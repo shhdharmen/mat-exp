@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "ngm-dev-components-docs": {
+    "mat-expressive-docs": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ngm-dev-components-docs:build:production"
+              "buildTarget": "mat-expressive-docs:build:production"
             },
             "development": {
-              "buildTarget": "ngm-dev-components-docs:build:development"
+              "buildTarget": "mat-expressive-docs:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,20 +75,20 @@
         }
       }
     },
-    "@ngm-dev/components": {
+    "@ngm-dev/mat-expressive": {
       "projectType": "library",
-      "root": "projects/ngm-dev/components",
-      "sourceRoot": "projects/ngm-dev/components/src",
+      "root": "projects/ngm-dev/mat-expressive",
+      "sourceRoot": "projects/ngm-dev/mat-expressive/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngm-dev/components/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngm-dev/mat-expressive/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngm-dev/components/tsconfig.lib.json"
+              "tsConfig": "projects/ngm-dev/mat-expressive/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -96,7 +96,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/ngm-dev/components/tsconfig.spec.json"
+            "tsConfig": "projects/ngm-dev/mat-expressive/tsconfig.spec.json"
           }
         }
       }

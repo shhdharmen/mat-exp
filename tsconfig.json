@@ -3,6 +3,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@ngm-dev/components": [
+        "./dist/ngm-dev/components"
+      ]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -28,6 +33,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ngm-dev/components/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ngm-dev/components/tsconfig.spec.json"
     }
   ]
 }

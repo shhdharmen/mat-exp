@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "expressive-angular-material": {
+    "ngm-dev-components-docs": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -30,6 +30,7 @@
               }
             ],
             "styles": [
+              "src/tailwind.css",
               "src/styles.scss"
             ]
           },
@@ -61,16 +62,42 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "expressive-angular-material:build:production"
+              "buildTarget": "ngm-dev-components-docs:build:production"
             },
             "development": {
-              "buildTarget": "expressive-angular-material:build:development"
+              "buildTarget": "ngm-dev-components-docs:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "@ngm-dev/components": {
+      "projectType": "library",
+      "root": "projects/ngm-dev/components",
+      "sourceRoot": "projects/ngm-dev/components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngm-dev/components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngm-dev/components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/ngm-dev/components/tsconfig.spec.json"
+          }
         }
       }
     }

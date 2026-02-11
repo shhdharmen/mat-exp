@@ -2,19 +2,12 @@ import { matExpressiveCreateOptions } from '../../utils/di/create-options';
 import { type MatExpressinveAppearanceOptions } from '../../common/appearance.options';
 import {
   type MatExpressiveButtonShape,
-  MatExpressiveButtonState,
-  MatExpressiveSizeM,
-  MatExpressiveSizeS,
-  type MatExpressiveSizeXL,
-  type MatExpressiveSizeXS,
+  type MatExpressiveButtonState,
+  type MatExpressiveSize,
 } from '../../types';
 
 export interface MatExpressiveButtonOptions extends MatExpressinveAppearanceOptions {
-  readonly size:
-    | MatExpressiveSizeXL
-    | MatExpressiveSizeXS
-    | MatExpressiveSizeS
-    | MatExpressiveSizeM;
+  readonly size: MatExpressiveSize;
   readonly shape: MatExpressiveButtonShape;
   readonly state?: MatExpressiveButtonState;
 }

@@ -3,18 +3,43 @@
 
 @include animations.buttonRoundedBorderRadius();
 
+// #region XS
 $button-xs-tokens: (
   tonal-container-height: 32px,
-  tonal-label-text-tracking: 0.1pt,
-  protected-container-height: 32px,
-  protected-label-text-tracking: 0.1pt,
   tonal-horizontal-padding: 12px,
+  tonal-label-text-tracking: var(--mat-sys-label-large-tracking),
+  tonal-label-text-font: var(--mat-sys-label-large-font),
+  tonal-label-text-size: var(--mat-sys-label-large-size),
+  tonal-label-text-weight: var(--mat-sys-label-large-weight),
+  protected-container-height: 32px,
   protected-horizontal-padding: 12px,
+  protected-label-text-tracking: var(--mat-sys-label-large-tracking),
+  protected-label-text-font: var(--mat-sys-label-large-font),
+  protected-label-text-size: var(--mat-sys-label-large-size),
+  protected-label-text-weight: var(--mat-sys-label-large-weight),
+  filled-container-height: 32px,
+  filled-horizontal-padding: 12px,
+  filled-label-text-tracking: var(--mat-sys-label-large-tracking),
+  filled-label-text-font: var(--mat-sys-label-large-font),
+  filled-label-text-size: var(--mat-sys-label-large-size),
+  filled-label-text-weight: var(--mat-sys-label-large-weight),
+  outlined-container-height: 32px,
+  outlined-horizontal-padding: 12px,
+  outlined-label-text-tracking: var(--mat-sys-label-large-tracking),
+  outlined-label-text-font: var(--mat-sys-label-large-font),
+  outlined-label-text-size: var(--mat-sys-label-large-size),
+  outlined-label-text-weight: var(--mat-sys-label-large-weight),
+  text-container-height: 32px,
+  text-horizontal-padding: 12px,
+  text-label-text-tracking: var(--mat-sys-label-large-tracking),
+  text-label-text-font: var(--mat-sys-label-large-font),
+  text-label-text-size: var(--mat-sys-label-large-size),
+  text-label-text-weight: var(--mat-sys-label-large-weight),
 );
 $button-xs-properties: (
   '.mdc-button': (
     line-height: (
-      value: 20px,
+      value: var(--mat-sys-label-large-line-height),
     ),
   ),
 );
@@ -23,6 +48,9 @@ $button-xs-shapes: (
     tokens: (
       tonal-container-shape: 12px,
       protected-container-shape: 12px,
+      filled-container-shape: 12px,
+      outlined-container-shape: 12px,
+      text-container-shape: 12px,
     ),
     properties: (
       '.mdc-button, .mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
@@ -36,6 +64,9 @@ $button-xs-shapes: (
         tokens: (
           tonal-container-shape: 8px,
           protected-container-shape: 8px,
+          filled-container-shape: 8px,
+          outlined-container-shape: 8px,
+          text-container-shape: 8px,
         ),
       ),
     ),
@@ -52,18 +83,45 @@ $button-xs-states: (
     ),
   ),
 );
+// #endregion
+
+// #region S
 $button-s-tokens: (
   tonal-container-height: 40px,
-  tonal-label-text-tracking: 0.1pt,
-  protected-container-height: 40px,
-  protected-label-text-tracking: 0.1pt,
   tonal-horizontal-padding: 16px,
+  tonal-label-text-tracking: var(--mat-sys-label-large-tracking),
+  tonal-label-text-font: var(--mat-sys-label-large-font),
+  tonal-label-text-size: var(--mat-sys-label-large-size),
+  tonal-label-text-weight: var(--mat-sys-label-large-weight),
+  protected-container-height: 40px,
   protected-horizontal-padding: 16px,
+  protected-label-text-tracking: var(--mat-sys-label-large-tracking),
+  protected-label-text-font: var(--mat-sys-label-large-font),
+  protected-label-text-size: var(--mat-sys-label-large-size),
+  protected-label-text-weight: var(--mat-sys-label-large-weight),
+  filled-container-height: 40px,
+  filled-horizontal-padding: 16px,
+  filled-label-text-tracking: var(--mat-sys-label-large-tracking),
+  filled-label-text-font: var(--mat-sys-label-large-font),
+  filled-label-text-size: var(--mat-sys-label-large-size),
+  filled-label-text-weight: var(--mat-sys-label-large-weight),
+  outlined-container-height: 40px,
+  outlined-horizontal-padding: 16px,
+  outlined-label-text-tracking: var(--mat-sys-label-large-tracking),
+  outlined-label-text-font: var(--mat-sys-label-large-font),
+  outlined-label-text-size: var(--mat-sys-label-large-size),
+  outlined-label-text-weight: var(--mat-sys-label-large-weight),
+  text-container-height: 40px,
+  text-horizontal-padding: 16px,
+  text-label-text-tracking: var(--mat-sys-label-large-tracking),
+  text-label-text-font: var(--mat-sys-label-large-font),
+  text-label-text-size: var(--mat-sys-label-large-size),
+  text-label-text-weight: var(--mat-sys-label-large-weight),
 );
 $button-s-properties: (
   '.mdc-button': (
     line-height: (
-      value: 20px,
+      value: var(--mat-sys-label-large-line-height),
     ),
   ),
 );
@@ -72,6 +130,9 @@ $button-s-shapes: (
     tokens: (
       tonal-container-shape: 12px,
       protected-container-shape: 12px,
+      filled-container-shape: 12px,
+      outlined-container-shape: 12px,
+      text-container-shape: 12px,
     ),
     properties: (
       '.mdc-button, .mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
@@ -85,6 +146,9 @@ $button-s-shapes: (
         tokens: (
           tonal-container-shape: 8px,
           protected-container-shape: 8px,
+          filled-container-shape: 8px,
+          outlined-container-shape: 8px,
+          text-container-shape: 8px,
         ),
       ),
     ),
@@ -101,3 +165,86 @@ $button-s-states: (
     ),
   ),
 );
+// #endregion
+
+// #region M
+$button-m-tokens: (
+  tonal-container-height: 56px,
+  tonal-horizontal-padding: 24px,
+  tonal-label-text-tracking: var(--mat-sys-title-medium-tracking),
+  tonal-label-text-font: var(--mat-sys-title-medium-font),
+  tonal-label-text-size: var(--mat-sys-title-medium-size),
+  tonal-label-text-weight: var(--mat-sys-title-medium-weight),
+  protected-container-height: 56px,
+  protected-horizontal-padding: 24px,
+  protected-label-text-tracking: var(--mat-sys-title-medium-tracking),
+  protected-label-text-font: var(--mat-sys-title-medium-font),
+  protected-label-text-size: var(--mat-sys-title-medium-size),
+  protected-label-text-weight: var(--mat-sys-title-medium-weight),
+  filled-container-height: 56px,
+  filled-horizontal-padding: 24px,
+  filled-label-text-tracking: var(--mat-sys-title-medium-tracking),
+  filled-label-text-font: var(--mat-sys-title-medium-font),
+  filled-label-text-size: var(--mat-sys-title-medium-size),
+  filled-label-text-weight: var(--mat-sys-title-medium-weight),
+  outlined-container-height: 56px,
+  outlined-horizontal-padding: 24px,
+  outlined-label-text-tracking: var(--mat-sys-title-medium-tracking),
+  outlined-label-text-font: var(--mat-sys-title-medium-font),
+  outlined-label-text-size: var(--mat-sys-title-medium-size),
+  outlined-label-text-weight: var(--mat-sys-title-medium-weight),
+  text-container-height: 56px,
+  text-horizontal-padding: 24px,
+  text-label-text-tracking: var(--mat-sys-title-medium-tracking),
+  text-label-text-font: var(--mat-sys-title-medium-font),
+  text-label-text-size: var(--mat-sys-title-medium-size),
+  text-label-text-weight: var(--mat-sys-title-medium-weight),
+);
+$button-m-properties: (
+  '.mdc-button': (
+    line-height: (
+      value: var(--mat-sys-title-medium-line-height),
+    ),
+  ),
+);
+$button-m-shapes: (
+  square: (
+    tokens: (
+      tonal-container-shape: 16px,
+      protected-container-shape: 16px,
+      filled-container-shape: 16px,
+      outlined-container-shape: 16px,
+      text-container-shape: 16px,
+    ),
+    properties: (
+      '.mdc-button, .mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
+        transition: (
+          value: constants.$button-transition,
+        ),
+      ),
+    ),
+    states: (
+      pressed: (
+        tokens: (
+          tonal-container-shape: 12px,
+          protected-container-shape: 12px,
+          filled-container-shape: 12px,
+          outlined-container-shape: 12px,
+          text-container-shape: 12px,
+        ),
+      ),
+    ),
+  ),
+);
+$button-m-states: (
+  pressed: (
+    properties: (
+      '.mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
+        animation: (
+          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
+        ),
+      ),
+    ),
+  ),
+);
+// #endregion

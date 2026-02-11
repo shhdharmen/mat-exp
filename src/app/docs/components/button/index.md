@@ -1,0 +1,63 @@
+---
+title: Overview
+keyword: ButtonOverviewPage
+---
+
+## Pre-requisites
+
+Make sure either you have included `mat-expressive-button-styles` or `mat-expressive-button-styles` in your global SCSS styles.
+
+```scss
+@use '@ngm-dev/mat-expressive' as mat-expressive;
+
+html {
+  @include mat-expressive.mat-expressive-all-styles();
+}
+```
+
+or
+
+```scss
+@use '@ngm-dev/mat-expressive' as mat-expressive;
+
+html {
+  @include mat-expressive.mat-expressive-button-styles();
+}
+```
+
+## Usages
+
+The styles for Material Expressive Button can be applied in two ways:
+
+1. Using the `data-*` attributes
+2. Using the `matExpressiveButton` directive
+
+### Using the `data-*` attributes
+
+```angular-ts name="app.ts"
+import { MatButton } from '@angular/material/button';
+@Component({
+  selector: 'app-root',
+  imports: [MatButton],
+  template: `
+    <button matButton="elevated" data-size="xs" data-shape="square">Elevated</button>
+    <button matButton="tonal" data-size="sm">Tonal</button>
+  `,
+})
+export class App {}
+```
+
+### Using the `matExpressiveButton` directive
+
+```angular-ts name="app.ts"
+import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+@Component({
+  selector: 'app-root',
+  imports: [MatButton, MatExpressiveButton],
+  template: `
+    <button matButton="elevated" size="xs" shape="square" matExpressiveButton>Elevated</button>
+    <button matButton="tonal" size="sm" matExpressiveButton>Tonal</button>
+  `,
+})
+export class App {}
+```

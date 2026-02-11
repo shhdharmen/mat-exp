@@ -3,3 +3,4 @@
  */
 
 export * from './lib/directives/button/button';
+export * from './lib/types/index';

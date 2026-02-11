@@ -1,11 +1,10 @@
+import { NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent } from '@ng-doc/app';
 import { Component, signal } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { RouterOutlet } from '@angular/router';
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
 
 @Component({
   selector: 'app-root',
-  imports: [MatButton, MatExpressiveButton],
+  imports: [NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

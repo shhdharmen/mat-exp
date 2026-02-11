@@ -17,4 +17,10 @@ $button-config: (
     shapes: tokens.$button-s-shapes,
     states: tokens.$button-s-states,
   ),
+  m: (
+    tokens: tokens.$button-m-tokens,
+    properties: tokens.$button-m-properties,
+    shapes: tokens.$button-m-shapes,
+    states: tokens.$button-m-states,
+  ),
 );

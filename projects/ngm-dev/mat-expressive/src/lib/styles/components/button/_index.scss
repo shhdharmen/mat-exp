@@ -132,9 +132,9 @@
   }
 
   // Generate styles for each size (these override root-level defaults)
-  $sizes: map.get(config.$button-config, sizes);
-  @if $sizes {
-    @each $size, $size-config in $sizes {
+  @each $size, $size-config in config.$button-config {
+    // Skip root-level keys
+    @if $size != 'tokens' and $size != 'properties' and $size != 'shapes' and $size != 'states' {
       [data-size='#{$size}'] {
         // Apply size-level tokens and properties
         $size-tokens: map.get($size-config, tokens);

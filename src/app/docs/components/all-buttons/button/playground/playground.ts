@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import {
   MatExpressiveButton,
   MatExpressiveButtonShape,
-  MatExpressiveSize,
+  MatExpressiveButtonSize,
 } from '@ngm-dev/mat-expressive';
 
 @Component({
@@ -15,7 +15,8 @@ import {
   styleUrls: ['./playground.scss'],
 })
 export class DocsButtonPlayground {
-  readonly size = input<MatExpressiveSize>('s');
+  readonly size = input<MatExpressiveButtonSize>('s');
   readonly shape = input<MatExpressiveButtonShape>('round');
   readonly appearance = input<MatButtonAppearance>('text');
+  readonly iconPosition = input<'start' | 'end'>('start');
 }

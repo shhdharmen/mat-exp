@@ -9,7 +9,7 @@ const Api: NgDocApi = {
       include: 'projects/ngm-dev/mat-expressive/src/public-api.ts',
     },
   ],
-  order: 1000,
+  order: 4,
 };
 
 export default Api;

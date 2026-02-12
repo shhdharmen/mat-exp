@@ -3,7 +3,13 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-@mixin mat-expressive-button-styles {
+@mixin mat-expressive-button-styles(
+  $options: (
+    skip-html-element-styles: false,
+  )
+) {
+  $skip-html-element-styles: map.get($options, skip-html-element-styles);
+
   // Validate the entire configuration
   $validation-result: utils.validate-button-config(config.$button-config, 'button-config');
 
@@ -18,7 +24,8 @@
   $root-states: map.get(config.$button-config, states);
 
   // Apply root-level defaults (when no size attribute is present)
-  @include utils.apply-tokens-properties($root-tokens, $root-properties) using ($slot) {
+  @include utils.apply-tokens-properties($root-tokens, $root-properties, $skip-html-element-styles)
+    using ($slot) {
     @if $slot == tokens {
       @include mat.button-overrides($root-tokens);
     }
@@ -31,7 +38,12 @@
         $shape-tokens: map.get($shape-config, tokens);
         $shape-properties: map.get($shape-config, properties);
 
-        @include utils.apply-tokens-properties($shape-tokens, $shape-properties) using ($slot) {
+        @include utils.apply-tokens-properties(
+            $shape-tokens,
+            $shape-properties,
+            $skip-html-element-styles
+          )
+          using ($slot) {
           @if $slot == tokens {
             @include mat.button-overrides($shape-tokens);
           }
@@ -47,7 +59,12 @@
 
             // Apply with data attribute selector
             &[data-state='#{$state-name}'] {
-              @include utils.apply-tokens-properties($state-tokens, $state-properties) using ($slot) {
+              @include utils.apply-tokens-properties(
+                  $state-tokens,
+                  $state-properties,
+                  $skip-html-element-styles
+                )
+                using ($slot) {
                 @if $slot == tokens {
                   @include mat.button-overrides($state-tokens);
                 }
@@ -57,8 +74,12 @@
             // Also apply with CSS pseudo-selector if available
             @if $pseudo-selector {
               &#{$pseudo-selector} {
-                @include utils.apply-tokens-properties($state-tokens, $state-properties) using
-                  ($slot) {
+                @include utils.apply-tokens-properties(
+                    $state-tokens,
+                    $state-properties,
+                    $skip-html-element-styles
+                  )
+                  using ($slot) {
                   @if $slot == tokens {
                     @include mat.button-overrides($state-tokens);
                   }
@@ -80,7 +101,12 @@
 
       // Apply with data attribute selector
       [data-state='#{$state-name}'] {
-        @include utils.apply-tokens-properties($state-tokens, $state-properties) using ($slot) {
+        @include utils.apply-tokens-properties(
+            $state-tokens,
+            $state-properties,
+            $skip-html-element-styles
+          )
+          using ($slot) {
           @if $slot == tokens {
             @include mat.button-overrides($state-tokens);
           }
@@ -90,7 +116,12 @@
       // Also apply with CSS pseudo-selector if available
       @if $pseudo-selector {
         #{$pseudo-selector} {
-          @include utils.apply-tokens-properties($state-tokens, $state-properties) using ($slot) {
+          @include utils.apply-tokens-properties(
+              $state-tokens,
+              $state-properties,
+              $skip-html-element-styles
+            )
+            using ($slot) {
             @if $slot == tokens {
               @include mat.button-overrides($state-tokens);
             }
@@ -109,7 +140,12 @@
         $size-tokens: map.get($size-config, tokens);
         $size-properties: map.get($size-config, properties);
 
-        @include utils.apply-tokens-properties($size-tokens, $size-properties) using ($slot) {
+        @include utils.apply-tokens-properties(
+            $size-tokens,
+            $size-properties,
+            $skip-html-element-styles
+          )
+          using ($slot) {
           @if $slot == tokens {
             @include mat.button-overrides($size-tokens);
           }
@@ -123,7 +159,12 @@
               $shape-tokens: map.get($shape-config, tokens);
               $shape-properties: map.get($shape-config, properties);
 
-              @include utils.apply-tokens-properties($shape-tokens, $shape-properties) using ($slot) {
+              @include utils.apply-tokens-properties(
+                  $shape-tokens,
+                  $shape-properties,
+                  $skip-html-element-styles
+                )
+                using ($slot) {
                 @if $slot == tokens {
                   @include mat.button-overrides($shape-tokens);
                 }
@@ -139,8 +180,12 @@
 
                   // Apply with data attribute selector
                   &[data-state='#{$state-name}'] {
-                    @include utils.apply-tokens-properties($state-tokens, $state-properties) using
-                      ($slot) {
+                    @include utils.apply-tokens-properties(
+                        $state-tokens,
+                        $state-properties,
+                        $skip-html-element-styles
+                      )
+                      using ($slot) {
                       @if $slot == tokens {
                         @include mat.button-overrides($state-tokens);
                       }
@@ -150,8 +195,12 @@
                   // Also apply with CSS pseudo-selector if available
                   @if $pseudo-selector {
                     &#{$pseudo-selector} {
-                      @include utils.apply-tokens-properties($state-tokens, $state-properties) using
-                        ($slot) {
+                      @include utils.apply-tokens-properties(
+                          $state-tokens,
+                          $state-properties,
+                          $skip-html-element-styles
+                        )
+                        using ($slot) {
                         @if $slot == tokens {
                           @include mat.button-overrides($state-tokens);
                         }
@@ -174,7 +223,12 @@
 
             // Apply with data attribute selector
             &[data-state='#{$state-name}'] {
-              @include utils.apply-tokens-properties($state-tokens, $state-properties) using ($slot) {
+              @include utils.apply-tokens-properties(
+                  $state-tokens,
+                  $state-properties,
+                  $skip-html-element-styles
+                )
+                using ($slot) {
                 @if $slot == tokens {
                   @include mat.button-overrides($state-tokens);
                 }
@@ -184,8 +238,12 @@
             // Also apply with CSS pseudo-selector if available
             @if $pseudo-selector {
               &#{$pseudo-selector} {
-                @include utils.apply-tokens-properties($state-tokens, $state-properties) using
-                  ($slot) {
+                @include utils.apply-tokens-properties(
+                    $state-tokens,
+                    $state-properties,
+                    $skip-html-element-styles
+                  )
+                  using ($slot) {
                   @if $slot == tokens {
                     @include mat.button-overrides($state-tokens);
                   }

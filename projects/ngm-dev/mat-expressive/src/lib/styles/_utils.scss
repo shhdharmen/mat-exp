@@ -347,12 +347,12 @@ $_state-pseudo-map: (
 }
 
 // Mixin to apply tokens and properties
-@mixin apply-tokens-properties($tokens, $properties) {
+@mixin apply-tokens-properties($tokens, $properties, $skip-html-element-styles: false) {
   @if $tokens {
     @content (tokens);
   }
 
-  @if $properties {
+  @if $properties and not $skip-html-element-styles {
     @each $selector, $props in $properties {
       // Output the selector - it will be nested under parent
       &#{$selector} {

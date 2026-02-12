@@ -1,11 +1,11 @@
 import { NgDocPage } from '@ng-doc/core';
-import ComponentsCategory from '../ng-doc.category';
+import AllButtonsCategory from '../ng-doc.category';
 import { DocsButtonPlayground } from './playground/playground';
 
 const ButtonPage: NgDocPage = {
   title: `Button`,
-  mdFile: ['./index.md', './playground.md'],
-  category: ComponentsCategory,
+  mdFile: ['./index.md', './api.md', './styling.md', './playground.md'],
+  category: AllButtonsCategory,
   playgrounds: {
     DocsButtonPlayground: {
       target: DocsButtonPlayground,

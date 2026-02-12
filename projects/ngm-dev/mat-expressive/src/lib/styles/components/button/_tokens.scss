@@ -1,7 +1,22 @@
 @use './constants' as constants;
 @use './animations' as animations;
+@use '../../../utils/functions/rem';
+@use 'sass:map';
 
 @include animations.buttonRoundedBorderRadius();
+
+$button-icon-selectors: (
+  '.mat-mdc-button>.mat-icon',
+  '.mat-mdc-unelevated-button>.mat-icon',
+  '.mat-mdc-raised-button>.mat-icon',
+  '.mat-mdc-outlined-button>.mat-icon',
+  '.mat-tonal-button>.mat-icon'
+);
+$button-shape-selectors: (
+  '.mdc-button',
+  '.mat-mdc-raised-button',
+  '.mat-mdc-raised-button .mdc-button__ripple'
+);
 
 // #region XS
 $button-xs-tokens: (
@@ -11,24 +26,28 @@ $button-xs-tokens: (
   tonal-label-text-font: var(--mat-sys-label-large-font),
   tonal-label-text-size: var(--mat-sys-label-large-size),
   tonal-label-text-weight: var(--mat-sys-label-large-weight),
+  tonal-icon-offset: 0,
   protected-container-height: 32px,
   protected-horizontal-padding: 12px,
   protected-label-text-tracking: var(--mat-sys-label-large-tracking),
   protected-label-text-font: var(--mat-sys-label-large-font),
   protected-label-text-size: var(--mat-sys-label-large-size),
   protected-label-text-weight: var(--mat-sys-label-large-weight),
+  protected-icon-offset: 0,
   filled-container-height: 32px,
   filled-horizontal-padding: 12px,
   filled-label-text-tracking: var(--mat-sys-label-large-tracking),
   filled-label-text-font: var(--mat-sys-label-large-font),
   filled-label-text-size: var(--mat-sys-label-large-size),
   filled-label-text-weight: var(--mat-sys-label-large-weight),
+  filled-icon-offset: 0,
   outlined-container-height: 32px,
   outlined-horizontal-padding: 12px,
   outlined-label-text-tracking: var(--mat-sys-label-large-tracking),
   outlined-label-text-font: var(--mat-sys-label-large-font),
   outlined-label-text-size: var(--mat-sys-label-large-size),
   outlined-label-text-weight: var(--mat-sys-label-large-weight),
+  outlined-icon-offset: 0,
   text-container-height: 32px,
   text-horizontal-padding: 12px,
   text-label-text-tracking: var(--mat-sys-label-large-tracking),
@@ -43,6 +62,35 @@ $button-xs-properties: (
     ),
   ),
 );
+@each $selector in $button-icon-selectors {
+  $button-xs-properties: map.set(
+    $button-xs-properties,
+    $selector,
+    (
+      font-size: (
+          value: rem.rem(16),
+        ),
+      height: (
+          value: rem.rem(16),
+        ),
+      width: (
+          value: rem.rem(16),
+        ),
+    )
+  );
+}
+$button-xs-shape-square-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-xs-shape-square-properties: map.set(
+    $button-xs-shape-square-properties,
+    $selector,
+    (
+      transition: (
+          value: constants.$button-transition,
+        ),
+    )
+  );
+}
 $button-xs-shapes: (
   square: (
     tokens: (
@@ -52,13 +100,7 @@ $button-xs-shapes: (
       outlined-container-shape: 12px,
       text-container-shape: 12px,
     ),
-    properties: (
-      '.mdc-button, .mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
-        transition: (
-          value: constants.$button-transition,
-        ),
-      ),
-    ),
+    properties: $button-xs-shape-square-properties,
     states: (
       pressed: (
         tokens: (
@@ -72,16 +114,24 @@ $button-xs-shapes: (
     ),
   ),
 );
-$button-xs-states: (
-  pressed: (
-    properties: (
-      '.mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
-        animation: (
+
+$button-xs-state-pressed-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-xs-state-pressed-properties: map.set(
+    $button-xs-state-pressed-properties,
+    $selector,
+    (
+      animation: (
           value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
         ),
-      ),
-    ),
-  ),
+    )
+  );
+}
+$button-xs-state-pressed: (
+  properties: $button-xs-state-pressed-properties,
+);
+$button-xs-states: (
+  pressed: $button-xs-state-pressed,
 );
 // #endregion
 
@@ -125,6 +175,18 @@ $button-s-properties: (
     ),
   ),
 );
+$button-s-shape-square-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-s-shape-square-properties: map.set(
+    $button-s-shape-square-properties,
+    $selector,
+    (
+      transition: (
+          value: constants.$button-transition,
+        ),
+    )
+  );
+}
 $button-s-shapes: (
   square: (
     tokens: (
@@ -134,13 +196,7 @@ $button-s-shapes: (
       outlined-container-shape: 12px,
       text-container-shape: 12px,
     ),
-    properties: (
-      '.mdc-button, .mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
-        transition: (
-          value: constants.$button-transition,
-        ),
-      ),
-    ),
+    properties: $button-s-shape-square-properties,
     states: (
       pressed: (
         tokens: (
@@ -154,15 +210,21 @@ $button-s-shapes: (
     ),
   ),
 );
-$button-s-states: (
-  pressed: (
-    properties: (
-      '.mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
-        animation: (
+$button-s-state-pressed-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-s-state-pressed-properties: map.set(
+    $button-s-state-pressed-properties,
+    $selector,
+    (
+      animation: (
           value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
         ),
-      ),
-    ),
+    )
+  );
+}
+$button-s-states: (
+  pressed: (
+    properties: $button-s-state-pressed-properties,
   ),
 );
 // #endregion
@@ -207,6 +269,35 @@ $button-m-properties: (
     ),
   ),
 );
+@each $selector in $button-icon-selectors {
+  $button-m-properties: map.set(
+    $button-m-properties,
+    $selector,
+    (
+      font-size: (
+          value: rem.rem(24),
+        ),
+      height: (
+          value: rem.rem(24),
+        ),
+      width: (
+          value: rem.rem(24),
+        ),
+    )
+  );
+}
+$button-m-shape-square-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-m-shape-square-properties: map.set(
+    $button-m-shape-square-properties,
+    $selector,
+    (
+      transition: (
+          value: constants.$button-transition,
+        ),
+    )
+  );
+}
 $button-m-shapes: (
   square: (
     tokens: (
@@ -216,13 +307,7 @@ $button-m-shapes: (
       outlined-container-shape: 16px,
       text-container-shape: 16px,
     ),
-    properties: (
-      '.mdc-button, .mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
-        transition: (
-          value: constants.$button-transition,
-        ),
-      ),
-    ),
+    properties: $button-m-shape-square-properties,
     states: (
       pressed: (
         tokens: (
@@ -236,15 +321,245 @@ $button-m-shapes: (
     ),
   ),
 );
+$button-m-state-pressed-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-m-state-pressed-properties: map.set(
+    $button-m-state-pressed-properties,
+    $selector,
+    (
+      animation: (
+          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
+        ),
+    )
+  );
+}
 $button-m-states: (
   pressed: (
-    properties: (
-      '.mat-mdc-raised-button, .mat-mdc-raised-button .mdc-button__ripple': (
-        animation: (
-          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
+    properties: $button-m-state-pressed-properties,
+  ),
+);
+// #endregion
+
+// #region L
+$button-l-tokens: (
+  tonal-container-height: rem.rem(96),
+  tonal-horizontal-padding: rem.rem(48),
+  tonal-label-text-tracking: var(--mat-sys-headline-small-tracking),
+  tonal-label-text-font: var(--mat-sys-headline-small-font),
+  tonal-label-text-size: var(--mat-sys-headline-small-size),
+  tonal-label-text-weight: var(--mat-sys-headline-small-weight),
+  protected-container-height: rem.rem(96),
+  protected-horizontal-padding: rem.rem(48),
+  protected-label-text-tracking: var(--mat-sys-headline-small-tracking),
+  protected-label-text-font: var(--mat-sys-headline-small-font),
+  protected-label-text-size: var(--mat-sys-headline-small-size),
+  protected-label-text-weight: var(--mat-sys-headline-small-weight),
+  filled-container-height: rem.rem(96),
+  filled-horizontal-padding: rem.rem(48),
+  filled-label-text-tracking: var(--mat-sys-headline-small-tracking),
+  filled-label-text-font: var(--mat-sys-headline-small-font),
+  filled-label-text-size: var(--mat-sys-headline-small-size),
+  filled-label-text-weight: var(--mat-sys-headline-small-weight),
+  outlined-container-height: rem.rem(96),
+  outlined-horizontal-padding: rem.rem(48),
+  outlined-label-text-tracking: var(--mat-sys-headline-small-tracking),
+  outlined-label-text-font: var(--mat-sys-headline-small-font),
+  outlined-label-text-size: var(--mat-sys-headline-small-size),
+  outlined-label-text-weight: var(--mat-sys-headline-small-weight),
+  outlined-outline-width: rem.rem(2),
+  text-container-height: rem.rem(96),
+  text-horizontal-padding: rem.rem(48),
+  text-label-text-tracking: var(--mat-sys-headline-small-tracking),
+  text-label-text-font: var(--mat-sys-headline-small-font),
+  text-label-text-size: var(--mat-sys-headline-small-size),
+  text-label-text-weight: var(--mat-sys-headline-small-weight),
+);
+$button-l-properties: (
+  '.mdc-button': (
+    line-height: (
+      value: var(--mat-sys-headline-small-line-height),
+    ),
+  ),
+);
+@each $selector in $button-icon-selectors {
+  $button-l-properties: map.set(
+    $button-l-properties,
+    $selector,
+    (
+      font-size: (
+          value: rem.rem(32),
+        ),
+      height: (
+          value: rem.rem(32),
+        ),
+      width: (
+          value: rem.rem(32),
+        ),
+    )
+  );
+}
+$button-l-shape-square-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-l-shape-square-properties: map.set(
+    $button-l-shape-square-properties,
+    $selector,
+    (
+      transition: (
+          value: constants.$button-transition,
+        ),
+    )
+  );
+}
+$button-l-shapes: (
+  square: (
+    tokens: (
+      tonal-container-shape: rem.rem(28),
+      protected-container-shape: rem.rem(28),
+      filled-container-shape: rem.rem(28),
+      outlined-container-shape: rem.rem(28),
+      text-container-shape: rem.rem(28),
+    ),
+    properties: $button-l-shape-square-properties,
+    states: (
+      pressed: (
+        tokens: (
+          tonal-container-shape: rem.rem(16),
+          protected-container-shape: rem.rem(16),
+          filled-container-shape: rem.rem(16),
+          outlined-container-shape: rem.rem(16),
+          text-container-shape: rem.rem(16),
         ),
       ),
     ),
+  ),
+);
+$button-l-state-pressed-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-l-state-pressed-properties: map.set(
+    $button-l-state-pressed-properties,
+    $selector,
+    (
+      animation: (
+          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
+        ),
+    )
+  );
+}
+$button-l-states: (
+  pressed: (
+    properties: $button-l-state-pressed-properties,
+  ),
+);
+// #endregion
+
+// #region XL
+$button-xl-tokens: (
+  tonal-container-height: rem.rem(136),
+  tonal-horizontal-padding: rem.rem(64),
+  tonal-label-text-tracking: var(--mat-sys-headline-large-tracking),
+  tonal-label-text-font: var(--mat-sys-headline-large-font),
+  tonal-label-text-size: var(--mat-sys-headline-large-size),
+  tonal-label-text-weight: var(--mat-sys-headline-large-weight),
+  protected-container-height: rem.rem(136),
+  protected-horizontal-padding: rem.rem(64),
+  protected-label-text-tracking: var(--mat-sys-headline-large-tracking),
+  protected-label-text-font: var(--mat-sys-headline-large-font),
+  protected-label-text-size: var(--mat-sys-headline-large-size),
+  protected-label-text-weight: var(--mat-sys-headline-large-weight),
+  filled-container-height: rem.rem(136),
+  filled-horizontal-padding: rem.rem(64),
+  filled-label-text-tracking: var(--mat-sys-headline-large-tracking),
+  filled-label-text-font: var(--mat-sys-headline-large-font),
+  filled-label-text-size: var(--mat-sys-headline-large-size),
+  filled-label-text-weight: var(--mat-sys-headline-large-weight),
+  outlined-container-height: rem.rem(136),
+  outlined-horizontal-padding: rem.rem(64),
+  outlined-label-text-tracking: var(--mat-sys-headline-large-tracking),
+  outlined-label-text-font: var(--mat-sys-headline-large-font),
+  outlined-label-text-size: var(--mat-sys-headline-large-size),
+  outlined-label-text-weight: var(--mat-sys-headline-large-weight),
+  outlined-outline-width: rem.rem(3),
+  text-container-height: rem.rem(136),
+  text-horizontal-padding: rem.rem(64),
+  text-label-text-tracking: var(--mat-sys-headline-large-tracking),
+  text-label-text-font: var(--mat-sys-headline-large-font),
+  text-label-text-size: var(--mat-sys-headline-large-size),
+  text-label-text-weight: var(--mat-sys-headline-large-weight),
+);
+$button-xl-properties: (
+  '.mdc-button': (
+    line-height: (
+      value: var(--mat-sys-headline-large-line-height),
+    ),
+  ),
+);
+@each $selector in $button-icon-selectors {
+  $button-xl-properties: map.set(
+    $button-xl-properties,
+    $selector,
+    (
+      font-size: (
+          value: rem.rem(40),
+        ),
+      height: (
+          value: rem.rem(40),
+        ),
+      width: (
+          value: rem.rem(40),
+        ),
+    )
+  );
+}
+$button-xl-shape-square-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-xl-shape-square-properties: map.set(
+    $button-xl-shape-square-properties,
+    $selector,
+    (
+      transition: (
+          value: constants.$button-transition,
+        ),
+    )
+  );
+}
+$button-xl-shapes: (
+  square: (
+    tokens: (
+      tonal-container-shape: rem.rem(28),
+      protected-container-shape: rem.rem(28),
+      filled-container-shape: rem.rem(28),
+      outlined-container-shape: rem.rem(28),
+      text-container-shape: rem.rem(28),
+    ),
+    properties: $button-xl-shape-square-properties,
+    states: (
+      pressed: (
+        tokens: (
+          tonal-container-shape: rem.rem(16),
+          protected-container-shape: rem.rem(16),
+          filled-container-shape: rem.rem(16),
+          outlined-container-shape: rem.rem(16),
+          text-container-shape: rem.rem(16),
+        ),
+      ),
+    ),
+  ),
+);
+$button-xl-state-pressed-properties: ();
+@each $selector in $button-shape-selectors {
+  $button-xl-state-pressed-properties: map.set(
+    $button-xl-state-pressed-properties,
+    $selector,
+    (
+      animation: (
+          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
+        ),
+    )
+  );
+}
+$button-xl-states: (
+  pressed: (
+    properties: $button-xl-state-pressed-properties,
   ),
 );
 // #endregion

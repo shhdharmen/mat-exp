@@ -1,11 +1,11 @@
-export type MatExpressiveSizeM = 'm';
-export type MatExpressiveSizeS = 's';
-export type MatExpressiveSizeL = 'l';
-export type MatExpressiveSizeXS = 'xs';
-export type MatExpressiveSizeXL = 'xl';
-export type MatExpressiveSize =
-  | MatExpressiveSizeXS
-  | MatExpressiveSizeS
-  | MatExpressiveSizeM
-  | MatExpressiveSizeL
-  | MatExpressiveSizeXL;
+export type MatExpressiveButtonSizeM = 'm';
+export type MatExpressiveButtonSizeS = 's';
+export type MatExpressiveButtonSizeL = 'l';
+export type MatExpressiveButtonSizeXS = 'xs';
+export type MatExpressiveButtonSizeXL = 'xl';
+export type MatExpressiveButtonSize =
+  | MatExpressiveButtonSizeXS
+  | MatExpressiveButtonSizeS
+  | MatExpressiveButtonSizeM
+  | MatExpressiveButtonSizeL
+  | MatExpressiveButtonSizeXL;

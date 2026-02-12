@@ -1,5 +1,9 @@
 @use './components/button';
 
-@mixin mat-expressive-all-styles {
-  @include button.mat-expressive-button-styles();
+@mixin mat-expressive-all-styles(
+  $options: (
+    skip-html-element-styles: false,
+  )
+) {
+  @include button.mat-expressive-button-styles($options);
 }

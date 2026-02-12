@@ -23,4 +23,16 @@ $button-config: (
     shapes: tokens.$button-m-shapes,
     states: tokens.$button-m-states,
   ),
+  l: (
+    tokens: tokens.$button-l-tokens,
+    properties: tokens.$button-l-properties,
+    shapes: tokens.$button-l-shapes,
+    states: tokens.$button-l-states,
+  ),
+  xl: (
+    tokens: tokens.$button-xl-tokens,
+    properties: tokens.$button-xl-properties,
+    shapes: tokens.$button-xl-shapes,
+    states: tokens.$button-xl-states,
+  ),
 );

@@ -5,7 +5,7 @@ keyword: ButtonOverviewPage
 
 ## Pre-requisites
 
-Make sure either you have included `mat-expressive-button-styles` or `mat-expressive-button-styles` in your global SCSS styles.
+Make sure either you have included `mat-expressive-all-styles` or `mat-expressive-button-styles` in your global SCSS styles.
 
 ```scss
 @use '@ngm-dev/mat-expressive' as mat-expressive;
@@ -32,7 +32,7 @@ The styles for Material Expressive Button can be applied in two ways:
 1. Using the `data-*` attributes
 2. Using the `matExpressiveButton` directive
 
-### Using the `data-*` attributes
+### Using the data-\* attributes
 
 ```angular-ts name="app.ts"
 import { MatButton } from '@angular/material/button';
@@ -47,7 +47,9 @@ import { MatButton } from '@angular/material/button';
 export class App {}
 ```
 
-### Using the `matExpressiveButton` directive
+### Using the matExpressiveButton directive
+
+If you do not want to use `data-*` attributes and want full type safety, you can use `matExpressiveButton` directive.
 
 ```angular-ts name="app.ts"
 import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
@@ -61,3 +63,19 @@ import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
 })
 export class App {}
 ```
+
+## Suported Variations
+
+Mat Expressive Button supports the following variations:
+
+- Size: `xs`, `s`, `m`, `l`, `xl`
+- Shape: `round`, `square`
+- State: `pressed` (`:active` pseudo-selector)
+
+## Shape Morph
+
+### Pressed State
+
+[According to Material 3 Design System Expressive guidelines](https://m3.material.io/components/buttons/specs#cb36ae03-5539-497d-9777-06547a7d3f17), when pressed, buttons can morph to become more square. Both round and square buttons should have the same pressed shape.
+
+Mat Expressive Button supports this shape morphing by default.

@@ -21,7 +21,11 @@
       >Link</a
     >
     <button [matButton]="appearance()" [attr.data-size]="size()" [attr.data-shape]="shape()">
-      <mat-icon>star</mat-icon>
+      @if (iconPosition() === 'start') {
+        <mat-icon>star</mat-icon>
+      } @else {
+        <mat-icon iconPositionEnd>star</mat-icon>
+      }
       With Icon
     </button>
   </div>
@@ -53,7 +57,11 @@
       >Link</a
     >
     <button [matButton]="appearance()" [size]="size()" [shape]="shape()" matExpressiveButton>
-      <mat-icon>star</mat-icon>
+      @if (iconPosition() === 'start') {
+        <mat-icon>star</mat-icon>
+      } @else {
+        <mat-icon iconPositionEnd>star</mat-icon>
+      }
       With Icon
     </button>
   </div>

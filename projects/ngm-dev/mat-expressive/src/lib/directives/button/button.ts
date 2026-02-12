@@ -17,9 +17,11 @@ import { matExpressiveWithStyles } from '../../utils/misc/with-styles';
 //   changeDetection: ChangeDetectionStrategy.OnPush,
 // })
 // class Styles {}
-
+/**
+ * Directive to style the Angular Material Button component with latest Material 3 Design System Expressive styles.
+ */
 @Directive({
-  selector: '[matButton][matExpressiveButton]',
+  selector: '[matExpressiveButton]',
   providers: [matExpressiveAppearanceOptionsProvider(MAT_EXPRESSIVE_BUTTON_OPTIONS)],
   host: {
     '[attr.data-size]': 'size()',
@@ -33,5 +35,9 @@ export class MatExpressiveButton {
 
   public readonly size = input(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).size);
   public readonly shape = input(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).shape);
+
+  /**
+   * @internal
+   */
   public readonly state = input(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).state);
 }

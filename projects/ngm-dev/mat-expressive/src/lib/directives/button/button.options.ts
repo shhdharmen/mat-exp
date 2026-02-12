@@ -3,11 +3,11 @@ import { type MatExpressinveAppearanceOptions } from '../../common/appearance.op
 import {
   type MatExpressiveButtonShape,
   type MatExpressiveButtonState,
-  type MatExpressiveSize,
+  type MatExpressiveButtonSize,
 } from '../../types';
 
 export interface MatExpressiveButtonOptions extends MatExpressinveAppearanceOptions {
-  readonly size: MatExpressiveSize;
+  readonly size: MatExpressiveButtonSize;
   readonly shape: MatExpressiveButtonShape;
   readonly state?: MatExpressiveButtonState;
 }

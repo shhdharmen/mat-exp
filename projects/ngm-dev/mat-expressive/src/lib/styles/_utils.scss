@@ -223,8 +223,8 @@ $_state-pseudo-map: (
   $allowed-shapes: map.get($_known-attributes, shapes);
   $allowed-states: map.get($_known-attributes, states);
 
-  // Validate root-level defaults (tokens, properties, shapes, states)
-  $root-level-keys: (tokens, properties, shapes, states);
+  // Validate root-level defaults (tokens, properties, shapes, states, sizes)
+  $root-level-keys: (tokens, properties, shapes, states, sizes);
 
   // Validate root-level tokens if present
   @if map.has-key($config, tokens) {
@@ -274,63 +274,70 @@ $_state-pseudo-map: (
     }
   }
 
-  // Validate each size configuration
-  @each $size-key, $size-config in $config {
-    // Skip root-level keys
-    @if not list.index($root-level-keys, $size-key) {
-      @if not list.index($allowed-sizes, $size-key) {
-        $errors: list.append(
-          $errors,
-          'Invalid key "#{$size-key}". Allowed: #{$allowed-sizes} or root-level keys (tokens, properties, shapes, states)'
-        );
+  // Validate sizes configuration if present
+  @if map.has-key($config, sizes) {
+    $sizes: map.get($config, sizes);
+    @if $sizes {
+      @if meta.type-of($sizes) != 'map' {
+        $errors: list.append($errors, '#{$name}.sizes must be a map');
       } @else {
-        @if meta.type-of($size-config) != 'map' {
-          $errors: list.append($errors, '#{$name}.#{$size-key} must be a map');
-        } @else {
-          // Validate size-level tokens/properties
-          $size-errors: _validate-tokens-properties-structure(
-            $size-config,
-            '#{$name}.#{$size-key}'
-          );
-
-          // Filter out the "at least one of tokens or properties" error for size level
-          // because shapes and states can provide them
-          @each $error in $size-errors {
-            @if not list.index($error, 'must have at least one of "tokens" or "properties"') {
-              $errors: list.append($errors, $error);
-            }
-          }
-
-          // Validate shapes if present (shapes can have states)
-          @if map.has-key($size-config, shapes) {
-            $shapes: map.get($size-config, shapes);
-            $shape-errors: _validate-shape-structure(
-              $shapes,
-              '#{$name}.#{$size-key}.shapes',
-              $allowed-shapes
+        // Validate each size configuration
+        @each $size-key, $size-config in $sizes {
+          @if not list.index($allowed-sizes, $size-key) {
+            $errors: list.append(
+              $errors,
+              'Invalid size key "#{$size-key}". Allowed: #{$allowed-sizes}'
             );
-            $errors: list.join($errors, $shape-errors);
-          }
-
-          // Validate states if present (at size level)
-          @if map.has-key($size-config, states) {
-            $states: map.get($size-config, states);
-            $state-errors: _validate-states-structure(
-              $states,
-              '#{$name}.#{$size-key}.states',
-              $allowed-states
-            );
-            $errors: list.join($errors, $state-errors);
-          }
-
-          // Check for unexpected keys at size level
-          @each $key, $val in $size-config {
-            @if $key != 'tokens' and $key != 'properties' and $key != 'shapes' and $key != 'states'
-            {
-              $errors: list.append(
-                $errors,
-                '#{$name}.#{$size-key} has unexpected key "#{$key}" (only "tokens", "properties", "shapes", "states" allowed)'
+          } @else {
+            @if meta.type-of($size-config) != 'map' {
+              $errors: list.append($errors, '#{$name}.sizes.#{$size-key} must be a map');
+            } @else {
+              // Validate size-level tokens/properties
+              $size-errors: _validate-tokens-properties-structure(
+                $size-config,
+                '#{$name}.sizes.#{$size-key}'
               );
+
+              // Filter out the "at least one of tokens or properties" error for size level
+              // because shapes and states can provide them
+              @each $error in $size-errors {
+                @if not list.index($error, 'must have at least one of "tokens" or "properties"') {
+                  $errors: list.append($errors, $error);
+                }
+              }
+
+              // Validate shapes if present (shapes can have states)
+              @if map.has-key($size-config, shapes) {
+                $shapes-in-size: map.get($size-config, shapes);
+                $shape-errors: _validate-shape-structure(
+                  $shapes-in-size,
+                  '#{$name}.sizes.#{$size-key}.shapes',
+                  $allowed-shapes
+                );
+                $errors: list.join($errors, $shape-errors);
+              }
+
+              // Validate states if present (at size level)
+              @if map.has-key($size-config, states) {
+                $states-in-size: map.get($size-config, states);
+                $state-errors: _validate-states-structure(
+                  $states-in-size,
+                  '#{$name}.sizes.#{$size-key}.states',
+                  $allowed-states
+                );
+                $errors: list.join($errors, $state-errors);
+              }
+
+              // Check for unexpected keys at size level
+              @each $key, $val in $size-config {
+                @if $key != 'tokens' and $key != 'properties' and $key != 'shapes' and $key != 'states'
+                {
+                  $errors: list.append(
+                    $errors,
+                    '#{$name}.sizes.#{$size-key} has unexpected key "#{$key}" (only "tokens", "properties", "shapes", "states" allowed)'
+                  );
+                }
+              }
             }
           }
         }

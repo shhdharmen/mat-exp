@@ -5,34 +5,36 @@ $button-config: (
   properties: tokens.$button-s-properties,
   shapes: tokens.$button-s-shapes,
   states: tokens.$button-s-states,
-  xs: (
-    tokens: tokens.$button-xs-tokens,
-    properties: tokens.$button-xs-properties,
-    shapes: tokens.$button-xs-shapes,
-    states: tokens.$button-xs-states,
-  ),
-  s: (
-    tokens: tokens.$button-s-tokens,
-    properties: tokens.$button-s-properties,
-    shapes: tokens.$button-s-shapes,
-    states: tokens.$button-s-states,
-  ),
-  m: (
-    tokens: tokens.$button-m-tokens,
-    properties: tokens.$button-m-properties,
-    shapes: tokens.$button-m-shapes,
-    states: tokens.$button-m-states,
-  ),
-  l: (
-    tokens: tokens.$button-l-tokens,
-    properties: tokens.$button-l-properties,
-    shapes: tokens.$button-l-shapes,
-    states: tokens.$button-l-states,
-  ),
-  xl: (
-    tokens: tokens.$button-xl-tokens,
-    properties: tokens.$button-xl-properties,
-    shapes: tokens.$button-xl-shapes,
-    states: tokens.$button-xl-states,
+  sizes: (
+    xs: (
+      tokens: tokens.$button-xs-tokens,
+      properties: tokens.$button-xs-properties,
+      shapes: tokens.$button-xs-shapes,
+      states: tokens.$button-xs-states,
+    ),
+    s: (
+      tokens: tokens.$button-s-tokens,
+      properties: tokens.$button-s-properties,
+      shapes: tokens.$button-s-shapes,
+      states: tokens.$button-s-states,
+    ),
+    m: (
+      tokens: tokens.$button-m-tokens,
+      properties: tokens.$button-m-properties,
+      shapes: tokens.$button-m-shapes,
+      states: tokens.$button-m-states,
+    ),
+    l: (
+      tokens: tokens.$button-l-tokens,
+      properties: tokens.$button-l-properties,
+      shapes: tokens.$button-l-shapes,
+      states: tokens.$button-l-states,
+    ),
+    xl: (
+      tokens: tokens.$button-xl-tokens,
+      properties: tokens.$button-xl-properties,
+      shapes: tokens.$button-xl-shapes,
+      states: tokens.$button-xl-states,
+    ),
   ),
 );

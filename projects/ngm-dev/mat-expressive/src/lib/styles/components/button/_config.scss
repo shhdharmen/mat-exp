@@ -16,24 +16,28 @@ $button-config: (
     state: 'pressed',
     properties: tokens.$xs-state-pressed-properties,
   ),
+  // (
+  //   size: 'xs',
+  //   toggle: 'unselected',
+  //   tokens: tokens.$xs-toggle-unselected-tokens,
+  //   properties: tokens.$xs-toggle-unselected-properties,
+  // ),
+  (
+      size: 'xs',
+      toggle: 'selected',
+      tokens: tokens.$xs-toggle-selected-tokens,
+      properties: tokens.$xs-toggle-selected-properties,
+    ),
   (
     size: 'xs',
     shape: 'square',
     tokens: tokens.$xs-shape-square-tokens,
-    properties: tokens.$xs-shape-square-properties,
   ),
   (
     size: 'xs',
     shape: 'square',
     toggle: 'selected',
     tokens: tokens.$xs-shape-square-toggle-selected-tokens,
-    properties: tokens.$xs-shape-square-toggle-selected-properties,
-  ),
-  (
-    size: 'xs',
-    shape: 'square',
-    toggle: 'unselected',
-    tokens: tokens.$xs-shape-square-toggle-unselected-tokens,
   ),
   (
     size: 'xs',
@@ -41,11 +45,5 @@ $button-config: (
     toggle: 'selected',
     tokens: tokens.$xs-shape-round-toggle-selected-tokens,
     properties: tokens.$xs-shape-round-toggle-selected-properties,
-  ),
-  (
-    size: 'xs',
-    shape: 'round',
-    toggle: 'unselected',
-    tokens: tokens.$xs-shape-round-toggle-unselected-tokens,
   )
 );

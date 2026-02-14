@@ -5,6 +5,8 @@
 $button-common-tokens: (
   outlined-state-layer-color: var(--mat-sys-on-surface-variant),
   outlined-label-text-color: var(--mat-sys-on-surface-variant),
+  outlined-outline-color: var(--mat-sys-outline-variant),
+  protected-container-color: var(--mat-sys-surface-container-low),
 );
 
 $button-shape-square-properties: ();

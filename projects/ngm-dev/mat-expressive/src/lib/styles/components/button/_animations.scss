@@ -1,4 +1,4 @@
-@use '../../utils' as utils;
+@use './utils';
 
 @mixin buttonRoundedBorderRadius() {
   @include utils.keyframes(buttonRoundedBorderRadius) {
@@ -10,20 +10,6 @@
     }
     100% {
       border-radius: 8px;
-    }
-  }
-}
-
-@mixin buttonRoundedBorderRadiusTo12px() {
-  @include utils.keyframes(buttonRoundedBorderRadiusTo12px) {
-    0% {
-      border-radius: 9999px;
-    }
-    1% {
-      border-radius: 50px;
-    }
-    100% {
-      border-radius: 12px;
     }
   }
 }

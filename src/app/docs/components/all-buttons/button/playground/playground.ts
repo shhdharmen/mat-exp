@@ -4,9 +4,9 @@ import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatExpressiveButton,
-  MatExpressiveButtonShape,
-  MatExpressiveButtonSize,
-  MatExpressiveButtonToggle,
+  type MatExpressiveButtonShape,
+  type MatExpressiveButtonSize,
+  type MatExpressiveButtonToggle,
 } from '@ngm-dev/mat-expressive';
 
 @Component({

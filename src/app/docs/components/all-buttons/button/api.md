@@ -5,9 +5,9 @@ route: api
 keyword: ButtonApiPage
 ---
 
-## Data Attributes
+## Data Attributes with .mat-expressive-button class
 
-You can use below `data-*` attributes to style the Angular Material Button component. Make sure to use below with `matButton` directive.
+You can use below `data-*` attributes with `.mat-expressive-button` class to style the Angular Material Button component. Make sure to use below with `matButton` directive.
 
 ### data-size
 

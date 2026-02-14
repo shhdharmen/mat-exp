@@ -1,4 +1,6 @@
-<h4 class="mat-font-title-lg">With <code>data-*</code> attributes</h4>
+<h4 class="mat-font-title-lg">
+  With <code>.mat-expressive-button</code> class and <code>data-*</code> attributes
+</h4>
 <section>
   <div class="example-button-row">
     <button
@@ -6,6 +8,7 @@
       [attr.data-size]="size()"
       [attr.data-shape]="shape()"
       [attr.data-toggle]="toggle()"
+      class="mat-expressive-button"
     >
       Basic
     </button>
@@ -15,6 +18,7 @@
       [attr.data-shape]="shape()"
       [attr.data-toggle]="toggle()"
       disabled
+      class="mat-expressive-button"
     >
       Disabled
     </button>
@@ -25,6 +29,7 @@
       [attr.data-toggle]="toggle()"
       href="#"
       target="_blank"
+      class="mat-expressive-button"
       >Link</a
     >
     <button
@@ -32,6 +37,7 @@
       [attr.data-size]="size()"
       [attr.data-shape]="shape()"
       [attr.data-toggle]="toggle()"
+      class="mat-expressive-button"
     >
       @if (iconPosition() === 'start') {
         <mat-icon>star</mat-icon>

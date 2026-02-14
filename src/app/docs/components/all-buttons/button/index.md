@@ -29,10 +29,10 @@ html {
 
 The styles for Material Expressive Button can be applied in two ways:
 
-1. Using the `data-*` attributes
+1. Using the `.mat-expressive-button` class with the `data-*` attributes
 2. Using the `matExpressiveButton` directive
 
-### Using the data-\* attributes
+### Using the .mat-expressive-button class with the data-\* attributes
 
 ```angular-ts name="app.ts"
 import { MatButton } from '@angular/material/button';
@@ -40,8 +40,10 @@ import { MatButton } from '@angular/material/button';
   selector: 'app-root',
   imports: [MatButton],
   template: `
-    <button matButton="elevated" data-size="xs" data-shape="square">Elevated</button>
-    <button matButton="tonal" data-size="sm">Tonal</button>
+    <button matButton="elevated" class="mat-expressive-button" data-size="xs" data-shape="square">
+      Elevated
+    </button>
+    <button matButton="tonal" class="mat-expressive-button" data-size="sm">Tonal</button>
   `,
 })
 export class App {}
@@ -49,7 +51,7 @@ export class App {}
 
 ### Using the matExpressiveButton directive
 
-If you do not want to use `data-*` attributes and want full type safety, you can use `matExpressiveButton` directive.
+If you do not want to use `data-*` attributes and the `.mat-expressive-button` class and want full type safety, you can use `matExpressiveButton` directive.
 
 ```angular-ts name="app.ts"
 import { MatExpressiveButton } from '@ngm-dev/mat-expressive';

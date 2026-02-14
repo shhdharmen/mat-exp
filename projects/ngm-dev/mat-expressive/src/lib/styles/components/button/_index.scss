@@ -1,15 +1,18 @@
-@use './config' as config;
-@use '../../utils' as utils;
+@use './config';
+@use './utils';
 @use '@angular/material' as mat;
 @use 'sass:map';
+
+$_mat-expressive-button-class: '.mat-expressive-button';
 
 @mixin mat-expressive-button-styles(
   $options: (
     skip-html-element-styles: false,
+    mat-expressive-button-class: $_mat-expressive-button-class,
   )
 ) {
   $skip-html-element-styles: map.get($options, skip-html-element-styles);
-
+  $mat-expressive-button-class: map.get($options, mat-expressive-button-class);
   // Validate the entire configuration
   $validation-result: utils.validate-button-config(config.$button-config, 'button-config');
 
@@ -34,7 +37,7 @@
   // Apply root-level shapes
   @if $root-shapes {
     @each $shape-name, $shape-config in $root-shapes {
-      [data-shape='#{$shape-name}'] {
+      #{$mat-expressive-button-class}[data-shape='#{$shape-name}'] {
         $shape-tokens: map.get($shape-config, tokens);
         $shape-properties: map.get($shape-config, properties);
 
@@ -163,7 +166,7 @@
       $pseudo-selector: utils.get-state-pseudo($state-name);
 
       // Apply with data attribute selector
-      [data-state='#{$state-name}'] {
+      #{$mat-expressive-button-class}[data-state='#{$state-name}'] {
         @include utils.apply-tokens-properties(
             $state-tokens,
             $state-properties,
@@ -178,7 +181,7 @@
 
       // Also apply with CSS pseudo-selector if available
       @if $pseudo-selector {
-        #{$pseudo-selector} {
+        #{$mat-expressive-button-class}#{$pseudo-selector} {
           @include utils.apply-tokens-properties(
               $state-tokens,
               $state-properties,
@@ -198,7 +201,7 @@
   @each $size, $size-config in config.$button-config {
     // Skip root-level keys
     @if $size != 'tokens' and $size != 'properties' and $size != 'shapes' and $size != 'states' {
-      [data-size='#{$size}'] {
+      #{$mat-expressive-button-class}[data-size='#{$size}'] {
         // Apply size-level tokens and properties
         $size-tokens: map.get($size-config, tokens);
         $size-properties: map.get($size-config, properties);

@@ -230,7 +230,14 @@ $_state-pseudo-map: (
 
         // Ensure no unexpected keys (only tokens, properties, states, and toggles allowed in shapes)
         @each $nested-key, $nested-val in $value {
-          @if $nested-key != 'tokens' and $nested-key != 'properties' and $nested-key != 'states' and $nested-key != 'toggles'
+          @if $nested-key !=
+            'tokens' and
+            $nested-key !=
+            'properties' and
+            $nested-key !=
+            'states' and
+            $nested-key !=
+            'toggles'
           {
             $errors: list.append(
               $errors,

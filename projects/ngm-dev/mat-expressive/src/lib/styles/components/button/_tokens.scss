@@ -1,10 +1,9 @@
 @use './constants' as constants;
 @use './animations' as animations;
-@use '../../../utils/functions/rem';
+@use '../../utils/functions/rem';
 @use 'sass:map';
 
 @include animations.buttonRoundedBorderRadius();
-@include animations.buttonRoundedBorderRadiusTo12px();
 
 $button-icon-selectors: (
   '.mat-mdc-button>.mat-icon',
@@ -18,72 +17,45 @@ $button-shape-selectors: (
   '.mat-mdc-raised-button',
   '.mat-mdc-raised-button .mdc-button__ripple'
 );
-
-// #region XS
-$button-xs-tokens: (
-  tonal-container-height: 32px,
-  tonal-horizontal-padding: 12px,
-  tonal-label-text-tracking: var(--mat-sys-label-large-tracking),
-  tonal-label-text-font: var(--mat-sys-label-large-font),
-  tonal-label-text-size: var(--mat-sys-label-large-size),
-  tonal-label-text-weight: var(--mat-sys-label-large-weight),
-  tonal-icon-offset: 0,
-  protected-container-height: 32px,
-  protected-horizontal-padding: 12px,
-  protected-label-text-tracking: var(--mat-sys-label-large-tracking),
-  protected-label-text-font: var(--mat-sys-label-large-font),
-  protected-label-text-size: var(--mat-sys-label-large-size),
-  protected-label-text-weight: var(--mat-sys-label-large-weight),
-  protected-icon-offset: 0,
-  filled-container-height: 32px,
-  filled-horizontal-padding: 12px,
-  filled-label-text-tracking: var(--mat-sys-label-large-tracking),
-  filled-label-text-font: var(--mat-sys-label-large-font),
-  filled-label-text-size: var(--mat-sys-label-large-size),
-  filled-label-text-weight: var(--mat-sys-label-large-weight),
-  filled-icon-offset: 0,
-  outlined-container-height: 32px,
-  outlined-horizontal-padding: 12px,
-  outlined-label-text-tracking: var(--mat-sys-label-large-tracking),
-  outlined-label-text-font: var(--mat-sys-label-large-font),
-  outlined-label-text-size: var(--mat-sys-label-large-size),
-  outlined-label-text-weight: var(--mat-sys-label-large-weight),
-  outlined-icon-offset: 0,
-  text-container-height: 32px,
-  text-horizontal-padding: 12px,
-  text-label-text-tracking: var(--mat-sys-label-large-tracking),
-  text-label-text-font: var(--mat-sys-label-large-font),
-  text-label-text-size: var(--mat-sys-label-large-size),
-  text-label-text-weight: var(--mat-sys-label-large-weight),
+$button-common-tokens: (
+  outlined-state-layer-color: var(--mat-sys-on-surface-variant),
+  outlined-label-text-color: var(--mat-sys-on-surface-variant),
 );
-$button-xs-properties: (
-  '.mdc-button': (
-    line-height: (
-      value: var(--mat-sys-label-large-line-height),
-    ),
-  ),
-);
-@each $selector in $button-icon-selectors {
-  $button-xs-properties: map.set(
-    $button-xs-properties,
-    $selector,
-    (
-      font-size: (
-          value: rem.rem(16),
-        ),
-      height: (
-          value: rem.rem(16),
-        ),
-      width: (
-          value: rem.rem(16),
-        ),
+@function mdc-button-line-height($value) {
+  @return (
+    '.mdc-button': (
+      line-height: (
+        value: $value,
+      ),
     )
   );
 }
-$button-xs-shape-square-properties: ();
+@function icon-size($value) {
+  @return (
+    font-size: (
+      value: rem.rem($value),
+    ),
+    height: (
+      value: rem.rem($value),
+    ),
+    width: (
+      value: rem.rem($value),
+    )
+  );
+}
+@function button-shape-tokens($value) {
+  @return (
+    tonal-container-shape: rem.rem($value),
+    protected-container-shape: rem.rem($value),
+    filled-container-shape: rem.rem($value),
+    outlined-container-shape: rem.rem($value),
+    text-container-shape: rem.rem($value)
+  );
+}
+$button-shape-square-properties: ();
 @each $selector in $button-shape-selectors {
-  $button-xs-shape-square-properties: map.set(
-    $button-xs-shape-square-properties,
+  $button-shape-square-properties: map.set(
+    $button-shape-square-properties,
     $selector,
     (
       transition: (
@@ -92,11 +64,10 @@ $button-xs-shape-square-properties: ();
     )
   );
 }
-$button-xs-shapes-square-toggle-selected-pressed-properties: ();
-$button-xs-shapes-round-toggle-selected-properties: ();
+$button-shapes-square-toggle-selected-pressed-properties: ();
 @each $selector in $button-shape-selectors {
-  $button-xs-shapes-square-toggle-selected-pressed-properties: map.set(
-    $button-xs-shapes-square-toggle-selected-pressed-properties,
+  $button-shapes-square-toggle-selected-pressed-properties: map.set(
+    $button-shapes-square-toggle-selected-pressed-properties,
     $selector,
     (
       animation: (
@@ -105,9 +76,26 @@ $button-xs-shapes-round-toggle-selected-properties: ();
     )
   );
 }
+$button-shapes-round-toggle-selected-properties: (
+  '.mdc-button.mdc-button--outlined': (
+    background-color: (
+      value: var(--mat-sys-inverse-surface),
+    ),
+  ),
+  '.mat-mdc-outlined-button[disabled]': (
+    background-color: (
+      value: var(--mat-sys-on-surface),
+    ),
+  ),
+  '.mat-mdc-outlined-button.mat-mdc-button-disabled': (
+    background-color: (
+      value: var(--mat-sys-on-surface),
+    ),
+  ),
+);
 @each $selector in $button-shape-selectors {
-  $button-xs-shapes-round-toggle-selected-properties: map.set(
-    $button-xs-shapes-round-toggle-selected-properties,
+  $button-shapes-round-toggle-selected-properties: map.set(
+    $button-shapes-round-toggle-selected-properties,
     $selector,
     (
       transition: (
@@ -116,41 +104,95 @@ $button-xs-shapes-round-toggle-selected-properties: ();
     )
   );
 }
+
+// #region XS
+$button-xs-tokens: map.merge(
+  $button-common-tokens,
+  (
+    tonal-container-height: rem.rem(32),
+    tonal-horizontal-padding: rem.rem(12),
+    tonal-label-text-tracking: var(--mat-sys-label-large-tracking),
+    tonal-label-text-font: var(--mat-sys-label-large-font),
+    tonal-label-text-size: var(--mat-sys-label-large-size),
+    tonal-label-text-weight: var(--mat-sys-label-large-weight),
+    tonal-icon-offset: 0,
+    protected-container-height: rem.rem(32),
+    protected-horizontal-padding: rem.rem(12),
+    protected-label-text-tracking: var(--mat-sys-label-large-tracking),
+    protected-label-text-font: var(--mat-sys-label-large-font),
+    protected-label-text-size: var(--mat-sys-label-large-size),
+    protected-label-text-weight: var(--mat-sys-label-large-weight),
+    protected-icon-offset: 0,
+    filled-container-height: rem.rem(32),
+    filled-horizontal-padding: rem.rem(12),
+    filled-label-text-tracking: var(--mat-sys-label-large-tracking),
+    filled-label-text-font: var(--mat-sys-label-large-font),
+    filled-label-text-size: var(--mat-sys-label-large-size),
+    filled-label-text-weight: var(--mat-sys-label-large-weight),
+    filled-icon-offset: 0,
+    outlined-container-height: rem.rem(32),
+    outlined-horizontal-padding: rem.rem(12),
+    outlined-label-text-tracking: var(--mat-sys-label-large-tracking),
+    outlined-label-text-font: var(--mat-sys-label-large-font),
+    outlined-label-text-size: var(--mat-sys-label-large-size),
+    outlined-label-text-weight: var(--mat-sys-label-large-weight),
+    outlined-icon-offset: 0,
+    text-container-height: rem.rem(32),
+    text-horizontal-padding: rem.rem(12),
+    text-label-text-tracking: var(--mat-sys-label-large-tracking),
+    text-label-text-font: var(--mat-sys-label-large-font),
+    text-label-text-size: var(--mat-sys-label-large-size),
+    text-label-text-weight: var(--mat-sys-label-large-weight),
+  )
+);
+$button-xs-properties: (mdc-button-line-height(var(--mat-sys-label-large-line-height)));
+@each $selector in $button-icon-selectors {
+  $button-xs-properties: map.set($button-xs-properties, $selector, icon-size(16));
+}
 $button-xs-shapes: (
   square: (
-    tokens: (
-      tonal-container-shape: 12px,
-      protected-container-shape: 12px,
-      filled-container-shape: 12px,
-      outlined-container-shape: 12px,
-      text-container-shape: 12px,
-    ),
-    properties: $button-xs-shape-square-properties,
+    tokens: button-shape-tokens(12),
+    properties: $button-shape-square-properties,
     states: (
       pressed: (
-        tokens: (
-          tonal-container-shape: 8px,
-          protected-container-shape: 8px,
-          filled-container-shape: 8px,
-          outlined-container-shape: 8px,
-          text-container-shape: 8px,
-        ),
+        tokens: button-shape-tokens(8),
       ),
     ),
     toggles: (
       selected: (
-        tokens: (
-          protected-container-color: var(--mat-sys-primary),
-          protected-label-text-color: var(--mat-sys-on-primary),
-          tonal-container-shape: 9999px,
-          protected-container-shape: 9999px,
-          filled-container-shape: 9999px,
-          outlined-container-shape: 9999px,
-          text-container-shape: 9999px,
+        tokens: map.merge(
+            button-shape-tokens(9999),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: (
+          '.mdc-button.mdc-button--outlined': (
+            background-color: (
+              value: var(--mat-sys-inverse-surface),
+            ),
+          ),
+          '.mat-mdc-outlined-button[disabled]': (
+            background-color: (
+              value: var(--mat-sys-on-surface),
+            ),
+          ),
+          '.mat-mdc-outlined-button.mat-mdc-button-disabled': (
+            background-color: (
+              value: var(--mat-sys-on-surface),
+            ),
+          ),
         ),
         states: (
           pressed: (
-            properties: $button-xs-shapes-square-toggle-selected-pressed-properties,
+            properties: $button-shapes-square-toggle-selected-pressed-properties,
           ),
         ),
       ),
@@ -159,25 +201,23 @@ $button-xs-shapes: (
   round: (
     toggles: (
       selected: (
-        tokens: (
-          protected-container-color: var(--mat-sys-primary),
-          protected-label-text-color: var(--mat-sys-on-primary),
-          tonal-container-shape: 12px,
-          protected-container-shape: 12px,
-          filled-container-shape: 12px,
-          outlined-container-shape: 12px,
-          text-container-shape: 12px,
-        ),
-        properties: $button-xs-shapes-round-toggle-selected-properties,
+        tokens: map.merge(
+            button-shape-tokens(12),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: $button-shapes-round-toggle-selected-properties,
         states: (
           pressed: (
-            tokens: (
-              tonal-container-shape: 8px,
-              protected-container-shape: 8px,
-              filled-container-shape: 8px,
-              outlined-container-shape: 8px,
-              text-container-shape: 8px,
-            ),
+            tokens: button-shape-tokens(8),
           ),
         ),
       ),
@@ -206,318 +246,318 @@ $button-xs-states: (
 // #endregion
 
 // #region S
-$button-s-tokens: (
-  tonal-container-height: 40px,
-  tonal-horizontal-padding: 16px,
-  tonal-label-text-tracking: var(--mat-sys-label-large-tracking),
-  tonal-label-text-font: var(--mat-sys-label-large-font),
-  tonal-label-text-size: var(--mat-sys-label-large-size),
-  tonal-label-text-weight: var(--mat-sys-label-large-weight),
-  protected-container-height: 40px,
-  protected-horizontal-padding: 16px,
-  protected-label-text-tracking: var(--mat-sys-label-large-tracking),
-  protected-label-text-font: var(--mat-sys-label-large-font),
-  protected-label-text-size: var(--mat-sys-label-large-size),
-  protected-label-text-weight: var(--mat-sys-label-large-weight),
-  filled-container-height: 40px,
-  filled-horizontal-padding: 16px,
-  filled-label-text-tracking: var(--mat-sys-label-large-tracking),
-  filled-label-text-font: var(--mat-sys-label-large-font),
-  filled-label-text-size: var(--mat-sys-label-large-size),
-  filled-label-text-weight: var(--mat-sys-label-large-weight),
-  outlined-container-height: 40px,
-  outlined-horizontal-padding: 16px,
-  outlined-label-text-tracking: var(--mat-sys-label-large-tracking),
-  outlined-label-text-font: var(--mat-sys-label-large-font),
-  outlined-label-text-size: var(--mat-sys-label-large-size),
-  outlined-label-text-weight: var(--mat-sys-label-large-weight),
-  text-container-height: 40px,
-  text-horizontal-padding: 16px,
-  text-label-text-tracking: var(--mat-sys-label-large-tracking),
-  text-label-text-font: var(--mat-sys-label-large-font),
-  text-label-text-size: var(--mat-sys-label-large-size),
-  text-label-text-weight: var(--mat-sys-label-large-weight),
+$button-s-tokens: map.merge(
+  $button-common-tokens,
+  (
+    tonal-container-height: rem.rem(40),
+    tonal-horizontal-padding: rem.rem(16),
+    tonal-label-text-tracking: var(--mat-sys-label-large-tracking),
+    tonal-label-text-font: var(--mat-sys-label-large-font),
+    tonal-label-text-size: var(--mat-sys-label-large-size),
+    tonal-label-text-weight: var(--mat-sys-label-large-weight),
+    protected-container-height: rem.rem(40),
+    protected-horizontal-padding: rem.rem(16),
+    protected-label-text-tracking: var(--mat-sys-label-large-tracking),
+    protected-label-text-font: var(--mat-sys-label-large-font),
+    protected-label-text-size: var(--mat-sys-label-large-size),
+    protected-label-text-weight: var(--mat-sys-label-large-weight),
+    filled-container-height: rem.rem(40),
+    filled-horizontal-padding: rem.rem(16),
+    filled-label-text-tracking: var(--mat-sys-label-large-tracking),
+    filled-label-text-font: var(--mat-sys-label-large-font),
+    filled-label-text-size: var(--mat-sys-label-large-size),
+    filled-label-text-weight: var(--mat-sys-label-large-weight),
+    outlined-container-height: rem.rem(40),
+    outlined-horizontal-padding: rem.rem(16),
+    outlined-label-text-tracking: var(--mat-sys-label-large-tracking),
+    outlined-label-text-font: var(--mat-sys-label-large-font),
+    outlined-label-text-size: var(--mat-sys-label-large-size),
+    outlined-label-text-weight: var(--mat-sys-label-large-weight),
+    text-container-height: rem.rem(40),
+    text-horizontal-padding: rem.rem(16),
+    text-label-text-tracking: var(--mat-sys-label-large-tracking),
+    text-label-text-font: var(--mat-sys-label-large-font),
+    text-label-text-size: var(--mat-sys-label-large-size),
+    text-label-text-weight: var(--mat-sys-label-large-weight),
+  )
 );
-$button-s-properties: (
-  '.mdc-button': (
-    line-height: (
-      value: var(--mat-sys-label-large-line-height),
-    ),
-  ),
-);
-$button-s-shape-square-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-s-shape-square-properties: map.set(
-    $button-s-shape-square-properties,
-    $selector,
-    (
-      transition: (
-          value: constants.$button-transition,
-        ),
-    )
-  );
-}
+$button-s-properties: (mdc-button-line-height(var(--mat-sys-label-large-line-height)));
+
 $button-s-shapes: (
   square: (
-    tokens: (
-      tonal-container-shape: 12px,
-      protected-container-shape: 12px,
-      filled-container-shape: 12px,
-      outlined-container-shape: 12px,
-      text-container-shape: 12px,
-    ),
-    properties: $button-s-shape-square-properties,
+    tokens: button-shape-tokens(12),
+    properties: $button-shape-square-properties,
     states: (
       pressed: (
-        tokens: (
-          tonal-container-shape: 8px,
-          protected-container-shape: 8px,
-          filled-container-shape: 8px,
-          outlined-container-shape: 8px,
-          text-container-shape: 8px,
+        tokens: button-shape-tokens(8),
+      ),
+    ),
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(9999),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        states: (
+          pressed: (
+            properties: $button-shapes-square-toggle-selected-pressed-properties,
+          ),
+        ),
+      ),
+    ),
+  ),
+  round: (
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(12),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: $button-shapes-round-toggle-selected-properties,
+        states: (
+          pressed: (
+            tokens: button-shape-tokens(8),
+          ),
         ),
       ),
     ),
   ),
 );
-$button-s-state-pressed-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-s-state-pressed-properties: map.set(
-    $button-s-state-pressed-properties,
-    $selector,
-    (
-      animation: (
-          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
-        ),
-    )
-  );
-}
+
 $button-s-states: (
   pressed: (
-    properties: $button-s-state-pressed-properties,
+    properties: $button-xs-state-pressed-properties,
   ),
 );
 // #endregion
 
 // #region M
-$button-m-tokens: (
-  tonal-container-height: 56px,
-  tonal-horizontal-padding: 24px,
-  tonal-label-text-tracking: var(--mat-sys-title-medium-tracking),
-  tonal-label-text-font: var(--mat-sys-title-medium-font),
-  tonal-label-text-size: var(--mat-sys-title-medium-size),
-  tonal-label-text-weight: var(--mat-sys-title-medium-weight),
-  protected-container-height: 56px,
-  protected-horizontal-padding: 24px,
-  protected-label-text-tracking: var(--mat-sys-title-medium-tracking),
-  protected-label-text-font: var(--mat-sys-title-medium-font),
-  protected-label-text-size: var(--mat-sys-title-medium-size),
-  protected-label-text-weight: var(--mat-sys-title-medium-weight),
-  filled-container-height: 56px,
-  filled-horizontal-padding: 24px,
-  filled-label-text-tracking: var(--mat-sys-title-medium-tracking),
-  filled-label-text-font: var(--mat-sys-title-medium-font),
-  filled-label-text-size: var(--mat-sys-title-medium-size),
-  filled-label-text-weight: var(--mat-sys-title-medium-weight),
-  outlined-container-height: 56px,
-  outlined-horizontal-padding: 24px,
-  outlined-label-text-tracking: var(--mat-sys-title-medium-tracking),
-  outlined-label-text-font: var(--mat-sys-title-medium-font),
-  outlined-label-text-size: var(--mat-sys-title-medium-size),
-  outlined-label-text-weight: var(--mat-sys-title-medium-weight),
-  text-container-height: 56px,
-  text-horizontal-padding: 24px,
-  text-label-text-tracking: var(--mat-sys-title-medium-tracking),
-  text-label-text-font: var(--mat-sys-title-medium-font),
-  text-label-text-size: var(--mat-sys-title-medium-size),
-  text-label-text-weight: var(--mat-sys-title-medium-weight),
+$button-m-tokens: map.merge(
+  $button-common-tokens,
+  (
+    tonal-container-height: rem.rem(56),
+    tonal-horizontal-padding: rem.rem(24),
+    tonal-label-text-tracking: var(--mat-sys-title-medium-tracking),
+    tonal-label-text-font: var(--mat-sys-title-medium-font),
+    tonal-label-text-size: var(--mat-sys-title-medium-size),
+    tonal-label-text-weight: var(--mat-sys-title-medium-weight),
+    protected-container-height: rem.rem(56),
+    protected-horizontal-padding: rem.rem(24),
+    protected-label-text-tracking: var(--mat-sys-title-medium-tracking),
+    protected-label-text-font: var(--mat-sys-title-medium-font),
+    protected-label-text-size: var(--mat-sys-title-medium-size),
+    protected-label-text-weight: var(--mat-sys-title-medium-weight),
+    filled-container-height: rem.rem(56),
+    filled-horizontal-padding: rem.rem(24),
+    filled-label-text-tracking: var(--mat-sys-title-medium-tracking),
+    filled-label-text-font: var(--mat-sys-title-medium-font),
+    filled-label-text-size: var(--mat-sys-title-medium-size),
+    filled-label-text-weight: var(--mat-sys-title-medium-weight),
+    outlined-container-height: rem.rem(56),
+    outlined-horizontal-padding: rem.rem(24),
+    outlined-label-text-tracking: var(--mat-sys-title-medium-tracking),
+    outlined-label-text-font: var(--mat-sys-title-medium-font),
+    outlined-label-text-size: var(--mat-sys-title-medium-size),
+    outlined-label-text-weight: var(--mat-sys-title-medium-weight),
+    text-container-height: rem.rem(56),
+    text-horizontal-padding: rem.rem(24),
+    text-label-text-tracking: var(--mat-sys-title-medium-tracking),
+    text-label-text-font: var(--mat-sys-title-medium-font),
+    text-label-text-size: var(--mat-sys-title-medium-size),
+    text-label-text-weight: var(--mat-sys-title-medium-weight),
+  )
 );
-$button-m-properties: (
-  '.mdc-button': (
-    line-height: (
-      value: var(--mat-sys-title-medium-line-height),
-    ),
-  ),
-);
+$button-m-properties: (mdc-button-line-height(var(--mat-sys-title-medium-line-height)));
 @each $selector in $button-icon-selectors {
-  $button-m-properties: map.set(
-    $button-m-properties,
-    $selector,
-    (
-      font-size: (
-          value: rem.rem(24),
-        ),
-      height: (
-          value: rem.rem(24),
-        ),
-      width: (
-          value: rem.rem(24),
-        ),
-    )
-  );
+  $button-m-properties: map.set($button-m-properties, $selector, icon-size(24));
 }
-$button-m-shape-square-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-m-shape-square-properties: map.set(
-    $button-m-shape-square-properties,
-    $selector,
-    (
-      transition: (
-          value: constants.$button-transition,
-        ),
-    )
-  );
-}
+
 $button-m-shapes: (
   square: (
-    tokens: (
-      tonal-container-shape: 16px,
-      protected-container-shape: 16px,
-      filled-container-shape: 16px,
-      outlined-container-shape: 16px,
-      text-container-shape: 16px,
-    ),
-    properties: $button-m-shape-square-properties,
+    tokens: button-shape-tokens(16),
+    properties: $button-shape-square-properties,
     states: (
       pressed: (
-        tokens: (
-          tonal-container-shape: 12px,
-          protected-container-shape: 12px,
-          filled-container-shape: 12px,
-          outlined-container-shape: 12px,
-          text-container-shape: 12px,
+        tokens: button-shape-tokens(12),
+      ),
+    ),
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(9999),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        states: (
+          pressed: (
+            properties: $button-shapes-square-toggle-selected-pressed-properties,
+          ),
+        ),
+      ),
+    ),
+  ),
+  round: (
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(16),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: $button-shapes-round-toggle-selected-properties,
+        states: (
+          pressed: (
+            tokens: button-shape-tokens(12),
+          ),
         ),
       ),
     ),
   ),
 );
-$button-m-state-pressed-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-m-state-pressed-properties: map.set(
-    $button-m-state-pressed-properties,
-    $selector,
-    (
-      animation: (
-          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
-        ),
-    )
-  );
-}
 $button-m-states: (
   pressed: (
-    properties: $button-m-state-pressed-properties,
+    properties: $button-xs-state-pressed-properties,
   ),
 );
 // #endregion
 
 // #region L
-$button-l-tokens: (
-  tonal-container-height: rem.rem(96),
-  tonal-horizontal-padding: rem.rem(48),
-  tonal-label-text-tracking: var(--mat-sys-headline-small-tracking),
-  tonal-label-text-font: var(--mat-sys-headline-small-font),
-  tonal-label-text-size: var(--mat-sys-headline-small-size),
-  tonal-label-text-weight: var(--mat-sys-headline-small-weight),
-  protected-container-height: rem.rem(96),
-  protected-horizontal-padding: rem.rem(48),
-  protected-label-text-tracking: var(--mat-sys-headline-small-tracking),
-  protected-label-text-font: var(--mat-sys-headline-small-font),
-  protected-label-text-size: var(--mat-sys-headline-small-size),
-  protected-label-text-weight: var(--mat-sys-headline-small-weight),
-  filled-container-height: rem.rem(96),
-  filled-horizontal-padding: rem.rem(48),
-  filled-label-text-tracking: var(--mat-sys-headline-small-tracking),
-  filled-label-text-font: var(--mat-sys-headline-small-font),
-  filled-label-text-size: var(--mat-sys-headline-small-size),
-  filled-label-text-weight: var(--mat-sys-headline-small-weight),
-  outlined-container-height: rem.rem(96),
-  outlined-horizontal-padding: rem.rem(48),
-  outlined-label-text-tracking: var(--mat-sys-headline-small-tracking),
-  outlined-label-text-font: var(--mat-sys-headline-small-font),
-  outlined-label-text-size: var(--mat-sys-headline-small-size),
-  outlined-label-text-weight: var(--mat-sys-headline-small-weight),
-  outlined-outline-width: rem.rem(2),
-  text-container-height: rem.rem(96),
-  text-horizontal-padding: rem.rem(48),
-  text-label-text-tracking: var(--mat-sys-headline-small-tracking),
-  text-label-text-font: var(--mat-sys-headline-small-font),
-  text-label-text-size: var(--mat-sys-headline-small-size),
-  text-label-text-weight: var(--mat-sys-headline-small-weight),
+$button-l-tokens: map.merge(
+  $button-common-tokens,
+  (
+    tonal-container-height: rem.rem(96),
+    tonal-horizontal-padding: rem.rem(48),
+    tonal-label-text-tracking: var(--mat-sys-headline-small-tracking),
+    tonal-label-text-font: var(--mat-sys-headline-small-font),
+    tonal-label-text-size: var(--mat-sys-headline-small-size),
+    tonal-label-text-weight: var(--mat-sys-headline-small-weight),
+    protected-container-height: rem.rem(96),
+    protected-horizontal-padding: rem.rem(48),
+    protected-label-text-tracking: var(--mat-sys-headline-small-tracking),
+    protected-label-text-font: var(--mat-sys-headline-small-font),
+    protected-label-text-size: var(--mat-sys-headline-small-size),
+    protected-label-text-weight: var(--mat-sys-headline-small-weight),
+    filled-container-height: rem.rem(96),
+    filled-horizontal-padding: rem.rem(48),
+    filled-label-text-tracking: var(--mat-sys-headline-small-tracking),
+    filled-label-text-font: var(--mat-sys-headline-small-font),
+    filled-label-text-size: var(--mat-sys-headline-small-size),
+    filled-label-text-weight: var(--mat-sys-headline-small-weight),
+    outlined-container-height: rem.rem(96),
+    outlined-horizontal-padding: rem.rem(48),
+    outlined-label-text-tracking: var(--mat-sys-headline-small-tracking),
+    outlined-label-text-font: var(--mat-sys-headline-small-font),
+    outlined-label-text-size: var(--mat-sys-headline-small-size),
+    outlined-label-text-weight: var(--mat-sys-headline-small-weight),
+    outlined-outline-width: rem.rem(2),
+    text-container-height: rem.rem(96),
+    text-horizontal-padding: rem.rem(48),
+    text-label-text-tracking: var(--mat-sys-headline-small-tracking),
+    text-label-text-font: var(--mat-sys-headline-small-font),
+    text-label-text-size: var(--mat-sys-headline-small-size),
+    text-label-text-weight: var(--mat-sys-headline-small-weight),
+  )
 );
-$button-l-properties: (
-  '.mdc-button': (
-    line-height: (
-      value: var(--mat-sys-headline-small-line-height),
-    ),
-  ),
-);
+$button-l-properties: (mdc-button-line-height(var(--mat-sys-headline-small-line-height)));
 @each $selector in $button-icon-selectors {
-  $button-l-properties: map.set(
-    $button-l-properties,
-    $selector,
-    (
-      font-size: (
-          value: rem.rem(32),
-        ),
-      height: (
-          value: rem.rem(32),
-        ),
-      width: (
-          value: rem.rem(32),
-        ),
-    )
-  );
+  $button-l-properties: map.set($button-l-properties, $selector, icon-size(32));
 }
-$button-l-shape-square-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-l-shape-square-properties: map.set(
-    $button-l-shape-square-properties,
-    $selector,
-    (
-      transition: (
-          value: constants.$button-transition,
-        ),
-    )
-  );
-}
+
 $button-l-shapes: (
   square: (
-    tokens: (
-      tonal-container-shape: rem.rem(28),
-      protected-container-shape: rem.rem(28),
-      filled-container-shape: rem.rem(28),
-      outlined-container-shape: rem.rem(28),
-      text-container-shape: rem.rem(28),
-    ),
-    properties: $button-l-shape-square-properties,
+    tokens: button-shape-tokens(28),
+    properties: $button-shape-square-properties,
     states: (
       pressed: (
-        tokens: (
-          tonal-container-shape: rem.rem(16),
-          protected-container-shape: rem.rem(16),
-          filled-container-shape: rem.rem(16),
-          outlined-container-shape: rem.rem(16),
-          text-container-shape: rem.rem(16),
+        tokens: button-shape-tokens(16),
+      ),
+    ),
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(9999),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        states: (
+          pressed: (
+            properties: $button-shapes-square-toggle-selected-pressed-properties,
+          ),
+        ),
+      ),
+    ),
+  ),
+  round: (
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(28),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: $button-shapes-round-toggle-selected-properties,
+        states: (
+          pressed: (
+            tokens: button-shape-tokens(16),
+          ),
         ),
       ),
     ),
   ),
 );
-$button-l-state-pressed-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-l-state-pressed-properties: map.set(
-    $button-l-state-pressed-properties,
-    $selector,
-    (
-      animation: (
-          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
-        ),
-    )
-  );
-}
 $button-l-states: (
   pressed: (
-    properties: $button-l-state-pressed-properties,
+    properties: $button-xs-state-pressed-properties,
   ),
 );
 // #endregion
@@ -556,80 +596,72 @@ $button-xl-tokens: (
   text-label-text-size: var(--mat-sys-headline-large-size),
   text-label-text-weight: var(--mat-sys-headline-large-weight),
 );
-$button-xl-properties: (
-  '.mdc-button': (
-    line-height: (
-      value: var(--mat-sys-headline-large-line-height),
-    ),
-  ),
-);
+$button-xl-properties: (mdc-button-line-height(var(--mat-sys-headline-large-line-height)));
 @each $selector in $button-icon-selectors {
-  $button-xl-properties: map.set(
-    $button-xl-properties,
-    $selector,
-    (
-      font-size: (
-          value: rem.rem(40),
-        ),
-      height: (
-          value: rem.rem(40),
-        ),
-      width: (
-          value: rem.rem(40),
-        ),
-    )
-  );
+  $button-xl-properties: map.set($button-xl-properties, $selector, icon-size(40));
 }
-$button-xl-shape-square-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-xl-shape-square-properties: map.set(
-    $button-xl-shape-square-properties,
-    $selector,
-    (
-      transition: (
-          value: constants.$button-transition,
-        ),
-    )
-  );
-}
+
 $button-xl-shapes: (
   square: (
-    tokens: (
-      tonal-container-shape: rem.rem(28),
-      protected-container-shape: rem.rem(28),
-      filled-container-shape: rem.rem(28),
-      outlined-container-shape: rem.rem(28),
-      text-container-shape: rem.rem(28),
-    ),
-    properties: $button-xl-shape-square-properties,
+    tokens: button-shape-tokens(28),
+    properties: $button-shape-square-properties,
     states: (
       pressed: (
-        tokens: (
-          tonal-container-shape: rem.rem(16),
-          protected-container-shape: rem.rem(16),
-          filled-container-shape: rem.rem(16),
-          outlined-container-shape: rem.rem(16),
-          text-container-shape: rem.rem(16),
+        tokens: button-shape-tokens(16),
+      ),
+    ),
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(9999),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        states: (
+          pressed: (
+            properties: $button-shapes-square-toggle-selected-pressed-properties,
+          ),
+        ),
+      ),
+    ),
+  ),
+  round: (
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            button-shape-tokens(28),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: $button-shapes-round-toggle-selected-properties,
+        states: (
+          pressed: (
+            tokens: button-shape-tokens(16),
+          ),
         ),
       ),
     ),
   ),
 );
-$button-xl-state-pressed-properties: ();
-@each $selector in $button-shape-selectors {
-  $button-xl-state-pressed-properties: map.set(
-    $button-xl-state-pressed-properties,
-    $selector,
-    (
-      animation: (
-          value: buttonRoundedBorderRadius 200ms cubic-bezier(0.2, 0, 0, 1) forwards,
-        ),
-    )
-  );
-}
 $button-xl-states: (
   pressed: (
-    properties: $button-xl-state-pressed-properties,
+    properties: $button-xs-state-pressed-properties,
   ),
 );
 // #endregion

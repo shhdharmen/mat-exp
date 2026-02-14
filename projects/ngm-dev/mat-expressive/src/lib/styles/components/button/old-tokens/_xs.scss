@@ -48,53 +48,85 @@ $properties: (functions.mdc-button-line-height(var(--mat-sys-label-large-line-he
 @each $selector in common-selectors.$button-icon-selectors {
   $properties: map.set($properties, $selector, functions.icon-size(16));
 }
-$state-pressed-properties: common-tokens.$button-state-pressed-properties;
-
-$shape-square-tokens: functions.button-shape-tokens(12);
-$shape-square-properties: common-tokens.$button-shape-square-properties;
-
-$shape-square-toggle-selected-tokens: map.merge(
-  functions.button-shape-tokens(9999),
-  (
-    filled-container-color: var(--mat-sys-primary),
-    filled-label-text-color: var(--mat-sys-on-primary),
-    outlined-label-text-color: var(--mat-sys-inverse-on-surface),
-    outlined-disabled-label-text-color: color-mix(in srgb, var(--mat-sys-surface) 38%, transparent),
-  )
-);
-$shape-square-toggle-selected-properties: (
-  '.mdc-button.mdc-button--outlined': (
-    background-color: (
-      value: var(--mat-sys-inverse-surface),
+$shapes: (
+  square: (
+    tokens: functions.button-shape-tokens(12),
+    properties: common-tokens.$button-shape-square-properties,
+    states: (
+      pressed: (
+        tokens: functions.button-shape-tokens(8),
+      ),
+    ),
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            functions.button-shape-tokens(9999),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: (
+          '.mdc-button.mdc-button--outlined': (
+            background-color: (
+              value: var(--mat-sys-inverse-surface),
+            ),
+          ),
+          '.mat-mdc-outlined-button[disabled]': (
+            background-color: (
+              value: var(--mat-sys-on-surface),
+            ),
+          ),
+          '.mat-mdc-outlined-button.mat-mdc-button-disabled': (
+            background-color: (
+              value: var(--mat-sys-on-surface),
+            ),
+          ),
+        ),
+        states: (
+          pressed: (
+            properties: common-tokens.$button-shapes-square-toggle-selected-pressed-properties,
+          ),
+        ),
+      ),
     ),
   ),
-  '.mat-mdc-outlined-button[disabled]': (
-    background-color: (
-      value: var(--mat-sys-on-surface),
+  round: (
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            functions.button-shape-tokens(12),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: common-tokens.$button-shapes-round-toggle-selected-properties,
+        states: (
+          pressed: (
+            tokens: functions.button-shape-tokens(8),
+          ),
+        ),
+      ),
     ),
   ),
-  '.mat-mdc-outlined-button.mat-mdc-button-disabled': (
-    background-color: (
-      value: var(--mat-sys-on-surface),
-    ),
+);
+
+$states: (
+  pressed: (
+    properties: common-tokens.$button-state-pressed-properties,
   ),
 );
-
-$shape-square-toggle-unselected-tokens: (
-  filled-container-color: var(--mat-sys-surface-container),
-  filled-label-text-color: var(--mat-sys-on-surface-variant),
-);
-
-$shape-round-toggle-selected-tokens: map.merge(
-  functions.button-shape-tokens(12),
-  (
-    filled-container-color: var(--mat-sys-primary),
-    filled-label-text-color: var(--mat-sys-on-primary),
-    outlined-label-text-color: var(--mat-sys-inverse-on-surface),
-    outlined-disabled-label-text-color: color-mix(in srgb, var(--mat-sys-surface) 38%, transparent),
-  )
-);
-$shape-round-toggle-selected-properties: common-tokens.$button-shapes-round-toggle-selected-properties;
-
-$shape-round-toggle-unselected-tokens: $shape-square-toggle-unselected-tokens;
 // #endregion

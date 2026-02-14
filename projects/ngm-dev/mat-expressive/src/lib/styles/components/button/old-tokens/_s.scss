@@ -41,4 +41,69 @@ $tokens: map.merge(
   )
 );
 $properties: (functions.mdc-button-line-height(var(--mat-sys-label-large-line-height)));
+
+$shapes: (
+  square: (
+    tokens: functions.button-shape-tokens(12),
+    properties: common-tokens.$button-shape-square-properties,
+    states: (
+      pressed: (
+        tokens: functions.button-shape-tokens(8),
+      ),
+    ),
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            functions.button-shape-tokens(9999),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        states: (
+          pressed: (
+            properties: common-tokens.$button-shapes-square-toggle-selected-pressed-properties,
+          ),
+        ),
+      ),
+    ),
+  ),
+  round: (
+    toggles: (
+      selected: (
+        tokens: map.merge(
+            functions.button-shape-tokens(12),
+            (
+              protected-container-color: var(--mat-sys-primary),
+              protected-label-text-color: var(--mat-sys-on-primary),
+              outlined-label-text-color: var(--mat-sys-inverse-on-surface),
+              outlined-disabled-label-text-color: color-mix(
+                  in srgb,
+                  var(--mat-sys-surface) 38%,
+                  transparent
+                ),
+            )
+          ),
+        properties: common-tokens.$button-shapes-round-toggle-selected-properties,
+        states: (
+          pressed: (
+            tokens: functions.button-shape-tokens(8),
+          ),
+        ),
+      ),
+    ),
+  ),
+);
+
+$states: (
+  pressed: (
+    properties: common-tokens.$button-state-pressed-properties,
+  ),
+);
 // #endregion

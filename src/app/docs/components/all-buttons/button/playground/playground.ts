@@ -18,7 +18,7 @@ import {
 export class DocsButtonPlayground {
   readonly size = input<MatExpressiveButtonSize>('s');
   readonly shape = input<MatExpressiveButtonShape>('round');
-  readonly toggle = input<MatExpressiveButtonToggle>('unselected');
+  readonly toggle = input<MatExpressiveButtonToggle | undefined>(undefined);
   readonly appearance = input<MatButtonAppearance>('text');
   readonly iconPosition = input<'start' | 'end'>('start');
 }

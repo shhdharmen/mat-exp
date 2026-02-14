@@ -1,0 +1,38 @@
+@use './old-tokens' as tokens;
+
+$button-config: (
+  tokens: tokens.$s-tokens,
+  properties: tokens.$s-properties,
+  shapes: tokens.$s-shapes,
+  states: tokens.$s-states,
+  xs: (
+    tokens: tokens.$xs-tokens,
+    properties: tokens.$xs-properties,
+    shapes: tokens.$xs-shapes,
+    states: tokens.$xs-states,
+  ),
+  s: (
+    tokens: tokens.$s-tokens,
+    properties: tokens.$s-properties,
+    shapes: tokens.$s-shapes,
+    states: tokens.$s-states,
+  ),
+  m: (
+    tokens: tokens.$m-tokens,
+    properties: tokens.$m-properties,
+    shapes: tokens.$m-shapes,
+    states: tokens.$m-states,
+  ),
+  l: (
+    tokens: tokens.$l-tokens,
+    properties: tokens.$l-properties,
+    shapes: tokens.$l-shapes,
+    states: tokens.$l-states,
+  ),
+  xl: (
+    tokens: tokens.$xl-tokens,
+    properties: tokens.$xl-properties,
+    shapes: tokens.$xl-shapes,
+    states: tokens.$xl-states,
+  ),
+);

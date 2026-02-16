@@ -18,7 +18,7 @@ html {
 
 ## Options
 
-### `skip-html-element-styles`
+### skip-html-element-styles
 
 Type: `boolean`
 
@@ -46,3 +46,29 @@ If you set `skip-html-element-styles` to `true`, the mixin will not apply styles
 
 - Icon sizes
 - Shape morphing
+
+### mat-expressive-button-class
+
+Type: `string`
+
+Default: `.mat-expressive-button`
+
+The class to be applied to the button.
+
+**Usage example:**
+
+```scss
+@use '@ngm-dev/mat-expressive' as mat-expressive;
+
+html {
+  @include mat-expressive.mat-expressive-button-styles(
+    (
+      mat-expressive-button-class: '.my-custom-button',
+    )
+  );
+}
+```
+
+#### Effects
+
+If you set `mat-expressive-button-class` to `.my-custom-button`, the mixin will apply styles to the button with the class `.my-custom-button`.

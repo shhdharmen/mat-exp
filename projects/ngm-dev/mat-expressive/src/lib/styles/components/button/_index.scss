@@ -3,7 +3,7 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-$_mat-expressive-button-class: '.mat-expressive-button';
+$_mat-expressive-button-class: 'mat-expressive-button';
 
 @mixin mat-expressive-button-styles(
   $options: (
@@ -12,7 +12,7 @@ $_mat-expressive-button-class: '.mat-expressive-button';
   )
 ) {
   $skip-html-element-styles: map.get($options, skip-html-element-styles);
-  $mat-expressive-button-class: map.get($options, mat-expressive-button-class);
+  $mat-expressive-button-class: '.' + map.get($options, mat-expressive-button-class);
 
   // Validate the entire configuration
   $validation-result: utils.validate-button-config(config.$button-config, 'button-config');

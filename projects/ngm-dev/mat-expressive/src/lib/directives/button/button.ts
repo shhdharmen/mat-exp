@@ -6,7 +6,6 @@ import {
   input,
   ViewEncapsulation,
 } from '@angular/core';
-import { matExpressiveAppearanceOptionsProvider } from '../../common/appearance.options';
 import { MAT_EXPRESSIVE_BUTTON_OPTIONS } from './button.options';
 import { matExpressiveWithStyles } from '../../utils/misc/with-styles';
 
@@ -22,7 +21,6 @@ import { matExpressiveWithStyles } from '../../utils/misc/with-styles';
  */
 @Directive({
   selector: '[matExpressiveButton]',
-  providers: [matExpressiveAppearanceOptionsProvider(MAT_EXPRESSIVE_BUTTON_OPTIONS)],
   host: {
     '[attr.data-size]': 'size()',
     '[attr.data-shape]': 'shape()',

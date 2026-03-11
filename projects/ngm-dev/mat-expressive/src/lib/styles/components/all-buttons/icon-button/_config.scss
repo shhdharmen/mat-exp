@@ -122,4 +122,65 @@ $icon-button-config: (
     tokens: tokens.$xs-appearance-filled-toggle-unselected-focused-tokens,
   ),
   // #endregion
+  // #region: XS - tonal
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    tokens: tokens.$xs-appearance-tonal-tokens,
+    properties: tokens.$xs-appearance-tonal-properties,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-tonal-toggle-selected-tokens,
+    properties: tokens.$xs-appearance-tonal-toggle-selected-properties,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    state: 'disabled',
+    tokens: tokens.$xs-appearance-tonal-disabled-tokens,
+    properties: tokens.$xs-appearance-tonal-disabled-properties,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    state: 'hovered',
+    tokens: tokens.$xs-appearance-tonal-hovered-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    state: 'hovered',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-tonal-toggle-selected-hovered-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    state: 'active',
+    tokens: tokens.$xs-appearance-tonal-active-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    state: 'active',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-tonal-toggle-selected-active-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    state: 'focused',
+    tokens: tokens.$xs-appearance-tonal-focused-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'tonal',
+    state: 'focused',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-tonal-toggle-selected-focused-tokens,
+  ),
+  // #endregion
 );

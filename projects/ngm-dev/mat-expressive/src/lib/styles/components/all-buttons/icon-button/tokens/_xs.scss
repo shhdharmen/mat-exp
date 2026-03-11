@@ -57,6 +57,18 @@ $appearance-filled-properties: ();
   );
 }
 
+$appearance-filled-toggle-unselected-tokens: (
+  icon-color: var(--mat-sys-on-surface-variant),
+);
+$appearance-filled-toggle-unselected-properties: ();
+@each $selector in common-selectors.$icon-button-appearance-selectors {
+  $appearance-filled-toggle-unselected-properties: map.set($appearance-filled-toggle-unselected-properties, $selector, (
+    background-color: (
+      value: var(--mat-sys-surface-container),
+    ),
+  ));
+}
+
 $appearance-filled-disabled-tokens: (
   icon-color: color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent),
 );
@@ -71,18 +83,6 @@ $appearance-filled-disabled-properties: ();
         ),
     )
   );
-}
-
-$appearance-filled-toggle-unselected-tokens: (
-  icon-color: var(--mat-sys-on-surface-variant),
-);
-$appearance-filled-toggle-unselected-properties: ();
-@each $selector in common-selectors.$icon-button-appearance-selectors {
-  $appearance-filled-toggle-unselected-properties: map.set($appearance-filled-toggle-unselected-properties, $selector, (
-    background-color: (
-      value: var(--mat-sys-surface-container),
-    ),
-  ));
 }
 
 $appearance-filled-hovered-tokens: (
@@ -100,5 +100,54 @@ $appearance-filled-toggle-unselected-active-tokens: $appearance-filled-toggle-un
 $appearance-filled-focused-tokens: $appearance-filled-hovered-tokens;
 
 $appearance-filled-toggle-unselected-focused-tokens: $appearance-filled-toggle-unselected-hovered-tokens;
+
+// #endregion
+// #region: XS - tonal
+$appearance-tonal-tokens: (
+  icon-color: var(--mat-sys-on-secondary-container),
+);
+$appearance-tonal-properties: ();
+@each $selector in common-selectors.$icon-button-appearance-selectors {
+  $appearance-tonal-properties: map.set(
+    $appearance-tonal-properties,
+    $selector,
+    (
+      background-color: (
+          value: var(--mat-sys-secondary-container),
+        ),
+    )
+  );
+}
+
+$appearance-tonal-toggle-selected-tokens: (
+  icon-color: var(--mat-sys-on-secondary),
+);
+$appearance-tonal-toggle-selected-properties: ();
+@each $selector in common-selectors.$icon-button-appearance-selectors {
+  $appearance-tonal-toggle-selected-properties: map.set($appearance-tonal-toggle-selected-properties, $selector, (
+    background-color: (
+      value: var(--mat-sys-secondary),
+    ),
+  ));
+}
+
+$appearance-tonal-disabled-tokens: $appearance-filled-disabled-tokens;
+$appearance-tonal-disabled-properties: $appearance-filled-disabled-properties;
+
+$appearance-tonal-hovered-tokens: (
+  state-layer-color: var(--mat-sys-on-secondary-container),
+);
+
+$appearance-tonal-toggle-selected-hovered-tokens: (
+  state-layer-color: var(--mat-sys-on-surface-variant),
+);
+
+$appearance-tonal-active-tokens: $appearance-tonal-hovered-tokens;
+
+$appearance-tonal-toggle-selected-active-tokens: $appearance-tonal-toggle-selected-hovered-tokens;
+
+$appearance-tonal-focused-tokens: $appearance-tonal-hovered-tokens;
+
+$appearance-tonal-toggle-selected-focused-tokens: $appearance-tonal-toggle-selected-hovered-tokens;
 
 // #endregion

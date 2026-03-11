@@ -1,3 +1,1 @@
-import { type MatButtonAppearance } from '@angular/material/button';
-
-export type MatExpressiveIconButtonAppearance = Omit<MatButtonAppearance, 'elevated'>;
+export type MatExpressiveIconButtonAppearance = "text" | "filled" | "outlined" | "tonal";

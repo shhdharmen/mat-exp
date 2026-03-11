@@ -16,7 +16,6 @@ $icon-button-config: (
     state: 'pressed',
     tokens: tokens.$xs-state-pressed-tokens,
   ),
-  // unselected not needed
   (
     size: 'xs',
     toggle: 'selected',
@@ -181,6 +180,67 @@ $icon-button-config: (
     state: 'focused',
     toggle: 'selected',
     tokens: tokens.$xs-appearance-tonal-toggle-selected-focused-tokens,
+  ),
+  // #endregion
+  // #region: XS - outlined
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    tokens: tokens.$xs-appearance-outlined-tokens,
+    properties: tokens.$xs-appearance-outlined-properties,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-outlined-toggle-selected-tokens,
+    properties: tokens.$xs-appearance-outlined-toggle-selected-properties,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    state: 'disabled',
+    tokens: tokens.$xs-appearance-outlined-disabled-tokens,
+    properties: tokens.$xs-appearance-outlined-disabled-properties,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    state: 'hovered',
+    tokens: tokens.$xs-appearance-outlined-hovered-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    state: 'hovered',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-outlined-toggle-selected-hovered-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    state: 'active',
+    tokens: tokens.$xs-appearance-outlined-active-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    state: 'active',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-outlined-toggle-selected-active-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    state: 'focused',
+    tokens: tokens.$xs-appearance-outlined-focused-tokens,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    state: 'focused',
+    toggle: 'selected',
+    tokens: tokens.$xs-appearance-outlined-toggle-selected-focused-tokens,
   ),
   // #endregion
 );

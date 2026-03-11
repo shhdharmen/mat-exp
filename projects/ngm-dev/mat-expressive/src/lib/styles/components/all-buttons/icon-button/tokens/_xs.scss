@@ -151,3 +151,52 @@ $appearance-tonal-focused-tokens: $appearance-tonal-hovered-tokens;
 $appearance-tonal-toggle-selected-focused-tokens: $appearance-tonal-toggle-selected-hovered-tokens;
 
 // #endregion
+// #region: XS - outlined
+$appearance-outlined-tokens: (
+  icon-color: var(--mat-sys-on-surface-variant),
+);
+$appearance-outlined-properties: ();
+@each $selector in common-selectors.$icon-button-appearance-selectors {
+  $appearance-outlined-properties: map.set(
+    $appearance-outlined-properties,
+    $selector,
+    (
+      outline: (
+          value: 1px solid var(--mat-sys-outline-variant),
+        )
+    )
+  );
+}
+
+$appearance-outlined-toggle-selected-tokens: (
+  icon-color: var(--mat-sys-inverse-on-surface),
+);
+$appearance-outlined-toggle-selected-properties: ();
+@each $selector in common-selectors.$icon-button-appearance-selectors {
+  $appearance-outlined-toggle-selected-properties: map.set($appearance-outlined-toggle-selected-properties, $selector, (
+    background-color: (
+      value: var(--mat-sys-inverse-surface),
+    ),
+  ));
+}
+
+$appearance-outlined-disabled-tokens: $appearance-filled-disabled-tokens;
+$appearance-outlined-disabled-properties: $appearance-filled-disabled-properties;
+
+$appearance-outlined-hovered-tokens: (
+  state-layer-color: var(--mat-sys-on-surface-variant),
+);
+
+$appearance-outlined-toggle-selected-hovered-tokens: (
+  state-layer-color: var(--mat-sys-inverse-on-surface),
+);
+
+$appearance-outlined-active-tokens: $appearance-outlined-hovered-tokens;
+
+$appearance-outlined-toggle-selected-active-tokens: $appearance-outlined-toggle-selected-hovered-tokens;
+
+$appearance-outlined-focused-tokens: $appearance-outlined-hovered-tokens;
+
+$appearance-outlined-toggle-selected-focused-tokens: $appearance-outlined-toggle-selected-hovered-tokens;
+
+// #endregion

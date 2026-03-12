@@ -4,8 +4,14 @@
 @use '../../utils/functions' as button-functions;
 @use './common' as common-tokens;
 
-// #region S
-$tokens: button-functions.icon-button-shape-tokens(20);
+// #region M
+$tokens: map.merge(
+  (
+    state-layer-size: functions.rem(56),
+    touch-target-size: functions.rem(64),
+  ),
+  button-functions.icon-button-shape-tokens(28)
+);
 $properties: common-tokens.$icon-button-common-properties;
 
 $width-narrow-properties: ();
@@ -15,13 +21,13 @@ $width-narrow-properties: ();
     $selector,
     (
       padding-left: (
-          value: functions.rem(4),
+          value: functions.rem(12),
         ),
       padding-right: (
-          value: functions.rem(4),
+          value: functions.rem(12),
         ),
       width: (
-          value: functions.rem(32),
+          value: functions.rem(48),
         ),
     )
   );
@@ -34,18 +40,34 @@ $width-wide-properties: ();
     $selector,
     (
       padding-left: (
-          value: functions.rem(14),
+          value: functions.rem(24),
         ),
       padding-right: (
-          value: functions.rem(14),
+          value: functions.rem(24),
         ),
       width: (
-          value: functions.rem(52),
+          value: functions.rem(72),
         ),
     )
   );
 }
 
+$state-pressed-tokens: button-functions.icon-button-shape-tokens(12);
+
+$shape-square-tokens: button-functions.icon-button-shape-tokens(16);
+
+$shape-square-state-pressed-tokens: button-functions.icon-button-shape-tokens(12);
+
+$shape-square-toggle-selected-tokens: button-functions.icon-button-shape-tokens(
+  28
+); // state-layer-size / 2
+
+$shape-square-toggle-selected-state-pressed-tokens: button-functions.icon-button-shape-tokens(12);
+
+$shape-round-toggle-selected-tokens: button-functions.icon-button-shape-tokens(12);
+$shape-round-toggle-selected-properties: common-tokens.$icon-button-shapes-round-toggle-selected-properties;
+
+$shape-round-toggle-selected-state-pressed-tokens: button-functions.icon-button-shape-tokens(12);
 // #endregion
 // #region: XS - outlined
 $appearance-outlined-properties: ();
@@ -58,7 +80,7 @@ $appearance-outlined-properties: ();
           value: 1px solid var(--mat-sys-outline-variant),
         ),
       padding: (
-          value: functions.rem(7.5),
+          value: functions.rem(15.5),
         ),
     )
   );
@@ -71,10 +93,10 @@ $appearance-outlined-width-narrow-properties: ();
     $selector,
     (
       padding-left: (
-          value: functions.rem(3.5),
+          value: functions.rem(11.5),
         ),
       padding-right: (
-          value: functions.rem(3.5),
+          value: functions.rem(11.5),
         ),
     )
   );
@@ -87,10 +109,10 @@ $appearance-outlined-width-wide-properties: ();
     $selector,
     (
       padding-left: (
-          value: functions.rem(13.5),
+          value: functions.rem(23.5),
         ),
       padding-right: (
-          value: functions.rem(13.5),
+          value: functions.rem(23.5),
         ),
     )
   );

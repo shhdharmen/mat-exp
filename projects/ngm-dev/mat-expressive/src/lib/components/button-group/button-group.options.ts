@@ -4,10 +4,16 @@ import {
   MatExpressiveButtonGroupShape,
   MatExpressiveButtonGroupVariant,
   type MatExpressiveButtonGroupSize,
+  type MatExpressiveButtonGroupAppearance,
 } from '../../types';
 
 // export interface MatExpressiveButtonOptions extends MatExpressinveAppearanceOptions {
 export interface MatExpressiveButtonGroupOptions {
+  /**
+   * The appearance of the buttons.
+   *
+   */
+  readonly appearance?: MatExpressiveButtonGroupAppearance;
   /**
    * The size of the button.
    *
@@ -16,7 +22,7 @@ export interface MatExpressiveButtonGroupOptions {
    */
   readonly size?: MatExpressiveButtonGroupSize;
   /**
-   * The shape of the button.
+   * The shape of the buttons.
    *
    * Default: `round`
    *
@@ -28,6 +34,9 @@ export interface MatExpressiveButtonGroupOptions {
   readonly selection?: MatExpressiveButtonGroupSelection;
   /**
    * The variant of the button group.
+   * 
+   * Default: `standard`
+   * 
    */
   readonly variant?: MatExpressiveButtonGroupVariant;
   /**

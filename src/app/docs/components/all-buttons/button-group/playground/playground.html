@@ -1,13 +1,18 @@
-<mat-expressive-button-group [size]="size()" [variant]="variant()" [shape]="shape()">
-  <button matIconButton matExpressiveIconButton appearance="tonal">
+<mat-expressive-button-group
+  [size]="size()"
+  [variant]="variant()"
+  [shape]="shape()"
+  [appearance]="appearance()"
+>
+  <button matIconButton matExpressiveIconButton>
     <mat-icon>delete</mat-icon>
   </button>
-  <button matButton="tonal" matExpressiveButton>Label</button>
-  <button matButton="tonal" matExpressiveButton>
+  <button matButton matExpressiveButton>Label</button>
+  <button matButton matExpressiveButton>
     <mat-icon>edit</mat-icon>
     Label
   </button>
-  <button matIconButton matExpressiveIconButton appearance="tonal">
+  <button matIconButton matExpressiveIconButton>
     <mat-icon>delete</mat-icon>
   </button>
 </mat-expressive-button-group>

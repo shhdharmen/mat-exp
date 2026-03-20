@@ -20,7 +20,7 @@ export class MatExpressiveIconButton {
   public readonly shape = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).shape);
   public readonly toggle = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).toggle);
   public readonly width = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).width);
-  public readonly appearance = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).appearance);
+  public readonly appearance = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).appearance);
   /**
    * @internal
    */

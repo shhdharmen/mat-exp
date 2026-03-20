@@ -26,6 +26,7 @@ import { MatExpressiveIconButton } from '../icon-button';
     '[attr.data-selection]': 'selection()',
     '[attr.data-size]': 'size()',
     '[attr.data-shape]': 'shape()',
+    '[attr.data-appearance]': 'appearance()',
   }
 })
 export class MatExpressiveButtonGroup {
@@ -33,6 +34,7 @@ export class MatExpressiveButtonGroup {
   public readonly shape = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).shape);
   public readonly selection = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).selection);
   public readonly variant = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).variant);
+  public readonly appearance = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).appearance);
   /**
    * @internal
    */
@@ -65,6 +67,18 @@ export class MatExpressiveButtonGroup {
         }
         this.matExpressiveIconButtons().forEach(iconButton => {
           iconButton.shape.set(shape)
+        });
+      })
+      effect(() => {
+        const appearance = this.appearance();
+
+        if (appearance) {
+          this.matExpressiveButtons().forEach(button => {
+            button.changeAppearance(appearance)
+          });
+        }
+        this.matExpressiveIconButtons().forEach(iconButton => {
+          iconButton.appearance.set(appearance === 'elevated' ? 'filled' : appearance)
         });
       })
     }

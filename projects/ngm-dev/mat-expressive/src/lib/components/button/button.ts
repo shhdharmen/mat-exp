@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { MAT_EXPRESSIVE_BUTTON_OPTIONS } from './button.options';
 import { matExpressiveWithStyles } from '../../utils/misc/with-styles';
+import { MatButton, MatButtonAppearance } from '@angular/material/button';
 
 // @Component({
 //   template: '',
@@ -46,4 +47,10 @@ export class MatExpressiveButton {
    * @internal
    */
   public readonly state = input(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).state);
+
+  private readonly matButton = inject(MatButton);
+
+  changeAppearance(appearance: MatButtonAppearance) {
+    this.matButton.appearance = appearance;
+  }
 }

@@ -43,3 +43,5 @@ Side effects of setting `skip-html-element-styles` to `true` are outlined in eac
 ### [mat-expressive-button-class](/components/all-buttons/button/styling#mat-expressive-button-class)
 
 ### [mat-expressive-icon-button-class](/components/all-buttons/icon-button/styling#mat-expressive-icon-button-class)
+
+### [mat-expressive-button-group-class](/components/all-buttons/button-group/styling#mat-expressive-button-group-class)

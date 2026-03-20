@@ -12,7 +12,7 @@ This document outlines API for `mat-expressive-button-group-styles` mixin.
 @use '@ngm-dev/mat-expressive' as mat-expressive;
 
 html {
-  @include mat-expressive.mat-expressive-icon-button-styles($options);
+  @include mat-expressive.mat-expressive-button-group-styles($options);
 }
 ```
 
@@ -24,7 +24,7 @@ Type: `boolean`
 
 Default: `false`
 
-If `true`, the mixin will not apply styles to the underlying HTML elements.
+If `true`, the mixin will not apply styles from the `properties` map (layout, gaps, connected layout helpers). Prefer leaving this `false` for button groups.
 
 **Usage example:**
 
@@ -32,7 +32,7 @@ If `true`, the mixin will not apply styles to the underlying HTML elements.
 @use '@ngm-dev/mat-expressive' as mat-expressive;
 
 html {
-  @include mat-expressive.mat-expressive-icon-button-styles(
+  @include mat-expressive.mat-expressive-button-group-styles(
     (
       skip-html-element-styles: true,
     )
@@ -40,22 +40,13 @@ html {
 }
 ```
 
-#### Effects
-
-If you set `skip-html-element-styles` to `true`, the mixin will not apply styles to the underlying HTML elements. And below are some styles which will not work as expected:
-
-- Icon sizes
-- Shape morphing
-- `outlined`, `filled` & `tonal` appearance variants
-- `narrow` & `wide` width variants
-
-### mat-expressive-icon-button-class
+### mat-expressive-button-group-class
 
 Type: `string`
 
-Default: `mat-expressive-icon-button`
+Default: `mat-expressive-button-group`
 
-The class to be applied to the button.
+The class used in generated selectors for the host.
 
 **Usage example:**
 
@@ -63,27 +54,23 @@ The class to be applied to the button.
 @use '@ngm-dev/mat-expressive' as mat-expressive;
 
 html {
-  @include mat-expressive.mat-expressive-icon-button-styles(
+  @include mat-expressive.mat-expressive-button-group-styles(
     (
-      mat-expressive-icon-button-class: 'my-custom-icon-button',
+      mat-expressive-button-group-class: 'my-custom-button-group',
     )
   );
 }
 ```
 
-#### Effects
-
-If you set `mat-expressive-icon-button-class` to `my-custom-icon-button`, the mixin will apply styles to the button with the class `my-custom-icon-button`.
-
-Make sure to also override the `matExpressiveIconButtonClass` in the `provideMatExpressiveIconButtonOptions`.
+If you change this, set `matExpressiveButtonGroupClass` in `provideMatExpressiveButtonGroupOptions` to the same value.
 
 ```angular-ts
-import { provideMatExpressiveIconButtonOptions } from '@ngm-dev/mat-expressive';
+import { provideMatExpressiveButtonGroupOptions } from '@ngm-dev/mat-expressive';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideMatExpressiveIconButtonOptions({
-      matExpressiveIconButtonClass: 'my-custom-icon-button',
+    provideMatExpressiveButtonGroupOptions({
+      matExpressiveButtonGroupClass: 'my-custom-button-group',
     }),
   ],
 };

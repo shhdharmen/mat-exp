@@ -44,4 +44,13 @@ $known-attributes: (
     narrow,
     wide,
   ),
+  variant: (
+    standard,
+    connected,
+  ),
+  selection: (
+    single-select,
+    multi-select,
+    select-required,
+  ),
 );

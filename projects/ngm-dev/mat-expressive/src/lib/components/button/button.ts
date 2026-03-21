@@ -65,8 +65,6 @@ export class MatExpressiveButton implements MatExpressiveSelectableButton {
    */
   public readonly state = input(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).state);
 
-  private readonly matButton = inject(MatButton);
-
   get appearance(): MatButtonAppearance | null {
     return this.matButton.appearance;
   }
@@ -80,6 +78,9 @@ export class MatExpressiveButton implements MatExpressiveSelectableButton {
   set disabled(disabled: boolean | undefined) {
     this.matButton.disabled = disabled;
   }
+
+  private readonly matButton = inject(MatButton);
+  private readonly buttonGroup = inject(MatExpressiveButtonGroup);
 
   _onButtonClick(): void {}
 }

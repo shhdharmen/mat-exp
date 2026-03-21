@@ -14,6 +14,7 @@ import {
   Input,
   input,
   model,
+  output,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
@@ -77,6 +78,8 @@ export class MatExpressiveButtonGroup {
   public readonly variant = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).variant);
   public readonly appearance = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).appearance);
   public readonly disabled = model(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).disabled);
+  public readonly value = model<any>();
+  public readonly change = output<MatExpressiveSelectableButtonChange>();
   /**
    * @internal
    */

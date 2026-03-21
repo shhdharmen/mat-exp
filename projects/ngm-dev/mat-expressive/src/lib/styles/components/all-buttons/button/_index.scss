@@ -9,11 +9,12 @@ $_mat-expressive-button-class: 'mat-expressive-button';
 @mixin mat-expressive-button-styles(
   $options: (
     skip-html-element-styles: false,
-    mat-expressive-button-class: $_mat-expressive-button-class,
+    // mat-expressive-button-class: $_mat-expressive-button-class,
   )
 ) {
   $skip-html-element-styles: map.get($options, skip-html-element-styles);
-  $mat-expressive-button-class: '.' + map.get($options, mat-expressive-button-class);
+  // $mat-expressive-button-class: '.' + map.get($options, mat-expressive-button-class);
+  $mat-expressive-button-class: '.' + $_mat-expressive-button-class;
 
   // Validate the entire configuration
   $validation-result: functions.validate-button-config(config.$button-config, 'button-config');

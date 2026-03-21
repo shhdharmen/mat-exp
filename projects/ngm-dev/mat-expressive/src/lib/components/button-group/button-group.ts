@@ -96,8 +96,13 @@ export class MatExpressiveButtonGroup implements ControlValueAccessor {
   /**
    * @internal
    */
-  public readonly matExpressiveButtonGroupClass = inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS)
-    .matExpressiveButtonGroupClass;
+  // public readonly matExpressiveButtonGroupClass = inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS)
+  //   .matExpressiveButtonGroupClass;
+
+  /**
+   * @internal
+   */
+  public readonly matExpressiveButtonGroupClass = 'mat-expressive-button-group';
 
   readonly _matExpressiveButtons = contentChildren<MatExpressiveButton>(MatExpressiveButton);
   readonly _matExpressiveIconButtons =

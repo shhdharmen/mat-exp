@@ -3,53 +3,44 @@ title: Overview
 keyword: ButtonGroupOverviewPage
 ---
 
-## Usages
+## Overview
 
-The styles for Material Expressive Button can be applied in two ways:
+`MatExpressiveButtonGroup` is a component that groups buttons and provides single/multi-select behavior compatible with Angular reactive and template-driven forms in [Material 3 Design System Expressive styles](https://m3.material.io/components/button-groups/overview).
 
-1. Using the `.mat-expressive-icon-button` class with the `data-*` attributes
-2. Using the `matExpressiveIconButton` directive
-
-### Using the .mat-expressive-icon-button class with the data-\* attributes
+## Usage
 
 ```angular-ts name="app.ts"
-import { MatIconButton } from '@angular/material/button';
+import {
+  MatExpressiveButtonGroup,
+  MatExpressiveIconButton,
+  MatExpressiveButton,
+} from '@ngm-dev/mat-expressive';
+import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-root',
-  imports: [MatIconButton, MatIcon],
+  imports: [
+    MatExpressiveButtonGroup,
+    MatExpressiveIconButton,
+    MatExpressiveButton,
+    MatIconButton,
+    MatButton,
+    MatIcon,
+  ],
   template: `
-    <button mat-icon-button class="mat-expressive-icon-button" data-size="xs" data-shape="square">
-      <mat-icon>home</mat-icon>
-    </button>
-    <button mat-icon-button class="mat-expressive-icon-button" data-size="sm">
-      <mat-icon>home</mat-icon>
-    </button>
-  `,
-})
-export class App {}
-```
-
-> **Note**
-> You can change the class by overriding options in [SCSS](/components/all-buttons/icon-button/styling#mat-expressive-icon-button-class) & [provider](/api/functions/mat-expressive/provideMatExpressiveIconButtonOptions).
-
-### Using the matExpressiveIconButton directive
-
-If you do not want to use `data-*` attributes and the `.mat-expressive-icon-button` class and want full type safety, you can use `matExpressiveIconButton` directive.
-
-```angular-ts name="app.ts"
-import { MatExpressiveIconButton } from '@ngm-dev/mat-expressive';
-import { MatIcon } from '@angular/material/icon';
-@Component({
-  selector: 'app-root',
-  imports: [MatIconButton, MatExpressiveIconButton, MatIcon],
-  template: `
-    <button mat-icon-button size="xs" shape="square" matExpressiveIconButton>
-      <mat-icon>home</mat-icon>
-    </button>
-    <button mat-icon-button size="sm" matExpressiveIconButton>
-      <mat-icon>home</mat-icon>
-    </button>
+    <mat-expressive-button-group>
+      <button matIconButton matExpressiveIconButton>
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button matButton matExpressiveButton>Label</button>
+      <button matButton matExpressiveButton>
+        <mat-icon>edit</mat-icon>
+        Label
+      </button>
+      <button matIconButton matExpressiveIconButton>
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </mat-expressive-button-group>
   `,
 })
 export class App {}
@@ -57,25 +48,14 @@ export class App {}
 
 ## Suported Variations
 
-Mat Expressive Icon Button supports the following variations:
+Mat Expressive Button Group supports the following variations:
 
 - Size: `xs`, `s`, `m`, `l`, `xl`
 - Shape: `round`, `square`
-- Toggle: `selected`, `unselected`
-- State: `pressed` (`:active` pseudo-selector)
+- Selection: `single-select`, `multi-select`
 - Appearance: `text`, `outlined`, `filled`, `tonal`
-- Width: `default`, `narrow`, `wide`
+- Variant: `standard`, `connected`
 
-<!-- ## Shape Morph
+## Use with @angular/forms
 
-Mat Expressive Button supports this shape morphing by default.
-
-### Pressed State
-
-[According to Material 3 Design System Expressive guidelines](https://m3.material.io/components/buttons/specs#cb36ae03-5539-497d-9777-06547a7d3f17), when pressed, buttons can morph to become more square. Both round and square buttons should have the same pressed shape.
-
-### When selected
-
-In addition to changing shape when pressed, toggle buttons also change the resting shape from round (unselected) to square (selected).
-
-If the resting unselected shape is square, the selected shape should be round. -->
+`<mat-expressive-button-group>` is compatible with `@angular/forms` and supports both `FormsModule` and `ReactiveFormsModule`.

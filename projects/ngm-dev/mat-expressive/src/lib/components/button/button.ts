@@ -1,9 +1,4 @@
-import {
-  Directive,
-  inject,
-  input,
-  model,
-} from '@angular/core';
+import { Directive, inject, input, model } from '@angular/core';
 import { MAT_EXPRESSIVE_BUTTON_OPTIONS } from './button.options';
 import { MatButton, MatButtonAppearance } from '@angular/material/button';
 import { MatExpressiveButtonGroup } from '../button-group';
@@ -44,8 +39,13 @@ export class MatExpressiveButton implements MatExpressiveSelectableButton {
   /**
    * @internal
    */
-  public readonly matExpressiveButtonClass = inject(MAT_EXPRESSIVE_BUTTON_OPTIONS)
-    .matExpressiveButtonClass;
+  // public readonly matExpressiveButtonClass = inject(MAT_EXPRESSIVE_BUTTON_OPTIONS)
+  //   .matExpressiveButtonClass;
+
+  /**
+   * @internal
+   */
+  public readonly matExpressiveButtonClass = 'mat-expressive-button';
 
   /**
    * @internal

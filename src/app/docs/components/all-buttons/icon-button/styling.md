@@ -49,7 +49,7 @@ If you set `skip-html-element-styles` to `true`, the mixin will not apply styles
 - `outlined`, `filled` & `tonal` appearance variants
 - `narrow` & `wide` width variants
 
-### mat-expressive-icon-button-class
+<!-- ### mat-expressive-icon-button-class
 
 Type: `string`
 
@@ -87,4 +87,4 @@ export const appConfig: ApplicationConfig = {
     }),
   ],
 };
-```
+``` -->

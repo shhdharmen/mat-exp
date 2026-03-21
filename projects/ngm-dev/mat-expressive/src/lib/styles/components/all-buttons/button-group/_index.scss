@@ -13,11 +13,12 @@ $_mat-expressive-button-group-class: 'mat-expressive-button-group';
 @mixin mat-expressive-button-group-styles(
   $options: (
     skip-html-element-styles: false,
-    mat-expressive-button-group-class: $_mat-expressive-button-group-class,
+    // mat-expressive-button-group-class: $_mat-expressive-button-group-class,
   )
 ) {
   $skip-html-element-styles: map.get($options, skip-html-element-styles);
-  $mat-expressive-button-group-class: '.' + map.get($options, mat-expressive-button-group-class);
+  // $mat-expressive-button-group-class: '.' + map.get($options, mat-expressive-button-group-class);
+  $mat-expressive-button-group-class: '.' + $_mat-expressive-button-group-class;
 
   $validation-result: functions.validate-button-group-config(
     config.$button-group-config,

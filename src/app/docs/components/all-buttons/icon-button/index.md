@@ -62,8 +62,8 @@ import { MatIcon } from '@angular/material/icon';
 export class App {}
 ```
 
-> **Note**
-> You can change the class by overriding options in [SCSS](/components/all-buttons/icon-button/styling#mat-expressive-icon-button-class) & [provider](/api/functions/mat-expressive/provideMatExpressiveIconButtonOptions).
+<!-- > **Note**
+> You can change the class by overriding options in [SCSS](/components/all-buttons/icon-button/styling#mat-expressive-icon-button-class) & [provider](/api/functions/mat-expressive/provideMatExpressiveIconButtonOptions). -->
 
 ### Using the matExpressiveIconButton directive
 

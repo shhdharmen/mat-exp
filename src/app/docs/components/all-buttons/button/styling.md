@@ -47,7 +47,7 @@ If you set `skip-html-element-styles` to `true`, the mixin will not apply styles
 - Icon sizes
 - Shape morphing
 
-### mat-expressive-button-class
+<!-- ### mat-expressive-button-class
 
 Type: `string`
 
@@ -85,4 +85,4 @@ export const appConfig: ApplicationConfig = {
     }),
   ],
 };
-```
+``` -->

@@ -52,7 +52,7 @@ export interface MatExpressiveButtonGroupOptions {
    * Default: `mat-expressive-button-group`
    *
    */
-  readonly matExpressiveButtonGroupClass?: string;
+  // readonly matExpressiveButtonGroupClass?: string;
 }
 
 export const MAT_EXPRESSIVE_BUTTON_GROUP_DEFAULT_OPTIONS: MatExpressiveButtonGroupOptions = {
@@ -60,7 +60,7 @@ export const MAT_EXPRESSIVE_BUTTON_GROUP_DEFAULT_OPTIONS: MatExpressiveButtonGro
   shape: 'round',
   variant: 'standard',
   selection: 'single-select',
-  matExpressiveButtonGroupClass: 'mat-expressive-button-group',
+  // matExpressiveButtonGroupClass: 'mat-expressive-button-group',
 };
 
 const [_MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS, _provideMatExpressiveButtonGroupOptions] =

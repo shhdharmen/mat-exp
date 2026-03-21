@@ -1,25 +1,14 @@
 import {
-  afterNextRender,
-  booleanAttribute,
-  ChangeDetectorRef,
-  DestroyRef,
   Directive,
-  EventEmitter,
   inject,
   Input,
   input,
   model,
-  Output,
 } from '@angular/core';
 import { MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS } from './icon-button.options';
 import { MatIconButton } from '@angular/material/button';
-import {
-  MatExpressiveSelectableButton,
-  MatExpressiveSelectableButtonChange,
-} from '../selectable-button/selectable-button';
+import { MatExpressiveSelectableButton } from '../selectable-button/selectable-button';
 import { MatExpressiveButtonGroup } from '../button-group';
-import { fromEvent } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatExpressiveButtonToggle, MatExpressiveIconButtonAppearance } from '../../types';
 /**
  * Directive to style the Angular Material Icon Button component with latest Material 3 Design System Expressive styles.
@@ -34,6 +23,7 @@ import { MatExpressiveButtonToggle, MatExpressiveIconButtonAppearance } from '..
     '[attr.data-toggle]': 'toggle()',
     '[attr.data-width]': 'width()',
     '[class]': 'matExpressiveIconButtonClass',
+    '(click)': '_onButtonClick()',
   },
   exportAs: 'matExpressiveIconButton',
 })
@@ -73,7 +63,9 @@ export class MatExpressiveIconButton implements MatExpressiveSelectableButton {
   }
 
   private readonly matIconButton = inject(MatIconButton);
-  private readonly buttonGroup = inject(MatExpressiveButtonGroup);
+  private readonly buttonGroup = inject(MatExpressiveButtonGroup, { optional: true });
 
-  _onButtonClick(): void {}
+  _onButtonClick(): void {
+    this.buttonGroup?._onButtonClick(this);
+  }
 }

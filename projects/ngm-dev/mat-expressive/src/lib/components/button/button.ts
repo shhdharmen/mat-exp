@@ -1,26 +1,13 @@
 import {
-  afterNextRender,
-  booleanAttribute,
-  ChangeDetectorRef,
-  DestroyRef,
   Directive,
-  effect,
-  EventEmitter,
   inject,
-  Input,
   input,
   model,
-  Output,
 } from '@angular/core';
 import { MAT_EXPRESSIVE_BUTTON_OPTIONS } from './button.options';
 import { MatButton, MatButtonAppearance } from '@angular/material/button';
 import { MatExpressiveButtonGroup } from '../button-group';
-import {
-  MatExpressiveSelectableButton,
-  MatExpressiveSelectableButtonChange,
-} from '../selectable-button/selectable-button';
-import { fromEvent } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatExpressiveSelectableButton } from '../selectable-button/selectable-button';
 import { MatExpressiveButtonToggle } from '../../types';
 
 // @Component({
@@ -80,7 +67,9 @@ export class MatExpressiveButton implements MatExpressiveSelectableButton {
   }
 
   private readonly matButton = inject(MatButton);
-  private readonly buttonGroup = inject(MatExpressiveButtonGroup);
+  private readonly buttonGroup = inject(MatExpressiveButtonGroup, { optional: true });
 
-  _onButtonClick(): void {}
+  _onButtonClick(): void {
+    this.buttonGroup?._onButtonClick(this);
+  }
 }

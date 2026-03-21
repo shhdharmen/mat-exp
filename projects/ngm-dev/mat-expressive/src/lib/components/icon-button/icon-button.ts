@@ -1,5 +1,25 @@
-import { Directive, inject, input, model } from '@angular/core';
+import {
+  afterNextRender,
+  booleanAttribute,
+  ChangeDetectorRef,
+  DestroyRef,
+  Directive,
+  EventEmitter,
+  inject,
+  Input,
+  input,
+  model,
+  Output,
+} from '@angular/core';
 import { MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS } from './icon-button.options';
+import { MatIconButton } from '@angular/material/button';
+import {
+  MatExpressiveSelectableButton,
+  MatExpressiveSelectableButtonChange,
+} from '../selectable-button/selectable-button';
+import { MatExpressiveButtonGroup } from '../button-group';
+import { fromEvent } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 /**
  * Directive to style the Angular Material Icon Button component with latest Material 3 Design System Expressive styles.
  */
@@ -14,13 +34,15 @@ import { MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS } from './icon-button.options';
     '[attr.data-width]': 'width()',
     '[class]': 'matExpressiveIconButtonClass',
   },
+  exportAs: 'matExpressiveIconButton',
 })
 export class MatExpressiveIconButton {
   public readonly size = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).size);
   public readonly shape = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).shape);
-  public readonly toggle = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).toggle);
+  public readonly toggle = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).toggle);
   public readonly width = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).width);
   public readonly appearance = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).appearance);
+  public readonly value = model<any>();
   /**
    * @internal
    */
@@ -31,4 +53,12 @@ export class MatExpressiveIconButton {
    * @internal
    */
   public readonly state = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).state);
+
+  private readonly matIconButton = inject(MatIconButton);
+  get disabled(): boolean {
+    return this.matIconButton.disabled;
+  }
+  set disabled(disabled: boolean | undefined) {
+    this.matIconButton.disabled = disabled;
+  }
 }

@@ -1,15 +1,26 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
+  afterNextRender,
+  booleanAttribute,
+  ChangeDetectorRef,
+  DestroyRef,
   Directive,
+  effect,
+  EventEmitter,
   inject,
+  Input,
   input,
   model,
-  ViewEncapsulation,
+  Output,
 } from '@angular/core';
 import { MAT_EXPRESSIVE_BUTTON_OPTIONS } from './button.options';
-import { matExpressiveWithStyles } from '../../utils/misc/with-styles';
 import { MatButton, MatButtonAppearance } from '@angular/material/button';
+import { MatExpressiveButtonGroup } from '../button-group';
+import {
+  MatExpressiveSelectableButton,
+  MatExpressiveSelectableButtonChange,
+} from '../selectable-button/selectable-button';
+import { fromEvent } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 // @Component({
 //   template: '',
@@ -30,13 +41,15 @@ import { MatButton, MatButtonAppearance } from '@angular/material/button';
     '[attr.data-toggle]': 'toggle()',
     '[class]': 'matExpressiveButtonClass',
   },
+  exportAs: 'matExpressiveButton',
 })
 export class MatExpressiveButton {
   // protected readonly nothing = matExpressiveWithStyles(Styles);
 
   public readonly size = model(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).size);
   public readonly shape = model(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).shape);
-  public readonly toggle = input(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).toggle);
+  public readonly toggle = model(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).toggle);
+  public readonly value = model<any>();
   /**
    * @internal
    */
@@ -50,7 +63,17 @@ export class MatExpressiveButton {
 
   private readonly matButton = inject(MatButton);
 
-  changeAppearance(appearance: MatButtonAppearance) {
+  get appearance(): MatButtonAppearance | null {
+    return this.matButton.appearance;
+  }
+  set appearance(appearance: MatButtonAppearance) {
     this.matButton.appearance = appearance;
+  }
+
+  get disabled(): boolean {
+    return this.matButton.disabled;
+  }
+  set disabled(disabled: boolean | undefined) {
+    this.matButton.disabled = disabled;
   }
 }

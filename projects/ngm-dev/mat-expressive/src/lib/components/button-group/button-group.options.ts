@@ -40,6 +40,13 @@ export interface MatExpressiveButtonGroupOptions {
    */
   readonly variant?: MatExpressiveButtonGroupVariant;
   /**
+   * The disabled state of the button group.
+   *
+   * Default: `false`
+   *
+   */
+  readonly disabled?: boolean;
+  /**
    * The class to be applied to the button group. Should be same as [`mat-expressive-button-group-class` style option](/components/all-buttons/button-group/styling#mat-expressive-button-group-class)
    *
    * Default: `mat-expressive-button-group`

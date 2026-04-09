@@ -1,0 +1,61 @@
+---
+title: Overview
+keyword: ButtonGroupOverviewPage
+---
+
+## Overview
+
+`MatExpressiveButtonGroup` is a component that groups buttons and provides single/multi-select behavior compatible with Angular reactive and template-driven forms in [Material 3 Design System Expressive styles](https://m3.material.io/components/button-groups/overview).
+
+## Usage
+
+```angular-ts name="app.ts"
+import {
+  MatExpressiveButtonGroup,
+  MatExpressiveIconButton,
+  MatExpressiveButton,
+} from '@ngm-dev/mat-expressive';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+@Component({
+  selector: 'app-root',
+  imports: [
+    MatExpressiveButtonGroup,
+    MatExpressiveIconButton,
+    MatExpressiveButton,
+    MatIconButton,
+    MatButton,
+    MatIcon,
+  ],
+  template: `
+    <mat-expressive-button-group>
+      <button matIconButton matExpressiveIconButton>
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button matButton matExpressiveButton>Label</button>
+      <button matButton matExpressiveButton>
+        <mat-icon>edit</mat-icon>
+        Label
+      </button>
+      <button matIconButton matExpressiveIconButton>
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </mat-expressive-button-group>
+  `,
+})
+export class App {}
+```
+
+## Suported Variations
+
+Mat Expressive Button Group supports the following variations:
+
+- Size: `xs`, `s`, `m`, `l`, `xl`
+- Shape: `round`, `square`
+- Selection: `single-select`, `multi-select`
+- Appearance: `text`, `outlined`, `filled`, `tonal`
+- Variant: `standard`, `connected`
+
+## Use with @angular/forms
+
+`<mat-expressive-button-group>` is compatible with `@angular/forms` and supports both `FormsModule` and `ReactiveFormsModule`.

@@ -1,0 +1,13 @@
+@use '../tokens/xs' as xs;
+
+$config: (
+  (
+    size: 'xs',
+    properties: xs.$properties,
+  ),
+  (
+    size: 'xs',
+    appearance: 'outlined',
+    properties: xs.$appearance-outlined-properties,
+  )
+);

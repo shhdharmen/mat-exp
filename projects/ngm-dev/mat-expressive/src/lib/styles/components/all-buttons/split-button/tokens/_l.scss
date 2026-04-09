@@ -1,0 +1,9 @@
+@use '../../../../utils/functions';
+
+$properties: (
+  '': (
+    height: (
+      value: functions.rem(96),
+    ),
+  ),
+);

@@ -1,9 +1,11 @@
-import { Directive, inject, Input, input, model } from '@angular/core';
+import { afterNextRender, Directive, inject, Input, input, model } from '@angular/core';
 import { MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS } from './icon-button.options';
 import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { MatExpressiveSelectableButton } from '../selectable-button/selectable-button';
 import { MatExpressiveButtonGroup } from '../button-group';
 import { MatExpressiveButtonToggle, MatExpressiveIconButtonAppearance } from '../../types';
+import { MatExpressiveSplitButton } from '../split-button';
 /**
  * Directive to style the Angular Material Icon Button component with latest Material 3 Design System Expressive styles.
  */
@@ -16,6 +18,7 @@ import { MatExpressiveButtonToggle, MatExpressiveIconButtonAppearance } from '..
     '[attr.data-state]': 'state()',
     '[attr.data-toggle]': 'toggle()',
     '[attr.data-width]': 'width()',
+    '[attr.data-menu-open]': 'isMenuOpen',
     '[class]': 'matExpressiveIconButtonClass',
     '(click)': '_onButtonClick()',
   },
@@ -66,5 +69,11 @@ export class MatExpressiveIconButton implements MatExpressiveSelectableButton {
 
   _onButtonClick(): void {
     this.buttonGroup?._onButtonClick(this);
+  }
+
+  private readonly matMenu = inject(MatMenuTrigger, { optional: true });
+
+  get isMenuOpen(): boolean {
+    return this.matMenu?.menuOpen ?? false;
   }
 }

@@ -1,0 +1,39 @@
+@use '../../../../utils/functions';
+@use 'sass:map';
+@use '../../common-selectors';
+@use '../../utils/functions' as button-functions;
+
+$properties: (
+  '': (
+    height: (
+      value: functions.rem(56),
+    ),
+  ),
+  ' > .mat-expressive-icon-button': (
+    width: (
+      value: functions.rem(56),
+    ),
+    text-align: (
+      value: unset,
+    ),
+    padding-left: (
+      value: functions.rem(13),
+    ),
+    padding-right: (
+      value: functions.rem(17),
+    ),
+    padding-top: (
+      value: functions.rem(15),
+    ),
+    padding-bottom: (
+      value: functions.rem(15),
+    ),
+  ),
+);
+@each $selector in common-selectors.$icon-button-icon-selectors {
+  $properties: map.set(
+    $properties,
+    ' > .mat-expressive-icon-button' + $selector,
+    button-functions.icon-size(26)
+  );
+}

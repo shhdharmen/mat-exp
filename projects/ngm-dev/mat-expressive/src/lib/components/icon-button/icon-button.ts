@@ -18,7 +18,6 @@ import { MatExpressiveSplitButton } from '../split-button';
     '[attr.data-state]': 'state()',
     '[attr.data-toggle]': 'toggle()',
     '[attr.data-width]': 'width()',
-    '[attr.data-menu-open]': 'isMenuOpen',
     '[class]': 'matExpressiveIconButtonClass',
     '(click)': '_onButtonClick()',
   },
@@ -69,11 +68,5 @@ export class MatExpressiveIconButton implements MatExpressiveSelectableButton {
 
   _onButtonClick(): void {
     this.buttonGroup?._onButtonClick(this);
-  }
-
-  private readonly matMenu = inject(MatMenuTrigger, { optional: true });
-
-  get isMenuOpen(): boolean {
-    return this.matMenu?.menuOpen ?? false;
   }
 }

@@ -9,7 +9,10 @@ $properties: (
       value: functions.rem(32),
     ),
   ),
-  ' > .mat-expressive-icon-button': (
+  ' > .mat-expressive-button:last-child': (
+    min-width: (
+      value: functions.rem(48),
+    ),
     width: (
       value: functions.rem(48),
     ),
@@ -27,36 +30,7 @@ $properties: (
 @each $selector in common-selectors.$icon-button-icon-selectors {
   $properties: map.set(
     $properties,
-    ' > .mat-expressive-icon-button' + $selector,
+    ' > .mat-expressive-button:last-child' + $selector,
     button-functions.icon-size(22)
-  );
-}
-
-$appearance-outlined-properties: ();
-@each $selector in common-selectors.$icon-button-appearance-selectors {
-  $appearance-outlined-properties: map.set(
-    $appearance-outlined-properties,
-    ' > .mat-expressive-icon-button[data-appearance=outlined]' + $selector,
-    (
-      padding-left: (
-          value: functions.rem(9.5),
-          // important: true,
-        ),
-      padding-right: (
-          value: functions.rem(14.5),
-          // important: true,
-        ),
-    )
-  );
-}
-@each $selector in common-selectors.$icon-button-ripple-selectors {
-  $appearance-outlined-properties: map.set(
-    $appearance-outlined-properties,
-    ' > .mat-expressive-icon-button[data-appearance=outlined]:active' + $selector,
-    (
-      border-radius: (
-          value: inherit,
-        ),
-    )
   );
 }

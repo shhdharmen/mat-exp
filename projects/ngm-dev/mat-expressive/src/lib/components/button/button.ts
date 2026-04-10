@@ -4,6 +4,7 @@ import { MatButton, MatButtonAppearance } from '@angular/material/button';
 import { MatExpressiveButtonGroup } from '../button-group';
 import { MatExpressiveSelectableButton } from '../selectable-button/selectable-button';
 import { MatExpressiveButtonToggle } from '../../types';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 // @Component({
 //   template: '',
@@ -22,6 +23,7 @@ import { MatExpressiveButtonToggle } from '../../types';
     '[attr.data-shape]': 'shape()',
     '[attr.data-state]': 'state()',
     '[attr.data-toggle]': 'toggle()',
+    '[attr.data-menu-open]': 'isMenuOpen',
     '[class]': 'matExpressiveButtonClass',
     '(click)': '_onButtonClick()',
   },
@@ -71,5 +73,10 @@ export class MatExpressiveButton implements MatExpressiveSelectableButton {
 
   _onButtonClick(): void {
     this.buttonGroup?._onButtonClick(this);
+  }
+  private readonly matMenu = inject(MatMenuTrigger, { optional: true });
+
+  get isMenuOpen(): boolean {
+    return this.matMenu?.menuOpen ?? false;
   }
 }

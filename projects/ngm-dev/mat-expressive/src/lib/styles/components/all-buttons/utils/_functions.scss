@@ -50,6 +50,16 @@
   );
 }
 
+@function button-icon-spacing-tokens($value) {
+  @return (
+    tonal-icon-spacing: functions.rem($value),
+    protected-icon-spacing: functions.rem($value),
+    filled-icon-spacing: functions.rem($value),
+    outlined-icon-spacing: functions.rem($value),
+    text-icon-spacing: functions.rem($value)
+  );
+}
+
 @function icon-button-shape-tokens($value) {
   @return (container-shape: functions.rem($value));
 }

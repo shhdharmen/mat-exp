@@ -29,9 +29,7 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
   imports: [
     MatExpressiveSplitButton,
     MatExpressiveButton,
-    MatExpressiveIconButton,
     MatIcon,
-    MatIconButton,
     MatButton,
     MatMenu,
     MatMenuItem,

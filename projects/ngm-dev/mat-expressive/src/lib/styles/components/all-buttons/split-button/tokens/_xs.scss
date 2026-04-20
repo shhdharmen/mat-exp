@@ -27,7 +27,7 @@ $properties: (
     ),
   ),
 );
-@each $selector in common-selectors.$icon-button-icon-selectors {
+@each $selector in common-selectors.$button-icon-selectors {
   $properties: map.set(
     $properties,
     ' > .mat-expressive-button:last-child' + $selector,

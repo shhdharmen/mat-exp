@@ -55,9 +55,9 @@ export const MAT_EXPRESSIVE_BUTTON_GROUP_VALUE_ACCESSOR: any = {
     { provide: MAT_EXPRESSIVE_BUTTON_GROUP, useExisting: MatExpressiveButtonGroup },
   ],
   templateUrl: './button-group.html',
-  styleUrls: ['./button-group.scss'],
+  // styleUrls: ['./button-group.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
   host: {
     '[class]': 'matExpressiveButtonGroupClass',
     '[attr.data-variant]': 'variant()',

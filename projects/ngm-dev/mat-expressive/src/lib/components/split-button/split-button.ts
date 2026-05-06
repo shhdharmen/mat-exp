@@ -36,9 +36,9 @@ import { MatExpressiveButton } from '../button';
     '[class]': 'matExpressiveSplitButtonClass',
   },
   template: '<ng-content></ng-content>',
-  styleUrls: ['./split-button.scss'],
+  // styleUrls: ['./split-button.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class MatExpressiveSplitButton {
   // protected readonly nothing = matExpressiveWithStyles(Styles);

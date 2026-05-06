@@ -97,7 +97,9 @@
     appearance,
     width,
     variant,
-    selection
+    selection,
+    color,
+    open
   );
 
   // Check if item is a map
@@ -124,10 +126,10 @@
         // Validate the value for this attribute key
         $allowed-values: map.get(constants.$known-attributes, $attr-key);
         @if $allowed-values {
-          @if meta.type-of($attr-value) != 'string' {
+          @if meta.type-of($attr-value) != 'string' and meta.type-of($attr-value) != 'bool' {
             $errors: list.append(
               $errors,
-              '#{$context-path}[#{$index}].#{$attr-key} must be a string'
+              '#{$context-path}[#{$index}].#{$attr-key} must be a string or boolean'
             );
           } @else if not list.index($allowed-values, $attr-value) {
             $errors: list.append(
@@ -218,6 +220,54 @@
 }
 
 @function validate-split-button-config($config, $name: 'split-button-config') {
+  $errors: ();
+
+  // Check if config is a list
+  @if meta.type-of($config) != 'list' {
+    @return 'Error [#{$name}]: Configuration must be a list';
+  }
+
+  // Validate each combination item in the list
+  $index: 1;
+  @each $item in $config {
+    $item-errors: _validate-combination-item($item, $index, $name);
+    $errors: list.join($errors, $item-errors);
+    $index: $index + 1;
+  }
+
+  // Return validation result
+  @if list.length($errors) > 0 {
+    @return 'Validation errors for [#{$name}]: #{$errors}';
+  }
+
+  @return true;
+}
+
+@function validate-fab-menu-trigger-config($config, $name: 'fab-menu-trigger-config') {
+  $errors: ();
+
+  // Check if config is a list
+  @if meta.type-of($config) != 'list' {
+    @return 'Error [#{$name}]: Configuration must be a list';
+  }
+
+  // Validate each combination item in the list
+  $index: 1;
+  @each $item in $config {
+    $item-errors: _validate-combination-item($item, $index, $name);
+    $errors: list.join($errors, $item-errors);
+    $index: $index + 1;
+  }
+
+  // Return validation result
+  @if list.length($errors) > 0 {
+    @return 'Validation errors for [#{$name}]: #{$errors}';
+  }
+
+  @return true;
+}
+
+@function validate-fab-menu-config($config, $name: 'fab-menu-config') {
   $errors: ();
 
   // Check if config is a list

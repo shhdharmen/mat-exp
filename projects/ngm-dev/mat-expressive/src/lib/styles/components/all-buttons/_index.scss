@@ -1,6 +1,7 @@
 @use './button';
 @use './icon-button';
 @use './fab-menu';
+@use './fab-menu-trigger' as fab-menu-trigger;
 
 @mixin mat-expressive-all-buttons-styles(
   $options: (
@@ -12,4 +13,5 @@
   @include button.mat-expressive-button-styles($options);
   @include icon-button.mat-expressive-icon-button-styles($options);
   @include fab-menu.mat-expressive-fab-menu-styles();
+  @include fab-menu-trigger.mat-expressive-fab-menu-trigger-styles();
 }

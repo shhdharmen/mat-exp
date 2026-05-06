@@ -10,13 +10,13 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { matExpressiveWithStyles } from '../../utils/misc/with-styles';
 import { MatExpressiveFabMenuTriggerColor } from '../../types/appearance';
 
-@Component({
-  template: '',
-  styleUrls: ['./fab-menu-trigger.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-class MatExpressiveFabMenuTriggerStyles {}
+// @Component({
+//   template: '',
+//   styleUrls: ['./fab-menu-trigger.scss'],
+//   encapsulation: ViewEncapsulation.None,
+//   changeDetection: ChangeDetectionStrategy.OnPush,
+// })
+// class MatExpressiveFabMenuTriggerStyles {}
 
 @Directive({
   selector: '[matExpressiveFabMenuTrigger]',
@@ -27,7 +27,7 @@ class MatExpressiveFabMenuTriggerStyles {}
   },
 })
 export class MatExpressiveFabMenuTrigger {
-  protected readonly nothing = matExpressiveWithStyles(MatExpressiveFabMenuTriggerStyles);
+  // protected readonly nothing = matExpressiveWithStyles(MatExpressiveFabMenuTriggerStyles);
   /**
    * @internal
    */

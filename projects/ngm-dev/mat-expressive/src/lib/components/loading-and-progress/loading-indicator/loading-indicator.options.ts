@@ -9,11 +9,20 @@ export interface MatExpressiveLoadingIndicatorOptions {
    *
    */
   readonly config?: MatExpressiveLoadingIndicatorConfig;
+
+  /**
+   * The accessible label announced to assistive technologies when the loading
+   * indicator is displayed.
+   *
+   * Default: `Loading`
+   */
+  readonly ariaLabel?: string;
 }
 
 export const MAT_EXPRESSIVE_LOADING_INDICATOR_DEFAULT_OPTIONS: MatExpressiveLoadingIndicatorOptions =
   {
     config: 'default',
+    ariaLabel: 'Loading',
   };
 
 const [_MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS, _provideMatExpressiveLoadingIndicatorOptions] =

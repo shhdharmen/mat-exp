@@ -26,27 +26,38 @@ function registerGsapPluginsOnce(): void {
 
 /**
  * Name of the M3 Expressive "fast spatial" cubic-bezier ease registered with
- * GSAP. Mirrors the Material 3 motion spring used for rotation and shape
- * morphing on the loading indicator (`cubic-bezier(0.42, 1.67, 0.21, 0.90)`).
+ * GSAP. Mirrors the Material 3 motion spring used for the shape morph on the
+ * loading indicator (`cubic-bezier(0.42, 1.67, 0.21, 0.90)`).
  */
 const EXPRESSIVE_FAST_SPATIAL_EASE = 'mat-expressive-fast-spatial';
 const EXPRESSIVE_FAST_SPATIAL_BEZIER = '0.42, 1.67, 0.21, 0.90';
 
 /** Defaults sourced from the Material 3 Expressive loading indicator spec. */
-const DEFAULT_ENTRY_DURATION_MS = 200;
 const DEFAULT_MORPH_STEP_DURATION_MS = 340;
 const DEFAULT_ROTATION_DURATION_MS = 2400;
-const DEFAULT_ENTRY_SCALE_FROM = 0.85;
+
+/** SVG coordinate origin used for path rotation – centre of the shared viewBox. */
+const SVG_ROTATION_ORIGIN = '190 190';
 
 /**
  * Material 3 Expressive loading indicator. Renders a continuously morphing and
- * rotating shape that loops through the seven canonical M3 shapes. Animations
- * are driven by GSAP (MorphSVGPlugin + CustomEase) so that paths with
- * different numbers of anchor points can be interpolated smoothly.
+ * rotating shape that loops through the seven canonical M3 shapes.
  *
- * The component automatically respects `prefers-reduced-motion: reduce`: when
- * the user opts out of motion, the indicator renders a single static shape
- * with no rotation, morph, or entry animation.
+ * Animation responsibilities are split between Angular and GSAP:
+ *
+ * - **Entry / exit** – handled by the native Angular animations API (`animate.enter`
+ *   and `animate.leave`, available in Angular v20.2+) via CSS keyframes, so the
+ *   fade + scale choreography is fully declarative and the consumer just has
+ *   to toggle the indicator with `@if` to get the M3 spec timings.
+ * - **Rotation & shape morph** – driven by GSAP (`MorphSVGPlugin` for the path
+ *   morph, `CustomEase` for the expressive fast-spatial spring) because they
+ *   need continuous, infinite, interruptible motion with anchor-point
+ *   reconciliation between paths.
+ *
+ * `prefers-reduced-motion: reduce` is honoured by both layers: the keyframe
+ * animations are disabled via CSS, and the GSAP rotation/morph timelines are
+ * skipped via `gsap.matchMedia()`. In that case the indicator renders a
+ * single static shape.
  */
 @Component({
   selector: 'mat-expressive-loading-indicator',
@@ -65,6 +76,8 @@ const DEFAULT_ENTRY_SCALE_FROM = 0.85;
     <svg
       #svg
       class="mat-expressive-loading-indicator-content"
+      animate.enter="mat-expressive-loading-indicator-entering"
+      animate.leave="mat-expressive-loading-indicator-leaving"
       [attr.viewBox]="viewBox"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -122,17 +135,11 @@ export class MatExpressiveLoadingIndicator {
   private initAnimations(): void {
     registerGsapPluginsOnce();
 
-    const svg = this.svgRef().nativeElement;
     const path = this.pathRef().nativeElement;
     const host = this.hostRef.nativeElement;
     const shapes = this.shapes;
 
     const hostStyles = getComputedStyle(host);
-    const entryDurationMs = readDurationVar(
-      hostStyles,
-      '--mat-expressive-loading-indicator-entry-duration',
-      DEFAULT_ENTRY_DURATION_MS,
-    );
     const morphDurationMs = readDurationVar(
       hostStyles,
       '--mat-expressive-loading-indicator-morph-step-duration',
@@ -142,11 +149,6 @@ export class MatExpressiveLoadingIndicator {
       hostStyles,
       '--mat-expressive-loading-indicator-rotation-duration',
       DEFAULT_ROTATION_DURATION_MS,
-    );
-    const entryScaleFrom = readNumberVar(
-      hostStyles,
-      '--mat-expressive-loading-indicator-entry-scale-from',
-      DEFAULT_ENTRY_SCALE_FROM,
     );
 
     // CustomEase is idempotent on the same name – cheap to call repeatedly.
@@ -162,28 +164,16 @@ export class MatExpressiveLoadingIndicator {
       (context) => {
         const reduceMotion = !!context.conditions?.['reduceMotion'];
 
-        gsap.set(svg, {
-          transformOrigin: '50% 50%',
-          rotation: 0,
-          scale: 1,
-          autoAlpha: 1,
-        });
-        gsap.set(path, { attr: { d: shapes[0] } });
+        // Rotate the path (not the SVG) so the CSS keyframe scale on the
+        // enclosing SVG element used by `animate.enter` / `animate.leave`
+        // never fights with GSAP's transform.
+        gsap.set(path, { svgOrigin: SVG_ROTATION_ORIGIN, rotation: 0 });
 
         if (reduceMotion) {
           return;
         }
 
-        gsap.set(svg, { autoAlpha: 0, scale: entryScaleFrom });
-
-        gsap.to(svg, {
-          autoAlpha: 1,
-          scale: 1,
-          duration: entryDurationMs / 1000,
-          ease: 'power2.out',
-        });
-
-        gsap.to(svg, {
+        gsap.to(path, {
           rotation: 360,
           duration: rotationDurationMs / 1000,
           ease: 'none',
@@ -211,13 +201,6 @@ export class MatExpressiveLoadingIndicator {
 
 function readDurationVar(styles: CSSStyleDeclaration, name: string, fallback: number): number {
   return parseCssDuration(styles.getPropertyValue(name), fallback);
-}
-
-function readNumberVar(styles: CSSStyleDeclaration, name: string, fallback: number): number {
-  const trimmed = styles.getPropertyValue(name).trim();
-  if (!trimmed) return fallback;
-  const parsed = Number.parseFloat(trimmed);
-  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function parseCssDuration(value: string, fallback: number): number {

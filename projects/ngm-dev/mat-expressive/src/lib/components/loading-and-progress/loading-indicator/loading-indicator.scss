@@ -20,35 +20,48 @@
   // the GSAP tweens / timelines, so overriding a variable also retunes the
   // animation. The morph/rotation values track the selected speed via the
   // `[data-speed='…']` overrides below.
+  //
+  // - `entry-duration` / `exit-duration` – the (animate.enter) / (animate.leave) GSAP tweens.
+  // - `entry-scale-from` – starting scale for the entry tween and target for the exit tween.
+  // - `morph-step-duration` – how long each per-step spring tween runs.
+  // - `morph-step-interval` – time between morph step starts; the difference
+  //   between this and `morph-step-duration` is the pause that follows the
+  //   spring (mirrors Compose's `MorphIntervalMillis`).
+  // - `rotation-duration` – one full revolution of the continuous linear
+  //   background rotation (matches Compose's `GlobalRotationDurationMillis`).
   --mat-expressive-loading-indicator-entry-duration: 200ms;
   --mat-expressive-loading-indicator-exit-duration: 150ms;
   --mat-expressive-loading-indicator-entry-scale-from: 0.85;
   --mat-expressive-loading-indicator-morph-step-duration: 350ms;
-  --mat-expressive-loading-indicator-rotation-duration: 2450ms;
+  --mat-expressive-loading-indicator-morph-step-interval: 500ms;
+  --mat-expressive-loading-indicator-rotation-duration: 3500ms;
 
   // Speed presets – each maps to one of the M3 Expressive spatial spring
   // tokens. The associated cubic-bezier ease is registered with GSAP in the
   // component itself; here we just keep the durations in step with the
   // spring's duration token, with the rotation period set to a full morph
-  // loop so the spin and morph never drift against each other.
+  // loop (interval × 7 shapes) so the spin and morph never drift against
+  // each other. The `default` row matches the Compose reference exactly
+  // (`MorphIntervalMillis = 650`, ~500ms spring), and the others scale
+  // proportionally.
   &[data-speed='fast'] {
     --mat-expressive-loading-indicator-morph-step-duration: 350ms;
-    --mat-expressive-loading-indicator-rotation-duration: 2450ms; // 7 × 350ms
+    --mat-expressive-loading-indicator-morph-step-interval: 500ms;
+    --mat-expressive-loading-indicator-rotation-duration: 3500ms; // 7 × 500ms
   }
 
   &[data-speed='default'] {
     --mat-expressive-loading-indicator-morph-step-duration: 500ms;
-    --mat-expressive-loading-indicator-rotation-duration: 3500ms; // 7 × 500ms
+    --mat-expressive-loading-indicator-morph-step-interval: 650ms;
+    --mat-expressive-loading-indicator-rotation-duration: 4550ms; // 7 × 650ms
   }
 
   &[data-speed='slow'] {
     --mat-expressive-loading-indicator-morph-step-duration: 650ms;
-    --mat-expressive-loading-indicator-rotation-duration: 4550ms; // 7 × 650ms
+    --mat-expressive-loading-indicator-morph-step-interval: 845ms;
+    --mat-expressive-loading-indicator-rotation-duration: 5915ms; // 7 × 845ms
   }
 
-  // The host is layout-only. The visual indicator lives on the inner
-  // wrapper (`.mat-expressive-loading-indicator-container`), which is what
-  // GSAP fades and scales for entry/exit.
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -81,5 +94,12 @@
     height: var(--mat-expressive-loading-indicator-active-indicator-size);
     color: inherit;
     overflow: visible;
+  }
+
+  &-rotator {
+    // Receives the linear background rotation tween; rotated around the SVG
+    // viewBox centre via GSAP's `svgOrigin`. No CSS needed beyond letting
+    // GSAP write the `transform` attribute.
+    transform-box: fill-box;
   }
 }

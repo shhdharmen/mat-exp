@@ -30,28 +30,38 @@ function registerGsapPluginsOnce(): void {
 
 /**
  * M3 Expressive spatial spring tokens. Each speed preset maps to one cubic
- * bezier (registered with GSAP as a `CustomEase`) and one per-morph-step
- * duration in milliseconds. The rotation period is kept in sync with the
- * morph loop by being a multiple of the per-step duration.
+ * bezier (registered with GSAP as a `CustomEase`), a spring duration (how
+ * long the per-step spring tween runs) and an interval (how long the entire
+ * step takes including the pause that follows the spring). The defaults
+ * mirror the Material 3 reference implementation in Jetpack Compose
+ * (`spring(dampingRatio = 0.6f, stiffness = 200f)` + `MorphIntervalMillis = 650`).
  */
 const EXPRESSIVE_SPATIAL_SPRINGS: Record<
   MatExpressiveLoadingIndicatorSpeed,
-  { readonly ease: string; readonly bezier: string; readonly durationMs: number }
+  {
+    readonly ease: string;
+    readonly bezier: string;
+    readonly durationMs: number;
+    readonly intervalMs: number;
+  }
 > = {
   fast: {
     ease: 'mat-expressive-fast-spatial',
     bezier: '0.42, 1.67, 0.21, 0.90',
     durationMs: 350,
+    intervalMs: 500,
   },
   default: {
     ease: 'mat-expressive-default-spatial',
     bezier: '0.38, 1.21, 0.22, 1.00',
     durationMs: 500,
+    intervalMs: 650,
   },
   slow: {
     ease: 'mat-expressive-slow-spatial',
     bezier: '0.39, 1.29, 0.35, 0.98',
     durationMs: 650,
+    intervalMs: 845,
   },
 };
 
@@ -64,8 +74,15 @@ function registerExpressiveEasesOnce(): void {
   expressiveEasesRegistered = true;
 }
 
-/** SVG coordinate origin used for path rotation – centre of the shared viewBox. */
+/** SVG coordinate origin used for path / group rotation – centre of the shared viewBox. */
 const SVG_ROTATION_ORIGIN = '190 190';
+
+/**
+ * Per-morph rotation kick. Mirrors `QuarterRotation = FullRotation / 4f` in
+ * the Compose reference; combined with the spring overshoot, this is what
+ * produces the "bounce" visible at each shape transition.
+ */
+const ROTATION_KICK_PER_STEP_DEG = 90;
 
 /** Defaults sourced from the Material 3 Expressive loading indicator spec. */
 const DEFAULT_ENTRY_DURATION_MS = 200;
@@ -85,10 +102,16 @@ const DEFAULT_ENTRY_SCALE_FROM = 0.85;
  * - **Exit** – `(animate.leave)` runs the inverse tween over ~150ms
  *   (`power2.in`); Angular waits for `animationComplete()` before detaching
  *   the element from the DOM.
- * - **Rotation & shape morph** – set up inside a reactive `effect()` so they
- *   re-arm whenever the {@linkcode speed} input changes. Uses GSAP's
- *   `MorphSVGPlugin` to reconcile differing anchor counts and `CustomEase`
- *   for the three M3 Expressive spatial springs.
+ * - **Rotation & shape morph** – modelled on the Compose Material3
+ *   `LoadingIndicator` choreography:
+ *   - a continuous **linear background rotation** on a wrapper `<g>`
+ *     (`rotationDurationMs` per full revolution),
+ *   - on top of it, a **per-step spring** that morphs the inner `<path>` to
+ *     the next shape **and** kicks its rotation by 90°, eased through one of
+ *     the M3 Expressive spatial spring cubic-bezier presets. The spring's
+ *     overshoot is what produces the visible bounce at each morph boundary
+ *     (the path momentarily extrapolates past the target shape and the
+ *     rotation momentarily overshoots past 90° before settling).
  *
  * `prefers-reduced-motion: reduce` is honoured on every layer: the entry /
  * exit tweens short-circuit to `event.animationComplete()`, and the
@@ -124,7 +147,9 @@ const DEFAULT_ENTRY_SCALE_FROM = 0.85;
         focusable="false"
         aria-hidden="true"
       >
-        <path #path [attr.d]="shapes[0]" fill="currentColor"></path>
+        <g #rotator class="mat-expressive-loading-indicator-rotator">
+          <path #path [attr.d]="shapes[0]" fill="currentColor"></path>
+        </g>
       </svg>
     </div>
   `,
@@ -176,6 +201,7 @@ export class MatExpressiveLoadingIndicator {
   public readonly viewBox = MAT_EXPRESSIVE_LOADING_INDICATOR_VIEW_BOX;
 
   private readonly containerRef = viewChild<ElementRef<HTMLDivElement>>('container');
+  private readonly rotatorRef = viewChild<ElementRef<SVGGElement>>('rotator');
   private readonly pathRef = viewChild<ElementRef<SVGPathElement>>('path');
   private readonly hostRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -189,15 +215,16 @@ export class MatExpressiveLoadingIndicator {
     registerExpressiveEasesOnce();
 
     // The rotation + morph timelines are reactive: they rebuild whenever the
-    // `speed` input changes (or the viewChild path ref becomes available).
+    // `speed` input changes (or the viewChild refs become available).
     // `onCleanup` reverts the previous `gsap.matchMedia` context, so we never
     // leak running tweens across speed changes or component destruction.
     effect((onCleanup) => {
       const speed = this.speed();
       const pathEl = this.pathRef()?.nativeElement;
-      if (!pathEl) return;
+      const rotatorEl = this.rotatorRef()?.nativeElement;
+      if (!pathEl || !rotatorEl) return;
 
-      const mm = this.setupRotationAndMorph(pathEl, speed);
+      const mm = this.setupRotationAndMorph(rotatorEl, pathEl, speed);
       onCleanup(() => mm.revert());
     });
   }
@@ -293,6 +320,7 @@ export class MatExpressiveLoadingIndicator {
   }
 
   private setupRotationAndMorph(
+    rotator: SVGGElement,
     path: SVGPathElement,
     speed: MatExpressiveLoadingIndicatorSpeed,
   ): gsap.MatchMedia {
@@ -305,13 +333,21 @@ export class MatExpressiveLoadingIndicator {
       '--mat-expressive-loading-indicator-morph-step-duration',
       spring.durationMs,
     );
-    // Keep the rotation period locked to the morph loop period so the spin
-    // never visibly drifts against the morph cycle.
+    const morphIntervalMs = readDurationVar(
+      hostStyles,
+      '--mat-expressive-loading-indicator-morph-step-interval',
+      spring.intervalMs,
+    );
+    // Keep the background rotation period locked to a full morph loop so the
+    // linear spin and the per-step spring kicks don't visibly drift against
+    // each other.
     const rotationDurationMs = readDurationVar(
       hostStyles,
       '--mat-expressive-loading-indicator-rotation-duration',
-      spring.durationMs * shapes.length,
+      morphIntervalMs * shapes.length,
     );
+
+    const pauseMs = Math.max(0, morphIntervalMs - morphDurationMs);
 
     const mm = gsap.matchMedia();
 
@@ -323,9 +359,9 @@ export class MatExpressiveLoadingIndicator {
       (context) => {
         const reduceMotion = !!context.conditions?.['reduceMotion'];
 
-        // Reset path state before re-arming the loop – needed when re-running
-        // the effect because of a `speed` change so the new tweens start from
-        // a known baseline.
+        // Reset transforms / shape to a known baseline so a speed change
+        // doesn't leave us mid-spring on an unknown rotation.
+        gsap.set(rotator, { svgOrigin: SVG_ROTATION_ORIGIN, rotation: 0 });
         gsap.set(path, { svgOrigin: SVG_ROTATION_ORIGIN, rotation: 0 });
         gsap.set(path, { attr: { d: shapes[0] } });
 
@@ -333,25 +369,50 @@ export class MatExpressiveLoadingIndicator {
           return;
         }
 
-        gsap.to(path, {
+        // Continuous slow linear rotation on the wrapper `<g>`. Matches
+        // Compose's `globalRotation` (linear tween from 0 to 360° on
+        // `infiniteRepeatable`).
+        gsap.to(rotator, {
           rotation: 360,
           duration: rotationDurationMs / 1000,
           ease: 'none',
           repeat: -1,
         });
 
-        // Cycle: shapes[0] → shapes[1] → … → shapes[n-1] → shapes[0]. MorphSVG
-        // automatically reconciles paths with different anchor counts, so the
-        // 12-sided cookie morphing into a pentagon or oval stays smooth.
-        const morphTimeline = gsap.timeline({ repeat: -1, defaults: { overwrite: false } });
-        for (let i = 0; i < shapes.length; i++) {
-          const nextShape = shapes[(i + 1) % shapes.length];
-          morphTimeline.to(path, {
-            morphSVG: nextShape,
+        // Per-step spring on the inner `<path>` – the "bounce". Each step
+        // tweens the path's `d` (morphSVG) AND its rotation by 90° together,
+        // through the M3 Expressive spatial spring cubic-bezier (whose y > 1
+        // control point produces the overshoot that visually reads as a
+        // bounce on both morph and rotation).
+        //
+        // We drive this with a recursive `onComplete` rather than a
+        // `gsap.timeline({ repeat: -1 })` because the per-step rotation
+        // accumulates absolute degrees (90, 180, 270, …) and 7 × 90° = 630°
+        // is not a multiple of 360° – a repeating timeline would snap the
+        // rotation back to 0 on loop and produce a visible jump.
+        let absoluteRotation = 0;
+        let stepIndex = 0;
+
+        const playStep = (): void => {
+          stepIndex = (stepIndex + 1) % shapes.length;
+          absoluteRotation += ROTATION_KICK_PER_STEP_DEG;
+
+          gsap.to(path, {
+            morphSVG: shapes[stepIndex],
+            rotation: absoluteRotation,
             duration: morphDurationMs / 1000,
             ease: spring.ease,
+            onComplete: () => {
+              if (pauseMs > 0) {
+                gsap.delayedCall(pauseMs / 1000, playStep);
+              } else {
+                playStep();
+              }
+            },
           });
-        }
+        };
+
+        playStep();
       },
     );
 

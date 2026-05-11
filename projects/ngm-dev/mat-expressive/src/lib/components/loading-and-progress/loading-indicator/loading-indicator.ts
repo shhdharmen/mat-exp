@@ -1,16 +1,18 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
+  effect,
   ElementRef,
   inject,
   input,
+  PLATFORM_ID,
   viewChild,
 } from '@angular/core';
 import { gsap } from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
+import { type MatExpressiveLoadingIndicatorSpeed } from '../../../types';
 import { MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS } from './loading-indicator.options';
 import {
   MAT_EXPRESSIVE_LOADING_INDICATOR_SHAPES,
@@ -25,16 +27,40 @@ function registerGsapPluginsOnce(): void {
 }
 
 /**
- * Name of the M3 Expressive "fast spatial" cubic-bezier ease registered with
- * GSAP. Mirrors the Material 3 motion spring used for the shape morph on the
- * loading indicator (`cubic-bezier(0.42, 1.67, 0.21, 0.90)`).
+ * M3 Expressive spatial spring tokens. Each speed preset maps to one cubic
+ * bezier (registered with GSAP as a `CustomEase`) and one per-morph-step
+ * duration in milliseconds. The rotation period is kept in sync with the
+ * morph loop by being a multiple of the per-step duration.
  */
-const EXPRESSIVE_FAST_SPATIAL_EASE = 'mat-expressive-fast-spatial';
-const EXPRESSIVE_FAST_SPATIAL_BEZIER = '0.42, 1.67, 0.21, 0.90';
+const EXPRESSIVE_SPATIAL_SPRINGS: Record<
+  MatExpressiveLoadingIndicatorSpeed,
+  { readonly ease: string; readonly bezier: string; readonly durationMs: number }
+> = {
+  fast: {
+    ease: 'mat-expressive-fast-spatial',
+    bezier: '0.42, 1.67, 0.21, 0.90',
+    durationMs: 350,
+  },
+  default: {
+    ease: 'mat-expressive-default-spatial',
+    bezier: '0.38, 1.21, 0.22, 1.00',
+    durationMs: 500,
+  },
+  slow: {
+    ease: 'mat-expressive-slow-spatial',
+    bezier: '0.39, 1.29, 0.35, 0.98',
+    durationMs: 650,
+  },
+};
 
-/** Defaults sourced from the Material 3 Expressive loading indicator spec. */
-const DEFAULT_MORPH_STEP_DURATION_MS = 340;
-const DEFAULT_ROTATION_DURATION_MS = 2400;
+let expressiveEasesRegistered = false;
+function registerExpressiveEasesOnce(): void {
+  if (expressiveEasesRegistered) return;
+  for (const { ease, bezier } of Object.values(EXPRESSIVE_SPATIAL_SPRINGS)) {
+    CustomEase.create(ease, bezier);
+  }
+  expressiveEasesRegistered = true;
+}
 
 /** SVG coordinate origin used for path rotation – centre of the shared viewBox. */
 const SVG_ROTATION_ORIGIN = '190 190';
@@ -45,14 +71,13 @@ const SVG_ROTATION_ORIGIN = '190 190';
  *
  * Animation responsibilities are split between Angular and GSAP:
  *
- * - **Entry / exit** – handled by the native Angular animations API (`animate.enter`
- *   and `animate.leave`, available in Angular v20.2+) via CSS keyframes, so the
- *   fade + scale choreography is fully declarative and the consumer just has
- *   to toggle the indicator with `@if` to get the M3 spec timings.
+ * - **Entry / exit** – handled by the native Angular animations API
+ *   (`animate.enter` / `animate.leave`, available in Angular v20.2+) via CSS
+ *   keyframes, so the fade + scale choreography is fully declarative.
  * - **Rotation & shape morph** – driven by GSAP (`MorphSVGPlugin` for the path
- *   morph, `CustomEase` for the expressive fast-spatial spring) because they
- *   need continuous, infinite, interruptible motion with anchor-point
- *   reconciliation between paths.
+ *   morph, `CustomEase` for the expressive spatial springs). The morph cubic
+ *   bezier and timing depend on the {@linkcode speed} input which selects one
+ *   of the three M3 Expressive spatial springs (fast / default / slow).
  *
  * `prefers-reduced-motion: reduce` is honoured by both layers: the keyframe
  * animations are disabled via CSS, and the GSAP rotation/morph timelines are
@@ -69,12 +94,12 @@ const SVG_ROTATION_ORIGIN = '190 190';
     'aria-valuemax': '100',
     'aria-busy': 'true',
     '[attr.aria-label]': 'ariaLabel()',
+    '[attr.data-speed]': 'speed()',
     '[class]': 'matExpressiveLoadingIndicatorClass',
     '[class.mat-expressive-loading-indicator-contained]': 'config() === "contained"',
   },
   template: `
     <svg
-      #svg
       class="mat-expressive-loading-indicator-content"
       animate.enter="mat-expressive-loading-indicator-entering"
       animate.leave="mat-expressive-loading-indicator-leaving"
@@ -106,6 +131,19 @@ export class MatExpressiveLoadingIndicator {
   );
 
   /**
+   * Speed preset for the shape morph and rotation animation. Each preset maps
+   * to one of the M3 Expressive spatial spring tokens (`fast`, `default`,
+   * `slow`) – see {@linkcode MatExpressiveLoadingIndicatorSpeed}.
+   *
+   * Changing this signal at runtime tears down the active GSAP timelines and
+   * re-builds them with the new spring, so the indicator stays in sync with
+   * the new motion language without recreating the component.
+   */
+  public readonly speed = input(
+    inject(MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS).speed ?? 'fast',
+  );
+
+  /**
    * @internal
    */
   public readonly matExpressiveLoadingIndicatorClass = 'mat-expressive-loading-indicator';
@@ -123,36 +161,52 @@ export class MatExpressiveLoadingIndicator {
    */
   public readonly viewBox = MAT_EXPRESSIVE_LOADING_INDICATOR_VIEW_BOX;
 
-  private readonly svgRef = viewChild.required<ElementRef<SVGSVGElement>>('svg');
-  private readonly pathRef = viewChild.required<ElementRef<SVGPathElement>>('path');
+  private readonly pathRef = viewChild<ElementRef<SVGPathElement>>('path');
   private readonly hostRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   constructor() {
-    afterNextRender(() => this.initAnimations());
+    if (!this.isBrowser) {
+      return;
+    }
+
+    registerGsapPluginsOnce();
+    registerExpressiveEasesOnce();
+
+    // A reactive effect re-wires the GSAP timelines whenever the `speed`
+    // input or the `viewChild` path reference changes. The `onCleanup`
+    // hook is invoked both when the effect re-runs (speed change) and when
+    // the component is destroyed, so we never leak running tweens.
+    effect((onCleanup) => {
+      const speed = this.speed();
+      const pathEl = this.pathRef()?.nativeElement;
+      if (!pathEl) return;
+
+      const mm = this.setupGsapTimelines(pathEl, speed);
+      onCleanup(() => mm.revert());
+    });
   }
 
-  private initAnimations(): void {
-    registerGsapPluginsOnce();
-
-    const path = this.pathRef().nativeElement;
-    const host = this.hostRef.nativeElement;
+  private setupGsapTimelines(
+    path: SVGPathElement,
+    speed: MatExpressiveLoadingIndicatorSpeed,
+  ): gsap.MatchMedia {
+    const spring = EXPRESSIVE_SPATIAL_SPRINGS[speed];
     const shapes = this.shapes;
 
-    const hostStyles = getComputedStyle(host);
+    const hostStyles = getComputedStyle(this.hostRef.nativeElement);
     const morphDurationMs = readDurationVar(
       hostStyles,
       '--mat-expressive-loading-indicator-morph-step-duration',
-      DEFAULT_MORPH_STEP_DURATION_MS,
+      spring.durationMs,
     );
+    // Keep the rotation period locked to the morph loop period so the spin
+    // never visibly drifts against the morph cycle.
     const rotationDurationMs = readDurationVar(
       hostStyles,
       '--mat-expressive-loading-indicator-rotation-duration',
-      DEFAULT_ROTATION_DURATION_MS,
+      spring.durationMs * shapes.length,
     );
-
-    // CustomEase is idempotent on the same name – cheap to call repeatedly.
-    CustomEase.create(EXPRESSIVE_FAST_SPATIAL_EASE, EXPRESSIVE_FAST_SPATIAL_BEZIER);
 
     const mm = gsap.matchMedia();
 
@@ -164,10 +218,11 @@ export class MatExpressiveLoadingIndicator {
       (context) => {
         const reduceMotion = !!context.conditions?.['reduceMotion'];
 
-        // Rotate the path (not the SVG) so the CSS keyframe scale on the
-        // enclosing SVG element used by `animate.enter` / `animate.leave`
-        // never fights with GSAP's transform.
+        // Reset path state before re-arming the loop – needed when re-running
+        // the effect because of a `speed` change so the new tweens start from
+        // a known baseline.
         gsap.set(path, { svgOrigin: SVG_ROTATION_ORIGIN, rotation: 0 });
+        gsap.set(path, { attr: { d: shapes[0] } });
 
         if (reduceMotion) {
           return;
@@ -189,13 +244,13 @@ export class MatExpressiveLoadingIndicator {
           morphTimeline.to(path, {
             morphSVG: nextShape,
             duration: morphDurationMs / 1000,
-            ease: EXPRESSIVE_FAST_SPATIAL_EASE,
+            ease: spring.ease,
           });
         }
       },
     );
 
-    this.destroyRef.onDestroy(() => mm.revert());
+    return mm;
   }
 }
 

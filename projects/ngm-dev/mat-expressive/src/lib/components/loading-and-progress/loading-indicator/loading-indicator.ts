@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
+  type AnimationCallbackEvent,
   ChangeDetectionStrategy,
   Component,
   effect,
@@ -65,24 +66,32 @@ function registerExpressiveEasesOnce(): void {
 /** SVG coordinate origin used for path rotation – centre of the shared viewBox. */
 const SVG_ROTATION_ORIGIN = '190 190';
 
+/** Defaults sourced from the Material 3 Expressive loading indicator spec. */
+const DEFAULT_ENTRY_DURATION_MS = 200;
+const DEFAULT_EXIT_DURATION_MS = 150;
+const DEFAULT_ENTRY_SCALE_FROM = 0.85;
+
 /**
  * Material 3 Expressive loading indicator. Renders a continuously morphing and
  * rotating shape that loops through the seven canonical M3 shapes.
  *
- * Animation responsibilities are split between Angular and GSAP:
+ * All animation work is driven by GSAP – there are no CSS keyframes:
  *
- * - **Entry / exit** – handled by the native Angular animations API
- *   (`animate.enter` / `animate.leave`, available in Angular v20.2+) via CSS
- *   keyframes, so the fade + scale choreography is fully declarative.
- * - **Rotation & shape morph** – driven by GSAP (`MorphSVGPlugin` for the path
- *   morph, `CustomEase` for the expressive spatial springs). The morph cubic
- *   bezier and timing depend on the {@linkcode speed} input which selects one
- *   of the three M3 Expressive spatial springs (fast / default / slow).
+ * - **Entry** – Angular's `(animate.enter)` event binding hands control to
+ *   GSAP, which fades the wrapper from `autoAlpha: 0 / scale: 0.85 → 1` over
+ *   ~200ms (`power2.out`) and calls `event.animationComplete()` once the
+ *   tween finishes.
+ * - **Exit** – `(animate.leave)` runs the inverse tween over ~150ms
+ *   (`power2.in`); Angular waits for `animationComplete()` before detaching
+ *   the element from the DOM.
+ * - **Rotation & shape morph** – set up inside a reactive `effect()` so they
+ *   re-arm whenever the {@linkcode speed} input changes. Uses GSAP's
+ *   `MorphSVGPlugin` to reconcile differing anchor counts and `CustomEase`
+ *   for the three M3 Expressive spatial springs.
  *
- * `prefers-reduced-motion: reduce` is honoured by both layers: the keyframe
- * animations are disabled via CSS, and the GSAP rotation/morph timelines are
- * skipped via `gsap.matchMedia()`. In that case the indicator renders a
- * single static shape.
+ * `prefers-reduced-motion: reduce` is honoured on every layer: the entry /
+ * exit tweens short-circuit to `event.animationComplete()`, and the
+ * rotation / morph timelines are skipped via `gsap.matchMedia()`.
  */
 @Component({
   selector: 'mat-expressive-loading-indicator',
@@ -96,21 +105,26 @@ const SVG_ROTATION_ORIGIN = '190 190';
     '[attr.aria-label]': 'ariaLabel()',
     '[attr.data-speed]': 'speed()',
     '[class]': 'matExpressiveLoadingIndicatorClass',
-    '[class.mat-expressive-loading-indicator-contained]': 'config() === "contained"',
   },
   template: `
-    <svg
-      class="mat-expressive-loading-indicator-content"
-      animate.enter="mat-expressive-loading-indicator-entering"
-      animate.leave="mat-expressive-loading-indicator-leaving"
-      [attr.viewBox]="viewBox"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      focusable="false"
-      aria-hidden="true"
+    <div
+      #container
+      class="mat-expressive-loading-indicator-container"
+      [class.mat-expressive-loading-indicator-container-contained]="config() === 'contained'"
+      (animate.enter)="onEnter($event)"
+      (animate.leave)="onLeave($event)"
     >
-      <path #path [attr.d]="shapes[0]" fill="currentColor"></path>
-    </svg>
+      <svg
+        class="mat-expressive-loading-indicator-svg"
+        [attr.viewBox]="viewBox"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        focusable="false"
+        aria-hidden="true"
+      >
+        <path #path [attr.d]="shapes[0]" fill="currentColor"></path>
+      </svg>
+    </div>
   `,
 })
 export class MatExpressiveLoadingIndicator {
@@ -161,6 +175,7 @@ export class MatExpressiveLoadingIndicator {
    */
   public readonly viewBox = MAT_EXPRESSIVE_LOADING_INDICATOR_VIEW_BOX;
 
+  private readonly containerRef = viewChild<ElementRef<HTMLDivElement>>('container');
   private readonly pathRef = viewChild<ElementRef<SVGPathElement>>('path');
   private readonly hostRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -173,21 +188,111 @@ export class MatExpressiveLoadingIndicator {
     registerGsapPluginsOnce();
     registerExpressiveEasesOnce();
 
-    // A reactive effect re-wires the GSAP timelines whenever the `speed`
-    // input or the `viewChild` path reference changes. The `onCleanup`
-    // hook is invoked both when the effect re-runs (speed change) and when
-    // the component is destroyed, so we never leak running tweens.
+    // The rotation + morph timelines are reactive: they rebuild whenever the
+    // `speed` input changes (or the viewChild path ref becomes available).
+    // `onCleanup` reverts the previous `gsap.matchMedia` context, so we never
+    // leak running tweens across speed changes or component destruction.
     effect((onCleanup) => {
       const speed = this.speed();
       const pathEl = this.pathRef()?.nativeElement;
       if (!pathEl) return;
 
-      const mm = this.setupGsapTimelines(pathEl, speed);
+      const mm = this.setupRotationAndMorph(pathEl, speed);
       onCleanup(() => mm.revert());
     });
   }
 
-  private setupGsapTimelines(
+  /**
+   * @internal
+   *
+   * Bound to the wrapper's `(animate.enter)`. Drives the entry fade + scale
+   * via a GSAP tween and notifies Angular when the animation completes.
+   */
+  onEnter(event: AnimationCallbackEvent): void {
+    const container = this.containerRef()?.nativeElement;
+    if (!this.isBrowser || !container) {
+      event.animationComplete();
+      return;
+    }
+
+    if (prefersReducedMotion()) {
+      gsap.set(container, { autoAlpha: 1, scale: 1 });
+      event.animationComplete();
+      return;
+    }
+
+    const { durationMs, scaleFrom } = this.readEntryExitTokens();
+
+    gsap.fromTo(
+      container,
+      { autoAlpha: 0, scale: scaleFrom, transformOrigin: '50% 50%' },
+      {
+        autoAlpha: 1,
+        scale: 1,
+        duration: durationMs / 1000,
+        ease: 'power2.out',
+        onComplete: () => event.animationComplete(),
+      },
+    );
+  }
+
+  /**
+   * @internal
+   *
+   * Bound to the wrapper's `(animate.leave)`. Drives the exit fade + scale
+   * via a GSAP tween and notifies Angular when the animation completes so the
+   * element can be detached from the DOM.
+   */
+  onLeave(event: AnimationCallbackEvent): void {
+    const container = this.containerRef()?.nativeElement;
+    if (!this.isBrowser || !container) {
+      event.animationComplete();
+      return;
+    }
+
+    if (prefersReducedMotion()) {
+      event.animationComplete();
+      return;
+    }
+
+    const { exitDurationMs, scaleFrom } = this.readEntryExitTokens();
+
+    gsap.to(container, {
+      autoAlpha: 0,
+      scale: scaleFrom,
+      transformOrigin: '50% 50%',
+      duration: exitDurationMs / 1000,
+      ease: 'power2.in',
+      onComplete: () => event.animationComplete(),
+    });
+  }
+
+  private readEntryExitTokens(): {
+    durationMs: number;
+    exitDurationMs: number;
+    scaleFrom: number;
+  } {
+    const styles = getComputedStyle(this.hostRef.nativeElement);
+    return {
+      durationMs: readDurationVar(
+        styles,
+        '--mat-expressive-loading-indicator-entry-duration',
+        DEFAULT_ENTRY_DURATION_MS,
+      ),
+      exitDurationMs: readDurationVar(
+        styles,
+        '--mat-expressive-loading-indicator-exit-duration',
+        DEFAULT_EXIT_DURATION_MS,
+      ),
+      scaleFrom: readNumberVar(
+        styles,
+        '--mat-expressive-loading-indicator-entry-scale-from',
+        DEFAULT_ENTRY_SCALE_FROM,
+      ),
+    };
+  }
+
+  private setupRotationAndMorph(
     path: SVGPathElement,
     speed: MatExpressiveLoadingIndicatorSpeed,
   ): gsap.MatchMedia {
@@ -254,8 +359,23 @@ export class MatExpressiveLoadingIndicator {
   }
 }
 
+function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
+
 function readDurationVar(styles: CSSStyleDeclaration, name: string, fallback: number): number {
   return parseCssDuration(styles.getPropertyValue(name), fallback);
+}
+
+function readNumberVar(styles: CSSStyleDeclaration, name: string, fallback: number): number {
+  const trimmed = styles.getPropertyValue(name).trim();
+  if (!trimmed) return fallback;
+  const parsed = Number.parseFloat(trimmed);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function parseCssDuration(value: string, fallback: number): number {

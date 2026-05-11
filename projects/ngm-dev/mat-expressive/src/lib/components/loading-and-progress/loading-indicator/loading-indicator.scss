@@ -16,15 +16,15 @@
   --mat-expressive-loading-indicator-color: var(--mat-sys-on-primary-container);
   --mat-expressive-loading-indicator-container-color: var(--mat-sys-primary-container);
 
-  // Motion – entry/exit feed the CSS keyframes used by Angular's
-  // `animate.enter` / `animate.leave`. The morph/rotation values are read
-  // back by the component when wiring up the GSAP timelines. Their default
-  // values are speed-aware: see the `[data-speed='…']` overrides below.
+  // Motion tokens. Every value here is read by the component when wiring up
+  // the GSAP tweens / timelines, so overriding a variable also retunes the
+  // animation. The morph/rotation values track the selected speed via the
+  // `[data-speed='…']` overrides below.
   --mat-expressive-loading-indicator-entry-duration: 200ms;
   --mat-expressive-loading-indicator-exit-duration: 150ms;
+  --mat-expressive-loading-indicator-entry-scale-from: 0.85;
   --mat-expressive-loading-indicator-morph-step-duration: 350ms;
   --mat-expressive-loading-indicator-rotation-duration: 2450ms;
-  --mat-expressive-loading-indicator-entry-scale-from: 0.85;
 
   // Speed presets – each maps to one of the M3 Expressive spatial spring
   // tokens. The associated cubic-bezier ease is registered with GSAP in the
@@ -46,6 +46,9 @@
     --mat-expressive-loading-indicator-rotation-duration: 4550ms; // 7 × 650ms
   }
 
+  // The host is layout-only. The visual indicator lives on the inner
+  // wrapper (`.mat-expressive-loading-indicator-container`), which is what
+  // GSAP fades and scales for entry/exit.
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -55,75 +58,28 @@
   min-height: var(--mat-expressive-loading-indicator-min-size);
   max-width: var(--mat-expressive-loading-indicator-max-size);
   max-height: var(--mat-expressive-loading-indicator-max-size);
-  border-radius: 50%;
-  color: var(--mat-expressive-loading-indicator-color);
 
-  &-contained {
-    background-color: var(--mat-expressive-loading-indicator-container-color);
+  &-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--mat-expressive-loading-indicator-color);
+    transform-origin: 50% 50%;
+    will-change: transform, opacity;
+
+    &-contained {
+      background-color: var(--mat-expressive-loading-indicator-container-color);
+    }
   }
 
-  &-content {
+  &-svg {
     display: block;
     width: var(--mat-expressive-loading-indicator-active-indicator-size);
     height: var(--mat-expressive-loading-indicator-active-indicator-size);
     color: inherit;
     overflow: visible;
-    transform-origin: 50% 50%;
-    will-change: transform, opacity;
-  }
-
-  // Applied by Angular's native `animate.enter` API when the indicator is
-  // added to the DOM. The class is removed automatically when the animation
-  // ends; after that the SVG keeps the "to" keyframe state (opacity 1, no
-  // transform) which is also the regular default.
-  &-entering {
-    animation:
-      mat-expressive-loading-indicator-enter-keyframes
-      var(--mat-expressive-loading-indicator-entry-duration)
-      ease-out;
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
-  // Applied by Angular's native `animate.leave` API while the indicator is
-  // being removed; Angular waits for the animation to complete before
-  // detaching the element. `forwards` keeps the SVG in the faded-out state
-  // until removal so there is no snap-back.
-  &-leaving {
-    animation:
-      mat-expressive-loading-indicator-exit-keyframes
-      var(--mat-expressive-loading-indicator-exit-duration)
-      ease-in
-      forwards;
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-}
-
-@keyframes mat-expressive-loading-indicator-enter-keyframes {
-  from {
-    opacity: 0;
-    transform: scale(var(--mat-expressive-loading-indicator-entry-scale-from, 0.85));
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes mat-expressive-loading-indicator-exit-keyframes {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  to {
-    opacity: 0;
-    transform: scale(var(--mat-expressive-loading-indicator-entry-scale-from, 0.85));
   }
 }

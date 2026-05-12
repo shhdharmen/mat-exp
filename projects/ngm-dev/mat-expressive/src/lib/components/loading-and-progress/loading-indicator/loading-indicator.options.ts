@@ -38,7 +38,7 @@ export const MAT_EXPRESSIVE_LOADING_INDICATOR_DEFAULT_OPTIONS: MatExpressiveLoad
   {
     config: 'default',
     ariaLabel: 'Loading',
-    speed: 'fast',
+    speed: 'default',
   };
 
 const [_MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS, _provideMatExpressiveLoadingIndicatorOptions] =

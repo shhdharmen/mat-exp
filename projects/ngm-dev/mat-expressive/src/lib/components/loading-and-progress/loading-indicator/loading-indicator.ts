@@ -149,28 +149,7 @@ const ROTATION_KICK_PER_STEP_DEG = 90;
     '(animate.enter)': 'onEnter($event)',
     '(animate.leave)': 'onLeave($event)',
   },
-  template: `
-    <div
-      #container
-      class="mat-expressive-loading-indicator-container"
-      [class.mat-expressive-loading-indicator-container-contained]="config() === 'contained'"
-    >
-      <svg
-        class="mat-expressive-loading-indicator-svg"
-        [attr.viewBox]="viewBox"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        focusable="false"
-        aria-hidden="true"
-      >
-        <g #rotator class="mat-expressive-loading-indicator-rotator">
-          <g #springRotator class="mat-expressive-loading-indicator-spring-rotator">
-            <path #path [attr.d]="shapes[0]" fill="currentColor"></path>
-          </g>
-        </g>
-      </svg>
-    </div>
-  `,
+  templateUrl: './loading-indicator.html',
 })
 export class MatExpressiveLoadingIndicator {
   /**
@@ -185,9 +164,7 @@ export class MatExpressiveLoadingIndicator {
   /**
    * Accessible label announced by screen readers while the indicator is shown.
    */
-  public readonly ariaLabel = input(
-    inject(MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS).ariaLabel ?? 'Loading',
-  );
+  public readonly ariaLabel = input(inject(MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS).ariaLabel);
 
   /**
    * Speed preset for the shape morph and rotation animation. Each preset maps
@@ -198,7 +175,9 @@ export class MatExpressiveLoadingIndicator {
    * re-builds them with the new spring, so the indicator stays in sync with
    * the new motion language without recreating the component.
    */
-  public readonly speed = input(inject(MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS).speed ?? 'fast');
+  public readonly speed = input(
+    inject(MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS).speed ?? 'default',
+  );
 
   /**
    * @internal

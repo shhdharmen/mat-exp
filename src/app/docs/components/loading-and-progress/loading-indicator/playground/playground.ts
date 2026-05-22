@@ -16,6 +16,7 @@ export class DocsLoadingIndicatorPlayground {
   readonly config = input<MatExpressiveLoadingIndicatorConfig>('default');
   readonly speed = input<MatExpressiveLoadingIndicatorSpeed>('default');
   readonly isIndicatorVisible = signal(true);
+  readonly size = input<number>(48);
 
   toggleIndicator() {
     this.isIndicatorVisible.update((visible) => !visible);

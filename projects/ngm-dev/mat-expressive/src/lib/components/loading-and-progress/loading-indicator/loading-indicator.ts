@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
+  afterRenderEffect,
   type AnimationCallbackEvent,
   ChangeDetectionStrategy,
   Component,
@@ -132,12 +133,12 @@ export class MatExpressiveLoadingIndicator {
     // `speed` input changes (or the viewChild refs become available).
     // `onCleanup` reverts the previous `gsap.matchMedia` context, so we never
     // leak running tweens across speed changes or component destruction.
-    effect((onCleanup) => {
+    afterRenderEffect((onCleanup) => {
       const speed = this.speed();
       const pathEl = this.pathRef()?.nativeElement;
       const rotatorEl = this.rotatorRef()?.nativeElement;
       const springRotatorEl = this.springRotatorRef()?.nativeElement;
-      if (!pathEl || !rotatorEl || !springRotatorEl) return;
+      if (!pathEl || !rotatorEl || !springRotatorEl || !speed) return;
 
       const mm = setupRotationAndMorph(rotatorEl, springRotatorEl, pathEl, speed, this.shapes);
       onCleanup(() => mm.revert());

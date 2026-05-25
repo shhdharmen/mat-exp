@@ -1,59 +1,25 @@
-# ExpressiveAngularMaterial
+# Mat Expressive
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+Mat Expressive is a library that provides a set of components and styles for Angular Material based on the latest Material Design 3 Expressive Design System.
 
-## Development server
+Mat Expressive is neither a replacement for Angular Material nor a fork of Angular Material. It is mainly a collection of:
 
-To start a local development server, run:
+- Styles - These are applied to the existing Angular Material components to make them more expressive and consistent with the latest Material Design 3 Expressive Design System.
+- Directives - Same as styles, but when we need to apply styles to the underlying HTML elements or handle some specific behavior.
+- Components - These are created where we need to create a new component that is not available in Angular Material.
 
-```bash
-ng serve
-```
+## How does it work?
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Mat Expressive uses Angular Material's [`overrides` APIs](https://material.angular.dev/guide/theming#component-tokens) & [CSS variables](https://material.angular.dev/guide/theming-your-components) to achive the desired styles. When a change is not possible with the overrides, Mat Expressive directly applies styles to the underlying HTML elements.
 
-## Code scaffolding
+## Is applying styles to the underlying HTML elements a good idea?
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Well, generally it is not a good idea to apply styles to the underlying HTML elements. However, in the case of Mat Expressive, it is necessary to apply styles to the underlying HTML elements to achieve the desired styles.
 
-```bash
-ng generate component component-name
-```
+We use Angular Material's CSS classes like `.mdc-button` to apply styles to the underlying HTML elements. We also understand that this may break in the future when Angular Material updates their CSS classes.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+But, to accomodate such changes, we will be updating the library to use the new CSS classes as soon as they are released.
 
-```bash
-ng generate --help
-```
+## I do not want to apply styles to the underlying HTML elements.
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+That's toatally fine! But please note that you will not be able to see the full results provided by Mat Expressive. To learn more about how to skip HTML element styles, please refer to the [skipping HTML element styles](/getting-started/installation#skip-html-element-styles) section.

@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Angular-Material-Dev/mat-expressive/compare/v1.0.1...v1.0.2) (2026-05-25)
+
+
+### Bug Fixes
+
+* update Vercel configuration to redirect all traffic to index.html ([cbaab73](https://github.com/Angular-Material-Dev/mat-expressive/commit/cbaab732c827242736f82fe1a15b2752cd286c2a))
+
 ## [1.0.1](https://github.com/Angular-Material-Dev/mat-expressive/compare/v1.0.0...v1.0.1) (2026-05-25)
 
 

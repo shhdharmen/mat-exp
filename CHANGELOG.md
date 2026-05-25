@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Angular-Material-Dev/mat-expressive/compare/v1.0.2...v1.1.0) (2026-05-25)
+
+
+### Features
+
+* replace ng-doc with standard Angular builder and scaffold three-column shell ([8c5700a](https://github.com/Angular-Material-Dev/mat-expressive/commit/8c5700ae97dc08c38232dfdbecc0da9454aa2f2e)), closes [#11](https://github.com/Angular-Material-Dev/mat-expressive/issues/11)
+
 ## [1.0.2](https://github.com/Angular-Material-Dev/mat-expressive/compare/v1.0.1...v1.0.2) (2026-05-25)
 
 

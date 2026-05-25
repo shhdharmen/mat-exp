@@ -1,38 +1,17 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Mat Expressive</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <!--
-    Anti-FODT (flash of default theme) script.
-    Runs synchronously before first paint so the correct theme class is
-    applied before any CSS is applied. This prevents a white flash when
-    the user has previously selected dark mode.
-  -->
-    <script>
-      (function () {
-        try {
-          var stored = localStorage.getItem('theme');
-          if (stored === 'dark') {
-            document.documentElement.classList.add('dark');
-          } else if (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (e) {}
-      })();
-    </script>
-  </head>
-  <body>
-    <app-root></app-root>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>ExpressiveAngularMaterial</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+</body>
 </html>

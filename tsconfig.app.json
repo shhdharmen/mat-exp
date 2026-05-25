@@ -7,12 +7,11 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/ng-doc.config.ts"
+  ],
   "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.ng-doc.ts",
-    "src/**/ng-doc.page.ts",
-    "src/**/ng-doc.category.ts",
-    "src/**/ng-doc.api.ts"
+    "src/**/*.spec.ts"
   ]
 }

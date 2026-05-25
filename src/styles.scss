@@ -1,10 +1,22 @@
 @use '@angular/material' as mat;
 @use '../projects/ngm-dev/mat-expressive/src/lib/styles' as mat-expressive;
+@import '@ng-doc/app/styles/themes/dark.css';
+
+@mixin dark-theme() {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        theme-type: dark,
+      ),
+    )
+  );
+}
 
 html {
   color-scheme: light;
   height: 100%;
-
   @include mat.theme(
     (
       color: (
@@ -15,29 +27,27 @@ html {
       density: 0,
     )
   );
-
   @include mat.system-classes();
   @include mat-expressive.mat-expressive-all-styles();
-
-  &.dark {
+  &[data-theme='auto'] {
+    @media (prefers-color-scheme: dark) {
+      color-scheme: dark;
+    }
+  }
+  &[data-theme='dark'] {
     color-scheme: dark;
-
-    @include mat.theme(
-      (
-        color: (
-          primary: mat.$azure-palette,
-          tertiary: mat.$blue-palette,
-          theme-type: dark,
-        ),
-      )
-    );
   }
 }
 
 body {
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
+  --ng-doc-font-family: var(--mat-sys-body-medium-font);
 
   margin: 0;
   height: 100%;
+}
+
+.ng-doc-demo-controls {
+  display: none;
 }

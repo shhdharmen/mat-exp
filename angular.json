@@ -18,7 +18,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ng-doc/builder:application",
+          "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
@@ -27,26 +27,10 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@ng-doc/app/assets",
-                "output": "assets/ng-doc/app"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/@ng-doc/ui-kit/assets",
-                "output": "assets/ng-doc/ui-kit"
-              },
-              {
-                "glob": "**/*",
-                "input": "ng-doc/mat-expressive-docs/assets",
-                "output": "assets/ng-doc"
-              },
-              {
-                "glob": "**/*",
                 "input": "public"
               }
             ],
-            "styles": ["node_modules/@ng-doc/app/styles/global.css", "src/styles.scss"],
-            "allowedCommonJsDependencies": ["@ng-doc/core"]
+            "styles": ["src/styles/tailwind.css", "src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -73,7 +57,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@ng-doc/builder:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "mat-expressive-docs:build:production"

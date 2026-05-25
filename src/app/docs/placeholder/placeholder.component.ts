@@ -1,0 +1,16 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'app-placeholder',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div class="max-w-2xl">
+      <h1 class="text-3xl font-bold mb-4">Documentation</h1>
+      <p class="text-on-surface-variant">
+        Documentation pages will be rendered here. Use the navigation on the left to browse
+        available sections.
+      </p>
+    </div>
+  `,
+})
+export class PlaceholderComponent {}

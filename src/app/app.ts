@@ -1,32 +1,10 @@
-import {
-  NgDocRootComponent,
-  NgDocNavbarComponent,
-  NgDocSidebarComponent,
-  NgDocThemeToggleComponent,
-} from '@ng-doc/app';
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {
-  NgDocIconComponent,
-  NgDocButtonIconComponent,
-  NgDocTooltipDirective,
-} from '@ng-doc/ui-kit';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ShellComponent } from './shell';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    NgDocRootComponent,
-    NgDocNavbarComponent,
-    NgDocSidebarComponent,
-    RouterOutlet,
-    NgDocThemeToggleComponent,
-    NgDocIconComponent,
-    NgDocButtonIconComponent,
-    NgDocTooltipDirective,
-  ],
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ShellComponent],
+  template: `<app-shell />`,
 })
-export class App {
-  protected readonly title = signal('mat-expressive-docs');
-}
+export class App {}

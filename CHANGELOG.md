@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Angular-Material-Dev/mat-expressive/compare/v1.1.0...v1.1.1) (2026-05-25)
+
+
+### Reverts
+
+* Revert "Merge pull request [#24](https://github.com/Angular-Material-Dev/mat-expressive/issues/24) from Angular-Material-Dev/cursor/issue-11-foundation-shell-layout-b9dd" ([d3563d5](https://github.com/Angular-Material-Dev/mat-expressive/commit/d3563d5066c5df96e195b936cebeb1e3cc18eb0a))
+
 # [1.1.0](https://github.com/Angular-Material-Dev/mat-expressive/compare/v1.0.2...v1.1.0) (2026-05-25)
 
 

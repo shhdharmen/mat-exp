@@ -1,0 +1,18 @@
+/*
+ * TailwindCSS v4 - selective layer import
+ * Preflight (CSS reset) is intentionally omitted to avoid conflicts with
+ * the Angular Material baseline styles.
+ *
+ * All @import statements must come before other rules.
+ */
+@import 'tailwindcss/theme' layer(theme);
+@import 'tailwindcss/utilities' layer(utilities);
+
+/* Angular Material ↔ Tailwind custom property bridge (placeholder) */
+@import './tailwind-am-theme.css';
+
+/*
+ * Dark-mode variant: toggled by the `.dark` class placed on <html>.
+ * ThemeService and the anti-FODT inline script in index.html manage this.
+ */
+@custom-variant dark (&:where(.dark, .dark *));

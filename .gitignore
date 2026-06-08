@@ -46,3 +46,6 @@ Thumbs.db
 
 # NgDoc files
 /ng-doc
+
+# Claude Code
+.claude/

@@ -26,7 +26,6 @@ import {
 import { TocService } from '../../shared/services/toc.service';
 import { NavManifestService, NavPage } from '../../shell/nav-manifest.service';
 import { TabsComponent } from '../tabs/tabs.component';
-import { DeprecationBannerComponent } from './deprecation-banner/deprecation-banner.component';
 import { PLAYGROUND_PAGE_REGISTRY } from '../playground-page-registry';
 import {
   breadcrumbListJsonLd,
@@ -104,7 +103,6 @@ function findAncestorChain(
     TabsComponent,
     NgTemplateOutlet,
     NgComponentOutlet,
-    DeprecationBannerComponent,
     MatButton,
     MatExpressiveButton,
   ],

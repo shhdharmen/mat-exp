@@ -30,6 +30,10 @@ $known-attributes: map.merge(
     selection: (
       single-select,
       multi-select,
+      // Reserved for a not-yet-implemented "at least one option must stay
+      // selected" mode. The TS union member is intentionally still commented
+      // out in src/lib/types/selection.ts; this stays whitelisted so the
+      // style tokens exist ahead of that feature landing.
       select-required,
     ),
     color: (

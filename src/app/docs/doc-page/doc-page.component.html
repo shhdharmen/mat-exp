@@ -1,5 +1,3 @@
-<app-deprecation-banner [currentPath]="routePath()" />
-
 @if (componentPageContext(); as ctx) {
   <app-doc-tabs [tabs]="ctx.children!" [currentPath]="routePath()">
     <ng-container *ngTemplateOutlet="contentTpl" />

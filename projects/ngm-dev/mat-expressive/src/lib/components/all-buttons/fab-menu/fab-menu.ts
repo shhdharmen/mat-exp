@@ -1,4 +1,4 @@
-import { afterNextRender, Directive, inject, input, effect } from '@angular/core';
+import { Directive, inject, input, effect } from '@angular/core';
 import { MatMenu } from '@angular/material/menu';
 import { MatExpressiveFabMenuColor } from '../../../types/appearance';
 
@@ -15,24 +15,22 @@ export class MatExpressiveFabMenu {
 
   private readonly matMenu = inject(MatMenu, { optional: true });
 
-  constructor() {
-    afterNextRender(() => {
-      if (this.matMenu) {
-        this.matMenu.panelClass = [
-          this.matExpressiveFabMenuClass,
-          `mat-expressive-fab-menu-${this.color()}`,
-          this.matMenu.panelClass,
-        ].join(' ');
-      }
-    });
+  /**
+   * The consumer's original `panelClass`, captured once before any mutation, so it can be
+   * preserved every time `panelClass` is recomputed from scratch on `color()` changes.
+   */
+  private readonly originalPanelClass = this.matMenu?.panelClass;
 
+  constructor() {
     effect(() => {
       if (this.matMenu) {
         this.matMenu.panelClass = [
+          this.originalPanelClass,
           this.matExpressiveFabMenuClass,
           `mat-expressive-fab-menu-${this.color()}`,
-          this.matMenu.panelClass,
-        ].join(' ');
+        ]
+          .filter(Boolean)
+          .join(' ');
       }
     });
   }

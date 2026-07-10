@@ -1,35 +1,43 @@
-name: Deploy on GitHub Pages
+# ============================================================================
+# DISABLED — entire workflow commented out at maintainer's request while
+# release/CI pipeline work is being planned separately. To re-enable, strip
+# the "# " prefix from every line below, e.g.:
+#   sed -i 's/^# //' .github/workflows/deploy.yaml
+# ============================================================================
 
-on:
-  push:
-    branches:
-      - main
-
-permissions:
-  id-token: write # Required for OIDC
-  contents: write
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-      - name: Use Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24.x'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build library
-        run: npm run build:lib
-
-      - name: Build app
-        run: npm run build -- --base-href "/mat-expressive/"
-
-      - name: Deploy to GitHub Pages
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx angular-cli-ghpages --name="mr. Dharmen's Bot" --email=shhdharmen@gmail.com --dir=dist/mat-expressive-docs/browser
+# name: Deploy on GitHub Pages
+# 
+# on:
+#   push:
+#     branches:
+#       - main
+# 
+# permissions:
+#   id-token: write # Required for OIDC
+#   contents: write
+# 
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+# 
+#     steps:
+#       - uses: actions/checkout@v6
+#       - name: Use Node.js
+#         uses: actions/setup-node@v6
+#         with:
+#           node-version: '24.x'
+# 
+#       - name: Install dependencies
+#         run: npm ci
+# 
+#       - name: Build library
+#         run: npm run build:lib
+# 
+#       - name: Build app
+#         run: npm run build -- --base-href "/mat-expressive/"
+# 
+#       - name: Deploy to GitHub Pages
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: npx angular-cli-ghpages --name="mr. Dharmen's Bot" --email=shhdharmen@gmail.com --dir=dist/mat-expressive-docs/browser
+# 

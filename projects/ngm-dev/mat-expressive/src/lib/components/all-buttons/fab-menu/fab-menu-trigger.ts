@@ -1,11 +1,12 @@
 import { Directive, inject, input } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatExpressiveFabMenuTriggerColor } from '../../../types/appearance';
+import { injectIsMenuOpenSignal } from '../../../utils/menu/inject-menu-open-signal';
 
 @Directive({
   selector: '[matExpressiveFabMenuTrigger]',
   host: {
-    '[attr.data-menu-open]': 'isMenuOpen',
+    '[attr.data-menu-open]': 'isMenuOpen()',
     '[class]': 'matExpressiveFabMenuTriggerClass',
     '[attr.data-color]': 'color()',
   },
@@ -21,7 +22,8 @@ export class MatExpressiveFabMenuTrigger {
 
   private readonly matMenuTrigger = inject(MatMenuTrigger);
 
-  get isMenuOpen(): boolean {
-    return this.matMenuTrigger?.menuOpen ?? false;
-  }
+  /**
+   * @internal
+   */
+  public readonly isMenuOpen = injectIsMenuOpenSignal(this.matMenuTrigger);
 }

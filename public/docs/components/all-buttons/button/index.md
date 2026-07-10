@@ -54,7 +54,7 @@ import { MatButton } from '@angular/material/button';
     <button matButton="elevated" class="mat-expressive-button" data-size="xs" data-shape="square">
       Elevated
     </button>
-    <button matButton="tonal" class="mat-expressive-button" data-size="sm">Tonal</button>
+    <button matButton="tonal" class="mat-expressive-button" data-size="s">Tonal</button>
   `,
 })
 export class App {}
@@ -71,7 +71,7 @@ import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
   imports: [MatButton, MatExpressiveButton],
   template: `
     <button matButton="elevated" size="xs" shape="square" matExpressiveButton>Elevated</button>
-    <button matButton="tonal" size="sm" matExpressiveButton>Tonal</button>
+    <button matButton="tonal" size="s" matExpressiveButton>Tonal</button>
   `,
 })
 export class App {}

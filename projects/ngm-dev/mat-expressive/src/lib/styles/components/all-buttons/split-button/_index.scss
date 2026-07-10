@@ -20,8 +20,9 @@ $_mat-expressive-split-button-class: 'mat-expressive-split-button';
   // $mat-expressive-split-button-class: '.' + map.get($options, mat-expressive-split-button-class);
   $mat-expressive-split-button-class: '.' + $_mat-expressive-split-button-class;
 
-  $validation-result: functions.validate-split-button-config(
+  $validation-result: functions.validate-config(
     config.$split-button-config,
+    functions.$default-allowed-keys,
     'split-button-config'
   );
 
@@ -37,6 +38,23 @@ $_mat-expressive-split-button-class: 'mat-expressive-split-button';
     @if map.has-key($item, size) {
       $size: map.get($item, size);
       $selector: $selector + "[data-size='#{$size}']";
+    }
+
+    // `data-menu-open` is emitted by MatExpressiveIconButton on the split
+    // button's trigger child, not on the split-button host itself — so it
+    // gets appended to each nested properties selector, not to $selector.
+    @if map.has-key($item, menu-open) and $item-properties {
+      $menu-open: map.get($item, menu-open);
+      $scoped-properties: ();
+      @each $prop-selector, $props in $item-properties {
+        $scoped-properties: map.merge(
+          $scoped-properties,
+          (
+            "#{$prop-selector}[data-menu-open='#{$menu-open}']": $props,
+          )
+        );
+      }
+      $item-properties: $scoped-properties;
     }
 
     #{$selector} {

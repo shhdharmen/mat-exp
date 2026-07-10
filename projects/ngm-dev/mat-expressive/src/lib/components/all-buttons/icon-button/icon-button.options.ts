@@ -51,6 +51,9 @@ export interface MatExpressiveIconButtonOptions {
   // readonly matExpressiveIconButtonClass?: string;
 }
 
+/**
+ * @internal
+ */
 export const MAT_EXPRESSIVE_ICON_BUTTON_DEFAULT_OPTIONS: MatExpressiveIconButtonOptions = {
   size: 's',
   shape: 'round',
@@ -59,14 +62,8 @@ export const MAT_EXPRESSIVE_ICON_BUTTON_DEFAULT_OPTIONS: MatExpressiveIconButton
   // matExpressiveIconButtonClass: 'mat-expressive-icon-button',
 };
 
-const [_MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS, _provideMatExpressiveIconButtonOptions] =
-  matExpressiveCreateOptions(MAT_EXPRESSIVE_ICON_BUTTON_DEFAULT_OPTIONS);
+const _iconButtonOptions = matExpressiveCreateOptions(MAT_EXPRESSIVE_ICON_BUTTON_DEFAULT_OPTIONS);
 
-export const MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS = _MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS;
-export function provideMatExpressiveIconButtonOptions(
-  options:
-    | Partial<MatExpressiveIconButtonOptions>
-    | (() => Partial<MatExpressiveIconButtonOptions>),
-) {
-  return _provideMatExpressiveIconButtonOptions(options);
-}
+export const MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS = _iconButtonOptions.token;
+export const provideMatExpressiveIconButtonOptions = _iconButtonOptions.provide;
+export const injectMatExpressiveIconButtonOptions = _iconButtonOptions.inject;

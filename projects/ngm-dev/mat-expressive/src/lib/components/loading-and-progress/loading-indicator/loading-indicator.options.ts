@@ -34,6 +34,9 @@ export interface MatExpressiveLoadingIndicatorOptions {
   readonly speed?: MatExpressiveLoadingIndicatorSpeed;
 }
 
+/**
+ * @internal
+ */
 export const MAT_EXPRESSIVE_LOADING_INDICATOR_DEFAULT_OPTIONS: MatExpressiveLoadingIndicatorOptions =
   {
     config: 'default',
@@ -41,14 +44,10 @@ export const MAT_EXPRESSIVE_LOADING_INDICATOR_DEFAULT_OPTIONS: MatExpressiveLoad
     speed: 'default',
   };
 
-const [_MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS, _provideMatExpressiveLoadingIndicatorOptions] =
-  matExpressiveCreateOptions(MAT_EXPRESSIVE_LOADING_INDICATOR_DEFAULT_OPTIONS);
+const _loadingIndicatorOptions = matExpressiveCreateOptions(
+  MAT_EXPRESSIVE_LOADING_INDICATOR_DEFAULT_OPTIONS,
+);
 
-export const MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS = _MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS;
-export function provideMatExpressiveLoadingIndicatorOptions(
-  options:
-    | Partial<MatExpressiveLoadingIndicatorOptions>
-    | (() => Partial<MatExpressiveLoadingIndicatorOptions>),
-) {
-  return _provideMatExpressiveLoadingIndicatorOptions(options);
-}
+export const MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS = _loadingIndicatorOptions.token;
+export const provideMatExpressiveLoadingIndicatorOptions = _loadingIndicatorOptions.provide;
+export const injectMatExpressiveLoadingIndicatorOptions = _loadingIndicatorOptions.inject;

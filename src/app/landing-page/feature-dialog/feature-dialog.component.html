@@ -1,0 +1,35 @@
+<button mat-icon-button mat-dialog-close class="close-button" aria-label="Close dialog">
+  <mat-icon>close</mat-icon>
+</button>
+
+<h2 mat-dialog-title class="text-3xl sm:text-4xl font-bold text-center text-on-surface px-8 pt-4">
+  @for (part of data.headline; track $index) {
+    @if (part.italic) {
+      <em class="italic">{{ part.text }}</em>
+    } @else {
+      {{ part.text }}
+    }
+  }
+</h2>
+
+<mat-dialog-content class="px-6 pb-6">
+  <div class="rounded-2xl bg-primary-container/30 p-6 sm:p-8 flex justify-center mb-8">
+    <img
+      [src]="data.imageUrl"
+      [alt]="data.imageAlt"
+      class="rounded-xl max-w-full"
+      width="480"
+      height="270"
+    />
+  </div>
+
+  @for (feature of data.subFeatures; track feature.title; let last = $last) {
+    <div class="py-4">
+      <h3 class="font-bold text-on-surface mb-1">{{ feature.title }}</h3>
+      <p class="text-sm text-on-surface-variant leading-relaxed">{{ feature.description }}</p>
+    </div>
+    @if (!last) {
+      <hr class="border-outline-variant" />
+    }
+  }
+</mat-dialog-content>

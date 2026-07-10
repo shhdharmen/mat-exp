@@ -55,6 +55,9 @@ export interface MatExpressiveButtonGroupOptions {
   // readonly matExpressiveButtonGroupClass?: string;
 }
 
+/**
+ * @internal
+ */
 export const MAT_EXPRESSIVE_BUTTON_GROUP_DEFAULT_OPTIONS: MatExpressiveButtonGroupOptions = {
   size: 's',
   shape: 'round',
@@ -63,14 +66,8 @@ export const MAT_EXPRESSIVE_BUTTON_GROUP_DEFAULT_OPTIONS: MatExpressiveButtonGro
   // matExpressiveButtonGroupClass: 'mat-expressive-button-group',
 };
 
-const [_MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS, _provideMatExpressiveButtonGroupOptions] =
-  matExpressiveCreateOptions(MAT_EXPRESSIVE_BUTTON_GROUP_DEFAULT_OPTIONS);
+const _buttonGroupOptions = matExpressiveCreateOptions(MAT_EXPRESSIVE_BUTTON_GROUP_DEFAULT_OPTIONS);
 
-export const MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS = _MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS;
-export function provideMatExpressiveButtonGroupOptions(
-  options:
-    | Partial<MatExpressiveButtonGroupOptions>
-    | (() => Partial<MatExpressiveButtonGroupOptions>),
-) {
-  return _provideMatExpressiveButtonGroupOptions(options);
-}
+export const MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS = _buttonGroupOptions.token;
+export const provideMatExpressiveButtonGroupOptions = _buttonGroupOptions.provide;
+export const injectMatExpressiveButtonGroupOptions = _buttonGroupOptions.inject;

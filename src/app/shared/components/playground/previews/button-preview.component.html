@@ -1,0 +1,27 @@
+<div class="preview-row">
+  <button
+    [matButton]="appearance()"
+    matExpressiveButton
+    [size]="size()"
+    [shape]="shape()"
+    [toggle]="toggle()"
+    [disabled]="disabled()"
+  >
+    Button
+  </button>
+  <button
+    [matButton]="appearance()"
+    matExpressiveButton
+    [size]="size()"
+    [shape]="shape()"
+    [toggle]="toggle()"
+    [disabled]="disabled()"
+  >
+    @if (iconPosition() === 'before') {
+      <mat-icon>star</mat-icon>
+    } @else {
+      <mat-icon iconPositionEnd>star</mat-icon>
+    }
+    With Icon
+  </button>
+</div>

@@ -17,8 +17,9 @@ $_mat-expressive-icon-button-class: 'mat-expressive-icon-button';
   $mat-expressive-icon-button-class: '.' + $_mat-expressive-icon-button-class;
 
   // Validate the entire configuration
-  $validation-result: functions.validate-icon-button-config(
+  $validation-result: functions.validate-config(
     config.$icon-button-config,
+    functions.$default-allowed-keys,
     'icon-button-config'
   );
 

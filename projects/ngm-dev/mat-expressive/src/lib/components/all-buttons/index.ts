@@ -3,4 +3,5 @@ export * from './button';
 export * from './icon-button';
 export * from './button-group';
 export * from './split-button';
+export * from './button-group-child';
 export * from './fab-menu';

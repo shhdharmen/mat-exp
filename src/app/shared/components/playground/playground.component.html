@@ -1,0 +1,155 @@
+@if (isLoading()) {
+  <div
+    class="component-preview-skeleton"
+    role="status"
+    [attr.aria-label]="'Loading playground for ' + component()"
+  >
+    <span class="sr-only">Loading playground…</span>
+  </div>
+} @else if (hasError()) {
+  <div class="playground-error" role="alert">
+    <mat-icon>error_outline</mat-icon>
+    <span
+      >No playground schema found for <code>{{ component() }}</code
+      >.</span
+    >
+  </div>
+} @else if (schema(); as s) {
+  <div class="playground-layout">
+    <!-- Live preview area -->
+    <div class="playground-preview" aria-label="Live component preview">
+      <ng-container #previewHost />
+    </div>
+
+    <!-- Controls panel -->
+    @if (controls().length > 0) {
+      <div class="playground-controls" aria-label="Component controls">
+        <div class="playground-controls-header">
+          <span class="playground-controls-title mat-label-medium">Controls</span>
+          <button
+            matIconButton
+            aria-label="Reset all controls to defaults"
+            matTooltip="Reset to defaults"
+            (click)="resetAllControls()"
+          >
+            <mat-icon>restart_alt</mat-icon>
+          </button>
+        </div>
+
+        <div class="playground-controls-list">
+          @for (ctrl of controls(); track ctrl.name) {
+            <div class="control-row">
+              @if (ctrl.type === 'select') {
+                <mat-form-field appearance="outline" class="control-field">
+                  <mat-label>{{ ctrl.label }}</mat-label>
+                  <mat-select
+                    [value]="getControlValue(ctrl.name)"
+                    (selectionChange)="updateControlValue(ctrl.name, $event.value)"
+                  >
+                    @if (ctrl.nullable) {
+                      <mat-option [value]="null">None</mat-option>
+                    }
+                    @for (opt of ctrl.options; track opt) {
+                      <mat-option [value]="opt">{{ opt }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              } @else if (ctrl.type === 'slide-toggle') {
+                <div class="control-toggle-row">
+                  <mat-slide-toggle
+                    [checked]="!!getControlValue(ctrl.name)"
+                    (change)="updateControlValue(ctrl.name, $event.checked)"
+                  >
+                    {{ ctrl.label }}
+                  </mat-slide-toggle>
+                </div>
+              } @else if (ctrl.type === 'text') {
+                <mat-form-field appearance="outline" class="control-field">
+                  <mat-label>{{ ctrl.label }}</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [value]="getControlValue(ctrl.name) ?? ''"
+                    (input)="updateControlValue(ctrl.name, getInputValue($event))"
+                  />
+                  @if (ctrl.nullable) {
+                    <button
+                      matIconButton
+                      matSuffix
+                      [attr.aria-label]="'Clear ' + ctrl.label"
+                      (click)="updateControlValue(ctrl.name, null)"
+                    >
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  }
+                </mat-form-field>
+              } @else if (ctrl.type === 'number') {
+                <mat-form-field appearance="outline" class="control-field">
+                  <mat-label>{{ ctrl.label }}</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [value]="getControlValue(ctrl.name) ?? 0"
+                    (input)="updateControlValue(ctrl.name, getNumberInputValue($event))"
+                  />
+                  @if (ctrl.nullable) {
+                    <button
+                      matIconButton
+                      matSuffix
+                      [attr.aria-label]="'Clear ' + ctrl.label"
+                      (click)="updateControlValue(ctrl.name, null)"
+                    >
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  }
+                </mat-form-field>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (s.sourceFiles.length > 0) {
+    <mat-expansion-panel
+      [(expanded)]="viewSourceOpen"
+      (opened)="ensureSourceHighlighted()"
+      class="border border-outline-variant shadow-none!"
+      #panel="matExpansionPanel"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ panel.expanded ? 'Hide' : 'View' }} source</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="-mb-[16px] -mx-[24px]">
+        <mat-tab-group [(selectedIndex)]="activeSourceTabIndex" animationDuration="0ms">
+          @for (file of s.sourceFiles; track file.filename) {
+            <mat-tab [label]="file.filename">
+              <div class="source-tab-panel">
+                <div class="source-tab-panel-header">
+                  <button
+                    matIconButton
+                    matExpressiveIconButton
+                    type="button"
+                    [attr.aria-label]="'Copy ' + file.filename"
+                    matTooltip="Copy to clipboard"
+                    (click)="copySource(file)"
+                  >
+                    <mat-icon>{{
+                      copiedFilename() === file.filename ? 'done' : 'content_copy'
+                    }}</mat-icon>
+                  </button>
+                </div>
+                <div
+                  class="source-code code-block"
+                  [innerHTML]="getHighlightedSource(file.filename)"
+                ></div>
+              </div>
+            </mat-tab>
+          }
+        </mat-tab-group>
+      </div>
+    </mat-expansion-panel>
+  }
+}

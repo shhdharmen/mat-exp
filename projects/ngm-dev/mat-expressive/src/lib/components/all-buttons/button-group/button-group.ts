@@ -14,7 +14,7 @@ import {
   output,
   type Provider,
 } from '@angular/core';
-import { MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS } from './button-group.options';
+import { injectMatExpressiveButtonGroupOptions } from './button-group.options';
 import { MatExpressiveButton } from '../button';
 import { MatExpressiveIconButton } from '../icon-button';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -23,6 +23,10 @@ import {
   MatExpressiveSelectableButtonChange,
 } from '../selectable-button/selectable-button';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  bindButtonGroupChildren,
+  toButtonGroupChild,
+} from '../button-group-child/button-group-child';
 
 /**
  * Injection token that can be used to reference instances of `MatExpressiveButtonGroup`.
@@ -55,9 +59,7 @@ export const MAT_EXPRESSIVE_BUTTON_GROUP_VALUE_ACCESSOR: Provider = {
     { provide: MAT_EXPRESSIVE_BUTTON_GROUP, useExisting: MatExpressiveButtonGroup },
   ],
   templateUrl: './button-group.html',
-  // styleUrls: ['./button-group.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // encapsulation: ViewEncapsulation.None,
   host: {
     '[class]': 'matExpressiveButtonGroupClass',
     '[attr.data-variant]': 'variant()',
@@ -69,12 +71,18 @@ export const MAT_EXPRESSIVE_BUTTON_GROUP_VALUE_ACCESSOR: Provider = {
   },
 })
 export class MatExpressiveButtonGroup implements ControlValueAccessor {
-  public readonly size = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).size);
-  public readonly shape = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).shape);
-  public readonly selection = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).selection);
-  public readonly variant = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).variant);
-  public readonly appearance = input(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).appearance);
-  public readonly disabled = model(inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS).disabled);
+  private readonly _options = injectMatExpressiveButtonGroupOptions();
+
+  /** @default 's' */
+  public readonly size = input(this._options.size);
+  /** @default 'round' */
+  public readonly shape = input(this._options.shape);
+  /** @default 'single-select' */
+  public readonly selection = input(this._options.selection);
+  /** @default 'standard' */
+  public readonly variant = input(this._options.variant);
+  public readonly appearance = input(this._options.appearance);
+  public readonly disabled = model(this._options.disabled);
 
   /** Emits when the selected value changes, either via user interaction or programmatic update. */
   public readonly selectionChange = output<MatExpressiveSelectableButtonChange>();
@@ -96,12 +104,6 @@ export class MatExpressiveButtonGroup implements ControlValueAccessor {
   /**
    * @internal
    */
-  // public readonly matExpressiveButtonGroupClass = inject(MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS)
-  //   .matExpressiveButtonGroupClass;
-
-  /**
-   * @internal
-   */
   public readonly matExpressiveButtonGroupClass = 'mat-expressive-button-group';
 
   readonly _matExpressiveButtons = contentChildren<MatExpressiveButton>(MatExpressiveButton);
@@ -111,6 +113,16 @@ export class MatExpressiveButtonGroup implements ControlValueAccessor {
     ...this._matExpressiveButtons(),
     ...this._matExpressiveIconButtons(),
   ]);
+
+  /**
+   * `_allExpressiveButtons` adapted to the narrow `ButtonGroupChild` contract, used to
+   * broadcast `size`/`shape`/`appearance`/`disabled` without depending on the concrete
+   * button directive types.
+   * @internal
+   */
+  readonly _allButtonGroupChildren = computed(() =>
+    this._allExpressiveButtons().map(toButtonGroupChild),
+  );
 
   /** Tracks which buttons are currently selected. */
   _selectionModel = new SelectionModel<MatExpressiveSelectableButton>(false, undefined, false);
@@ -142,38 +154,14 @@ export class MatExpressiveButtonGroup implements ControlValueAccessor {
       }
     });
 
-    effect(() => {
-      const size = this.size();
-      if (size) {
-        this._allExpressiveButtons().forEach((button) => {
-          button.size.set(size);
-        });
-      }
-    });
-
-    effect(() => {
-      const shape = this.shape();
-      if (shape) {
-        this._allExpressiveButtons().forEach((button) => {
-          button.shape.set(shape);
-        });
-      }
-    });
-
-    effect(() => {
-      const appearance = this.appearance();
-      if (appearance) {
-        this._allExpressiveButtons().forEach((button) => {
-          button.appearance = appearance;
-        });
-      }
-    });
-
-    effect(() => {
-      const disabled = this.disabled();
-      this._allExpressiveButtons().forEach((button) => {
-        button.disabled = disabled;
-      });
+    // Broadcast `size`/`shape`/`appearance`/`disabled` down to the projected buttons via the
+    // narrow `ButtonGroupChild` contract (shared with `MatExpressiveSplitButton`).
+    bindButtonGroupChildren({
+      children: this._allButtonGroupChildren,
+      size: this.size,
+      shape: this.shape,
+      appearance: this.appearance,
+      disabled: this.disabled,
     });
   }
 

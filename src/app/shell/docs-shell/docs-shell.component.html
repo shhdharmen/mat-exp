@@ -1,0 +1,47 @@
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-surface focus:text-on-surface focus:rounded-full focus:border focus:border-outline"
+>
+  Skip to main content
+</a>
+
+<div class="flex flex-col h-screen">
+  <app-deprecation-banner />
+  <!-- Top header bar -->
+  <app-header (menuToggled)="drawerOpen.set(!drawerOpen())" />
+
+  <!-- Body: sidebar + content + TOC -->
+  <mat-drawer-container class="flex-1 overflow-hidden">
+    <!-- Mobile drawer (md and below) -->
+    <mat-drawer
+      [opened]="isMobile() ? drawerOpen() : true"
+      [mode]="isMobile() ? 'over' : 'side'"
+      class="border-r! border-outline-variant!"
+      (closed)="drawerOpen.set(false)"
+    >
+      <app-sidebar-nav (linkClicked)="drawerOpen.set(false)" />
+    </mat-drawer>
+
+    <mat-drawer-content class="flex! overflow-hidden">
+      <!-- Main content area -->
+      <main
+        class="flex-1 overflow-y-auto scrollbar-gutter-stable px-6 py-8 max-w-7xl mx-auto w-full"
+        id="main-content"
+        tabindex="-1"
+      >
+        <router-outlet />
+        <app-doc-prev-next />
+        <div class="my-24"></div>
+        <app-footer />
+      </main>
+
+      <!-- Right TOC (lg and above) -->
+      <aside
+        class="hidden lg:block w-52 xl:w-60 shrink-0 overflow-y-auto px-4 py-8 border-l border-outline-variant"
+        aria-label="On this page"
+      >
+        <app-toc />
+      </aside>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

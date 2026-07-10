@@ -23,3 +23,13 @@ But, to accomodate such changes, we will be updating the library to use the new 
 ## I do not want to apply styles to the underlying HTML elements.
 
 That's toatally fine! But please note that you will not be able to see the full results provided by Mat Expressive. To learn more about how to skip HTML element styles, please refer to the [skipping HTML element styles](/getting-started/installation#skip-html-element-styles) section.
+
+## Licensing
+
+`@ngm-dev/mat-expressive` is **free for non-commercial use** under the [PolyForm Noncommercial 1.0.0](./LICENSE) license. Commercial use (for-profit products, internal tools, client work, freelance) requires a paid license.
+
+Purchase a lifetime commercial license at our Polar.sh store *(link available when product is live — see `environment.polarUrl` in `src/environments/environment.ts`)*.
+
+See [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) for full terms and what is covered.
+
+Questions? Contact [support@angular-material.dev](mailto:support@angular-material.dev).

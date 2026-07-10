@@ -14,13 +14,9 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/Angular-Material-Dev/mat-expressive/issues"
+    "url": "https://github.com/Angular-Material-Dev/community"
   },
-  "homepage": "https://github.com/Angular-Material-Dev/mat-expressive#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Angular-Material-Dev/mat-expressive"
-  },
+  "homepage": "https://expressive.angular-material.dev/",
   "scripts": {
     "build": "npm run build:sass",
     "build:sass": "sass --pkg-importer=node -I ../../../node_modules ./src/lib/styles/_index.scss:../../../dist/ngm-dev/mat-expressive/src/styles/styles.css",
@@ -35,7 +31,7 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "license": "UNLICENSED",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "sideEffects": false,
   "exports": {
     ".": {

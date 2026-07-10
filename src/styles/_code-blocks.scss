@@ -1,0 +1,159 @@
+// Code blocks produced by MarkdownService (Shiki + wrapper markup).
+// Covers dual-theme token colours, header bar, badge, copy button,
+// line highlighting, and opt-in line-number gutter.
+
+$mono-stack: 'JetBrains Mono', monospace;
+$block-padding-inline: 1.25rem;
+
+.code-block {
+  position: relative;
+  margin-block: 1.25rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--mat-sys-outline-variant);
+
+  // ----- Shiki <pre> reset -----
+  pre.shiki {
+    margin: 0;
+    padding: 1.1rem $block-padding-inline;
+    overflow-x: auto;
+    font-family: $mono-stack;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    border-radius: 0;
+    background-color: var(--shiki-light-bg) !important;
+  }
+
+  code {
+    font-family: inherit;
+    background: none !important;
+  }
+
+  // ----- Dual-theme token colours (light default / .dark override) -----
+  pre.shiki,
+  pre.shiki code,
+  pre.shiki span {
+    color: var(--shiki-light);
+    background-color: var(--shiki-light-bg);
+    font-style: var(--shiki-light-font-style);
+    font-weight: var(--shiki-light-font-weight);
+    text-decoration: var(--shiki-light-text-decoration);
+  }
+
+  html.dark & {
+    pre.shiki {
+      background-color: var(--shiki-dark-bg) !important;
+    }
+
+    pre.shiki,
+    pre.shiki code,
+    pre.shiki span {
+      color: var(--shiki-dark);
+      background-color: var(--shiki-dark-bg);
+      font-style: var(--shiki-dark-font-style);
+      font-weight: var(--shiki-dark-font-weight);
+      text-decoration: var(--shiki-dark-text-decoration);
+    }
+  }
+
+  // ----- Header bar -----
+  .code-block-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    background-color: var(--mat-sys-surface-container);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    min-height: 36px;
+  }
+
+  // ----- Language / filename badge -----
+  .code-block-badge {
+    font-family: $mono-stack;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--mat-sys-on-surface-variant);
+    text-transform: uppercase;
+    user-select: none;
+    padding: 0.1em 0.45em;
+    border-radius: 4px;
+    background-color: var(--mat-sys-surface-variant);
+  }
+
+  // ----- Copy button -----
+  .code-block-copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    padding: 4px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--mat-sys-on-surface-variant);
+    transition:
+      color 150ms,
+      background-color 150ms;
+    flex-shrink: 0;
+
+    &:hover {
+      color: var(--mat-sys-on-surface);
+      background-color: var(--mat-sys-surface-variant);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--mat-sys-primary);
+      outline-offset: 2px;
+    }
+
+    .code-block-copy-check {
+      display: none;
+    }
+
+    &[data-copied] {
+      color: var(--mat-sys-primary);
+
+      svg:not(.code-block-copy-check) {
+        display: none;
+      }
+      .code-block-copy-check {
+        display: block;
+      }
+    }
+  }
+
+  // ----- Line highlighting (transformerMetaHighlight: {3,7-9}) -----
+  .line.highlighted {
+    background-color: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent);
+    margin-inline: -$block-padding-inline;
+    padding-inline: $block-padding-inline;
+    border-left: 3px solid var(--mat-sys-primary);
+    padding-left: calc(#{$block-padding-inline} - 3px);
+  }
+
+  // ----- Line numbers (data-line-numbers attribute) -----
+  &[data-line-numbers] pre.shiki code {
+    counter-reset: line-number;
+
+    .line {
+      counter-increment: line-number;
+      padding-left: 3.5em;
+      position: relative;
+
+      &::before {
+        content: counter(line-number);
+        position: absolute;
+        left: 0;
+        width: 2.75em;
+        text-align: right;
+        padding-right: 0.75em;
+        color: var(--mat-sys-on-surface-variant);
+        opacity: 0.45;
+        user-select: none;
+        pointer-events: none;
+      }
+    }
+  }
+}

@@ -1,18 +1,11 @@
 import { Directive, inject, input, model } from '@angular/core';
-import { MAT_EXPRESSIVE_BUTTON_OPTIONS } from './button.options';
+import { injectMatExpressiveButtonOptions } from './button.options';
 import { MatButton, MatButtonAppearance } from '@angular/material/button';
 import { MatExpressiveButtonGroup } from '../button-group';
 import { MatExpressiveSelectableButton } from '../selectable-button/selectable-button';
 import { MatExpressiveButtonToggle } from '../../../types';
 import { MatMenuTrigger } from '@angular/material/menu';
 
-// @Component({
-//   template: '',
-//   styleUrls: ['./button.scss'],
-//   encapsulation: ViewEncapsulation.None,
-//   changeDetection: ChangeDetectionStrategy.OnPush,
-// })
-// class Styles {}
 /**
  * Directive to style the Angular Material Button component with latest Material 3 Design System Expressive styles.
  */
@@ -30,19 +23,14 @@ import { MatMenuTrigger } from '@angular/material/menu';
   exportAs: 'matExpressiveButton',
 })
 export class MatExpressiveButton implements MatExpressiveSelectableButton {
-  // protected readonly nothing = matExpressiveWithStyles(Styles);
+  private readonly _options = injectMatExpressiveButtonOptions();
 
-  public readonly size = model(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).size);
-  public readonly shape = model(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).shape);
-  public readonly toggle = model<MatExpressiveButtonToggle | undefined>(
-    inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).toggle,
-  );
+  /** @default 's' */
+  public readonly size = model(this._options.size);
+  /** @default 'round' */
+  public readonly shape = model(this._options.shape);
+  public readonly toggle = model<MatExpressiveButtonToggle | undefined>(this._options.toggle);
   public readonly value = model<unknown>();
-  /**
-   * @internal
-   */
-  // public readonly matExpressiveButtonClass = inject(MAT_EXPRESSIVE_BUTTON_OPTIONS)
-  //   .matExpressiveButtonClass;
 
   /**
    * @internal
@@ -52,7 +40,7 @@ export class MatExpressiveButton implements MatExpressiveSelectableButton {
   /**
    * @internal
    */
-  public readonly state = input(inject(MAT_EXPRESSIVE_BUTTON_OPTIONS).state);
+  public readonly state = input(this._options.state);
 
   get appearance(): MatButtonAppearance | null {
     return this.matButton.appearance;

@@ -4,18 +4,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@ng-doc/generated": [
-        "./ng-doc/mat-expressive-docs/index.ts"
-      ],
-      "@ng-doc/generated/*": [
-        "./ng-doc/mat-expressive-docs/*"
-      ],
-      "@ngm-dev/components": [
-        "./dist/ngm-dev/components"
-      ],
-      "@ngm-dev/mat-expressive": [
-        "./dist/ngm-dev/mat-expressive"
-      ]
+      "@ngm-dev/mat-expressive": ["./dist/ngm-dev/mat-expressive"],
+      "/_pagefind/pagefind.js": ["./src/app/shell/search-modal/pagefind.types"]
     },
     "strict": true,
     "noImplicitOverride": true,
@@ -42,12 +32,6 @@
     },
     {
       "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/ngm-dev/components/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/ngm-dev/components/tsconfig.spec.json"
     },
     {
       "path": "./projects/ngm-dev/mat-expressive/tsconfig.lib.json"

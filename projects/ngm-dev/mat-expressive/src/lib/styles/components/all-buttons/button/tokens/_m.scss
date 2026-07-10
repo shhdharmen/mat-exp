@@ -57,6 +57,9 @@ $properties: map.deep-merge(
   common-tokens.$button-common-properties,
   (button-functions.mdc-button-line-height(var(--mat-sys-title-medium-line-height)))
 );
+@each $selector in common-selectors.$button-icon-selectors {
+  $properties: map.set($properties, $selector, button-functions.icon-size(24));
+}
 $state-pressed-tokens: button-functions.button-shape-tokens(12);
 
 $shape-square-tokens: button-functions.button-shape-tokens(16);

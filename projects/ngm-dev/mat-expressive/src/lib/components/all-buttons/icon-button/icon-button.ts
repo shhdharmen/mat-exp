@@ -1,9 +1,10 @@
 import { Directive, inject, Input, input, model } from '@angular/core';
-import { MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS } from './icon-button.options';
+import { injectMatExpressiveIconButtonOptions } from './icon-button.options';
 import { MatIconButton } from '@angular/material/button';
 import { MatExpressiveSelectableButton } from '../selectable-button/selectable-button';
 import { MatExpressiveButtonGroup } from '../button-group';
 import { MatExpressiveButtonToggle, MatExpressiveIconButtonAppearance } from '../../../types';
+import { MatMenuTrigger } from '@angular/material/menu';
 /**
  * Directive to style the Angular Material Icon Button component with latest Material 3 Design System Expressive styles.
  */
@@ -16,21 +17,24 @@ import { MatExpressiveButtonToggle, MatExpressiveIconButtonAppearance } from '..
     '[attr.data-state]': 'state()',
     '[attr.data-toggle]': 'toggle()',
     '[attr.data-width]': 'width()',
+    '[attr.data-menu-open]': 'isMenuOpen',
     '[class]': 'matExpressiveIconButtonClass',
     '(click)': '_onButtonClick()',
   },
   exportAs: 'matExpressiveIconButton',
 })
 export class MatExpressiveIconButton implements MatExpressiveSelectableButton {
-  public readonly size = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).size);
-  public readonly shape = model(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).shape);
-  public readonly width = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).width);
-  public readonly toggle = model<MatExpressiveButtonToggle | undefined>(
-    inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).toggle,
-  );
+  private readonly _options = injectMatExpressiveIconButtonOptions();
+
+  /** @default 's' */
+  public readonly size = model(this._options.size);
+  /** @default 'round' */
+  public readonly shape = model(this._options.shape);
+  public readonly width = input(this._options.width);
+  public readonly toggle = model<MatExpressiveButtonToggle | undefined>(this._options.toggle);
   public readonly value = model<unknown>();
 
-  private _appearance = inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).appearance;
+  private _appearance = this._options.appearance;
   @Input()
   get appearance(): MatExpressiveIconButtonAppearance | undefined {
     return this._appearance;
@@ -41,18 +45,12 @@ export class MatExpressiveIconButton implements MatExpressiveSelectableButton {
   /**
    * @internal
    */
-  // public readonly matExpressiveIconButtonClass = inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS)
-  //   .matExpressiveIconButtonClass;
-
-  /**
-   * @internal
-   */
   public readonly matExpressiveIconButtonClass = 'mat-expressive-icon-button';
 
   /**
    * @internal
    */
-  public readonly state = input(inject(MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS).state);
+  public readonly state = input(this._options.state);
 
   get disabled(): boolean {
     return this.matIconButton.disabled;
@@ -66,5 +64,11 @@ export class MatExpressiveIconButton implements MatExpressiveSelectableButton {
 
   _onButtonClick(): void {
     this.buttonGroup?._onButtonClick(this);
+  }
+
+  private readonly matMenu = inject(MatMenuTrigger, { optional: true });
+
+  get isMenuOpen(): boolean {
+    return this.matMenu?.menuOpen ?? false;
   }
 }

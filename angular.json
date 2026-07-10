@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "schematicCollections": ["@schematics/angular", "playwright-ng-schematics"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -18,7 +19,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ng-doc/builder:application",
+          "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
@@ -27,29 +28,32 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@ng-doc/app/assets",
-                "output": "assets/ng-doc/app"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/@ng-doc/ui-kit/assets",
-                "output": "assets/ng-doc/ui-kit"
-              },
-              {
-                "glob": "**/*",
-                "input": "ng-doc/mat-expressive-docs/assets",
-                "output": "assets/ng-doc"
-              },
-              {
-                "glob": "**/*",
                 "input": "public"
               }
             ],
-            "styles": ["node_modules/@ng-doc/app/styles/global.css", "src/styles.scss"],
-            "allowedCommonJsDependencies": ["@ng-doc/core"]
+            "styles": ["src/styles/tailwind.css", "src/styles.scss"],
+            "allowedCommonJsDependencies": [
+              "gray-matter",
+              "js-yaml",
+              "extend",
+              "strip-bom-string",
+              "bail"
+            ],
+            "server": "src/main.server.ts",
+            "ssr": false,
+            "prerender": {
+              "discoverRoutes": false,
+              "routesFile": "public/routes.txt"
+            }
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -73,7 +77,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@ng-doc/builder:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "mat-expressive-docs:build:production"
@@ -91,6 +95,17 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        },
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "mat-expressive-docs:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mat-expressive-docs:serve:production"
+            }
           }
         }
       }
@@ -127,6 +142,17 @@
               "projects/ngm-dev/mat-expressive/**/*.html"
             ],
             "eslintConfig": "projects/ngm-dev/mat-expressive/eslint.config.js"
+          }
+        },
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "@ngm-dev/mat-expressive:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "@ngm-dev/mat-expressive:serve:production"
+            }
           }
         }
       }

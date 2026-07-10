@@ -1,0 +1,59 @@
+<app-deprecation-banner [currentPath]="routePath()" />
+
+@if (componentPageContext(); as ctx) {
+  <app-doc-tabs [tabs]="ctx.children!" [currentPath]="routePath()">
+    <ng-container *ngTemplateOutlet="contentTpl" />
+  </app-doc-tabs>
+} @else {
+  <ng-container *ngTemplateOutlet="contentTpl" />
+}
+
+<ng-template #contentTpl>
+  @if (playgroundPageComponent(); as playgroundCmp) {
+    <ng-container *ngComponentOutlet="playgroundCmp" />
+  } @else if (page(); as p) {
+    @if (p.notFound) {
+      <div class="not-found">
+        <h1>Page not found</h1>
+        <p class="text-on-surface-variant">
+          The documentation page you're looking for doesn't exist.
+        </p>
+      </div>
+    } @else {
+      @if (p.frontmatter['title']) {
+        <h1 class="doc-page-title">{{ p.frontmatter['title'] }}</h1>
+      }
+      <div class="markdown-actions">
+        <a
+          matButton="outlined"
+          matExpressiveButton
+          shape="square"
+          size="xs"
+          [href]="rawMarkdownUrl()"
+          target="_blank"
+          rel="noopener"
+          >View markdown</a
+        >
+        <button
+          matButton="outlined"
+          matExpressiveButton
+          size="xs"
+          shape="square"
+          (click)="copyMarkdown()"
+        >
+          {{ copied() ? 'Copied!' : 'Copy markdown' }}
+        </button>
+      </div>
+
+      <app-markdown [html]="p.html" />
+    }
+  } @else {
+    <div class="loading-state" aria-busy="true" aria-label="Loading documentation">
+      <div class="loading-line w-3/4 h-8 mb-6"></div>
+      <div class="loading-line w-full h-4 mb-2"></div>
+      <div class="loading-line w-5/6 h-4 mb-2"></div>
+      <div class="loading-line w-full h-4 mb-2"></div>
+      <div class="loading-line w-4/5 h-4"></div>
+    </div>
+  }
+</ng-template>

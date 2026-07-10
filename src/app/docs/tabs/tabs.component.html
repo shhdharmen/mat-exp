@@ -1,0 +1,15 @@
+<nav
+  mat-tab-nav-bar
+  [tabPanel]="tabPanel"
+  aria-label="Component page sections"
+  class="sticky! -top-8 z-2 bg-surface mb-6"
+>
+  @for (tab of tabs(); track tab.path) {
+    <a mat-tab-link [routerLink]="tab.path" [active]="currentPath() === tab.path">
+      {{ tab.label }}
+    </a>
+  }
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <ng-content />
+</mat-tab-nav-panel>

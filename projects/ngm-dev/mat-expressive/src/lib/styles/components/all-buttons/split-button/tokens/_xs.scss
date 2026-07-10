@@ -30,7 +30,7 @@ $properties: (
 @each $selector in common-selectors.$button-icon-selectors {
   $properties: map.set(
     $properties,
-    ' > .mat-expressive-button:last-child' + $selector,
+    ' > .mat-expressive-icon-button' + $selector,
     button-functions.icon-size(22)
   );
 }

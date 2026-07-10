@@ -3,6 +3,25 @@
 @use 'sass:meta';
 @use 'sass:list';
 
+// Default allowed attribute keys shared by the button-family configs.
+// Individual variants may pass their own list to `validate-config()` if
+// they ever need to diverge from this set.
+$default-allowed-keys: (
+  tokens,
+  properties,
+  size,
+  shape,
+  state,
+  toggle,
+  appearance,
+  width,
+  variant,
+  selection,
+  color,
+  open,
+  menu-open
+);
+
 // Helper function to validate tokens and properties structure
 @function _validate-tokens-properties-structure($config, $context-path) {
   $errors: ();
@@ -85,22 +104,8 @@
 }
 
 // Helper function to validate a single combination item
-@function _validate-combination-item($item, $index, $context-path) {
+@function _validate-combination-item($item, $index, $context-path, $allowed-keys) {
   $errors: ();
-  $allowed-keys: (
-    tokens,
-    properties,
-    size,
-    shape,
-    state,
-    toggle,
-    appearance,
-    width,
-    variant,
-    selection,
-    color,
-    open
-  );
 
   // Check if item is a map
   @if meta.type-of($item) != 'map' {
@@ -145,8 +150,11 @@
   @return $errors;
 }
 
-// Main validation function for button configuration (list-based)
-@function validate-button-config($config, $name: 'button-config') {
+// Main validation function for button-family configuration (list-based).
+// Replaces the six near-identical `validate-*-config` wrapper functions
+// that used to exist here — each button variant now calls this directly,
+// passing its own `$allowed-keys` (defaulting to `$default-allowed-keys`).
+@function validate-config($config, $allowed-keys: $default-allowed-keys, $name: 'config') {
   $errors: ();
 
   // Check if config is a list
@@ -157,128 +165,7 @@
   // Validate each combination item in the list
   $index: 1;
   @each $item in $config {
-    $item-errors: _validate-combination-item($item, $index, $name);
-    $errors: list.join($errors, $item-errors);
-    $index: $index + 1;
-  }
-
-  // Return validation result
-  @if list.length($errors) > 0 {
-    @return 'Validation errors for [#{$name}]: #{$errors}';
-  }
-
-  @return true;
-}
-
-// Main validation function for icon-button configuration (list-based)
-@function validate-icon-button-config($config, $name: 'icon-button-config') {
-  $errors: ();
-
-  // Check if config is a list
-  @if meta.type-of($config) != 'list' {
-    @return 'Error [#{$name}]: Configuration must be a list';
-  }
-
-  // Validate each combination item in the list
-  $index: 1;
-  @each $item in $config {
-    $item-errors: _validate-combination-item($item, $index, $name);
-    $errors: list.join($errors, $item-errors);
-    $index: $index + 1;
-  }
-
-  // Return validation result
-  @if list.length($errors) > 0 {
-    @return 'Validation errors for [#{$name}]: #{$errors}';
-  }
-
-  @return true;
-}
-
-@function validate-button-group-config($config, $name: 'button-group-config') {
-  $errors: ();
-
-  // Check if config is a list
-  @if meta.type-of($config) != 'list' {
-    @return 'Error [#{$name}]: Configuration must be a list';
-  }
-
-  // Validate each combination item in the list
-  $index: 1;
-  @each $item in $config {
-    $item-errors: _validate-combination-item($item, $index, $name);
-    $errors: list.join($errors, $item-errors);
-    $index: $index + 1;
-  }
-
-  // Return validation result
-  @if list.length($errors) > 0 {
-    @return 'Validation errors for [#{$name}]: #{$errors}';
-  }
-
-  @return true;
-}
-
-@function validate-split-button-config($config, $name: 'split-button-config') {
-  $errors: ();
-
-  // Check if config is a list
-  @if meta.type-of($config) != 'list' {
-    @return 'Error [#{$name}]: Configuration must be a list';
-  }
-
-  // Validate each combination item in the list
-  $index: 1;
-  @each $item in $config {
-    $item-errors: _validate-combination-item($item, $index, $name);
-    $errors: list.join($errors, $item-errors);
-    $index: $index + 1;
-  }
-
-  // Return validation result
-  @if list.length($errors) > 0 {
-    @return 'Validation errors for [#{$name}]: #{$errors}';
-  }
-
-  @return true;
-}
-
-@function validate-fab-menu-trigger-config($config, $name: 'fab-menu-trigger-config') {
-  $errors: ();
-
-  // Check if config is a list
-  @if meta.type-of($config) != 'list' {
-    @return 'Error [#{$name}]: Configuration must be a list';
-  }
-
-  // Validate each combination item in the list
-  $index: 1;
-  @each $item in $config {
-    $item-errors: _validate-combination-item($item, $index, $name);
-    $errors: list.join($errors, $item-errors);
-    $index: $index + 1;
-  }
-
-  // Return validation result
-  @if list.length($errors) > 0 {
-    @return 'Validation errors for [#{$name}]: #{$errors}';
-  }
-
-  @return true;
-}
-
-@function validate-fab-menu-config($config, $name: 'fab-menu-config') {
-  $errors: ();
-
-  // Check if config is a list
-  @if meta.type-of($config) != 'list' {
-    @return 'Error [#{$name}]: Configuration must be a list';
-  }
-
-  // Validate each combination item in the list
-  $index: 1;
-  @each $item in $config {
-    $item-errors: _validate-combination-item($item, $index, $name);
+    $item-errors: _validate-combination-item($item, $index, $name, $allowed-keys);
     $errors: list.join($errors, $item-errors);
     $index: $index + 1;
   }

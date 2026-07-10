@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @use '../utils/functions' as button-functions;
 @use '../../../utils/functions' as utils-functions;
+@use '../common-selectors';
 
 @mixin mat-expressive-button-group-connected-s-corners($host-selector) {
   #{$host-selector}[data-variant='connected'][data-size='s'] {
@@ -17,6 +18,14 @@
             utils-functions.rem(20)
         )
       );
+
+      &[data-appearance='outlined']:active {
+        @each $selector in common-selectors.$icon-button-only-ripple-selectors {
+          #{$selector} {
+            border-radius: inherit;
+          }
+        }
+      }
     }
 
     > :last-child {
@@ -32,10 +41,18 @@
             utils-functions.rem(8)
         )
       );
+
+      &[data-appearance='outlined']:active {
+        @each $selector in common-selectors.$icon-button-only-ripple-selectors {
+          #{$selector} {
+            border-radius: inherit;
+          }
+        }
+      }
     }
 
-    > .mat-expressive-button:not(:first-child):not(:last-child),
-    > .mat-expressive-icon-button:not(:first-child):not(:last-child) {
+    > .mat-expressive-button:not(:first-child):not(:last-child):not([data-toggle='selected']),
+    > .mat-expressive-icon-button:not(:first-child):not(:last-child):not([data-toggle='selected']) {
       @include mat.button-overrides(
         button-functions.button-shape-tokens-raw(utils-functions.rem(8))
       );
@@ -43,11 +60,21 @@
         button-functions.icon-button-shape-tokens-raw(utils-functions.rem(8))
       );
     }
+
+    > .mat-expressive-button[data-toggle='selected'],
+    > .mat-expressive-icon-button[data-toggle='selected'] {
+      @include mat.button-overrides(
+        button-functions.button-shape-tokens-raw(utils-functions.rem(20))
+      );
+      @include mat.icon-button-overrides(
+        button-functions.icon-button-shape-tokens-raw(utils-functions.rem(20))
+      );
+    }
   }
 
   #{$host-selector}[data-variant='connected'][data-size='s'][data-shape='square'] {
-    > :first-child,
-    > :last-child,
+    > :first-child:not([data-toggle='selected']),
+    > :last-child:not([data-toggle='selected']),
     > * {
       @include mat.button-overrides(button-functions.button-shape-tokens(8));
       @include mat.icon-button-overrides(button-functions.icon-button-shape-tokens(8));

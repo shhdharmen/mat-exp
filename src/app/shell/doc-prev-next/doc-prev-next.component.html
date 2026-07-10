@@ -1,0 +1,48 @@
+@let pn = prevNext();
+
+@if (pn.prev || pn.next) {
+  <nav
+    aria-label="Previous and next page"
+    class="flex items-stretch justify-between gap-4 mt-12 pt-6"
+  >
+    @if (pn.prev) {
+      <a
+        [routerLink]="pn.prev.path"
+        class="group flex flex-col gap-1 flex-1 rounded-xl border border-outline-variant px-4 py-3 no-underline hover:bg-surface-variant transition-colors"
+        aria-label="Previous: {{ pn.prev.label }}"
+      >
+        <span class="flex items-center gap-1 text-xs text-on-surface-variant">
+          <mat-icon class="text-sm" aria-hidden="true">arrow_back</mat-icon>
+          Previous
+        </span>
+        <span
+          class="text-sm font-medium text-on-surface group-hover:text-primary transition-colors"
+        >
+          {{ pn.prev.label }}
+        </span>
+      </a>
+    } @else {
+      <div class="flex-1"></div>
+    }
+
+    @if (pn.next) {
+      <a
+        [routerLink]="pn.next.path"
+        class="group flex flex-col gap-1 flex-1 items-end rounded-xl border border-outline-variant px-4 py-3 no-underline hover:bg-surface-variant transition-colors text-right"
+        aria-label="Next: {{ pn.next.label }}"
+      >
+        <span class="flex items-center gap-1 text-xs text-on-surface-variant">
+          Next
+          <mat-icon class="text-sm" aria-hidden="true">arrow_forward</mat-icon>
+        </span>
+        <span
+          class="text-sm font-medium text-on-surface group-hover:text-primary transition-colors"
+        >
+          {{ pn.next.label }}
+        </span>
+      </a>
+    } @else {
+      <div class="flex-1"></div>
+    }
+  </nav>
+}

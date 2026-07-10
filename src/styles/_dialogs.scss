@@ -1,0 +1,7 @@
+.dialog-outlined {
+  .dark & {
+    .mat-mdc-dialog-surface {
+      border: 1px solid var(--mat-sys-outline);
+    }
+  }
+}

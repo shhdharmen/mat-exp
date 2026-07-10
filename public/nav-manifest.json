@@ -1,0 +1,458 @@
+{
+  "nav": [
+    {
+      "label": "Getting Started",
+      "path": "/docs/getting-started",
+      "order": 1,
+      "description": "Get started with Mat Expressive — installation, configuration, and your first components.",
+      "isSection": true,
+      "hasIndexPage": true,
+      "children": [
+        {
+          "label": "What is Mat Expressive?",
+          "path": "/docs/getting-started/what-is-mat-expressive",
+          "order": 1,
+          "description": "An introduction to Mat Expressive — a collection of components, directives, and styles for Angular Material aligned with the Material Design 3 Expressive Design System."
+        },
+        {
+          "label": "Installation",
+          "path": "/docs/getting-started/installation",
+          "order": 2,
+          "description": "Step-by-step guide to installing and configuring Mat Expressive in your Angular project, including style setup and HTML element style options."
+        },
+        {
+          "label": "llms.txt",
+          "path": "/llms.txt",
+          "isExternal": true
+        }
+      ]
+    },
+    {
+      "label": "Components",
+      "path": "/docs/components",
+      "order": 2,
+      "description": "Browse all Mat Expressive components with interactive demos, API references, and styling guides.",
+      "isSection": true,
+      "hasIndexPage": true,
+      "children": [
+        {
+          "label": "All Buttons",
+          "path": "/docs/components/all-buttons",
+          "order": 1,
+          "description": "All button components — Button, Icon Button, Button Group, Split Button, and FAB Menu.",
+          "isSection": true,
+          "hasIndexPage": true,
+          "children": [
+            {
+              "label": "Button",
+              "path": "/docs/components/all-buttons/button",
+              "order": 1,
+              "description": "Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-expressive-button CSS class approach and the matExpressiveButton directive.",
+              "isComponentPage": true,
+              "children": [
+                {
+                  "label": "Overview",
+                  "path": "/docs/components/all-buttons/button",
+                  "order": 1,
+                  "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-expressive-button CSS class approach and the matExpressiveButton directive."
+                },
+                {
+                  "label": "API",
+                  "path": "/docs/components/all-buttons/button/api",
+                  "order": 2,
+                  "description": "API reference for the Mat Expressive Button — data attributes for the CSS class approach and the matExpressiveButton directive."
+                },
+                {
+                  "label": "Styling",
+                  "path": "/docs/components/all-buttons/button/styling",
+                  "order": 3,
+                  "description": "Styling API for the mat-expressive-button-styles SCSS mixin, including the skip-html-element-styles option and its effects."
+                },
+                {
+                  "label": "Playground",
+                  "path": "/docs/components/all-buttons/button/playground",
+                  "order": 4,
+                  "description": "Interactive playground for Button."
+                }
+              ]
+            },
+            {
+              "label": "Icon Button",
+              "path": "/docs/components/all-buttons/icon-button",
+              "order": 2,
+              "description": "Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpressiveIconButton directive.",
+              "isComponentPage": true,
+              "children": [
+                {
+                  "label": "Overview",
+                  "path": "/docs/components/all-buttons/icon-button",
+                  "order": 1,
+                  "description": "Overview: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpressiveIconButton directive."
+                },
+                {
+                  "label": "API",
+                  "path": "/docs/components/all-buttons/icon-button/api",
+                  "order": 2,
+                  "description": "API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpressiveIconButton directive."
+                },
+                {
+                  "label": "Styling",
+                  "path": "/docs/components/all-buttons/icon-button/styling",
+                  "order": 3,
+                  "description": "Styling API for the mat-expressive-icon-button-styles SCSS mixin, including the skip-html-element-styles option."
+                },
+                {
+                  "label": "Playground",
+                  "path": "/docs/components/all-buttons/icon-button/playground",
+                  "order": 4,
+                  "description": "Interactive playground for Icon Button."
+                }
+              ]
+            },
+            {
+              "label": "Button Group",
+              "path": "/docs/components/all-buttons/button-group",
+              "order": 3,
+              "description": "Material Expressive Button Group for grouping buttons with single/multi-select behavior, compatible with Angular reactive and template-driven forms.",
+              "isComponentPage": true,
+              "children": [
+                {
+                  "label": "Overview",
+                  "path": "/docs/components/all-buttons/button-group",
+                  "order": 1,
+                  "description": "Overview: Material Expressive Button Group for grouping buttons with single/multi-select behavior, compatible with Angular reactive and template-driven forms."
+                },
+                {
+                  "label": "API",
+                  "path": "/docs/components/all-buttons/button-group/api",
+                  "order": 2,
+                  "description": "API reference for the MatExpressiveButtonGroup component."
+                },
+                {
+                  "label": "Styling",
+                  "path": "/docs/components/all-buttons/button-group/styling",
+                  "order": 3,
+                  "description": "Styling API for the mat-expressive-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout."
+                },
+                {
+                  "label": "Playground",
+                  "path": "/docs/components/all-buttons/button-group/playground",
+                  "order": 4,
+                  "description": "Interactive playground for Button Group."
+                }
+              ]
+            },
+            {
+              "label": "Split Button",
+              "path": "/docs/components/all-buttons/split-button",
+              "order": 4,
+              "description": "Material Expressive Split Button combining a primary action button with a secondary chevron that reveals additional menu options.",
+              "isComponentPage": true,
+              "children": [
+                {
+                  "label": "Overview",
+                  "path": "/docs/components/all-buttons/split-button",
+                  "order": 1,
+                  "description": "Overview: Material Expressive Split Button combining a primary action button with a secondary chevron that reveals additional menu options."
+                },
+                {
+                  "label": "API",
+                  "path": "/docs/components/all-buttons/split-button/api",
+                  "order": 2,
+                  "description": "API reference for the MatExpressiveSplitButton component."
+                },
+                {
+                  "label": "Styling",
+                  "path": "/docs/components/all-buttons/split-button/styling",
+                  "order": 3,
+                  "description": "Styling API for the mat-expressive-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects."
+                },
+                {
+                  "label": "Playground",
+                  "path": "/docs/components/all-buttons/split-button/playground",
+                  "order": 4,
+                  "description": "Interactive playground for Split Button."
+                }
+              ]
+            },
+            {
+              "label": "FAB Menu",
+              "path": "/docs/components/all-buttons/fab-menu",
+              "order": 5,
+              "description": "Material Expressive FAB Menu — directives that style a standard Angular Material FAB button and menu with M3 Expressive color and shape transitions.",
+              "isComponentPage": true,
+              "children": [
+                {
+                  "label": "Overview",
+                  "path": "/docs/components/all-buttons/fab-menu",
+                  "order": 1,
+                  "description": "Overview: Material Expressive FAB Menu — directives that style a standard Angular Material FAB button and menu with M3 Expressive color and shape transitions."
+                },
+                {
+                  "label": "API",
+                  "path": "/docs/components/all-buttons/fab-menu/api",
+                  "order": 2,
+                  "description": "API reference for the MatExpressiveFabMenu directive and MatExpressiveFabMenuTrigger directive."
+                },
+                {
+                  "label": "Styling",
+                  "path": "/docs/components/all-buttons/fab-menu/styling",
+                  "order": 3,
+                  "description": "Styling API for the mat-expressive-fab-menu-styles and mat-expressive-fab-menu-trigger-styles SCSS mixins."
+                },
+                {
+                  "label": "Playground",
+                  "path": "/docs/components/all-buttons/fab-menu/playground",
+                  "order": 4,
+                  "description": "Interactive playground for FAB Menu."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Loading & Progress",
+          "path": "/docs/components/loading-and-progress",
+          "order": 2,
+          "description": "Loading and progress indicator components.",
+          "isSection": true,
+          "hasIndexPage": true,
+          "children": [
+            {
+              "label": "Loading Indicator",
+              "path": "/docs/components/loading-and-progress/loading-indicator",
+              "order": 1,
+              "description": "Material Expressive Loading Indicator — a GSAP-animated SVG that morphs through seven M3 canonical shapes with spring-bounce rotation, fully accessible as a progressbar role.",
+              "isComponentPage": true,
+              "children": [
+                {
+                  "label": "Overview",
+                  "path": "/docs/components/loading-and-progress/loading-indicator",
+                  "order": 1,
+                  "description": "Overview: Material Expressive Loading Indicator — a GSAP-animated SVG that morphs through seven M3 canonical shapes with spring-bounce rotation, fully accessible as a progressbar role."
+                },
+                {
+                  "label": "API",
+                  "path": "/docs/components/loading-and-progress/loading-indicator/api",
+                  "order": 2,
+                  "description": "API reference for MatExpressiveLoadingIndicator — host attributes, inputs, animation callbacks, provider options, and advanced exports."
+                },
+                {
+                  "label": "Styling",
+                  "path": "/docs/components/loading-and-progress/loading-indicator/styling",
+                  "order": 3,
+                  "description": "CSS variables, internal structure, and motion token guidance for the Mat Expressive Loading Indicator."
+                },
+                {
+                  "label": "Playground",
+                  "path": "/docs/components/loading-and-progress/loading-indicator/playground",
+                  "order": 4,
+                  "description": "Interactive playground for Loading Indicator."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Styles API",
+      "path": "/docs/styles-api",
+      "order": 3,
+      "description": "SCSS mixin API reference for Mat Expressive styles — apply all styles or selectively include specific component styles.",
+      "isSection": true,
+      "hasIndexPage": true,
+      "children": [
+        {
+          "label": "All Styles API",
+          "path": "/docs/styles-api/all-styles",
+          "order": 1,
+          "description": "API reference for the mat-expressive-all-styles SCSS mixin that applies all Mat Expressive component styles at once."
+        },
+        {
+          "label": "All Buttons Styles API",
+          "path": "/docs/styles-api/all-buttons",
+          "order": 2,
+          "description": "API reference for the mat-expressive-all-buttons-styles SCSS mixin that applies all button-related Mat Expressive styles at once."
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "label": "What is Mat Expressive?",
+      "path": "/docs/getting-started/what-is-mat-expressive",
+      "order": 1,
+      "description": "An introduction to Mat Expressive — a collection of components, directives, and styles for Angular Material aligned with the Material Design 3 Expressive Design System."
+    },
+    {
+      "label": "Installation",
+      "path": "/docs/getting-started/installation",
+      "order": 2,
+      "description": "Step-by-step guide to installing and configuring Mat Expressive in your Angular project, including style setup and HTML element style options."
+    },
+    {
+      "label": "Overview",
+      "path": "/docs/components/all-buttons/button",
+      "order": 1,
+      "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-expressive-button CSS class approach and the matExpressiveButton directive."
+    },
+    {
+      "label": "API",
+      "path": "/docs/components/all-buttons/button/api",
+      "order": 2,
+      "description": "API reference for the Mat Expressive Button — data attributes for the CSS class approach and the matExpressiveButton directive."
+    },
+    {
+      "label": "Styling",
+      "path": "/docs/components/all-buttons/button/styling",
+      "order": 3,
+      "description": "Styling API for the mat-expressive-button-styles SCSS mixin, including the skip-html-element-styles option and its effects."
+    },
+    {
+      "label": "Playground",
+      "path": "/docs/components/all-buttons/button/playground",
+      "order": 4,
+      "description": "Interactive playground for Button."
+    },
+    {
+      "label": "Overview",
+      "path": "/docs/components/all-buttons/icon-button",
+      "order": 1,
+      "description": "Overview: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpressiveIconButton directive."
+    },
+    {
+      "label": "API",
+      "path": "/docs/components/all-buttons/icon-button/api",
+      "order": 2,
+      "description": "API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpressiveIconButton directive."
+    },
+    {
+      "label": "Styling",
+      "path": "/docs/components/all-buttons/icon-button/styling",
+      "order": 3,
+      "description": "Styling API for the mat-expressive-icon-button-styles SCSS mixin, including the skip-html-element-styles option."
+    },
+    {
+      "label": "Playground",
+      "path": "/docs/components/all-buttons/icon-button/playground",
+      "order": 4,
+      "description": "Interactive playground for Icon Button."
+    },
+    {
+      "label": "Overview",
+      "path": "/docs/components/all-buttons/button-group",
+      "order": 1,
+      "description": "Overview: Material Expressive Button Group for grouping buttons with single/multi-select behavior, compatible with Angular reactive and template-driven forms."
+    },
+    {
+      "label": "API",
+      "path": "/docs/components/all-buttons/button-group/api",
+      "order": 2,
+      "description": "API reference for the MatExpressiveButtonGroup component."
+    },
+    {
+      "label": "Styling",
+      "path": "/docs/components/all-buttons/button-group/styling",
+      "order": 3,
+      "description": "Styling API for the mat-expressive-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout."
+    },
+    {
+      "label": "Playground",
+      "path": "/docs/components/all-buttons/button-group/playground",
+      "order": 4,
+      "description": "Interactive playground for Button Group."
+    },
+    {
+      "label": "Overview",
+      "path": "/docs/components/all-buttons/split-button",
+      "order": 1,
+      "description": "Overview: Material Expressive Split Button combining a primary action button with a secondary chevron that reveals additional menu options."
+    },
+    {
+      "label": "API",
+      "path": "/docs/components/all-buttons/split-button/api",
+      "order": 2,
+      "description": "API reference for the MatExpressiveSplitButton component."
+    },
+    {
+      "label": "Styling",
+      "path": "/docs/components/all-buttons/split-button/styling",
+      "order": 3,
+      "description": "Styling API for the mat-expressive-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects."
+    },
+    {
+      "label": "Playground",
+      "path": "/docs/components/all-buttons/split-button/playground",
+      "order": 4,
+      "description": "Interactive playground for Split Button."
+    },
+    {
+      "label": "Overview",
+      "path": "/docs/components/all-buttons/fab-menu",
+      "order": 1,
+      "description": "Overview: Material Expressive FAB Menu — directives that style a standard Angular Material FAB button and menu with M3 Expressive color and shape transitions."
+    },
+    {
+      "label": "API",
+      "path": "/docs/components/all-buttons/fab-menu/api",
+      "order": 2,
+      "description": "API reference for the MatExpressiveFabMenu directive and MatExpressiveFabMenuTrigger directive."
+    },
+    {
+      "label": "Styling",
+      "path": "/docs/components/all-buttons/fab-menu/styling",
+      "order": 3,
+      "description": "Styling API for the mat-expressive-fab-menu-styles and mat-expressive-fab-menu-trigger-styles SCSS mixins."
+    },
+    {
+      "label": "Playground",
+      "path": "/docs/components/all-buttons/fab-menu/playground",
+      "order": 4,
+      "description": "Interactive playground for FAB Menu."
+    },
+    {
+      "label": "Overview",
+      "path": "/docs/components/loading-and-progress/loading-indicator",
+      "order": 1,
+      "description": "Overview: Material Expressive Loading Indicator — a GSAP-animated SVG that morphs through seven M3 canonical shapes with spring-bounce rotation, fully accessible as a progressbar role."
+    },
+    {
+      "label": "API",
+      "path": "/docs/components/loading-and-progress/loading-indicator/api",
+      "order": 2,
+      "description": "API reference for MatExpressiveLoadingIndicator — host attributes, inputs, animation callbacks, provider options, and advanced exports."
+    },
+    {
+      "label": "Styling",
+      "path": "/docs/components/loading-and-progress/loading-indicator/styling",
+      "order": 3,
+      "description": "CSS variables, internal structure, and motion token guidance for the Mat Expressive Loading Indicator."
+    },
+    {
+      "label": "Playground",
+      "path": "/docs/components/loading-and-progress/loading-indicator/playground",
+      "order": 4,
+      "description": "Interactive playground for Loading Indicator."
+    },
+    {
+      "label": "All Styles API",
+      "path": "/docs/styles-api/all-styles",
+      "order": 1,
+      "description": "API reference for the mat-expressive-all-styles SCSS mixin that applies all Mat Expressive component styles at once."
+    },
+    {
+      "label": "All Buttons Styles API",
+      "path": "/docs/styles-api/all-buttons",
+      "order": 2,
+      "description": "API reference for the mat-expressive-all-buttons-styles SCSS mixin that applies all button-related Mat Expressive styles at once."
+    }
+  ],
+  "sectionRedirects": {
+    "/docs/getting-started": "/docs/getting-started/what-is-mat-expressive",
+    "/docs/components": "/docs/components/all-buttons",
+    "/docs/components/all-buttons": "/docs/components/all-buttons/button",
+    "/docs/components/loading-and-progress": "/docs/components/loading-and-progress/loading-indicator",
+    "/docs/styles-api": "/docs/styles-api/all-styles"
+  }
+}

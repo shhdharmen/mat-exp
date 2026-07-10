@@ -1,0 +1,126 @@
+:host {
+  display: block;
+}
+
+.playground-layout {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-block: 1.5rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    min-height: 320px;
+  }
+}
+
+.playground-preview {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: safe center;
+  justify-content: safe center;
+  padding: 24px;
+  background-color: var(--mat-sys-surface-container-lowest);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  min-height: 200px;
+  overflow: auto;
+
+  @media (min-width: 768px) {
+    border-bottom: none;
+    border-right: 1px solid var(--mat-sys-outline-variant);
+  }
+}
+
+.playground-controls {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 16px;
+  gap: 8px;
+  background-color: var(--mat-sys-surface-container);
+  min-width: 220px;
+  max-width: 100%;
+
+  @media (min-width: 768px) {
+    width: 280px;
+    max-width: 280px;
+    overflow-y: auto;
+  }
+}
+
+.playground-controls-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.playground-controls-title {
+  color: var(--mat-sys-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.playground-controls-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.control-row {
+  width: 100%;
+}
+
+.control-field {
+  width: 100%;
+}
+
+.control-toggle-row {
+  display: flex;
+  align-items: center;
+  padding-block: 8px;
+}
+
+.source-tab-panel {
+  position: relative;
+}
+
+.source-tab-panel-header {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 1;
+  opacity: 0.35;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.source-code.code-block {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.playground-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  margin-block: 1.5rem;
+
+  mat-icon {
+    flex-shrink: 0;
+  }
+}

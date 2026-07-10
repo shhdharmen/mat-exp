@@ -1,4 +1,5 @@
 @use '../tokens/connected' as connected;
+@use '../../../../utils/functions';
 
 $config: (
   (
@@ -8,11 +9,70 @@ $config: (
   (
     variant: 'connected',
     size: 'xs',
-    properties: connected.$connected-compact-icon-button-properties,
+    shape: 'round',
+    properties: (
+      " > .mat-expressive-icon-button:first-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(14),
+        ),
+        padding-right: (
+          value: functions.rem(10),
+        ),
+      ),
+      " > .mat-expressive-icon-button:last-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(10),
+        ),
+        padding-right: (
+          value: functions.rem(14),
+        ),
+      ),
+    ),
   ),
   (
     variant: 'connected',
     size: 's',
-    properties: connected.$connected-compact-icon-button-properties,
+    shape: 'round',
+    properties: (
+      " > .mat-expressive-icon-button:first-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(14),
+        ),
+        padding-right: (
+          value: functions.rem(10),
+        ),
+      ),
+      " > .mat-expressive-icon-button:last-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(10),
+        ),
+        padding-right: (
+          value: functions.rem(14),
+        ),
+      ),
+    ),
   ),
+  (
+    variant: 'connected',
+    size: 'm',
+    shape: 'round',
+    properties: (
+      " > .mat-expressive-icon-button:first-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(18),
+        ),
+        padding-right: (
+          value: functions.rem(14),
+        ),
+      ),
+      " > .mat-expressive-icon-button:last-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(14),
+        ),
+        padding-right: (
+          value: functions.rem(18),
+        ),
+      ),
+    ),
+  )
 );

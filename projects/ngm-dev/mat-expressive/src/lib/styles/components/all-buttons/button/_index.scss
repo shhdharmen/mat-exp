@@ -17,7 +17,11 @@ $_mat-expressive-button-class: 'mat-expressive-button';
   $mat-expressive-button-class: '.' + $_mat-expressive-button-class;
 
   // Validate the entire configuration
-  $validation-result: functions.validate-button-config(config.$button-config, 'button-config');
+  $validation-result: functions.validate-config(
+    config.$button-config,
+    functions.$default-allowed-keys,
+    'button-config'
+  );
 
   @if $validation-result != true {
     @error $validation-result;

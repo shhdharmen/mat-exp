@@ -19,7 +19,7 @@ import {
   registerGsapPluginsOnce,
   setupRotationAndMorph,
 } from './loading-indicator.animation';
-import { MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS } from './loading-indicator.options';
+import { injectMatExpressiveLoadingIndicatorOptions } from './loading-indicator.options';
 import {
   MAT_EXPRESSIVE_LOADING_INDICATOR_SHAPES,
   MAT_EXPRESSIVE_LOADING_INDICATOR_VIEW_BOX,
@@ -75,7 +75,7 @@ import {
   templateUrl: './loading-indicator.html',
 })
 export class MatExpressiveLoadingIndicator {
-  private readonly _options = inject(MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS);
+  private readonly _options = injectMatExpressiveLoadingIndicatorOptions();
 
   /**
    * Visual configuration of the indicator.
@@ -83,10 +83,16 @@ export class MatExpressiveLoadingIndicator {
    * - `default` – renders just the morphing shape.
    * - `contained` – renders the morphing shape on top of a tonal background
    *   "container" circle.
+   *
+   * @default 'default'
    */
   public readonly config = input(this._options.config);
 
-  /** Accessible label announced by screen readers while the indicator is shown. */
+  /**
+   * Accessible label announced by screen readers while the indicator is shown.
+   *
+   * @default 'Loading'
+   */
   public readonly ariaLabel = input(this._options.ariaLabel);
 
   /**
@@ -97,6 +103,8 @@ export class MatExpressiveLoadingIndicator {
    * Changing this signal at runtime tears down the active GSAP timelines and
    * re-builds them with the new spring, so the indicator stays in sync with
    * the new motion language without recreating the component.
+   *
+   * @default 'default'
    */
   public readonly speed = input<MatExpressiveLoadingIndicatorSpeed>(
     this._options.speed ?? 'default',

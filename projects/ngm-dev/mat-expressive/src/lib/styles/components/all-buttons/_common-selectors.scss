@@ -11,20 +11,17 @@ $button-shape-selectors: (
   '.mat-mdc-raised-button .mdc-button__ripple'
 );
 $button-line-height-selectors: ('.mdc-button');
-$icon-button-icon-selectors: (
-  '.mat-mdc-icon-button .mat-icon',
-);
-$icon-button-shape-selectors: (
-  '.mat-mdc-icon-button',
-);
-$icon-button-appearance-selectors: (
-  '.mat-mdc-icon-button',
-);
-$icon-button-width-selectors: (
-  '.mat-mdc-icon-button',
-);
+$icon-button-icon-selectors: ('.mat-mdc-icon-button .mat-icon');
+$icon-button-shape-selectors: ('.mat-mdc-icon-button');
+$icon-button-appearance-selectors: ('.mat-mdc-icon-button');
+$icon-button-width-selectors: ('.mat-mdc-icon-button');
 $icon-button-ripple-selectors: (
   '.mat-mdc-icon-button .mat-mdc-button-ripple',
   '.mat-mdc-icon-button .mat-mdc-button-persistent-ripple',
-  '.mat-mdc-icon-button .mat-mdc-button-persistent-ripple::before',
+  '.mat-mdc-icon-button .mat-mdc-button-persistent-ripple::before'
+);
+$icon-button-only-ripple-selectors: (
+  '.mat-mdc-button-ripple',
+  '.mat-mdc-button-persistent-ripple',
+  '.mat-mdc-button-persistent-ripple::before'
 );

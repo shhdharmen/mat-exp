@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+.markdown-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.doc-page-title {
+  font: var(--mat-sys-headline-large);
+  margin-bottom: 1.5rem;
+}
+
+.not-found {
+  padding: 2rem 0;
+
+  h1 {
+    font: var(--mat-sys-headline-large);
+    margin-bottom: 1rem;
+  }
+}
+
+.loading-state {
+  padding: 0.5rem 0;
+}
+
+.loading-line {
+  background: linear-gradient(
+    90deg,
+    var(--mat-sys-surface-variant) 25%,
+    var(--mat-sys-surface) 50%,
+    var(--mat-sys-surface-variant) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}

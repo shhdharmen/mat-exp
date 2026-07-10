@@ -6,6 +6,7 @@ import { MatExpressiveFabMenuColor } from '../../../types/appearance';
   selector: '[matExpressiveFabMenu]',
 })
 export class MatExpressiveFabMenu {
+  /** @default 'primary' */
   readonly color = input<MatExpressiveFabMenuColor>('primary');
   /**
    * @internal

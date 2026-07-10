@@ -15,8 +15,9 @@ $_mat-expressive-fab-menu-class: 'mat-expressive-fab-menu';
   $mat-expressive-fab-menu-class: '.' + $_mat-expressive-fab-menu-class;
 
   // Validate the entire configuration
-  $validation-result: functions.validate-fab-menu-config(
+  $validation-result: functions.validate-config(
     config.$fab-menu-config,
+    functions.$default-allowed-keys,
     'fab-menu-config'
   );
 

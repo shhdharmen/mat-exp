@@ -15,8 +15,9 @@ $_mat-expressive-fab-menu-trigger-class: 'mat-expressive-fab-menu-trigger';
   $mat-expressive-fab-menu-trigger-class: '.' + $_mat-expressive-fab-menu-trigger-class;
 
   // Validate the entire configuration
-  $validation-result: functions.validate-fab-menu-trigger-config(
+  $validation-result: functions.validate-config(
     config.$fab-menu-trigger-config,
+    functions.$default-allowed-keys,
     'fab-menu-trigger-config'
   );
 

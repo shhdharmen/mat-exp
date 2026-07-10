@@ -1,0 +1,166 @@
+<mat-drawer-container class="flex-1" autosize>
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-surface focus:text-on-surface focus:rounded-full focus:border focus:border-outline"
+  >
+    Skip to main content
+  </a>
+
+  <!-- Drawer container fills remaining height -->
+  <!-- Mobile nav drawer -->
+  <mat-drawer
+    mode="over"
+    position="end"
+    [opened]="drawerOpen()"
+    (closed)="drawerOpen.set(false)"
+    class="w-72 p-6"
+    fixedInViewport
+  >
+    <!-- Drawer header -->
+    <div class="flex items-center justify-between mb-6">
+      <span class="font-semibold text-on-surface">Navigation</span>
+      <button mat-icon-button aria-label="Close navigation menu" (click)="drawerOpen.set(false)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="mb-6">
+      <ul class="space-y-1">
+        <li>
+          <button
+            class="block px-3 py-2 rounded-lg text-sm text-on-surface hover:bg-surface-container transition-colors no-underline w-100 text-left"
+            (click)="openCommunity(); drawerOpen.set(false)"
+          >
+            Community
+          </button>
+        </li>
+        <li>
+          <a
+            routerLink="/pricing"
+            class="block px-3 py-2 rounded-lg text-sm text-on-surface hover:bg-surface-container transition-colors no-underline"
+            (click)="drawerOpen.set(false)"
+            >Get Access</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Nav groups -->
+    @for (col of navColumns; track col.heading) {
+      <div class="mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-2">
+          {{ col.heading }}
+        </p>
+        <ul class="space-y-1">
+          @for (link of col.links; track link.label) {
+            <li>
+              @if (link.routerLink) {
+                <a
+                  [routerLink]="link.routerLink"
+                  class="block px-3 py-2 rounded-lg text-sm text-on-surface hover:bg-surface-container transition-colors no-underline"
+                  (click)="drawerOpen.set(false)"
+                  >{{ link.label }}</a
+                >
+              } @else {
+                <a
+                  [href]="link.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block px-3 py-2 rounded-lg text-sm text-on-surface hover:bg-surface-container transition-colors no-underline"
+                  (click)="drawerOpen.set(false)"
+                  >{{ link.label }}</a
+                >
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </mat-drawer>
+
+  <mat-drawer-content class="flex flex-col">
+    <!-- Marketing header -->
+    <header class="fixed top-0 z-10 bg-surface border-b border-outline-variant h-[56px] w-full">
+      <div class="flex items-center h-14 px-4 sm:px-6 gap-4 max-w-7xl mx-auto w-full">
+        <!-- Logo / wordmark -->
+        <a
+          routerLink="/"
+          class="flex items-center gap-2 font-semibold text-on-surface no-underline"
+        >
+          <app-logo svgClass="size-8" />
+          <div class="ms-1 flex items-center gap-2">
+            <span class="font-semibold font-title-large text-title-large"> Expressive </span>
+          </div>
+        </a>
+
+        <div class="flex-1"></div>
+
+        <!-- Community link -->
+        <button
+          matButton
+          matExpressiveButton
+          size="xs"
+          class="!hidden md:!inline-flex"
+          aria-label="Community"
+          (click)="openCommunity()"
+        >
+          Community
+        </button>
+
+        <!-- Get Access CTA -->
+        <a
+          routerLink="/pricing"
+          matButton="outlined"
+          matExpressiveButton
+          size="xs"
+          class="!hidden md:!inline-flex"
+          aria-label="Get access to a commercial license"
+        >
+          Get Access
+        </a>
+
+        <!-- Theme toggle -->
+        <button
+          mat-icon-button
+          [matTooltip]="
+            themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          "
+          [attr.aria-label]="
+            themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          "
+          (click)="themeService.toggle()"
+        >
+          <mat-icon>{{ themeService.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+
+        <!-- GitHub link -->
+        <!-- <a
+      href="https://github.com/Angular-Material-Dev/community"
+      mat-icon-button
+      aria-label="View repository on GitHub"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <mat-icon>open_in_new</mat-icon>
+    </a> -->
+
+        <!-- Menu toggle -->
+        <button
+          class="md:hidden!"
+          mat-icon-button
+          aria-label="Open navigation menu"
+          (click)="drawerOpen.set(true)"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </header>
+    <!-- Page content -->
+    <main id="main-content" class="flex-1 mt-[56px]" tabindex="-1">
+      <router-outlet />
+    </main>
+
+    <!-- Footer -->
+    <app-footer />
+  </mat-drawer-content>
+</mat-drawer-container>

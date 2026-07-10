@@ -1,0 +1,69 @@
+// GitHub-style alert callouts rendered by the marked-alert extension.
+// Variants: note, tip, warning, danger/caution, important.
+
+.markdown-alert {
+  padding: 0.75rem 1rem 0.75rem 1.25rem;
+  margin-block: 1.25rem;
+  border-left: 4px solid;
+  border-radius: 0 6px 6px 0;
+
+  p:last-child { margin-bottom: 0; }
+
+  .markdown-alert-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-bottom: 0.4rem;
+  }
+
+  &.markdown-alert-note {
+    border-color: var(--mat-sys-primary);
+    background-color: color-mix(in srgb, var(--mat-sys-primary) 8%, transparent);
+
+    .markdown-alert-title { color: var(--mat-sys-primary); }
+  }
+
+  &.markdown-alert-tip {
+    border-color: var(--mat-sys-tertiary);
+    background-color: color-mix(in srgb, var(--mat-sys-tertiary) 8%, transparent);
+
+    .markdown-alert-title { color: var(--mat-sys-tertiary); }
+  }
+
+  &.markdown-alert-warning {
+    $color: #b45309;
+
+    border-color: #{$color};
+    background-color: color-mix(in srgb, #{$color} 10%, transparent);
+
+    .markdown-alert-title { color: #{$color}; }
+
+    html.dark & {
+      $color-dark: #fbbf24;
+
+      border-color: #{$color-dark};
+      background-color: color-mix(in srgb, #{$color-dark} 10%, transparent);
+
+      .markdown-alert-title { color: #{$color-dark}; }
+    }
+  }
+
+  &.markdown-alert-caution,
+  &.markdown-alert-danger {
+    border-color: var(--mat-sys-error);
+    background-color: color-mix(in srgb, var(--mat-sys-error) 8%, transparent);
+
+    .markdown-alert-title { color: var(--mat-sys-error); }
+  }
+
+  &.markdown-alert-important {
+    border-color: var(--mat-sys-secondary);
+    background-color: color-mix(in srgb, var(--mat-sys-secondary) 8%, transparent);
+
+    .markdown-alert-title { color: var(--mat-sys-secondary); }
+  }
+}

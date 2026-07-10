@@ -3,23 +3,18 @@ import {
   Component,
   computed,
   contentChildren,
-  effect,
-  inject,
   model,
 } from '@angular/core';
-import { MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS } from './split-button.options';
+import { injectMatExpressiveSplitButtonOptions } from './split-button.options';
 import { MatExpressiveIconButton } from '../icon-button';
 import { MatExpressiveButton } from '../button';
+import {
+  bindButtonGroupChildren,
+  toButtonGroupChild,
+} from '../button-group-child/button-group-child';
 
-// @Component({
-//   template: '',
-//   styleUrls: ['./button.scss'],
-//   encapsulation: ViewEncapsulation.None,
-//   changeDetection: ChangeDetectionStrategy.OnPush,
-// })
-// class Styles {}
 /**
- * Directive to style the Angular Material Button component with latest Material 3 Design System Expressive styles.
+ * Component to style the Angular Material Button component with latest Material 3 Design System Expressive styles.
  */
 @Component({
   selector: 'mat-expressive-split-button',
@@ -29,20 +24,15 @@ import { MatExpressiveButton } from '../button';
     '[class]': 'matExpressiveSplitButtonClass',
   },
   template: '<ng-content></ng-content>',
-  // styleUrls: ['./split-button.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // encapsulation: ViewEncapsulation.None,
 })
 export class MatExpressiveSplitButton {
-  // protected readonly nothing = matExpressiveWithStyles(Styles);
+  private readonly _options = injectMatExpressiveSplitButtonOptions();
 
-  public readonly size = model(inject(MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS).size);
-  public readonly appearance = model(inject(MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS).appearance);
-  /**
-   * @internal
-   */
-  // public readonly matExpressiveButtonClass = inject(MAT_EXPRESSIVE_BUTTON_OPTIONS)
-  //   .matExpressiveButtonClass;
+  /** @default 's' */
+  public readonly size = model(this._options.size);
+  /** @default 'tonal' */
+  public readonly appearance = model(this._options.appearance);
 
   /**
    * @internal
@@ -57,23 +47,22 @@ export class MatExpressiveSplitButton {
     ...this._matExpressiveIconButtons(),
   ]);
 
-  constructor() {
-    effect(() => {
-      const size = this.size();
-      if (size) {
-        this._allExpressiveButtons().forEach((button) => {
-          button.size.set(size);
-        });
-      }
-    });
+  /**
+   * `_allExpressiveButtons` adapted to the narrow `ButtonGroupChild` contract, used to
+   * broadcast `size`/`appearance` without depending on the concrete button directive types.
+   * @internal
+   */
+  readonly _allButtonGroupChildren = computed(() =>
+    this._allExpressiveButtons().map(toButtonGroupChild),
+  );
 
-    effect(() => {
-      const appearance = this.appearance();
-      if (appearance) {
-        this._allExpressiveButtons().forEach((button) => {
-          button.appearance = appearance;
-        });
-      }
+  constructor() {
+    // Broadcast `size`/`appearance` down to the projected buttons via the narrow
+    // `ButtonGroupChild` contract (shared with `MatExpressiveButtonGroup`).
+    bindButtonGroupChildren({
+      children: this._allButtonGroupChildren,
+      size: this.size,
+      appearance: this.appearance,
     });
   }
 }

@@ -43,9 +43,13 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-
-# NgDoc files
-/ng-doc
-
 # Claude Code
 .claude/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# act — local GitHub Actions runner
+.secrets

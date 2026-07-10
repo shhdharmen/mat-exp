@@ -20,8 +20,9 @@ $_mat-expressive-button-group-class: 'mat-expressive-button-group';
   // $mat-expressive-button-group-class: '.' + map.get($options, mat-expressive-button-group-class);
   $mat-expressive-button-group-class: '.' + $_mat-expressive-button-group-class;
 
-  $validation-result: functions.validate-button-group-config(
+  $validation-result: functions.validate-config(
     config.$button-group-config,
+    functions.$default-allowed-keys,
     'button-group-config'
   );
 
@@ -39,9 +40,19 @@ $_mat-expressive-button-group-class: 'mat-expressive-button-group';
       $selector: $selector + "[data-size='#{$size}']";
     }
 
+    @if map.has-key($item, shape) {
+      $shape: map.get($item, shape);
+      $selector: $selector + "[data-shape='#{$shape}']";
+    }
+
     @if map.has-key($item, variant) {
       $variant: map.get($item, variant);
       $selector: $selector + "[data-variant='#{$variant}']";
+    }
+
+    @if map.has-key($item, appearance) {
+      $appearance: map.get($item, appearance);
+      $selector: $selector + "[data-appearance='#{$appearance}']";
     }
 
     @if map.has-key($item, selection) {

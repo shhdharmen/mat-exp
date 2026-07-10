@@ -1,0 +1,120 @@
+<div class="max-w-5xl mx-auto px-4 py-12">
+  <!-- Hero -->
+  <header class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+      Simple, transparent pricing
+    </h1>
+    <p class="text-lg text-gray-500 dark:text-gray-400">
+      Free for non-commercial use. One-time payment for commercial.
+    </p>
+  </header>
+
+  <!-- Pricing cards -->
+  <section class="flex flex-col md:flex-row gap-6 justify-center mb-16" aria-label="Pricing tiers">
+    <!-- Free / Non-Commercial card -->
+    <div
+      class="flex-1 w-full md:max-w-sm rounded-2xl border border-outline-variant bg-surface p-8 flex flex-col"
+    >
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-on-surface-variant mb-1">
+        Non-Commercial
+      </h2>
+      <p class="text-3xl font-bold text-on-surface mb-1">Free — forever</p>
+      <p class="text-sm text-on-surface-variant mb-6">&nbsp;</p>
+
+      <ul class="space-y-2 mb-8 flex-1" aria-label="Non-commercial plan features">
+        @for (bullet of freeBullets; track bullet) {
+          <li class="flex items-start gap-2 text-sm text-on-surface">
+            <span class="mt-0.5 text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
+            {{ bullet }}
+          </li>
+        }
+      </ul>
+
+      <a
+        routerLink="/docs/getting-started/installation"
+        mat-flat-button
+        class="w-full justify-center"
+        aria-label="Get started with the non-commercial plan"
+      >
+        Get Started
+      </a>
+    </div>
+
+    <!-- Commercial card -->
+    <div
+      class="flex-1 w-full md:max-w-sm rounded-2xl border-2 border-primary bg-surface p-8 flex flex-col shadow-lg"
+    >
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-primary mb-1">Commercial</h2>
+      <p class="text-3xl font-bold text-on-surface mb-1">${{ licensePrice }}</p>
+      <p class="text-sm text-on-surface-variant mb-2">one-time payment</p>
+      <p class="text-xs text-on-surface-variant mb-6">
+        Lifetime license · All future versions · Unlimited devs &amp; projects
+      </p>
+
+      <ul class="space-y-2 mb-8 flex-1" aria-label="Commercial plan features">
+        @for (bullet of commercialBullets; track bullet) {
+          <li class="flex items-start gap-2 text-sm text-on-surface">
+            <span class="mt-0.5 text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
+            {{ bullet }}
+          </li>
+        }
+      </ul>
+
+      <a
+        [attr.href]="polarUrl"
+        mat-flat-button
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-full justify-center"
+        aria-label="Buy a commercial license (opens in new tab)"
+      >
+        Buy License
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section aria-label="Frequently asked questions">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-center">
+      Frequently Asked Questions
+    </h2>
+
+    @if (renderedFaqCategories().length === 0) {
+      <!-- Skeleton while markdown renders -->
+      <div class="space-y-10 animate-pulse" aria-busy="true" aria-label="Loading FAQ">
+        @for (_ of [1, 2, 3]; track $index) {
+          <div>
+            <div class="h-4 bg-surface-variant rounded w-24 mb-4"></div>
+            <div class="space-y-3">
+              @for (__ of [1, 2, 3]; track $index) {
+                <div class="h-3 bg-surface-variant rounded w-full"></div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="space-y-10">
+        @for (category of renderedFaqCategories(); track category.heading) {
+          <div>
+            <h3
+              class="text-base font-semibold text-on-surface mb-4 pb-1 border-b border-outline-variant"
+            >
+              {{ category.heading }}
+            </h3>
+            <mat-accordion multi>
+              @for (entry of category.entries; track entry.q) {
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{ entry.q }}</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <app-markdown [html]="entry.html" />
+                </mat-expansion-panel>
+              }
+            </mat-accordion>
+          </div>
+        }
+      </div>
+    }
+  </section>
+</div>

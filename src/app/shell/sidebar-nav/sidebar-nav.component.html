@@ -1,0 +1,107 @@
+@let manifest = nav();
+
+<nav aria-label="Documentation navigation" class="py-4 overflow-y-auto">
+  @if (manifest) {
+    <mat-accordion [multi]="true" class="block">
+      @for (section of manifest.nav; track section.path) {
+        @if (section.children) {
+          <mat-expansion-panel [expanded]="true" class="shadow-none bg-transparent">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="flex items-center gap-2">
+                <span class="text-xs font-semibold uppercase tracking-wider">
+                  {{ section.label }}
+                </span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="pl-2">
+              @for (item of section.children; track item.path) {
+                @if (item.isComponentPage) {
+                  <!-- Component page — single nav link, tabs handled on page -->
+                  <a
+                    [routerLink]="item.path"
+                    routerLinkActive="bg-secondary-container text-on-secondary-container"
+                    class="flex items-center rounded-full px-3 py-1.5 text-sm text-on-surface-variant hover:bg-surface-variant transition-colors no-underline"
+                    (click)="linkClicked.emit()"
+                  >
+                    {{ item.label }}
+                  </a>
+                } @else if (item.isSection && item.children) {
+                  <!-- Nested section (e.g. Loading & Progress) -->
+                  <p class="text-xs font-medium text-on-surface-variant mt-3 mb-1 px-3">
+                    {{ item.label }}
+                  </p>
+                  @for (child of item.children; track child.path) {
+                    @if (child.isComponentPage) {
+                      <!-- Component page inside nested section — single link -->
+                      <a
+                        [routerLink]="child.path"
+                        routerLinkActive="bg-secondary-container text-on-secondary-container"
+                        class="flex items-center rounded-full px-3 py-1.5 text-sm text-on-surface-variant hover:bg-surface-variant transition-colors no-underline pl-5"
+                        (click)="linkClicked.emit()"
+                      >
+                        {{ child.label }}
+                      </a>
+                    } @else if (child.path) {
+                      <a
+                        [routerLink]="child.path"
+                        routerLinkActive="bg-secondary-container text-on-secondary-container"
+                        class="flex items-center rounded-full px-3 py-1.5 text-sm text-on-surface-variant hover:bg-surface-variant transition-colors no-underline pl-5"
+                        (click)="linkClicked.emit()"
+                      >
+                        {{ child.label }}
+                      </a>
+                    }
+                  }
+                } @else if (item.isExternal) {
+                  <a
+                    [href]="item.path"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center rounded-full px-3 py-1.5 text-sm text-on-surface-variant hover:bg-surface-variant transition-colors no-underline"
+                  >
+                    {{ item.label }}
+                  </a>
+                } @else if (item.path) {
+                  <a
+                    [routerLink]="item.path"
+                    routerLinkActive="bg-secondary-container text-on-secondary-container"
+                    class="flex items-center rounded-full px-3 py-1.5 text-sm text-on-surface-variant hover:bg-surface-variant transition-colors no-underline"
+                    (click)="linkClicked.emit()"
+                  >
+                    {{ item.label }}
+                  </a>
+                }
+              }
+            </div>
+          </mat-expansion-panel>
+        } @else if (section.path) {
+          <a
+            [routerLink]="section.path"
+            routerLinkActive="bg-secondary-container text-on-secondary-container"
+            class="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-on-surface hover:bg-surface-variant transition-colors no-underline mx-2"
+            (click)="linkClicked.emit()"
+          >
+            {{ section.label }}
+          </a>
+        }
+      }
+    </mat-accordion>
+
+    <a
+      routerLink="/docs/api"
+      routerLinkActive="bg-secondary-container text-on-secondary-container"
+      class="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-on-surface hover:bg-surface-variant transition-colors no-underline mx-2 mt-2"
+      (click)="linkClicked.emit()"
+    >
+      API Reference
+    </a>
+  } @else {
+    <!-- Skeleton while manifest loads -->
+    <div class="px-4 py-2 space-y-3">
+      @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+        <div class="h-4 bg-surface-variant rounded-full animate-pulse"></div>
+      }
+    </div>
+  }
+</nav>

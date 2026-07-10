@@ -1,0 +1,140 @@
+<!-- ── 1. Hero ──────────────────────────────────────────────────────────── -->
+<section class="hero-section relative overflow-hidden px-6 py-24 sm:py-32 text-center">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-on-surface mb-6">
+      <span class="font-bold">Material Expressive,</span>&nbsp;<em class="italic font-normal"
+        >finally</em
+      >&nbsp;<span class="font-bold">for Angular</span>
+    </h1>
+    <p class="text-lg sm:text-xl text-on-surface-variant mb-10 max-w-2xl mx-auto">
+      Material 3 Expressive components and motion for Angular — buttons, FABs, loading indicators,
+      and more, with zero config.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        routerLink="/docs/getting-started/installation"
+        mat-flat-button
+        matExpressiveButton
+        class="text-base px-6 py-3"
+      >
+        Get Started
+      </a>
+      <a
+        routerLink="/docs/components"
+        mat-stroked-button
+        matExpressiveButton
+        class="text-base px-6 py-3"
+      >
+        View Components
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. Component Gallery Strip ──────────────────────────────────────── -->
+<section class="gallery-section py-16 bg-surface-variant/30" aria-label="Component gallery">
+  <div class="gallery-strip flex gap-6 overflow-x-auto px-6 sm:px-12 pb-2">
+    @for (item of galleryItems; track item.label) {
+      <a
+        [routerLink]="item.path"
+        class="gallery-card shrink-0 w-64 rounded-2xl border border-outline-variant bg-surface overflow-hidden flex flex-col hover:border-primary transition-colors"
+      >
+        <img
+          [src]="item.image"
+          [alt]="item.label"
+          class="w-full h-40 object-cover"
+          width="320"
+          height="200"
+        />
+        <span class="px-4 py-3 font-medium text-on-surface">{{ item.label }}</span>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- ── 3. Philosophy Band ──────────────────────────────────────────────── -->
+<section class="philosophy-section py-20 px-6 text-center">
+  <div class="max-w-2xl mx-auto">
+    <p class="text-lg sm:text-xl text-on-surface-variant leading-relaxed mb-8">
+      Mat Expressive is built on Material Design 3, with GSAP-powered spring motion where it counts.
+      Every animation respects <code>prefers-reduced-motion</code>, and every shape, size, and speed
+      follows Material 3 Expressive presets.
+    </p>
+    <a
+      routerLink="/docs/components"
+      mat-stroked-button
+      matExpressiveButton
+      class="text-base px-6 py-3"
+    >
+      Explore Components →
+    </a>
+  </div>
+</section>
+
+<!-- ── 4. Feature Cards ─────────────────────────────────────────────────── -->
+<section class="features-section py-20 px-6">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-center text-3xl font-semibold mb-12 text-on-surface">Everything You Need</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      @for (feature of features; track feature.title) {
+        <div class="rounded-2xl border border-outline-variant p-6 flex flex-col gap-3">
+          <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+            <mat-icon class="text-on-primary-container">{{ feature.icon }}</mat-icon>
+          </div>
+          <h3 class="font-semibold text-on-surface">{{ feature.title }}</h3>
+          <p class="text-sm text-on-surface-variant leading-relaxed flex-1">
+            {{ feature.description }}
+          </p>
+          <button
+            mat-button
+            matExpressiveButton
+            class="self-start -ml-4"
+            (click)="openFeatureDialog(feature)"
+          >
+            Learn more →
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. Quick-start Code Snippet ───────────────────────────────────── -->
+<section class="quickstart-section py-20 px-6 bg-surface-variant/30">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="text-center text-3xl font-semibold mb-4 text-on-surface">Up in Minutes</h2>
+    <p class="text-center text-on-surface-variant mb-10">
+      Install, import, and add the directive. That's it.
+    </p>
+    @if (quickstartHtml()) {
+      <app-markdown [html]="quickstartHtml()" />
+    }
+  </div>
+</section>
+
+<!-- ── 6. CTA Footer Band ────────────────────────────────────────────── -->
+<section class="cta-section py-20 px-6 text-center">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl tracking-tight text-on-surface mb-4">
+      <span class="font-bold">Ship</span>&nbsp;<em class="italic font-normal">expressive</em
+      >&nbsp;<span class="font-bold">UI today.</span>
+    </h2>
+    <p class="text-on-surface-variant mb-10 text-lg">
+      Start for free with the non-commercial license, or grab a commercial license for production
+      use.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        routerLink="/docs/getting-started/installation"
+        mat-flat-button
+        matExpressiveButton
+        class="text-base px-6 py-3"
+      >
+        Get Started
+      </a>
+      <a routerLink="/pricing" mat-stroked-button matExpressiveButton class="text-base px-6 py-3">
+        Get a License
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+<div class="flex items-center h-14 px-4 gap-4 border-b border-outline-variant">
+  <!-- Hamburger for mobile sidebar -->
+  <button
+    mat-icon-button
+    aria-label="Open navigation"
+    (click)="menuToggled.emit()"
+    class="md:hidden!"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Logo / wordmark -->
+  <a routerLink="/" class="flex items-center gap-2 font-semibold text-on-surface no-underline">
+    <app-logo svgClass="size-8" />
+    <div class="ms-1 flex items-center gap-2">
+      <span class="font-semibold font-title-large text-title-large">Mat Expressive </span>
+    </div>
+  </a>
+
+  <div class="flex-1"></div>
+
+  <!-- Search trigger -->
+  @if (isMobile()) {
+    <button mat-icon-button aria-label="Search docs" (click)="openSearch()">
+      <mat-icon>search</mat-icon>
+    </button>
+  } @else {
+    <button
+      mat-button
+      aria-label="Search docs (Ctrl+K)"
+      aria-keyshortcuts="Control+K"
+      (click)="openSearch()"
+    >
+      <mat-icon>search</mat-icon>
+      <span class="hidden md:inline text-sm">Search</span>
+      <kbd
+        class="hidden md:inline text-xs bg-surface-variant px-1.5 py-0.5 rounded border border-outline-variant ml-0.5"
+        >⌃K</kbd
+      >
+    </button>
+  }
+
+  <!-- Version switcher -->
+  <app-version-switcher class="!hidden md:!inline-flex" />
+
+  <!-- Community link -->
+  <button
+    matButton
+    matExpressiveButton
+    size="xs"
+    class="!hidden md:!inline-flex"
+    aria-label="Community"
+    (click)="openCommunity()"
+  >
+    Community
+  </button>
+
+  <!-- Pricing link -->
+  <a
+    routerLink="/pricing"
+    matButton="outlined"
+    matExpressiveButton
+    size="xs"
+    class="!hidden md:!inline-flex"
+    aria-label="Get access"
+  >
+    Get Access
+  </a>
+
+  <!-- Theme toggle -->
+  <button
+    mat-icon-button
+    [matTooltip]="themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+    [attr.aria-label]="
+      themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+    "
+    (click)="themeService.toggle()"
+  >
+    <mat-icon>{{ themeService.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</div>

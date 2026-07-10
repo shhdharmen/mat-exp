@@ -22,19 +22,16 @@ export interface MatExpressiveSplitButtonOptions {
   readonly appearance?: MatExpressiveSplitButtonAppearance;
 }
 
+/**
+ * @internal
+ */
 export const MAT_EXPRESSIVE_SPLIT_BUTTON_DEFAULT_OPTIONS: MatExpressiveSplitButtonOptions = {
   size: 's',
   appearance: 'tonal',
 };
 
-const [_MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS, _provideMatExpressiveSplitButtonOptions] =
-  matExpressiveCreateOptions(MAT_EXPRESSIVE_SPLIT_BUTTON_DEFAULT_OPTIONS);
+const _splitButtonOptions = matExpressiveCreateOptions(MAT_EXPRESSIVE_SPLIT_BUTTON_DEFAULT_OPTIONS);
 
-export const MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS = _MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS;
-export function provideMatExpressiveSplitButtonOptions(
-  options:
-    | Partial<MatExpressiveSplitButtonOptions>
-    | (() => Partial<MatExpressiveSplitButtonOptions>),
-) {
-  return _provideMatExpressiveSplitButtonOptions(options);
-}
+export const MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS = _splitButtonOptions.token;
+export const provideMatExpressiveSplitButtonOptions = _splitButtonOptions.provide;
+export const injectMatExpressiveSplitButtonOptions = _splitButtonOptions.inject;

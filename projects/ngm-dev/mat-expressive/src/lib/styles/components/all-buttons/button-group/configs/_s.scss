@@ -1,8 +1,19 @@
 @use '../tokens/s' as s;
+@use '../../../../utils/functions';
 
 $config: (
   (
     size: 's',
     properties: s.$properties,
   ),
+  (
+    size: 's',
+    properties: (
+      ' > .mat-expressive-icon-button': (
+        width: (
+          value: functions.rem(48),
+        ),
+      ),
+    ),
+  )
 );

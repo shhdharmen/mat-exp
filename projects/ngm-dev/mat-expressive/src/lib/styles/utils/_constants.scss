@@ -1,66 +1,48 @@
+@use 'sass:map';
+@use './generated-attributes' as generated;
+
 $button-transition:
   box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
   border-radius 200ms cubic-bezier(0.2, 0, 0, 1),
   padding-left 200ms cubic-bezier(0.2, 0, 0, 1),
   padding-right 200ms cubic-bezier(0.2, 0, 0, 1);
 
-$state-pseudo-map: (
-  hovered: ':hover',
-  focused: ':focus',
-  active: ':active',
-  disabled: ':disabled',
-  pressed: ':active',
-);
-// Configuration for known attribute types and their values
-$known-attributes: (
-  size: (
-    xs,
-    s,
-    m,
-    l,
-    xl,
-  ),
-  shape: (
-    square,
-    round,
-  ),
-  state: (
-    hovered,
-    focused,
-    active,
-    disabled,
-    pressed,
-  ),
-  toggle: (
-    selected,
-    unselected,
-  ),
-  appearance: (
-    filled,
-    tonal,
-    outlined,
-    standard,
-  ),
-  width: (
-    default,
-    narrow,
-    wide,
-  ),
-  variant: (
-    standard,
-    connected,
-  ),
-  selection: (
-    single-select,
-    multi-select,
-    select-required,
-  ),
-  color: (
-    primary,
-    secondary,
-    tertiary,
-  ),
-  open: (
-    true,
-  ),
+// Sourced from generated-attributes.$generated-state-pseudo-map, which is
+// generated from the MatExpressiveButtonState TS union — see
+// scripts/generate-style-constants.ts.
+$state-pseudo-map: generated.$generated-state-pseudo-map;
+
+// Configuration for known attribute types and their values.
+//
+// size / shape / state / toggle / width / appearance are generated from the
+// TypeScript unions in src/lib/types/ (see scripts/generate-style-constants.ts
+// and utils/_generated-attributes.scss) — do not hand-edit those entries here.
+//
+// variant / selection / color / open / menu-open have no TS union counterpart
+// yet and remain hand-maintained below.
+$known-attributes: map.merge(
+  generated.$generated-known-attributes,
+  (
+    variant: (
+      standard,
+      connected,
+    ),
+    selection: (
+      single-select,
+      multi-select,
+      select-required,
+    ),
+    color: (
+      primary,
+      secondary,
+      tertiary,
+    ),
+    open: (
+      true,
+    ),
+    menu-open: (
+      true,
+      false,
+    ),
+  )
 );

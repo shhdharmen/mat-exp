@@ -1,0 +1,15 @@
+export { ShellComponent } from './shell.component';
+export { DocsShellComponent } from './docs-shell/docs-shell.component';
+export { StandaloneShellComponent } from './standalone-shell/standalone-shell.component';
+export { DeprecationBannerComponent } from './deprecation-banner/deprecation-banner.component';
+export { HeaderComponent } from './header/header.component';
+export { SidebarNavComponent } from './sidebar-nav/sidebar-nav.component';
+export { TocComponent } from './toc/toc.component';
+export { DocPrevNextComponent } from './doc-prev-next/doc-prev-next.component';
+export { ThemeService } from './theme.service';
+export { NavManifestService } from './nav-manifest.service';
+export { SearchModalComponent } from './search-modal/search-modal.component';
+export type { Theme } from './theme.service';
+export type { NavItem } from './sidebar-nav/sidebar-nav.component';
+export type { NavPage, NavManifest } from './nav-manifest.service';
+export type { TocItem } from '../shared/services/toc.service';

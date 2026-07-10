@@ -9,16 +9,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run build:lib                # Build library + copy README to dist
 npm run watch:lib                # Watch-build the library during development
 npm start                        # Serve docs app on localhost:4200
-npm run build:docs               # Run build script: regenerate nav-manifest.json, api-manifest.json, playground-schemas.json, routes.txt
 
 # Build
-ng build                         # Build docs app (runs build:docs automatically via prebuild hook)
+npm run build:docs               # Full docs pipeline: build-docs.ts -> ng build -> Pagefind indexing -> (postbuild:docs) sitemap + llms.txt
+ng build                         # Docs app build only — does NOT regenerate manifests/routes.txt; run build:docs for a from-scratch build
 npm run build:lib                # Build library (use this, not ng build directly)
 
 # Test
-npm test                         # Run docs app tests (Vitest via Angular CLI)
+npm test                         # Run docs app tests (Vitest via the Angular CLI unit-test builder)
 ng test --project @ngm-dev/mat-expressive           # Library tests only
-ng test --project mat-expressive-docs --testPathPattern="foo"  # Run single test file
+ng test --project mat-expressive-docs --filter="foo"  # Run tests matching a name pattern (Vitest builder option, not Jest's testPathPattern)
 
 # E2E
 ng e2e                           # Run Playwright e2e tests (spins up dev server automatically)
@@ -59,15 +59,17 @@ A **Component Page** has three markdown files (`index.md`, `api.md`, `styling.md
 
 ## Build Pipeline
 
-`npm run build:docs` (`scripts/build-docs.ts`) must run before `ng build` (it is wired as a prebuild step). It:
+`npm run build:docs` is one chained script (`tsx scripts/build-docs.ts && ng build && npx pagefind ...`), plus `postbuild:docs` (sitemap + `llms.txt` generation), which npm runs automatically afterward because its name matches the `build:docs` script:
 
-1. Scans `public/docs/` to build the navigation tree → `public/nav-manifest.json`
-2. Calls `scripts/extract-metadata.ts` (re-export barrel → `scripts/extract-metadata/`) (TypeScript compiler API) to parse the library source and emit:
+1. `scripts/build-docs.ts` scans `public/docs/` to build the navigation tree → `public/nav-manifest.json`, and calls `scripts/extract-metadata.ts` (re-export barrel → `scripts/extract-metadata/`) (TypeScript compiler API) to parse the library source and emit:
    - `public/api-manifest.json` — all exported selectors, inputs, outputs, JSDoc
    - `public/playground-schemas.json` — per-component input control descriptors
-3. Writes `public/routes.txt` — consumed by Angular's `prerender` config for SSG
+   - `public/routes.txt` — consumed by Angular's `prerender` config for SSG
+2. `ng build` builds and prerenders the docs app using the manifests/routes written in step 1
+3. `npx pagefind` indexes the prerendered output for the search modal (see ADR 0003)
+4. `postbuild:docs` (`scripts/generate-sitemap.ts`, `scripts/generate-llms-txt.ts`) runs automatically afterward via npm's script-hook naming convention
 
-When editing library inputs/outputs or JSDoc, re-run `npm run build:docs` to refresh the manifests.
+Running plain `ng build` skips all of the above except the Angular build itself — it will use whatever manifests/routes already exist on disk (or fail if they don't). When editing library inputs/outputs or JSDoc, re-run `npm run build:docs` to refresh the manifests.
 
 ## Angular 21 Conventions (enforced)
 

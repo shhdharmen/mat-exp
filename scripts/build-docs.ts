@@ -441,14 +441,7 @@ async function main(): Promise<void> {
   routeLines.push('/docs/api');
   // Standalone root routes (no /docs prefix — served by StandaloneShellComponent)
   routeLines.push('/');
-  routeLines.push('/pricing');
-  routeLines.push('/license');
-  routeLines.push('/about-us');
-  routeLines.push('/contact-us');
   routeLines.push('/changelog');
-  routeLines.push('/terms-and-conditions');
-  routeLines.push('/privacy-policy');
-  routeLines.push('/refund-policy');
   if (fs.existsSync(API_MANIFEST_OUT)) {
     const apiManifest = JSON.parse(fs.readFileSync(API_MANIFEST_OUT, 'utf-8')) as Record<
       string,

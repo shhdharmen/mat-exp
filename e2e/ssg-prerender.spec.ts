@@ -90,36 +90,6 @@ test.describe('routes.txt — static asset', () => {
     expect(lines).toContain('/docs/api');
   });
 
-  test('routes.txt contains /pricing route', async ({ page }) => {
-    const response = await page.request.get('/routes.txt');
-    const text = await response.text();
-    const lines = text
-      .split('\n')
-      .map((l) => l.trim())
-      .filter(Boolean);
-    expect(lines).toContain('/pricing');
-  });
-
-  test('routes.txt contains /license route', async ({ page }) => {
-    const response = await page.request.get('/routes.txt');
-    const text = await response.text();
-    const lines = text
-      .split('\n')
-      .map((l) => l.trim())
-      .filter(Boolean);
-    expect(lines).toContain('/license');
-  });
-
-  test('routes.txt contains /docs/getting-started/licensing route', async ({ page }) => {
-    const response = await page.request.get('/routes.txt');
-    const text = await response.text();
-    const lines = text
-      .split('\n')
-      .map((l) => l.trim())
-      .filter(Boolean);
-    expect(lines).toContain('/docs/getting-started/licensing');
-  });
-
   test('routes.txt contains API symbol routes for known symbols', async ({ page }) => {
     const response = await page.request.get('/routes.txt');
     const text = await response.text();
@@ -171,12 +141,6 @@ test.describe('SSG route smoke tests — key pages load content', () => {
       await expect(page.locator('.markdown-body')).not.toBeEmpty();
     });
   }
-
-  test('/pricing renders the pricing page component', async ({ page }) => {
-    await page.goto('/pricing');
-    await expect(page.locator('app-pricing-page')).toBeVisible({ timeout: 15_000 });
-    await expect(page.locator('app-pricing-page')).not.toBeEmpty();
-  });
 });
 
 // ---------------------------------------------------------------------------
@@ -333,13 +297,13 @@ test.describe('Wave 8 — Shell architecture', () => {
   });
 
   test('standalone pages use the standalone shell without sidebar', async ({ page }) => {
-    await page.goto('/pricing');
+    await page.goto('/changelog');
     await expect(page.locator('app-standalone-shell')).toBeVisible({ timeout: 10_000 });
     await expect(page.locator('app-sidebar-nav')).not.toBeVisible();
   });
 
   test('standalone shell has a logo link to the homepage', async ({ page }) => {
-    await page.goto('/pricing');
+    await page.goto('/changelog');
     const logoLink = page.locator('app-standalone-shell header a[href="/"]');
     await expect(logoLink).toBeVisible({ timeout: 10_000 });
   });
@@ -347,28 +311,6 @@ test.describe('Wave 8 — Shell architecture', () => {
   test('docs shell does not appear on standalone pages', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('app-docs-shell')).not.toBeVisible({ timeout: 10_000 });
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 8. Wave 8 — License page at /license
-// ---------------------------------------------------------------------------
-
-test.describe('Wave 8 — License page', () => {
-  test('/license renders the license page component', async ({ page }) => {
-    await page.goto('/license');
-    await expect(page.locator('app-license-page')).toBeVisible({ timeout: 15_000 });
-    await expect(page.locator('app-license-page')).not.toBeEmpty();
-  });
-
-  test('/license is rendered inside the standalone shell', async ({ page }) => {
-    await page.goto('/license');
-    await expect(page.locator('app-standalone-shell')).toBeVisible({ timeout: 10_000 });
-  });
-
-  test('/license has no docs sidebar', async ({ page }) => {
-    await page.goto('/license');
-    await expect(page.locator('app-sidebar-nav')).not.toBeVisible({ timeout: 10_000 });
   });
 });
 

@@ -23,9 +23,9 @@ describe('buildSitemapXml', () => {
   });
 
   it('emits one <url> entry per route with an absolute <loc> and the given <lastmod>', () => {
-    const xml = buildSitemapXml(['/pricing', '/license'], siteUrl, lastmod);
-    expect(xml).toContain(`<loc>${siteUrl}/pricing</loc>`);
-    expect(xml).toContain(`<loc>${siteUrl}/license</loc>`);
+    const xml = buildSitemapXml(['/changelog', '/docs/getting-started'], siteUrl, lastmod);
+    expect(xml).toContain(`<loc>${siteUrl}/changelog</loc>`);
+    expect(xml).toContain(`<loc>${siteUrl}/docs/getting-started</loc>`);
     expect(xml.match(/<lastmod>2026-07-06<\/lastmod>/g)).toHaveLength(2);
     expect(xml.match(/<url>/g)).toHaveLength(2);
   });

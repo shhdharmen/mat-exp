@@ -19,11 +19,6 @@ import { MarkdownComponent } from '../docs/markdown/markdown.component';
 import { MarkdownService, parseFrontmatter } from '../shared/services/markdown.service';
 import { breadcrumbListJsonLd, webPageJsonLd, withBaseJsonLd } from '../shared/utils/json-ld';
 
-const PAGE_TYPE_BY_PATH: Record<string, 'AboutPage' | 'ContactPage'> = {
-  '/about-us': 'AboutPage',
-  '/contact-us': 'ContactPage',
-};
-
 @Component({
   selector: 'app-static-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -107,7 +102,6 @@ export class StaticPageComponent {
     effect(() => {
       const c = this.content();
       if (!c || !c.title) return;
-      const pageType = PAGE_TYPE_BY_PATH[routePath];
       this.ngxMetaService.set({
         title: c.title,
         description: c.description,
@@ -120,7 +114,6 @@ export class StaticPageComponent {
             name: c.title,
             description: c.description,
             path: routePath,
-            type: pageType,
           }),
         ),
       } satisfies GlobalMetadata & JsonLdMetadata);

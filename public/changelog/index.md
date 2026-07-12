@@ -11,8 +11,9 @@ This project follows [Semantic Versioning](https://semver.org/) and [Conventiona
 
 ## Unreleased
 
+- Relicensed under MIT; removed commercial licensing and pricing pages
 - Copy markdown and View markdown actions on doc pages
-- Docs site footer and standalone license/about/contact pages
+- Docs site footer and standalone about/contact pages
 
 ---
 
@@ -36,4 +37,3 @@ _Initial public release_
 - Live playground per component
 - Search (Pagefind)
 - Subdomain versioning (`v1.expressive.angular-material.dev`, …)
-- Commercial licensing pages and pricing

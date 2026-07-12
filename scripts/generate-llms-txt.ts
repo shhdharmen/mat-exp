@@ -122,23 +122,13 @@ function main(): void {
     description: `Full API reference for ${'`@ngm-dev/mat-expressive`'} — every exported component, directive, type, and utility.`,
   };
 
-  const pricing = readStaticPageFrontmatter('/pricing');
+  const changelogFrontmatter = readStaticPageFrontmatter('/changelog');
   const optionalLinks: LlmsLink[] = [
     {
-      label: 'Pricing',
-      url: `${SITE_URL}/pricing`,
-      description:
-        pricing.description ??
-        'Free for non-commercial use under the PolyForm Noncommercial license; one-time payment for a lifetime commercial license.',
+      label: changelogFrontmatter.title ?? 'changelog',
+      url: `${SITE_URL}/changelog/index.md`,
+      description: changelogFrontmatter.description,
     },
-    ...(['license', 'about-us', 'contact-us', 'changelog'] as const).map((slug) => {
-      const fm = readStaticPageFrontmatter(`/${slug}`);
-      return {
-        label: fm.title ?? slug,
-        url: `${SITE_URL}/${slug}/index.md`,
-        description: fm.description,
-      };
-    }),
   ];
 
   const lines = [

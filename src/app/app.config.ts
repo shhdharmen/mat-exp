@@ -58,7 +58,7 @@ export const appConfig: ApplicationConfig = {
           creator: '@ngMaterialDev',
         },
       }),
-      // Every page sets a short, topic-only title (e.g. "Button", "Pricing");
+      // Every page sets a short, topic-only title (e.g. "Button", "Changelog");
       // this appends the site name once, in the single place titles are formatted.
       withNgxMetaTitleFormatter((title) =>
         title === SITE_NAME ? title : `${title} | ${SITE_NAME}`,

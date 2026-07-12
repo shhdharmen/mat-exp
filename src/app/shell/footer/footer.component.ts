@@ -17,27 +17,15 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     heading: 'Product',
     links: [
       { label: 'Docs', routerLink: '/docs/getting-started/installation' },
-      { label: 'Pricing', routerLink: '/pricing' },
       { label: 'Changelog', routerLink: '/changelog' },
     ],
   },
   {
-    heading: 'Company',
+    heading: 'Community',
     links: [
-      { label: 'About', routerLink: '/about-us' },
-      { label: 'Contact', routerLink: '/contact-us' },
       { label: 'GitHub', href: 'https://github.com/Angular-Material-Dev/community' },
       { label: 'X', href: 'https://x.com/ngMaterialDev' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/angular-material-dev/' },
-    ],
-  },
-  {
-    heading: 'Legal',
-    links: [
-      { label: 'License', routerLink: '/license' },
-      { label: 'Terms', routerLink: '/terms-and-conditions' },
-      { label: 'Privacy', routerLink: '/privacy-policy' },
-      { label: 'Refunds', routerLink: '/refund-policy' },
     ],
   },
 ];

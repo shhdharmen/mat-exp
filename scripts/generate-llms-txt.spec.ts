@@ -9,10 +9,10 @@ import { SITE_URL } from './site-config';
 
 describe('parseFrontmatterFields', () => {
   it('extracts title and description', () => {
-    const raw = '---\ntitle: License\ndescription: Dual-licensed package.\n---\n\nBody text.';
+    const raw = '---\ntitle: Changelog\ndescription: MIT-licensed package.\n---\n\nBody text.';
     expect(parseFrontmatterFields(raw)).toEqual({
-      title: 'License',
-      description: 'Dual-licensed package.',
+      title: 'Changelog',
+      description: 'MIT-licensed package.',
     });
   });
 
@@ -35,13 +35,17 @@ describe('parseFrontmatterFields', () => {
 describe('formatLink', () => {
   it('renders a markdown link with a description', () => {
     expect(
-      formatLink({ label: 'Pricing', url: `${SITE_URL}/pricing`, description: 'Free tier.' }),
-    ).toBe(`- [Pricing](${SITE_URL}/pricing): Free tier.`);
+      formatLink({
+        label: 'Changelog',
+        url: `${SITE_URL}/changelog`,
+        description: 'Release history.',
+      }),
+    ).toBe(`- [Changelog](${SITE_URL}/changelog): Release history.`);
   });
 
   it('renders a markdown link without a description', () => {
-    expect(formatLink({ label: 'Pricing', url: `${SITE_URL}/pricing` })).toBe(
-      `- [Pricing](${SITE_URL}/pricing)`,
+    expect(formatLink({ label: 'Changelog', url: `${SITE_URL}/changelog` })).toBe(
+      `- [Changelog](${SITE_URL}/changelog)`,
     );
   });
 });

@@ -19,7 +19,7 @@ export function escapeXml(value: string): string {
   return value.replace(/&/g, '&amp;');
 }
 
-/** Builds the `sitemap.xml` document body for a list of route paths (e.g. `/pricing`). */
+/** Builds the `sitemap.xml` document body for a list of route paths (e.g. `/changelog`). */
 export function buildSitemapXml(
   routes: readonly string[],
   siteUrl: string,

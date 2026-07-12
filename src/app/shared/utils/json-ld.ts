@@ -66,70 +66,15 @@ export function breadcrumbListJsonLd(items: readonly BreadcrumbEntry[]): object 
   };
 }
 
-export interface FaqEntryPlain {
-  question: string;
-  answer: string;
-}
-
-/** Strips common Markdown syntax so FAQ answers read as plain text in structured data. */
-export function stripMarkdown(text: string): string {
-  return text
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    .replace(/[*_`#]/g, '')
-    .replace(/\n+/g, ' ')
-    .trim();
-}
-
-export function faqPageJsonLd(entries: readonly FaqEntryPlain[]): object {
-  return {
-    '@type': 'FAQPage',
-    mainEntity: entries.map((entry) => ({
-      '@type': 'Question',
-      name: entry.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: stripMarkdown(entry.answer),
-      },
-    })),
-  };
-}
-
-export interface OfferJsonLd {
-  name: string;
-  description: string;
-  price: number;
-  priceCurrency?: string;
-}
-
-export function productJsonLd(offers: readonly OfferJsonLd[]): object {
-  return {
-    '@type': 'Product',
-    name: SITE_NAME,
-    description:
-      'Material 3 Expressive components for Angular Material — GSAP-powered spring motion, zero-config directives, SSR-safe.',
-    brand: { '@id': `${SITE_URL}/#organization` },
-    offers: offers.map((offer) => ({
-      '@type': 'Offer',
-      name: offer.name,
-      description: offer.description,
-      price: offer.price,
-      priceCurrency: offer.priceCurrency ?? 'USD',
-      url: `${SITE_URL}/pricing`,
-    })),
-  };
-}
-
 export interface WebPageJsonLdOptions {
   name: string;
   description?: string | null;
   path: string;
-  type?: 'WebPage' | 'AboutPage' | 'ContactPage';
 }
 
 export function webPageJsonLd(options: WebPageJsonLdOptions): object {
   return {
-    '@type': options.type ?? 'WebPage',
+    '@type': 'WebPage',
     name: options.name,
     description: options.description ?? undefined,
     url: absoluteUrl(options.path),

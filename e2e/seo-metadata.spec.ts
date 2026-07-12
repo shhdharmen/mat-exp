@@ -49,19 +49,9 @@ test.describe('SEO — page titles include the site name', () => {
     await waitForTitle(page, 'Installation | Mat Expressive');
   });
 
-  test('pricing page title is suffixed', async ({ page }) => {
-    await page.goto('/pricing');
-    await waitForTitle(page, 'Pricing | Mat Expressive');
-  });
-
-  test('license page title is suffixed', async ({ page }) => {
-    await page.goto('/license');
-    await waitForTitle(page, 'License | Mat Expressive');
-  });
-
-  test('a static page (about-us) title is suffixed', async ({ page }) => {
-    await page.goto('/about-us');
-    await waitForTitle(page, 'About Us | Mat Expressive');
+  test('a static page (changelog) title is suffixed', async ({ page }) => {
+    await page.goto('/changelog');
+    await waitForTitle(page, 'Changelog | Mat Expressive');
   });
 
   test('not-found page title is suffixed too', async ({ page }) => {
@@ -140,8 +130,8 @@ test.describe('SEO — description and canonical URL', () => {
     expect(href).toMatch(/^https?:\/\/[^/]+\/docs\/getting-started\/installation$/);
   });
 
-  test('pricing page has a non-empty meta description', async ({ page }) => {
-    await page.goto('/pricing');
+  test('a static page (changelog) has a non-empty meta description', async ({ page }) => {
+    await page.goto('/changelog');
     const description = page.locator('meta[name="description"]');
     await expect(description).toHaveCount(1);
     expect(await description.getAttribute('content')).not.toBe('');
@@ -201,12 +191,6 @@ test.describe('SEO — JSON-LD structured data', () => {
     const names = breadcrumb.itemListElement.map((i) => i.name);
     expect(names[0]).toBe('Mat Expressive');
     expect(names[names.length - 1]).toBe('Button');
-  });
-
-  test('pricing page includes Product and FAQPage nodes', async ({ page }) => {
-    await page.goto('/pricing');
-    const types = typesOf(await getJsonLdNodes(page));
-    expect(types).toEqual(expect.arrayContaining(['Product', 'FAQPage']));
   });
 
   test('API detail page includes a BreadcrumbList ending with the symbol name', async ({

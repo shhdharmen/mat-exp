@@ -33,14 +33,7 @@
 /docs/styles-api/all-buttons
 /docs/api
 /
-/pricing
-/license
-/about-us
-/contact-us
 /changelog
-/terms-and-conditions
-/privacy-policy
-/refund-policy
 /docs/api/mat-expressive/interfaces/MatExpressiveSelectableButton
 /docs/api/mat-expressive/classes/MatExpressiveSelectableButtonChange
 /docs/api/mat-expressive/directives/MatExpressiveButton

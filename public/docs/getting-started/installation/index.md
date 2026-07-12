@@ -69,9 +69,6 @@ the package via npm and wire up styles yourself:
 npm install @ngm-dev/mat-expressive
 ```
 
-> [!NOTE]
-> While it's free for non-commercial usage, you need a license for other usages. [Learn more](/license).
-
 You can then either include only the styles for a specific component, a group of components, or
 the entire Mat Expressive styles. **We recommend including only the components you actually
 use** — the styles are generated as a flat combinatorial matrix (size × shape × state ×

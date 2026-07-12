@@ -26,10 +26,6 @@ That's totally fine! But please note that you will not be able to see the full r
 
 ## Licensing
 
-`@ngm-dev/mat-expressive` is **free for non-commercial use** under the [PolyForm Noncommercial 1.0.0](./LICENSE) license. Commercial use (for-profit products, internal tools, client work, freelance) requires a paid license.
-
-Purchase a lifetime commercial license at our Polar.sh store *(link available when product is live — see `environment.polarUrl` in `src/environments/environment.ts`)*.
-
-See [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) for full terms and what is covered.
+`@ngm-dev/mat-expressive` is free and open source under the [MIT](./LICENSE) license.
 
 Questions? Contact [support@angular-material.dev](mailto:support@angular-material.dev).

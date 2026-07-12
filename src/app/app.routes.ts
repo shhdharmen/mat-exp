@@ -16,42 +16,7 @@ export const routes: Routes = [
           import('./landing-page/landing-page.component').then((m) => m.LandingPageComponent),
       },
       {
-        path: 'pricing',
-        loadComponent: () =>
-          import('./docs/pricing-page/pricing-page.component').then((m) => m.PricingPageComponent),
-      },
-      {
-        path: 'license',
-        loadComponent: () =>
-          import('./license-page/license-page.component').then((m) => m.LicensePageComponent),
-      },
-      {
-        path: 'about-us',
-        loadComponent: () =>
-          import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
-      },
-      {
-        path: 'contact-us',
-        loadComponent: () =>
-          import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
-      },
-      {
         path: 'changelog',
-        loadComponent: () =>
-          import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
-      },
-      {
-        path: 'terms-and-conditions',
-        loadComponent: () =>
-          import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
-      },
-      {
-        path: 'privacy-policy',
-        loadComponent: () =>
-          import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
-      },
-      {
-        path: 'refund-policy',
         loadComponent: () =>
           import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
       },

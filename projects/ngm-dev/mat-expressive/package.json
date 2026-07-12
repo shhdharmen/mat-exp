@@ -31,7 +31,7 @@
     "tslib": "^2.3.0",
     "@inquirer/prompts": "^8.5.2"
   },
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "sideEffects": false,
   "schematics": "./schematics/collection.json",
   "ng-add": {

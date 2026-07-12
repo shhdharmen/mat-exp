@@ -191,6 +191,11 @@ Current open implementation issues and their recommended wave order. Update this
 | #74 | Add licensing documentation page and README section | merged PR #81 |
 | #75 | Add `/pricing` page | merged PR #82 |
 
+> **Superseded:** Wave 7's dual-license (PolyForm Noncommercial + paid) model was reversed by the
+> MIT relicense — see `docs/ai-handoff/BUSINESS-STRATEGY.md` §4/§6. `LICENSE` is now MIT,
+> `COMMERCIAL_LICENSE.md` and the `/pricing` and `/license` pages were deleted, and all
+> pricing/commercial-license copy was removed from the docs site.
+
 **Wave 8 — Routing restructure + landing page** ✓
 
 | Issue | Title | Status |

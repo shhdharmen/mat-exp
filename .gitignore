@@ -53,3 +53,6 @@ Thumbs.db
 
 # act — local GitHub Actions runner
 .secrets
+
+# Compiled schematics output (built from schematics/**/*.ts by `npm run build:schematics`)
+/projects/ngm-dev/mat-expressive/schematics/**/*.js

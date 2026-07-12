@@ -20,7 +20,50 @@ Make sure you have installed Angular Material first using the following command:
 ng add @angular/material
 ```
 
-## Install the Mat Expressive via npm
+## Install with `ng add` (recommended)
+
+```bash
+ng add @ngm-dev/mat-expressive
+```
+
+This installs the package and configures its styles for you:
+
+- It first verifies `@angular/material` is installed (Mat Expressive builds on top of it), and
+  aborts with instructions to run `ng add @angular/material` first if it isn't.
+- It then asks: **"would you like ng-add to configure Mat Expressive's styles automatically?"**
+  If you decline, nothing else is touched and it prints a link back to this page so you can wire
+  styles up manually later — see [Manual installation](#manual-installation) below.
+- If you accept, it looks at your project's global stylesheet (the `styles` array in
+  `angular.json`):
+  - **CSS project** — it adds `"@ngm-dev/mat-expressive/styles.css"` as the first entry of the
+    `styles` array in `angular.json` for you (see [Not using Sass?](#not-using-sass) below for
+    what that ships).
+  - **SCSS/Sass project** — it asks **which components you'd like to include styles for**,
+    offering each Button Family member individually (Button, Icon Button, Button Group, Split
+    Button, FAB Menu, FAB Menu Trigger) plus an "All components" option (the default), then
+    inserts the matching `@use`/`@include` block into your global stylesheet — positioned
+    correctly relative to any existing `@use` statements (e.g. the one `ng add @angular/material`
+    already wrote).
+- Re-running `ng add @ngm-dev/mat-expressive` is safe — every step is idempotent.
+
+For non-interactive or scripted use (e.g. CI), skip both prompts with explicit flags:
+
+```bash
+# Decline automatic style setup entirely
+ng add @ngm-dev/mat-expressive --configure-styles=false
+
+# Configure styles for only the Button and Icon Button components
+ng add @ngm-dev/mat-expressive --components=button,icon-button
+```
+
+Valid `--components` keys are `button`, `icon-button`, `button-group`, `split-button`,
+`fab-menu`, and `fab-menu-trigger`, or the literal `all` (default). `--components` is ignored for
+CSS projects, which always receive the full prebuilt stylesheet.
+
+## Manual installation
+
+If `ng add` doesn't fit your setup, or you declined its automatic style configuration, install
+the package via npm and wire up styles yourself:
 
 ```bash
 npm install @ngm-dev/mat-expressive
@@ -29,9 +72,11 @@ npm install @ngm-dev/mat-expressive
 > [!NOTE]
 > While it's free for non-commercial usage, you need a license for other usages. [Learn more](/license).
 
-## Setup the Mat Expressive styles
-
-You can either include only the styles for a specific component, a group of components, or the entire Mat Expressive styles. **We recommend including only the components you actually use** — the styles are generated as a flat combinatorial matrix (size × shape × state × appearance × …) per component, so pulling in the whole library costs more CSS than most apps need. See [Reducing the CSS payload](#reducing-the-css-payload) below.
+You can then either include only the styles for a specific component, a group of components, or
+the entire Mat Expressive styles. **We recommend including only the components you actually
+use** — the styles are generated as a flat combinatorial matrix (size × shape × state ×
+appearance × …) per component, so pulling in the whole library costs more CSS than most apps
+need. See [Reducing the CSS payload](#reducing-the-css-payload) below.
 
 ### Include the styles for a specific component (recommended)
 

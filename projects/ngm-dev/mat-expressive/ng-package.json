@@ -1,8 +1,23 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../../dist/ngm-dev/mat-expressive",
+  "allowedNonPeerDependencies": ["@inquirer/prompts"],
   "lib": {
     "entryFile": "src/public-api.ts"
   },
-  "assets": ["src/lib/styles/**/*.scss"]
+  "assets": [
+    "src/lib/styles/**/*.scss",
+    {
+      "glob": "**/*.json",
+      "input": "schematics",
+      "output": "schematics",
+      "ignore": ["**/tsconfig*.json"]
+    },
+    {
+      "glob": "**/*.js",
+      "input": "schematics",
+      "output": "schematics",
+      "ignore": ["**/*.spec.js"]
+    }
+  ]
 }

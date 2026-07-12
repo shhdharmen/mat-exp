@@ -28,10 +28,15 @@
     "gsap": "^3.13.0"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@inquirer/prompts": "^8.5.2"
   },
   "license": "PolyForm-Noncommercial-1.0.0",
   "sideEffects": false,
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
   "exports": {
     ".": {
       "sass": "./src/lib/styles/_index.scss"

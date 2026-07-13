@@ -1,63 +1,73 @@
-<table class="doc-page-meta">
-  <tbody>
-    @if (editPageUrl(); as editUrl) {
-      @if (rawMarkdownUrl(); as mdUrl) {
-        <tr class="doc-page-meta-row docs-row">
-          <th scope="row">Docs</th>
-          <td>
-            <a class="edit-page-link" [href]="editUrl" target="_blank" rel="noopener">
-              <mat-icon svgIcon="edit" aria-hidden="true" />
-              Edit this page
-            </a>
-            @if (designUrl(); as url) {
-              <a class="design-link" [href]="url" target="_blank" rel="noopener">
-                <mat-icon svgIcon="design" aria-hidden="true" />
-                Design
-              </a>
-            }
-            <a class="llms-md-link" [href]="mdUrl" target="_blank" rel="noopener">
-              <mat-icon svgIcon="doc" aria-hidden="true" />
-              LLMs.md
-            </a>
-          </td>
-        </tr>
-      }
-    }
-    @if (importStatement(); as statement) {
-      <tr class="doc-page-meta-row import-row">
-        <th scope="row">Import</th>
-        <td>
-          <code class="import-statement">{{ statement }}</code>
-          <button
-            matIconButton
-            matExpIconButton
-            type="button"
-            class="copy-import-button"
-            aria-label="Copy import statement"
-            matTooltip="Copy to clipboard"
-            (click)="copyImport()"
+@if (importStatement(); as statement) {
+  <mat-card class="shadow-none! border! border-outline-variant! mb-4">
+    <mat-card-header class="flex items-center">
+      <div
+        mat-card-avatar
+        class="bg-primary-container text-on-primary-container rounded-full flex items-center justify-center p-2 mb-0!"
+      >
+        <mat-icon>code</mat-icon>
+      </div>
+      <mat-card-subtitle>Import Statement</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="pb-0!">
+      <app-code [content]="statement" language="typescript"></app-code>
+    </mat-card-content>
+  </mat-card>
+}
+@let showGHCard = sourceFolderUrl() || reportIssueUrl();
+@let showDocCard = editPageUrl() || rawMarkdownUrl();
+
+<div class="grid gap-4" [class.grid-cols-2]="showGHCard && showDocCard">
+  @if (showGHCard) {
+    <mat-card class="shadow-none! border! border-outline-variant!">
+      <mat-card-content>
+        <div class="flex gap-2">
+          <div
+            mat-card-avatar
+            class="bg-primary-container text-on-primary-container rounded-full flex items-center justify-center p-2 mb-0!"
           >
-            <mat-icon>{{ copiedImport() ? 'done' : 'content_copy' }}</mat-icon>
-          </button>
-        </td>
-      </tr>
-    }
-    @if (sourceFolderUrl(); as srcUrl) {
-      <tr class="doc-page-meta-row github-row">
-        <th scope="row">GitHub</th>
-        <td>
-          <a class="source-folder-link" [href]="srcUrl" target="_blank" rel="noopener">
-            <mat-icon svgIcon="folder" aria-hidden="true" />
-            View source
-          </a>
-          @if (reportIssueUrl(); as issueUrl) {
-            <a class="report-issue-link" [href]="issueUrl" target="_blank" rel="noopener">
-              <mat-icon svgIcon="flag" aria-hidden="true" />
+            <mat-icon svgIcon="brand-github"></mat-icon>
+          </div>
+          @if (sourceFolderUrl(); as url) {
+            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
+              <mat-icon>folder</mat-icon>
+              View source folder
+            </a>
+          }
+          @if (reportIssueUrl(); as url) {
+            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
+              <mat-icon>bug_report</mat-icon>
               Report an issue
             </a>
           }
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+  @if (showDocCard) {
+    <mat-card class="shadow-none! border! border-outline-variant!">
+      <mat-card-content>
+        <div class="flex gap-2">
+          <div
+            mat-card-avatar
+            class="bg-primary-container text-on-primary-container rounded-full flex items-center justify-center p-2 mb-0!"
+          >
+            <mat-icon>docs</mat-icon>
+          </div>
+          @if (editPageUrl(); as url) {
+            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
+              <mat-icon>edit</mat-icon>
+              Edit this page
+            </a>
+          }
+          @if (rawMarkdownUrl(); as url) {
+            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
+              <mat-icon>description</mat-icon>
+              LLMs.md
+            </a>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

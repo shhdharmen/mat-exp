@@ -1,8 +1,17 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
-import { MatIconButton } from '@angular/material/button';
+import { MatIconButton, MatAnchor } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatExpIconButton } from '@ngm-dev/mat-exp';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+  MatCardSubtitle,
+  MatCardAvatar,
+} from '@angular/material/card';
+import { MatExpIconButton, MatExpButton } from '@ngm-dev/mat-exp';
+import { CodeComponent } from '../../shared/components/code/code.component';
 
 /**
  * Compact metadata table shown above every markdown-backed Doc Page's
@@ -16,7 +25,21 @@ import { MatExpIconButton } from '@ngm-dev/mat-exp';
 @Component({
   selector: 'app-doc-page-meta',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatIcon, MatIconButton, MatTooltip, MatExpIconButton],
+  imports: [
+    MatIcon,
+    MatIconButton,
+    MatTooltip,
+    MatExpIconButton,
+    MatCard,
+    MatCardContent,
+    CodeComponent,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatCardAvatar,
+    MatAnchor,
+    MatExpButton,
+  ],
   templateUrl: './doc-page-meta.component.html',
   styleUrl: './doc-page-meta.component.scss',
 })
@@ -35,16 +58,4 @@ export class DocPageMetaComponent {
     if (!symbols || symbols.length === 0) return undefined;
     return `import { ${symbols.join(', ')} } from '@ngm-dev/mat-exp';`;
   });
-
-  protected async copyImport(): Promise<void> {
-    const statement = this.importStatement();
-    if (!statement) return;
-    try {
-      await navigator.clipboard.writeText(statement);
-    } catch {
-      // clipboard write unavailable in some browser/permission contexts
-    }
-    this.copiedImport.set(true);
-    setTimeout(() => this.copiedImport.set(false), 2000);
-  }
 }

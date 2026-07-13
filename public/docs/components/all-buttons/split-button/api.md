@@ -1,9 +1,9 @@
 ---
 title: API
 order: 2
-description: API reference for the MatExpressiveSplitButton component.
+description: API reference for the MatExpSplitButton component.
 ---
 
-## MatExpressiveSplitButton Component
+## MatExpSplitButton Component
 
-You can view the API for `MatExpressiveSplitButton` component [here](/docs/api/mat-expressive/components/MatExpressiveSplitButton).
+You can view the API for `MatExpSplitButton` component [here](/docs/api/mat-exp/components/MatExpSplitButton).

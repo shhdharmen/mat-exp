@@ -253,11 +253,14 @@ const TYPE_LINK_CLASS = 'text-blue-600 dark:text-blue-400 hover:underline';
                 </thead>
                 <tbody>
                   @for (inp of modelInputs(); track inp.name) {
-                    <tr>
+                    <tr [id]="'input-' + inp.name">
                       <td>
-                        <span class="font-mono text-sm text-gray-900 dark:text-gray-100">{{
-                          inp.name
-                        }}</span>
+                        <a
+                          [routerLink]="[]"
+                          [fragment]="'input-' + inp.name"
+                          class="font-mono text-sm text-gray-900 dark:text-gray-100 hover:underline"
+                          >{{ inp.name }}</a
+                        >
                         @if (inp.deprecated) {
                           <span
                             class="ml-1.5 text-xs text-yellow-600 dark:text-yellow-400 font-medium"
@@ -297,11 +300,14 @@ const TYPE_LINK_CLASS = 'text-blue-600 dark:text-blue-400 hover:underline';
                 </thead>
                 <tbody>
                   @for (inp of regularInputs(); track inp.name) {
-                    <tr>
+                    <tr [id]="'input-' + inp.name">
                       <td>
-                        <span class="font-mono text-sm text-gray-900 dark:text-gray-100">{{
-                          inp.name
-                        }}</span>
+                        <a
+                          [routerLink]="[]"
+                          [fragment]="'input-' + inp.name"
+                          class="font-mono text-sm text-gray-900 dark:text-gray-100 hover:underline"
+                          >{{ inp.name }}</a
+                        >
                         @if (inp.deprecated) {
                           <span
                             class="ml-1.5 text-xs text-yellow-600 dark:text-yellow-400 font-medium"
@@ -340,11 +346,14 @@ const TYPE_LINK_CLASS = 'text-blue-600 dark:text-blue-400 hover:underline';
                 </thead>
                 <tbody>
                   @for (out of entry()!.outputs!; track out.name) {
-                    <tr>
+                    <tr [id]="'output-' + out.name">
                       <td>
-                        <span class="font-mono text-sm text-gray-900 dark:text-gray-100">{{
-                          out.name
-                        }}</span>
+                        <a
+                          [routerLink]="[]"
+                          [fragment]="'output-' + out.name"
+                          class="font-mono text-sm text-gray-900 dark:text-gray-100 hover:underline"
+                          >{{ out.name }}</a
+                        >
                         @if (out.deprecated) {
                           <span
                             class="ml-1.5 text-xs text-yellow-600 dark:text-yellow-400 font-medium"
@@ -383,11 +392,14 @@ const TYPE_LINK_CLASS = 'text-blue-600 dark:text-blue-400 hover:underline';
                 </thead>
                 <tbody>
                   @for (prop of entry()!.properties!; track prop.name) {
-                    <tr>
+                    <tr [id]="'property-' + prop.name">
                       <td>
-                        <span class="font-mono text-sm text-gray-900 dark:text-gray-100">{{
-                          prop.name
-                        }}</span>
+                        <a
+                          [routerLink]="[]"
+                          [fragment]="'property-' + prop.name"
+                          class="font-mono text-sm text-gray-900 dark:text-gray-100 hover:underline"
+                          >{{ prop.name }}</a
+                        >
                         @if (prop.isReadonly) {
                           <span class="ml-1.5 text-xs font-mono text-gray-400">readonly</span>
                         }
@@ -700,7 +712,7 @@ export class ApiDetailPageComponent {
           if (entry) {
             const segment = KIND_URL_SEGMENT[entry.kind];
             if (segment) {
-              return `<a href="/docs/api/mat-expressive/${segment}/${part}">${part}</a>`;
+              return `<a href="/docs/api/mat-exp/${segment}/${part}">${part}</a>`;
             }
           }
         }
@@ -736,7 +748,7 @@ export class ApiDetailPageComponent {
         if (entry) {
           const segment = KIND_URL_SEGMENT[entry.kind];
           if (segment) {
-            return { text: part, link: `/docs/api/mat-expressive/${segment}/${part}` };
+            return { text: part, link: `/docs/api/mat-exp/${segment}/${part}` };
           }
         }
       }
@@ -754,7 +766,7 @@ export class ApiDetailPageComponent {
           if (entry) {
             const segment = KIND_URL_SEGMENT[entry.kind];
             if (segment) {
-              return `<a href="/docs/api/mat-expressive/${segment}/${part}" class="${TYPE_LINK_CLASS}">${part}</a>`;
+              return `<a href="/docs/api/mat-exp/${segment}/${part}" class="${TYPE_LINK_CLASS}">${part}</a>`;
             }
           }
         }

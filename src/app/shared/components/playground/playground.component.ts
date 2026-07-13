@@ -32,7 +32,7 @@ import {
   MatExpansionPanelTitle,
 } from '@angular/material/expansion';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
-import { MatExpressiveIconButton } from '@ngm-dev/mat-expressive';
+import { MatExpIconButton } from '@ngm-dev/mat-exp';
 
 import { MarkdownService } from '../../services/markdown.service';
 import { ControlDef, PlaygroundSchemas, SourceFile } from './playground.types';
@@ -57,7 +57,7 @@ import { PLAYGROUND_REGISTRY } from './playground-registry';
     MatExpansionPanelTitle,
     MatTabGroup,
     MatTab,
-    MatExpressiveIconButton,
+    MatExpIconButton,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './playground.component.html',

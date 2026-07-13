@@ -1,4 +1,4 @@
-# ARCHITECTURE.md — How mat-expressive Actually Works
+# ARCHITECTURE.md — How mat-exp Actually Works
 
 > Audience: an AI model (or human) with zero prior context maintaining this repo.
 > Every claim below was verified against the code on `feature/revamped-docs` (commit `05966f0`).
@@ -6,13 +6,13 @@
 
 ## 1. The one-paragraph mental model
 
-`@ngm-dev/mat-expressive` does **not** fork or wrap Angular Material. It decorates Angular
+`@ngm-dev/mat-exp` does **not** fork or wrap Angular Material. It decorates Angular
 Material's own components with **attribute directives** that stamp `data-*` attributes onto the
 host element, and ships **global SCSS mixins** whose selectors key off those attributes
-(`.mat-expressive-button[data-size='m']`). The SCSS sets Angular Material's official theming
+(`.mat-exp-button[data-size='m']`). The SCSS sets Angular Material's official theming
 tokens via `mat.button-overrides(...)` where possible, and falls back to raw CSS on Material's
 internal `.mdc-*` classes where the token API can't reach. One component
-(`MatExpressiveLoadingIndicator`) is a genuinely new component with GSAP-driven animation.
+(`MatExpLoadingIndicator`) is a genuinely new component with GSAP-driven animation.
 The docs site is a second Angular app in the same workspace: a custom static-site generator
 built on markdown files + Angular prerendering (ng-doc was removed — see ADR at
 `docs/adr/`, and note the checked-in `CLAUDE.md` still describes the old ng-doc setup; it is stale).
@@ -20,8 +20,8 @@ built on markdown files + Angular prerendering (ng-doc was removed — see ADR a
 ## 2. Workspace layout
 
 ```
-mat-expressive/
-├── projects/ngm-dev/mat-expressive/   # THE LIBRARY (published npm package)
+mat-exp/
+├── projects/ngm-dev/mat-exp/   # THE LIBRARY (published npm package)
 │   └── src/
 │       ├── public-api.ts              # entry point: re-exports lib/components + lib/types
 │       └── lib/
@@ -34,7 +34,7 @@ mat-expressive/
 │           ├── constants/version.ts
 │           └── assets/shapes/*.svg    # UNUSED at runtime (path data is inlined
 │                                      # in loading-indicator.shapes.ts); reference only
-├── src/                               # THE DOCS APP (mat-expressive-docs)
+├── src/                               # THE DOCS APP (mat-exp-docs)
 ├── public/docs/                       # markdown content, served as static assets (ADR 0002)
 ├── scripts/                           # build-docs.ts + extract-metadata/ + generators
 ├── e2e/                               # Playwright specs for the DOCS SITE (13 files, ~298 tests)
@@ -45,13 +45,13 @@ mat-expressive/
 
 Two Angular projects, one workspace (`angular.json`):
 
-- `@ngm-dev/mat-expressive` — built by ng-packagr (`projects/ngm-dev/mat-expressive/ng-package.json`).
-- `mat-expressive-docs` — built by `@angular/build:application` with
+- `@ngm-dev/mat-exp` — built by ng-packagr (`projects/ngm-dev/mat-exp/ng-package.json`).
+- `mat-exp-docs` — built by `@angular/build:application` with
   `prerender.routesFile: public/routes.txt` and `ssr: false` (SSG only, no runtime SSR server).
 
 ```mermaid
 flowchart LR
-  subgraph library [Library projects/ngm-dev/mat-expressive]
+  subgraph library [Library projects/ngm-dev/mat-exp]
     TS[TS unions in lib/types] -->|scripts/generate-style-constants.ts| GEN[_generated-attributes.scss]
     GEN --> CONST[utils/_constants.scss]
     CONST --> MIXINS[per-component SCSS mixins]
@@ -59,28 +59,28 @@ flowchart LR
   end
   subgraph consumer [Consumer app]
     MAT[Angular Material components] --> DIRS
-    MIXINS -->|"@include mat-expressive-all-styles()"| CSS[consumer's global CSS]
+    MIXINS -->|"@include mat-exp-all-styles()"| CSS[consumer's global CSS]
   end
 ```
 
 ## 3. The library's public API surface
 
-Everything exported from `projects/ngm-dev/mat-expressive/src/public-api.ts` →
+Everything exported from `projects/ngm-dev/mat-exp/src/public-api.ts` →
 `lib/components/index.ts` + `lib/types/index.ts`:
 
 | Export | Kind | Attaches to | File |
 |---|---|---|---|
-| `MatExpressiveButton` | Directive `[matExpressiveButton]` | `MatButton` host | `lib/components/all-buttons/button/button.ts` |
-| `MatExpressiveIconButton` | Directive `[matExpressiveIconButton]` | `MatIconButton` host | `.../icon-button/icon-button.ts` |
-| `MatExpressiveButtonGroup` | Component `<mat-expressive-button-group>`, implements `ControlValueAccessor` | — | `.../button-group/button-group.ts` |
-| `MatExpressiveSplitButton` | Component `<mat-expressive-split-button>` | — | `.../split-button/split-button.ts` |
-| `MatExpressiveFabMenu` | Directive `[matExpressiveFabMenu]` | `MatMenu` | `.../fab-menu/fab-menu.ts` |
-| `MatExpressiveFabMenuTrigger` | Directive `[matExpressiveFabMenuTrigger]` | `MatMenuTrigger` host | `.../fab-menu/fab-menu-trigger.ts` |
-| `MatExpressiveLoadingIndicator` | Component `<mat-expressive-loading-indicator>` | — | `lib/components/loading-and-progress/loading-indicator/loading-indicator.ts` |
-| `MatExpressiveSelectableButton(Change)` | interface + event class | — | `.../selectable-button/selectable-button.ts` |
+| `MatExpButton` | Directive `[matExpButton]` | `MatButton` host | `lib/components/all-buttons/button/button.ts` |
+| `MatExpIconButton` | Directive `[matExpIconButton]` | `MatIconButton` host | `.../icon-button/icon-button.ts` |
+| `MatExpButtonGroup` | Component `<mat-exp-button-group>`, implements `ControlValueAccessor` | — | `.../button-group/button-group.ts` |
+| `MatExpSplitButton` | Component `<mat-exp-split-button>` | — | `.../split-button/split-button.ts` |
+| `MatExpFabMenu` | Directive `[matExpFabMenu]` | `MatMenu` | `.../fab-menu/fab-menu.ts` |
+| `MatExpFabMenuTrigger` | Directive `[matExpFabMenuTrigger]` | `MatMenuTrigger` host | `.../fab-menu/fab-menu-trigger.ts` |
+| `MatExpLoadingIndicator` | Component `<mat-exp-loading-indicator>` | — | `lib/components/loading-and-progress/loading-indicator/loading-indicator.ts` |
+| `MatExpSelectableButton(Change)` | interface + event class | — | `.../selectable-button/selectable-button.ts` |
 | `ButtonGroupChild`, adapters, `bindButtonGroupChildren` | interface + helpers | — | `.../button-group-child/button-group-child.ts` |
-| `provideMatExpressive*Options` / `MAT_EXPRESSIVE_*_OPTIONS` | DI | — | each `*.options.ts` |
-| `MatExpressiveButtonSize/Shape/State/Toggle/…` | string-literal unions | — | `lib/types/*.ts` |
+| `provideMatExp*Options` / `MAT_EXP_*_OPTIONS` | DI | — | each `*.options.ts` |
+| `MatExpButtonSize/Shape/State/Toggle/…` | string-literal unions | — | `lib/types/*.ts` |
 
 **Private API convention:** anything prefixed `_` or JSDoc-tagged `@internal` is private.
 `@internal` inputs are also excluded from the docs Playground schema by
@@ -88,11 +88,11 @@ Everything exported from `projects/ngm-dev/mat-expressive/src/public-api.ts` →
 
 ### The options-bag DI pattern (used by every configurable component)
 
-`lib/utils/di/create-options.ts` — `matExpressiveCreateOptions(defaults)` returns
+`lib/utils/di/create-options.ts` — `matExpCreateOptions(defaults)` returns
 `{ token, provide, inject }`. Each `*.options.ts` file calls it once and re-exports the three
 under component-specific names. `provide()` merges partial overrides on top of whatever is
 provided further up the injector tree. Component code reads defaults via
-`injectMatExpressive<X>Options()` in field initializers, e.g.
+`injectMatExp<X>Options()` in field initializers, e.g.
 `public readonly size = model(this._options.size)` (`button.ts:29`).
 **When adding a component, copy this pattern exactly** — see COMPONENT-FACTORY.md.
 
@@ -101,8 +101,8 @@ provided further up the injector tree. Component code reads defaults via
 `button-group-child.ts` defines a narrow `ButtonGroupChild` interface
 (`setSize/setShape/setAppearance/setDisabled`), adapter classes for the two button directives,
 and `bindButtonGroupChildren(config)` which registers `effect()`s that push group-level inputs
-down to projected children. Both `MatExpressiveButtonGroup` (`button-group.ts:159`) and
-`MatExpressiveSplitButton` (`split-button.ts:62`) call it in their constructors. This is the
+down to projected children. Both `MatExpButtonGroup` (`button-group.ts:159`) and
+`MatExpSplitButton` (`split-button.ts:62`) call it in their constructors. This is the
 *only* sanctioned way for a container to control child buttons.
 
 ## 4. The Button Family and its style mechanism (the core invariant)
@@ -120,7 +120,7 @@ Summary of the invariant:
   component-scoped styles.
 - `loading-indicator` is NOT in the family: it uses ordinary `styleUrls` +
   `ViewEncapsulation.None` and continuous CSS custom properties
-  (`--mat-expressive-loading-indicator-size` etc. in `loading-indicator.scss`). Zero consumer
+  (`--mat-exp-loading-indicator-size` etc. in `loading-indicator.scss`). Zero consumer
   setup needed. Follow this model for any future non-family component.
 
 **Decision rule for new components:** if the new component shares discrete size/shape/appearance
@@ -148,19 +148,19 @@ Trace for `button` (identical shape for every family member):
 5. **Configs** — `configs/_{size}.scss` files list combination entries:
    `(size: 'xs', shape: 'square', state: 'pressed', tokens: …, properties: …)`.
    `_config.scss` joins them into one `$button-config` list.
-6. **Mixin** — `button/_index.scss` `mat-expressive-button-styles($options)`:
+6. **Mixin** — `button/_index.scss` `mat-exp-button-styles($options)`:
    - validates the whole config against `$known-attributes` via
      `utils/functions/_validate-config.scss` (`@error` on any unknown key/value — this is the
      safety net that catches typos at build time);
-   - iterates entries, string-builds a selector `.mat-expressive-button[data-size='xs']…`,
+   - iterates entries, string-builds a selector `.mat-exp-button[data-size='xs']…`,
      emits `mat.button-overrides($tokens)` for the token slot, and raw properties via
      `utils/mixins/_apply-tokens-properties.scss` (skipped when the consumer passes
      `skip-html-element-styles: true`);
    - for `state` entries, emits BOTH `[data-state='pressed']` and the mapped pseudo-class
      (`:active`) variants (`_get-state-pseudo.scss`).
 7. **Aggregation** — `components/all-buttons/_index.scss` exposes
-   `mat-expressive-all-buttons-styles()`; `_mat-expressive-styles.scss` exposes
-   `mat-expressive-all-styles()`; the package Sass entry `lib/styles/_index.scss` `@forward`s all
+   `mat-exp-all-buttons-styles()`; `_mat-exp-styles.scss` exposes
+   `mat-exp-all-styles()`; the package Sass entry `lib/styles/_index.scss` `@forward`s all
    of it.
 
 Because the consumer's app compiles this SCSS, `@use '@angular/material' as mat` inside the
@@ -168,10 +168,10 @@ library SCSS resolves against the **consumer's** installed Angular Material — 
 names stay in sync with the consumer's Material version, and also why a Material-internal token
 rename can break us silently (see §8).
 
-**Cost of this design:** including `mat-expressive-all-styles()` emits ~177 KB of uncompressed
+**Cost of this design:** including `mat-exp-all-styles()` emits ~177 KB of uncompressed
 CSS (verified by compiling the real published package — `npm pack` the built `dist/`, install the
 tarball into a scratch project, `sass --pkg-importer=node` against
-`@use '@ngm-dev/mat-expressive' as me` — expanded output; the ~153 KB figure in DX-AUDIT.md §3
+`@use '@ngm-dev/mat-exp' as me` — expanded output; the ~153 KB figure in DX-AUDIT.md §3
 was measured differently and predates issue #133's mitigations below; both numbers are the same
 order of magnitude and the discrepancy isn't itself the problem). Gzip reduces this heavily
 (repetitive selectors) but the raw number is what counts against Angular's initial-bundle budget,
@@ -179,9 +179,9 @@ so it should be watched per release.
 
 **Mitigations landed for issue #133** (see PR that closed/partially-closed it):
 1. The install docs now recommend the per-component mixins
-   (`mat-expressive-button-styles()`, etc.) as the default path, with
-   `mat-expressive-all-styles()` reframed as the "kitchen sink" option — a single
-   `mat-expressive-button-styles()` call compiles to ~62 KB raw, about a third of the full
+   (`mat-exp-button-styles()`, etc.) as the default path, with
+   `mat-exp-all-styles()` reframed as the "kitchen sink" option — a single
+   `mat-exp-button-styles()` call compiles to ~62 KB raw, about a third of the full
    payload, since it skips every other family member's combination matrix.
 2. Every button-family mixin now accepts a filter option — `sizes` (button, icon-button,
    button-group, split-button), `appearances` (icon-button only), `colors` (fab-menu,
@@ -193,7 +193,7 @@ so it should be watched per release.
    the combination-list config) via `filter-config.size-included()`. Passing no filter option
    (`null`, the default) is a byte-for-byte no-op — verified by compiling before/after with no
    options and diffing output. Measured: `sizes: ('s', 'm')` + `colors: ('primary')` on
-   `mat-expressive-all-styles()` cuts ~177 KB to ~75 KB (~57% reduction).
+   `mat-exp-all-styles()` cuts ~177 KB to ~75 KB (~57% reduction).
 3. **Deferred, not attempted:** deduplicating identical token blocks across combination entries
    in the generated SCSS output (e.g. multiple size/shape/state combinations that happen to
    share a token map). This would need either a content-hash-keyed CSS custom property indirection
@@ -205,7 +205,7 @@ so it should be watched per release.
    package structure; revisit dedup only if real-world payload data from npm consumers shows the
    mitigations above aren't enough.
 
-## 6. The docs site (mat-expressive-docs)
+## 6. The docs site (mat-exp-docs)
 
 Language and terminology: `CONTEXT.md` at repo root is the authoritative glossary
 (Doc Page, Section, Component Page, Build Script, API Manifest, Playground Schema, Routes File,
@@ -253,8 +253,8 @@ Runtime app structure (`src/app/`):
   `llms.txt` generated post-build.
 
 **Critical wiring detail:** the docs app consumes the library styles **from source**
-(`src/styles/_base.scss:2` → `@use '../../projects/ngm-dev/mat-expressive/src/lib/styles'`),
-and library TS **from dist** (tsconfig path `@ngm-dev/mat-expressive → ./dist/ngm-dev/mat-expressive`,
+(`src/styles/_base.scss:2` → `@use '../../projects/ngm-dev/mat-exp/src/lib/styles'`),
+and library TS **from dist** (tsconfig path `@ngm-dev/mat-exp → ./dist/ngm-dev/mat-exp`,
 so `npm run build:lib` must run before `npm start`). Because styles come from source, the docs
 site can look perfect while the published npm package is broken — which is exactly what
 happened (see ISSUES-TRIAGED.md #1). Any packaging change MUST be verified with `npm pack` +
@@ -264,12 +264,12 @@ a fresh external app, never via the docs site.
 
 - **Library build:** `npm run build:lib` = generate style constants → ng-packagr →
   copy root README into dist → `postbuild:lib` compiles `lib/styles/_index.scss` to
-  `dist/.../src/styles/styles.css` with the Dart Sass CLI (`projects/ngm-dev/mat-expressive/package.json`
+  `dist/.../src/styles/styles.css` with the Dart Sass CLI (`projects/ngm-dev/mat-exp/package.json`
   `build:sass` script). NOTE: `_index.scss` contains only `@forward` statements, so this
   compiled CSS is **empty (41 bytes)** — see ISSUES-TRIAGED.md #1.
 - **Release:** semantic-release from `main` pushes
   (`.github/workflows/test-build-publish.yaml`, config in `.releaserc.json`; publishes
-  `dist/ngm-dev/mat-expressive`, angular commit preset, maintenance branches `N.x.x` supported).
+  `dist/ngm-dev/mat-exp`, angular commit preset, maintenance branches `N.x.x` supported).
   The e2e job runs Playwright against the docs app; the publish job runs lint + builds.
   **Unit tests (`npm test`) are not run anywhere in CI.**
 - **Deploy:** **[Update 2026-07-12: Vercel was dropped; GitHub Pages
@@ -293,9 +293,9 @@ a fresh external app, never via the docs site.
    Never hand-edit `_generated-attributes.scss`.
 3. **Angular Material private-class dependency.** The `properties:` maps intentionally style
    `.mdc-button__label`, `.mat-icon`, etc. (`styles/components/all-buttons/_common-selectors.scss`).
-   This is a knowing bet (documented in `public/docs/getting-started/what-is-mat-expressive/index.md`).
+   This is a knowing bet (documented in `public/docs/getting-started/what-is-mat-exp/index.md`).
    Every Angular Material **minor** bump must be followed by a visual pass of every component
-   in the docs playground. Peer range is `^21.1.0` (`projects/ngm-dev/mat-expressive/package.json`)
+   in the docs playground. Peer range is `^21.1.0` (`projects/ngm-dev/mat-exp/package.json`)
    — do not widen it to a new major without that visual pass.
 4. **Tree-shaking / side effects.** The lib package.json has `"sideEffects": false`.
    Never add module-level side effects (top-level GSAP registration, global CSS imports) to
@@ -312,7 +312,7 @@ a fresh external app, never via the docs site.
 - **Packaging is the #1 dragon.** The npm package as published (v1.0.1) and as produced by
   `npm run build:lib` on this branch contains **no SCSS files and an empty styles.css** —
   the documented install path fails for every npm consumer. The `exports` field in
-  `projects/ngm-dev/mat-expressive/package.json` points `"sass"` at `./src/lib/styles/_index.scss`,
+  `projects/ngm-dev/mat-exp/package.json` points `"sass"` at `./src/lib/styles/_index.scss`,
   which is never copied into dist; `ng-package.json`'s `assets: ["src/lib/assets/**/*"]` globs a
   directory that does not exist. Fix + verification recipe in ISSUES-TRIAGED.md #1.
 - **`fab-menu.ts` panelClass accumulation.** Both an `afterNextRender` and an `effect` append
@@ -329,7 +329,7 @@ a fresh external app, never via the docs site.
   `:active` selector variants are emitted (§5 step 6). Don't "deduplicate" — the data-attribute
   variant exists so docs/demos can force states.
 - **`$known-attributes` contains `select-required`** (`utils/_constants.scss:33`) but the TS
-  union `MatExpressiveButtonGroupSelection` has it commented out (`types/selection.ts`).
+  union `MatExpButtonGroupSelection` has it commented out (`types/selection.ts`).
   The SCSS whitelist is deliberately permissive there; if you implement `select-required`,
   uncomment the TS side.
 - **Stale test doubles.** `src/app/shell/section-redirect.guard.spec.ts` fails (2 tests) because

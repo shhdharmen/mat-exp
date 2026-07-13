@@ -51,7 +51,7 @@
 #         run: npx playwright install --with-deps chromium
 # 
 #       - name: Run e2e tests
-#         run: npx ng e2e --project=mat-expressive-docs --test-project=chromium
+#         run: npx ng e2e --project=mat-exp-docs --test-project=chromium
 # 
 #       - name: Upload Playwright report
 #         if: failure()
@@ -77,7 +77,7 @@
 #         run: npm ci
 # 
 #       - name: Lint
-#         run: npm run lint -- @ngm-dev/mat-expressive
+#         run: npm run lint -- @ngm-dev/mat-exp
 # 
 #       - name: Build library
 #         run: npm run build:lib

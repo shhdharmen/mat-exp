@@ -23,7 +23,7 @@ ng add @angular/material
 ## Install with `ng add` (recommended)
 
 ```bash
-ng add @ngm-dev/mat-expressive
+ng add @ngm-dev/mat-exp
 ```
 
 This installs the package and configures its styles for you:
@@ -35,7 +35,7 @@ This installs the package and configures its styles for you:
   styles up manually later — see [Manual installation](#manual-installation) below.
 - If you accept, it looks at your project's global stylesheet (the `styles` array in
   `angular.json`):
-  - **CSS project** — it adds `"@ngm-dev/mat-expressive/styles.css"` as the first entry of the
+  - **CSS project** — it adds `"@ngm-dev/mat-exp/styles.css"` as the first entry of the
     `styles` array in `angular.json` for you (see [Not using Sass?](#not-using-sass) below for
     what that ships).
   - **SCSS/Sass project** — it asks **which components you'd like to include styles for**,
@@ -44,16 +44,16 @@ This installs the package and configures its styles for you:
     inserts the matching `@use`/`@include` block into your global stylesheet — positioned
     correctly relative to any existing `@use` statements (e.g. the one `ng add @angular/material`
     already wrote).
-- Re-running `ng add @ngm-dev/mat-expressive` is safe — every step is idempotent.
+- Re-running `ng add @ngm-dev/mat-exp` is safe — every step is idempotent.
 
 For non-interactive or scripted use (e.g. CI), skip both prompts with explicit flags:
 
 ```bash
 # Decline automatic style setup entirely
-ng add @ngm-dev/mat-expressive --configure-styles=false
+ng add @ngm-dev/mat-exp --configure-styles=false
 
 # Configure styles for only the Button and Icon Button components
-ng add @ngm-dev/mat-expressive --components=button,icon-button
+ng add @ngm-dev/mat-exp --components=button,icon-button
 ```
 
 Valid `--components` keys are `button`, `icon-button`, `button-group`, `split-button`,
@@ -66,7 +66,7 @@ If `ng add` doesn't fit your setup, or you declined its automatic style configur
 the package via npm and wire up styles yourself:
 
 ```bash
-npm install @ngm-dev/mat-expressive
+npm install @ngm-dev/mat-exp
 ```
 
 You can then either include only the styles for a specific component, a group of components, or
@@ -80,13 +80,13 @@ need. See [Reducing the CSS payload](#reducing-the-css-payload) below.
 Include the styles for only the components you use in your global SCSS styles. This keeps your compiled CSS as small as possible.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-button-styles();
-  @include mat-expressive.mat-expressive-icon-button-styles();
-  @include mat-expressive.mat-expressive-button-group-styles();
-  @include mat-expressive.mat-expressive-split-button-styles();
+  @include mat-exp.mat-exp-button-styles();
+  @include mat-exp.mat-exp-icon-button-styles();
+  @include mat-exp.mat-exp-button-group-styles();
+  @include mat-exp.mat-exp-split-button-styles();
 }
 ```
 
@@ -97,10 +97,10 @@ Each component's **Styling** tab documents the mixin's options, including the `s
 Include the styles for a group of components in your global SCSS styles. This will include the styles for all buttons (icon buttons, button groups, split buttons, etc.) — reach for this only if your app genuinely uses most of the button family.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-buttons-styles();
+  @include mat-exp.mat-exp-all-buttons-styles();
 }
 ```
 
@@ -109,41 +109,41 @@ html {
 Include the entire Mat Expressive styles in your global SCSS styles. This is the simplest option, but it also emits the most CSS — every component, every size, every shape, every state, every appearance, all at once. Use it for prototyping or when you genuinely need the whole library; prefer the per-component or per-group mixins above for production apps that care about bundle size.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles();
+  @include mat-exp.mat-exp-all-styles();
 }
 ```
 
 ### Not using Sass?
 
-If your project doesn't compile Sass, you can import the prebuilt CSS instead. It bundles the full `mat-expressive-all-styles()` output (HTML element styles included, `skip-html-element-styles` is not configurable this way). This is the escape hatch for teams without a Sass build step — if you *do* compile Sass, prefer the mixins above (or the filtering options below) since the prebuilt CSS can't be trimmed at compile time.
+If your project doesn't compile Sass, you can import the prebuilt CSS instead. It bundles the full `mat-exp-all-styles()` output (HTML element styles included, `skip-html-element-styles` is not configurable this way). This is the escape hatch for teams without a Sass build step — if you *do* compile Sass, prefer the mixins above (or the filtering options below) since the prebuilt CSS can't be trimmed at compile time.
 
 ```css
-@import '@ngm-dev/mat-expressive/styles.css';
+@import '@ngm-dev/mat-exp/styles.css';
 ```
 
 Or add it directly to the `styles` array in `angular.json`:
 
 ```json
-"styles": ["@ngm-dev/mat-expressive/styles.css"]
+"styles": ["@ngm-dev/mat-exp/styles.css"]
 ```
 
 ## Reducing the CSS payload
 
-`mat-expressive-all-styles()` emits every component's full size × shape × state × toggle × appearance combination matrix flat, because each Directive-based button family member has no `styleUrls` and can only style itself through global mixins keyed off `data-*` attribute selectors. Measured against the real published package (`npm pack` tarball, `@use '@ngm-dev/mat-expressive' as me`, `sass` CLI, expanded output, uncompressed) this mixin produces **~177 KB of raw CSS** (gzip compresses this well thanks to repetitive selectors, but the raw number is still worth budgeting for — Angular's default initial-bundle budget is 500 KB).
+`mat-exp-all-styles()` emits every component's full size × shape × state × toggle × appearance combination matrix flat, because each Directive-based button family member has no `styleUrls` and can only style itself through global mixins keyed off `data-*` attribute selectors. Measured against the real published package (`npm pack` tarball, `@use '@ngm-dev/mat-exp' as me`, `sass` CLI, expanded output, uncompressed) this mixin produces **~177 KB of raw CSS** (gzip compresses this well thanks to repetitive selectors, but the raw number is still worth budgeting for — Angular's default initial-bundle budget is 500 KB).
 
 Two ways to cut this down, from least to most work:
 
-1. **Only include the mixins for components you use.** A single `mat-expressive-button-styles()` call, for example, compiles to roughly **62 KB** raw — about a third of the full `mat-expressive-all-styles()` payload — because it skips every other family member's combination matrix entirely.
-2. **Filter out unused size / appearance / color combinations.** Every button-family mixin accepts a `sizes` option (`icon-button` also accepts `appearances`; `fab-menu` / `fab-menu-trigger` accept `colors`) that drops the rest of that axis's combinations at Sass compile time. For example, restricting `mat-expressive-all-styles()` to `sizes: ('s', 'm')` plus `colors: ('primary')` cuts the ~177 KB payload to roughly **75 KB** — a ~57% reduction — with no runtime cost, because the CSS for the excluded sizes/colors is simply never generated.
+1. **Only include the mixins for components you use.** A single `mat-exp-button-styles()` call, for example, compiles to roughly **62 KB** raw — about a third of the full `mat-exp-all-styles()` payload — because it skips every other family member's combination matrix entirely.
+2. **Filter out unused size / appearance / color combinations.** Every button-family mixin accepts a `sizes` option (`icon-button` also accepts `appearances`; `fab-menu` / `fab-menu-trigger` accept `colors`) that drops the rest of that axis's combinations at Sass compile time. For example, restricting `mat-exp-all-styles()` to `sizes: ('s', 'm')` plus `colors: ('primary')` cuts the ~177 KB payload to roughly **75 KB** — a ~57% reduction — with no runtime cost, because the CSS for the excluded sizes/colors is simply never generated.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles(
+  @include mat-exp.mat-exp-all-styles(
     (
       sizes: ('s', 'm'),
       colors: ('primary'),
@@ -162,10 +162,10 @@ These two techniques compose: apply a `sizes`/`appearances`/`colors` filter to t
 If you do not want to apply styles to the underlying HTML elements, you can set the `skip-html-element-styles` option to `true`.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles(
+  @include mat-exp.mat-exp-all-styles(
     (
       skip-html-element-styles: true,
     )

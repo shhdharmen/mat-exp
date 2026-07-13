@@ -1,0 +1,9 @@
+@use '../tokens/xl' as xl;
+
+// prettier-ignore
+$config: (
+  (
+    size: 'xl',
+    properties: xl.$properties,
+  ),
+);

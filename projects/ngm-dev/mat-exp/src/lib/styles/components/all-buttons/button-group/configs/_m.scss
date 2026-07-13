@@ -1,0 +1,9 @@
+@use '../tokens/m' as m;
+
+// prettier-ignore
+$config: (
+  (
+    size: 'm',
+    properties: m.$properties,
+  ),
+);

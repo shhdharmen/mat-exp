@@ -15,7 +15,7 @@
  *
  * What this script does:
  *  1. Discovers every Button-Family component under
- *     `projects/ngm-dev/mat-expressive/src/lib/styles/components/all-buttons/*\/tokens/`
+ *     `projects/ngm-dev/mat-exp/src/lib/styles/components/all-buttons/*\/tokens/`
  *     that splits its tokens across per-size partials (`_xs.scss`, `_s.scss`,
  *     `_m.scss`, `_l.scss`, `_xl.scss`).
  *  2. For each size partial, parses every top-level SCSS variable whose name
@@ -48,7 +48,7 @@ import * as path from 'node:path';
 
 const ALL_BUTTONS_ROOT = path.resolve(
   process.cwd(),
-  'projects/ngm-dev/mat-expressive/src/lib/styles/components/all-buttons',
+  'projects/ngm-dev/mat-exp/src/lib/styles/components/all-buttons',
 );
 
 /** M3 Expressive appearance prefixes checked per the issue's scope. */

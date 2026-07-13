@@ -4,21 +4,21 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {
-  MatExpressiveButton,
-  MatExpressiveButtonGroup,
-  MatExpressiveIconButton,
-  type MatExpressiveButtonGroupAppearance,
-  type MatExpressiveButtonGroupSelection,
-  type MatExpressiveButtonGroupShape,
-  type MatExpressiveButtonGroupSize,
-  type MatExpressiveButtonGroupVariant,
-} from '@ngm-dev/mat-expressive';
+  MatExpButton,
+  MatExpButtonGroup,
+  MatExpIconButton,
+  type MatExpButtonGroupAppearance,
+  type MatExpButtonGroupSelection,
+  type MatExpButtonGroupShape,
+  type MatExpButtonGroupSize,
+  type MatExpButtonGroupVariant,
+} from '@ngm-dev/mat-exp';
 
 /**
- * Preview wrapper for MatExpressiveButtonGroup.
+ * Preview wrapper for MatExpButtonGroup.
  * Used by the playground as the override component — ButtonGroup needs projected
  * button content that cannot be auto-generated from the schema alone.
- * @playgroundFor MatExpressiveButtonGroup
+ * @playgroundFor MatExpButtonGroup
  */
 @Component({
   selector: 'app-button-group-preview',
@@ -27,9 +27,9 @@ import {
     MatButton,
     MatIconButton,
     MatIcon,
-    MatExpressiveButton,
-    MatExpressiveButtonGroup,
-    MatExpressiveIconButton,
+    MatExpButton,
+    MatExpButtonGroup,
+    MatExpIconButton,
     ReactiveFormsModule,
     JsonPipe,
   ],
@@ -38,11 +38,11 @@ import {
   styleUrl: './button-group-preview.component.scss',
 })
 export class ButtonGroupPreviewComponent {
-  readonly size = input<MatExpressiveButtonGroupSize>('s');
-  readonly shape = input<MatExpressiveButtonGroupShape>('round');
-  readonly variant = input<MatExpressiveButtonGroupVariant>('standard');
-  readonly appearance = input<MatExpressiveButtonGroupAppearance>('tonal');
-  readonly selection = input<MatExpressiveButtonGroupSelection>('single-select');
+  readonly size = input<MatExpButtonGroupSize>('s');
+  readonly shape = input<MatExpButtonGroupShape>('round');
+  readonly variant = input<MatExpButtonGroupVariant>('standard');
+  readonly appearance = input<MatExpButtonGroupAppearance>('tonal');
+  readonly selection = input<MatExpButtonGroupSelection>('single-select');
   readonly disabled = input<boolean>(false);
 
   readonly control = new FormControl<string | string[] | null>(null);

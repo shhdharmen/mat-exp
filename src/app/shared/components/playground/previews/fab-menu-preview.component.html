@@ -2,7 +2,7 @@
   <button
     matFab
     [matMenuTriggerFor]="menu"
-    matExpressiveFabMenuTrigger
+    matExpFabMenuTrigger
     #menuTrigger="matMenuTrigger"
     [color]="color()"
   >
@@ -14,7 +14,7 @@
       }
     </mat-icon>
   </button>
-  <mat-menu #menu="matMenu" matExpressiveFabMenu [color]="color()">
+  <mat-menu #menu="matMenu" matExpFabMenu [color]="color()">
     <button mat-menu-item>
       <mat-icon>description</mat-icon>
       Document

@@ -8,14 +8,14 @@
 ## D1. Augment Angular Material in place; never fork or wrap
 Directives on `MatButton`/`MatIconButton`/`MatMenu` + token overrides + `.mdc-*` escape hatches.
 **Why:** consumers keep their Material knowledge, a11y, and upgrade path; the library stays
-small; "not a fork" is the core positioning (`what-is-mat-expressive/index.md`).
+small; "not a fork" is the core positioning (`what-is-mat-exp/index.md`).
 **Keep?** Yes — it's the product's identity and its lowest-maintenance option.
 **Revisit when:** an Angular Material minor structurally renames `.mdc-*` internals (audit the
 `properties:` maps in `lib/styles/**/tokens/` after every Material bump), or D8 fires.
 
 ## D2. `data-*` attributes as the styling contract (not classes, not CSS-only inputs)
 **Why:** one contract serves both usage styles — plain HTML/CSS users write
-`class="mat-expressive-button" data-size="m"`, directive users get typed inputs that stamp the
+`class="mat-exp-button" data-size="m"`, directive users get typed inputs that stamp the
 same attributes. Debuggable in devtools.
 **Keep?** Yes. It's also what makes the docs' "two usages" story coherent.
 **Revisit:** never seriously — this is load-bearing for everything.
@@ -36,7 +36,7 @@ about CSS size — add size/appearance filtering options to the mixins before re
 **Why:** rename-safety across language boundaries. **Keep?** Unambiguously yes — extend the
 same generation idea to token-name validation if Material bumps keep biting.
 
-## D5. Options-bags via one deep DI factory (`matExpressiveCreateOptions`)
+## D5. Options-bags via one deep DI factory (`matExpCreateOptions`)
 **Why:** collapses token+provider+inject ceremony (was three files, issue #100); merge
 semantics down the injector tree give app-wide, route-level, and component-level defaults.
 **Keep?** Yes. Reference implementation quality.

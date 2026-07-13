@@ -1,18 +1,18 @@
 ---
 title: All Styles API
 order: 1
-description: API reference for the mat-expressive-all-styles SCSS mixin that applies all Mat Expressive component styles at once.
+description: API reference for the mat-exp-all-styles SCSS mixin that applies all Mat Expressive component styles at once.
 ---
 
-This document outlines API for `mat-expressive-all-styles` mixin.
+This document outlines API for `mat-exp-all-styles` mixin.
 
 ## Usage
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles($options);
+  @include mat-exp.mat-exp-all-styles($options);
 }
 ```
 
@@ -29,10 +29,10 @@ If `true`, the mixin will not apply styles to the underlying HTML elements.
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles(
+  @include mat-exp.mat-exp-all-styles(
     (
       skip-html-element-styles: true,
     )
@@ -44,17 +44,17 @@ Side effects of setting `skip-html-element-styles` to `true` are outlined in eac
 
 ### sizes / appearances / colors
 
-`mat-expressive-all-styles($options)` forwards `$options` unchanged to every underlying component mixin, so any of the size/appearance/color filter options documented on the individual component **Styling** tabs (e.g. `sizes` on `mat-expressive-button-styles`, `colors` on `mat-expressive-fab-menu-styles`) work here too — they just apply across every component at once.
+`mat-exp-all-styles($options)` forwards `$options` unchanged to every underlying component mixin, so any of the size/appearance/color filter options documented on the individual component **Styling** tabs (e.g. `sizes` on `mat-exp-button-styles`, `colors` on `mat-exp-fab-menu-styles`) work here too — they just apply across every component at once.
 
-`mat-expressive-all-styles()` emits ~177 KB of raw, uncompressed CSS (every component × every combination). See [Reducing the CSS payload](/docs/getting-started/installation#reducing-the-css-payload) for measured numbers and the recommended per-component alternative.
+`mat-exp-all-styles()` emits ~177 KB of raw, uncompressed CSS (every component × every combination). See [Reducing the CSS payload](/docs/getting-started/installation#reducing-the-css-payload) for measured numbers and the recommended per-component alternative.
 
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles(
+  @include mat-exp.mat-exp-all-styles(
     (
       sizes: ('s', 'm'),
       colors: ('primary'),

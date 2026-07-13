@@ -8,6 +8,6 @@ updates:
   - package-ecosystem: 'npm' # See documentation for possible values
     directories:
       - '/'
-      - '/projects/ngm-dev/mat-expressive'
+      - '/projects/ngm-dev/mat-exp'
     schedule:
       interval: 'weekly'

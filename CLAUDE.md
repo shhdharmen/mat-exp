@@ -17,8 +17,8 @@ npm run build:lib                # Build library (use this, not ng build directl
 
 # Test
 npm test                         # Run docs app tests (Vitest via the Angular CLI unit-test builder)
-ng test --project @ngm-dev/mat-expressive           # Library tests only
-ng test --project mat-expressive-docs --filter="foo"  # Run tests matching a name pattern (Vitest builder option, not Jest's testPathPattern)
+ng test --project @ngm-dev/mat-exp           # Library tests only
+ng test --project mat-exp-docs --filter="foo"  # Run tests matching a name pattern (Vitest builder option, not Jest's testPathPattern)
 
 # E2E
 ng e2e                           # Run Playwright e2e tests (spins up dev server automatically)
@@ -34,7 +34,7 @@ npm run commit
 
 Two Angular projects in one workspace:
 
-**Library** (`projects/ngm-dev/mat-expressive/`) — the published npm package `@ngm-dev/mat-expressive`. Entry point is `src/public-api.ts`, which re-exports from `./lib/components` and `./lib/types`. Packed by ng-packagr; assets (SVG paths, etc.) declared in `ng-package.json`. The root `tsconfig.json` path alias for `@ngm-dev/mat-expressive` points to `dist/ngm-dev/mat-expressive`, so **build the library before running the docs app**.
+**Library** (`projects/ngm-dev/mat-exp/`) — the published npm package `@ngm-dev/mat-exp`. Entry point is `src/public-api.ts`, which re-exports from `./lib/components` and `./lib/types`. Packed by ng-packagr; assets (SVG paths, etc.) declared in `ng-package.json`. The root `tsconfig.json` path alias for `@ngm-dev/mat-exp` points to `dist/ngm-dev/mat-exp`, so **build the library before running the docs app**.
 
 **Docs app** (`src/`) — a custom Angular SSG documentation site (not ng-doc). Content is markdown under `public/docs/`; the Angular app reads and renders it at runtime. `app.config.ts` wires up providers; routing is file-system-driven and pre-rendered via routes from `public/routes.txt`.
 
@@ -84,7 +84,7 @@ Running plain `ng build` skips all of the above except the Angular build itself 
 
 ## Component Patterns
 
-Button components are implemented as `@Directive` (not `@Component`) using the `inject()` pattern. They use `inject(X, { optional: true })` for optional dependencies like `ButtonGroup` context or `MatMenu`. The directive selector prefix is `matExpressive` (camelCase); component selector prefix is `mat-expressive` (kebab-case) — enforced by ESLint.
+Button components are implemented as `@Directive` (not `@Component`) using the `inject()` pattern. They use `inject(X, { optional: true })` for optional dependencies like `ButtonGroup` context or `MatMenu`. The directive selector prefix is `matExp` (camelCase); component selector prefix is `mat-exp` (kebab-case) — enforced by ESLint.
 
 Supporting code in the library:
 - `src/lib/types/` — shared type modules: size, shape, state, appearance, variant, width, selection, speed, config, toggle
@@ -280,8 +280,8 @@ worked simultaneously. Wave 15 issues depend on specific (not all) Wave 14 issue
 | #118 | Fix invalid `size="sm"` example in button docs | Docs content |
 | #120 | Fix FabMenu `panelClass` accumulation bug | Library (fab-menu) |
 | #121 | Migrate remaining decorator inputs/getters to signals in the Button Family | Library (button family) |
-| #124 | Unit tests for `MatExpressiveSplitButton` | Library tests |
-| #126 | Unit tests for `MatExpressiveLoadingIndicator` | Library tests |
+| #124 | Unit tests for `MatExpSplitButton` | Library tests |
+| #126 | Unit tests for `MatExpLoadingIndicator` | Library tests |
 | #129 | Write missing `COMMERCIAL_LICENSE.md` | Docs/legal |
 | #130 | Delete dead `temp/navigation-rail` foreign code | Cleanup |
 | #131 | Replace library project `README.md` scaffold | Docs |
@@ -292,7 +292,7 @@ worked simultaneously. Wave 15 issues depend on specific (not all) Wave 14 issue
 
 Low-risk shared-file overlaps within this wave — different lines/keys, safe to work in
 parallel, just worth a heads-up if two contributors land at once:
-- #116 and #135 both touch `projects/ngm-dev/mat-expressive/package.json` (different script keys: `build:sass` vs `postpublish`).
+- #116 and #135 both touch `projects/ngm-dev/mat-exp/package.json` (different script keys: `build:sass` vs `postpublish`).
 - #118 and #132 both touch `public/docs/components/all-buttons/button/index.md` (different lines).
 - #129 and #132 both touch root `README.md` (different sections).
 
@@ -300,11 +300,11 @@ parallel, just worth a heads-up if two contributors land at once:
 
 | Issue | Title | Blocked by | Why |
 |---|---|---|---|
-| #122 | Unit tests for `MatExpressiveButton` | #121 (soft) | Test the final signal-based API instead of the getter being replaced, to avoid rework |
-| #123 | Unit tests for `MatExpressiveIconButton` | #121 (soft — stated explicitly in the issue body) | Same reason; the issue itself recommends sequencing after #121 |
-| #125 | Unit tests for `MatExpressiveFabMenu` / `FabMenuTrigger` | #120 (hard) + #121 (soft) | The `panelClass` regression test needs the bug fix (#120) to exist to mean anything; the trigger's `isMenuOpen` coverage depends on #121's signal migration |
-| #133 | Reduce CSS payload of `mat-expressive-all-styles()` | #116 (hard) | Issue explicitly says not to start before the packaging fix ships (also has a release-shipping dependency, tracked on the separate CI/release plan) |
-| #136 | `ng add @ngm-dev/mat-expressive` schematic | #116 (hard) | Issue explicitly blocked on the packaging fix — otherwise the schematic wires up a broken install |
+| #122 | Unit tests for `MatExpButton` | #121 (soft) | Test the final signal-based API instead of the getter being replaced, to avoid rework |
+| #123 | Unit tests for `MatExpIconButton` | #121 (soft — stated explicitly in the issue body) | Same reason; the issue itself recommends sequencing after #121 |
+| #125 | Unit tests for `MatExpFabMenu` / `FabMenuTrigger` | #120 (hard) + #121 (soft) | The `panelClass` regression test needs the bug fix (#120) to exist to mean anything; the trigger's `isMenuOpen` coverage depends on #121's signal migration |
+| #133 | Reduce CSS payload of `mat-exp-all-styles()` | #116 (hard) | Issue explicitly says not to start before the packaging fix ships (also has a release-shipping dependency, tracked on the separate CI/release plan) |
+| #136 | `ng add @ngm-dev/mat-exp` schematic | #116 (hard) | Issue explicitly blocked on the packaging fix — otherwise the schematic wires up a broken install |
 | #137 | `new:component` generator | #121 (soft) | Generator templates should scaffold the final signal-only convention rather than propagate the decorator-getter pattern being removed |
 
 "Hard" = doing the work before the blocker lands produces a broken or meaningless result.

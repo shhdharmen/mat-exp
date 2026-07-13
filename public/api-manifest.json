@@ -1,11 +1,11 @@
 {
-  "MatExpressiveSelectableButton": {
+  "MatExpSelectableButton": {
     "kind": "interface",
-    "shape": "MatExpressiveSelectableButton",
+    "shape": "MatExpSelectableButton",
     "properties": [
       {
         "name": "toggle",
-        "type": "ModelSignal<MatExpressiveButtonToggle | undefined>"
+        "type": "ModelSignal<MatExpButtonToggle | undefined>"
       },
       {
         "name": "value",
@@ -20,14 +20,14 @@
       }
     ]
   },
-  "MatExpressiveSelectableButtonChange": {
+  "MatExpSelectableButtonChange": {
     "kind": "class",
-    "shape": "MatExpressiveSelectableButtonChange",
+    "shape": "MatExpSelectableButtonChange",
     "description": "Change event object emitted by button toggle.",
     "properties": [
       {
         "name": "source",
-        "type": "MatExpressiveSelectableButton",
+        "type": "MatExpSelectableButton",
         "description": "The button that emits the event."
       },
       {
@@ -37,25 +37,25 @@
       }
     ]
   },
-  "MatExpressiveButton": {
+  "MatExpButton": {
     "kind": "directive",
-    "selector": "[matExpressiveButton]",
+    "selector": "[matExpButton]",
     "inputs": [
       {
         "name": "size",
-        "type": "ModelSignal<MatExpressiveButtonSize | undefined>",
+        "type": "ModelSignal<MatExpButtonSize | undefined>",
         "isModel": true,
         "default": "'s'"
       },
       {
         "name": "shape",
-        "type": "ModelSignal<MatExpressiveButtonShape | undefined>",
+        "type": "ModelSignal<MatExpButtonShape | undefined>",
         "isModel": true,
         "default": "'round'"
       },
       {
         "name": "toggle",
-        "type": "ModelSignal<MatExpressiveButtonToggle | undefined>",
+        "type": "ModelSignal<MatExpButtonToggle | undefined>",
         "isModel": true
       },
       {
@@ -67,65 +67,73 @@
     "outputs": [],
     "description": "Directive to style the Angular Material Button component with latest Material 3 Design System Expressive styles."
   },
-  "MatExpressiveButtonOptions": {
+  "MatExpButtonOptions": {
     "kind": "interface",
-    "shape": "MatExpressiveButtonOptions",
+    "shape": "MatExpButtonOptions",
     "properties": [
       {
         "name": "size",
-        "type": "MatExpressiveButtonSize | undefined",
+        "type": "MatExpButtonSize | undefined",
         "isOptional": true,
         "description": "The size of the button.\n\nDefault: `s`"
       },
       {
         "name": "shape",
-        "type": "MatExpressiveButtonShape | undefined",
+        "type": "MatExpButtonShape | undefined",
         "isOptional": true,
         "description": "The shape of the button.\n\nDefault: `round`"
       },
       {
         "name": "toggle",
-        "type": "MatExpressiveButtonToggle | undefined",
+        "type": "MatExpButtonToggle | undefined",
         "isOptional": true,
         "description": "The toggle state of the button."
       }
     ]
   },
-  "MAT_EXPRESSIVE_BUTTON_OPTIONS": {
+  "MAT_EXP_BUTTON_OPTIONS": {
     "kind": "const",
-    "value": "InjectionToken<MatExpressiveButtonOptions>"
+    "value": "InjectionToken<MatExpButtonOptions>"
   },
-  "provideMatExpressiveButtonOptions": {
-    "kind": "const",
-    "value": "(options: Partial<MatExpressiveButtonOptions> | (() => Partial<MatExpressiveButtonOptions>)) => FactoryProvider"
+  "provideMatExpButtonOptions": {
+    "kind": "function",
+    "signature": "(options: Partial<MatExpButtonOptions> | (() => Partial<MatExpButtonOptions>)) => FactoryProvider",
+    "params": [
+      {
+        "name": "options",
+        "type": "Partial<MatExpButtonOptions> | (() => Partial<MatExpButtonOptions>)"
+      }
+    ],
+    "returnType": "FactoryProvider"
   },
-  "injectMatExpressiveButtonOptions": {
-    "kind": "const",
-    "value": "() => MatExpressiveButtonOptions"
+  "injectMatExpButtonOptions": {
+    "kind": "function",
+    "signature": "() => MatExpButtonOptions",
+    "returnType": "MatExpButtonOptions"
   },
-  "MatExpressiveIconButton": {
+  "MatExpIconButton": {
     "kind": "directive",
-    "selector": "[matExpressiveIconButton]",
+    "selector": "[matExpIconButton]",
     "inputs": [
       {
         "name": "size",
-        "type": "ModelSignal<MatExpressiveButtonSize | undefined>",
+        "type": "ModelSignal<MatExpButtonSize | undefined>",
         "isModel": true,
         "default": "'s'"
       },
       {
         "name": "shape",
-        "type": "ModelSignal<MatExpressiveButtonShape | undefined>",
+        "type": "ModelSignal<MatExpButtonShape | undefined>",
         "isModel": true,
         "default": "'round'"
       },
       {
         "name": "width",
-        "type": "MatExpressiveIconButtonWidth | undefined"
+        "type": "MatExpIconButtonWidth | undefined"
       },
       {
         "name": "toggle",
-        "type": "ModelSignal<MatExpressiveButtonToggle | undefined>",
+        "type": "ModelSignal<MatExpButtonToggle | undefined>",
         "isModel": true
       },
       {
@@ -135,97 +143,105 @@
       },
       {
         "name": "appearance",
-        "type": "MatExpressiveIconButtonAppearance | undefined"
+        "type": "MatExpIconButtonAppearance | undefined"
       }
     ],
     "outputs": [],
     "description": "Directive to style the Angular Material Icon Button component with latest Material 3 Design System Expressive styles."
   },
-  "MatExpressiveIconButtonOptions": {
+  "MatExpIconButtonOptions": {
     "kind": "interface",
-    "shape": "MatExpressiveIconButtonOptions",
+    "shape": "MatExpIconButtonOptions",
     "properties": [
       {
         "name": "appearance",
-        "type": "MatExpressiveIconButtonAppearance | undefined",
+        "type": "MatExpIconButtonAppearance | undefined",
         "isOptional": true,
         "description": "The appearance of the icon button.\n\nDefault: `text`"
       },
       {
         "name": "size",
-        "type": "MatExpressiveButtonSize | undefined",
+        "type": "MatExpButtonSize | undefined",
         "isOptional": true,
         "description": "The size of the icon button.\n\nDefault: `s`"
       },
       {
         "name": "shape",
-        "type": "MatExpressiveButtonShape | undefined",
+        "type": "MatExpButtonShape | undefined",
         "isOptional": true,
         "description": "The shape of the icon button.\n\nDefault: `round`"
       },
       {
         "name": "toggle",
-        "type": "MatExpressiveButtonToggle | undefined",
+        "type": "MatExpButtonToggle | undefined",
         "isOptional": true,
         "description": "The toggle state of the button."
       },
       {
         "name": "width",
-        "type": "MatExpressiveIconButtonWidth | undefined",
+        "type": "MatExpIconButtonWidth | undefined",
         "isOptional": true,
         "description": "The width of the icon button."
       }
     ]
   },
-  "MAT_EXPRESSIVE_ICON_BUTTON_OPTIONS": {
+  "MAT_EXP_ICON_BUTTON_OPTIONS": {
     "kind": "const",
-    "value": "InjectionToken<MatExpressiveIconButtonOptions>"
+    "value": "InjectionToken<MatExpIconButtonOptions>"
   },
-  "provideMatExpressiveIconButtonOptions": {
+  "provideMatExpIconButtonOptions": {
+    "kind": "function",
+    "signature": "(options: Partial<MatExpIconButtonOptions> | (() => Partial<MatExpIconButtonOptions>)) => FactoryProvider",
+    "params": [
+      {
+        "name": "options",
+        "type": "Partial<MatExpIconButtonOptions> | (() => Partial<MatExpIconButtonOptions>)"
+      }
+    ],
+    "returnType": "FactoryProvider"
+  },
+  "injectMatExpIconButtonOptions": {
+    "kind": "function",
+    "signature": "() => MatExpIconButtonOptions",
+    "returnType": "MatExpIconButtonOptions"
+  },
+  "MAT_EXP_BUTTON_GROUP": {
     "kind": "const",
-    "value": "(options: Partial<MatExpressiveIconButtonOptions> | (() => Partial<MatExpressiveIconButtonOptions>)) => FactoryProvider"
+    "value": "InjectionToken<MatExpButtonGroup>",
+    "description": "Injection token that can be used to reference instances of `MatExpButtonGroup`.\nIt serves as alternative token to the actual `MatExpButtonGroup` class which\ncould cause unnecessary retention of the class and its component metadata."
   },
-  "injectMatExpressiveIconButtonOptions": {
-    "kind": "const",
-    "value": "() => MatExpressiveIconButtonOptions"
-  },
-  "MAT_EXPRESSIVE_BUTTON_GROUP": {
-    "kind": "const",
-    "value": "InjectionToken<MatExpressiveButtonGroup>",
-    "description": "Injection token that can be used to reference instances of `MatExpressiveButtonGroup`.\nIt serves as alternative token to the actual `MatExpressiveButtonGroup` class which\ncould cause unnecessary retention of the class and its component metadata."
-  },
-  "MAT_EXPRESSIVE_BUTTON_GROUP_VALUE_ACCESSOR": {
+  "MAT_EXP_BUTTON_GROUP_VALUE_ACCESSOR": {
     "kind": "const",
     "value": "Provider",
-    "description": "Provider Expression that allows mat-expressive-button-group to register as a ControlValueAccessor.\nThis allows it to support [(ngModel)] and reactive forms."
+    "description": "Provider Expression that allows mat-exp-button-group to register as a ControlValueAccessor.\nThis allows it to support [(ngModel)] and reactive forms."
   },
-  "MatExpressiveButtonGroup": {
+  "MatExpButtonGroup": {
     "kind": "component",
-    "selector": "mat-expressive-button-group",
+    "selector": "mat-exp-button-group",
     "inputs": [
       {
         "name": "size",
-        "type": "MatExpressiveButtonSize | undefined",
+        "type": "MatExpButtonSize | undefined",
         "default": "'s'"
       },
       {
         "name": "shape",
-        "type": "MatExpressiveButtonShape | undefined",
+        "type": "MatExpButtonShape | undefined",
         "default": "'round'"
       },
       {
         "name": "selection",
-        "type": "MatExpressiveButtonGroupSelection | undefined",
+        "type": "MatExpButtonGroupSelection | undefined",
         "default": "'single-select'"
       },
       {
         "name": "variant",
-        "type": "MatExpressiveButtonGroupVariant | undefined",
+        "type": "MatExpButtonGroupVariant | undefined",
         "default": "'standard'"
       },
       {
         "name": "appearance",
-        "type": "MatExpressiveButtonGroupAppearance | undefined"
+        "type": "MatExpButtonGroupAppearance | undefined"
       },
       {
         "name": "disabled",
@@ -241,43 +257,43 @@
     "outputs": [
       {
         "name": "selectionChange",
-        "eventType": "MatExpressiveSelectableButtonChange",
+        "eventType": "MatExpSelectableButtonChange",
         "description": "Emits when the selected value changes, either via user interaction or programmatic update."
       }
     ],
     "description": "Component that groups buttons and provides single/multi-select behavior\ncompatible with Angular reactive and template-driven forms."
   },
-  "MatExpressiveButtonGroupOptions": {
+  "MatExpButtonGroupOptions": {
     "kind": "interface",
-    "shape": "MatExpressiveButtonGroupOptions",
+    "shape": "MatExpButtonGroupOptions",
     "properties": [
       {
         "name": "appearance",
-        "type": "MatExpressiveButtonGroupAppearance | undefined",
+        "type": "MatExpButtonGroupAppearance | undefined",
         "isOptional": true,
         "description": "The appearance of the buttons."
       },
       {
         "name": "size",
-        "type": "MatExpressiveButtonSize | undefined",
+        "type": "MatExpButtonSize | undefined",
         "isOptional": true,
         "description": "The size of the button.\n\nDefault: `s`"
       },
       {
         "name": "shape",
-        "type": "MatExpressiveButtonShape | undefined",
+        "type": "MatExpButtonShape | undefined",
         "isOptional": true,
         "description": "The shape of the buttons.\n\nDefault: `round`"
       },
       {
         "name": "selection",
-        "type": "MatExpressiveButtonGroupSelection | undefined",
+        "type": "MatExpButtonGroupSelection | undefined",
         "isOptional": true,
         "description": "The selection of the button group."
       },
       {
         "name": "variant",
-        "type": "MatExpressiveButtonGroupVariant | undefined",
+        "type": "MatExpButtonGroupVariant | undefined",
         "isOptional": true,
         "description": "The variant of the button group.\n\nDefault: `standard`"
       },
@@ -289,31 +305,39 @@
       }
     ]
   },
-  "MAT_EXPRESSIVE_BUTTON_GROUP_OPTIONS": {
+  "MAT_EXP_BUTTON_GROUP_OPTIONS": {
     "kind": "const",
-    "value": "InjectionToken<MatExpressiveButtonGroupOptions>"
+    "value": "InjectionToken<MatExpButtonGroupOptions>"
   },
-  "provideMatExpressiveButtonGroupOptions": {
-    "kind": "const",
-    "value": "(options: Partial<MatExpressiveButtonGroupOptions> | (() => Partial<MatExpressiveButtonGroupOptions>)) => FactoryProvider"
+  "provideMatExpButtonGroupOptions": {
+    "kind": "function",
+    "signature": "(options: Partial<MatExpButtonGroupOptions> | (() => Partial<MatExpButtonGroupOptions>)) => FactoryProvider",
+    "params": [
+      {
+        "name": "options",
+        "type": "Partial<MatExpButtonGroupOptions> | (() => Partial<MatExpButtonGroupOptions>)"
+      }
+    ],
+    "returnType": "FactoryProvider"
   },
-  "injectMatExpressiveButtonGroupOptions": {
-    "kind": "const",
-    "value": "() => MatExpressiveButtonGroupOptions"
+  "injectMatExpButtonGroupOptions": {
+    "kind": "function",
+    "signature": "() => MatExpButtonGroupOptions",
+    "returnType": "MatExpButtonGroupOptions"
   },
-  "MatExpressiveSplitButton": {
+  "MatExpSplitButton": {
     "kind": "component",
-    "selector": "mat-expressive-split-button",
+    "selector": "mat-exp-split-button",
     "inputs": [
       {
         "name": "size",
-        "type": "ModelSignal<MatExpressiveButtonSize | undefined>",
+        "type": "ModelSignal<MatExpButtonSize | undefined>",
         "isModel": true,
         "default": "'s'"
       },
       {
         "name": "appearance",
-        "type": "ModelSignal<MatExpressiveSplitButtonAppearance | undefined>",
+        "type": "ModelSignal<MatExpSplitButtonAppearance | undefined>",
         "isModel": true,
         "default": "'tonal'"
       }
@@ -321,44 +345,52 @@
     "outputs": [],
     "description": "Component to style the Angular Material Button component with latest Material 3 Design System Expressive styles."
   },
-  "MatExpressiveSplitButtonOptions": {
+  "MatExpSplitButtonOptions": {
     "kind": "interface",
-    "shape": "MatExpressiveSplitButtonOptions",
+    "shape": "MatExpSplitButtonOptions",
     "properties": [
       {
         "name": "size",
-        "type": "MatExpressiveButtonSize | undefined",
+        "type": "MatExpButtonSize | undefined",
         "isOptional": true,
         "description": "The size of the button.\n\nDefault: `s`"
       },
       {
         "name": "appearance",
-        "type": "MatExpressiveSplitButtonAppearance | undefined",
+        "type": "MatExpSplitButtonAppearance | undefined",
         "isOptional": true,
         "description": "The label of the split button.\n\nDefault: `tonal`"
       }
     ]
   },
-  "MAT_EXPRESSIVE_SPLIT_BUTTON_OPTIONS": {
+  "MAT_EXP_SPLIT_BUTTON_OPTIONS": {
     "kind": "const",
-    "value": "InjectionToken<MatExpressiveSplitButtonOptions>"
+    "value": "InjectionToken<MatExpSplitButtonOptions>"
   },
-  "provideMatExpressiveSplitButtonOptions": {
-    "kind": "const",
-    "value": "(options: Partial<MatExpressiveSplitButtonOptions> | (() => Partial<MatExpressiveSplitButtonOptions>)) => FactoryProvider"
+  "provideMatExpSplitButtonOptions": {
+    "kind": "function",
+    "signature": "(options: Partial<MatExpSplitButtonOptions> | (() => Partial<MatExpSplitButtonOptions>)) => FactoryProvider",
+    "params": [
+      {
+        "name": "options",
+        "type": "Partial<MatExpSplitButtonOptions> | (() => Partial<MatExpSplitButtonOptions>)"
+      }
+    ],
+    "returnType": "FactoryProvider"
   },
-  "injectMatExpressiveSplitButtonOptions": {
-    "kind": "const",
-    "value": "() => MatExpressiveSplitButtonOptions"
+  "injectMatExpSplitButtonOptions": {
+    "kind": "function",
+    "signature": "() => MatExpSplitButtonOptions",
+    "returnType": "MatExpSplitButtonOptions"
   },
   "toButtonGroupChild": {
     "kind": "function",
-    "signature": "(button: MatExpressiveButton | MatExpressiveIconButton) => ButtonGroupChild",
+    "signature": "(button: MatExpButton | MatExpIconButton) => ButtonGroupChild",
     "description": "Wraps a projected button/icon-button directive instance in its `ButtonGroupChild` adapter.",
     "params": [
       {
         "name": "button",
-        "type": "MatExpressiveButton | MatExpressiveIconButton"
+        "type": "MatExpButton | MatExpIconButton"
       }
     ],
     "returnType": "ButtonGroupChild"
@@ -366,7 +398,7 @@
   "bindButtonGroupChildren": {
     "kind": "function",
     "signature": "(config: ButtonGroupChildBroadcastConfig) => void",
-    "description": "Registers the effects that broadcast `size`/`shape`/`appearance`/`disabled` from a\ngroup-like host (`MatExpressiveButtonGroup`, `MatExpressiveSplitButton`) down to its\nprojected `ButtonGroupChild` instances.\n\nThis is the single implementation of the broadcast-effect logic that was previously\nduplicated between `button-group.ts` and `split-button.ts`. Must be called from within\nan injection context (e.g. a component/directive constructor).",
+    "description": "Registers the effects that broadcast `size`/`shape`/`appearance`/`disabled` from a\ngroup-like host (`MatExpButtonGroup`, `MatExpSplitButton`) down to its\nprojected `ButtonGroupChild` instances.\n\nThis is the single implementation of the broadcast-effect logic that was previously\nduplicated between `button-group.ts` and `split-button.ts`. Must be called from within\nan injection context (e.g. a component/directive constructor).",
     "params": [
       {
         "name": "config",
@@ -378,26 +410,26 @@
   "ButtonGroupChild": {
     "kind": "interface",
     "shape": "ButtonGroupChild",
-    "description": "Narrow contract that `MatExpressiveButtonGroup` and `MatExpressiveSplitButton` depend on\ninstead of reaching into the full public surface of `MatExpressiveButton` /\n`MatExpressiveIconButton`.\n\nKeeping this interface narrow means a change to either button directive's public setters\nno longer ripples silently into both group/split-button implementations - only the adapter\nfor the affected directive needs to change.",
+    "description": "Narrow contract that `MatExpButtonGroup` and `MatExpSplitButton` depend on\ninstead of reaching into the full public surface of `MatExpButton` /\n`MatExpIconButton`.\n\nKeeping this interface narrow means a change to either button directive's public setters\nno longer ripples silently into both group/split-button implementations - only the adapter\nfor the affected directive needs to change.",
     "methods": [
       {
         "name": "setSize",
-        "signature": "(size: MatExpressiveButtonSize) => void",
+        "signature": "(size: MatExpButtonSize) => void",
         "params": [
           {
             "name": "size",
-            "type": "MatExpressiveButtonSize"
+            "type": "MatExpButtonSize"
           }
         ],
         "returnType": "void"
       },
       {
         "name": "setShape",
-        "signature": "(shape: MatExpressiveButtonShape) => void",
+        "signature": "(shape: MatExpButtonShape) => void",
         "params": [
           {
             "name": "shape",
-            "type": "MatExpressiveButtonShape"
+            "type": "MatExpButtonShape"
           }
         ],
         "returnType": "void"
@@ -429,33 +461,33 @@
   "ButtonAdapter": {
     "kind": "class",
     "shape": "ButtonAdapter",
-    "description": "Adapts a `MatExpressiveButton` directive instance to the `ButtonGroupChild` contract.",
+    "description": "Adapts a `MatExpButton` directive instance to the `ButtonGroupChild` contract.",
     "properties": [
       {
         "name": "button",
-        "type": "MatExpressiveButton",
+        "type": "MatExpButton",
         "isReadonly": true
       }
     ],
     "methods": [
       {
         "name": "setSize",
-        "signature": "(size: MatExpressiveButtonSize) => void",
+        "signature": "(size: MatExpButtonSize) => void",
         "params": [
           {
             "name": "size",
-            "type": "MatExpressiveButtonSize"
+            "type": "MatExpButtonSize"
           }
         ],
         "returnType": "void"
       },
       {
         "name": "setShape",
-        "signature": "(shape: MatExpressiveButtonShape) => void",
+        "signature": "(shape: MatExpButtonShape) => void",
         "params": [
           {
             "name": "shape",
-            "type": "MatExpressiveButtonShape"
+            "type": "MatExpButtonShape"
           }
         ],
         "returnType": "void"
@@ -487,33 +519,33 @@
   "IconButtonAdapter": {
     "kind": "class",
     "shape": "IconButtonAdapter",
-    "description": "Adapts a `MatExpressiveIconButton` directive instance to the `ButtonGroupChild` contract.",
+    "description": "Adapts a `MatExpIconButton` directive instance to the `ButtonGroupChild` contract.",
     "properties": [
       {
         "name": "button",
-        "type": "MatExpressiveIconButton",
+        "type": "MatExpIconButton",
         "isReadonly": true
       }
     ],
     "methods": [
       {
         "name": "setSize",
-        "signature": "(size: MatExpressiveButtonSize) => void",
+        "signature": "(size: MatExpButtonSize) => void",
         "params": [
           {
             "name": "size",
-            "type": "MatExpressiveButtonSize"
+            "type": "MatExpButtonSize"
           }
         ],
         "returnType": "void"
       },
       {
         "name": "setShape",
-        "signature": "(shape: MatExpressiveButtonShape) => void",
+        "signature": "(shape: MatExpButtonShape) => void",
         "params": [
           {
             "name": "shape",
-            "type": "MatExpressiveButtonShape"
+            "type": "MatExpButtonShape"
           }
         ],
         "returnType": "void"
@@ -554,12 +586,12 @@
       },
       {
         "name": "size",
-        "type": "Signal<MatExpressiveButtonSize | undefined> | undefined",
+        "type": "Signal<MatExpButtonSize | undefined> | undefined",
         "isOptional": true
       },
       {
         "name": "shape",
-        "type": "Signal<MatExpressiveButtonShape | undefined> | undefined",
+        "type": "Signal<MatExpButtonShape | undefined> | undefined",
         "isOptional": true
       },
       {
@@ -574,37 +606,37 @@
       }
     ]
   },
-  "MatExpressiveFabMenu": {
+  "MatExpFabMenu": {
     "kind": "directive",
-    "selector": "[matExpressiveFabMenu]",
+    "selector": "[matExpFabMenu]",
     "inputs": [
       {
         "name": "color",
-        "type": "MatExpressiveFabMenuTriggerColor",
+        "type": "MatExpFabMenuTriggerColor",
         "default": "primary"
       }
     ],
     "outputs": []
   },
-  "MatExpressiveFabMenuTrigger": {
+  "MatExpFabMenuTrigger": {
     "kind": "directive",
-    "selector": "[matExpressiveFabMenuTrigger]",
+    "selector": "[matExpFabMenuTrigger]",
     "inputs": [
       {
         "name": "color",
-        "type": "MatExpressiveFabMenuTriggerColor",
+        "type": "MatExpFabMenuTriggerColor",
         "default": "primary"
       }
     ],
     "outputs": []
   },
-  "MatExpressiveLoadingIndicator": {
+  "MatExpLoadingIndicator": {
     "kind": "component",
-    "selector": "mat-expressive-loading-indicator",
+    "selector": "mat-exp-loading-indicator",
     "inputs": [
       {
         "name": "config",
-        "type": "MatExpressiveLoadingIndicatorConfig | undefined",
+        "type": "MatExpLoadingIndicatorConfig | undefined",
         "default": "'default'",
         "description": "Visual configuration of the indicator.\n\n- `default` – renders just the morphing shape.\n- `contained` – renders the morphing shape on top of a tonal background\n  \"container\" circle."
       },
@@ -616,21 +648,21 @@
       },
       {
         "name": "speed",
-        "type": "MatExpressiveLoadingIndicatorSpeed",
+        "type": "MatExpLoadingIndicatorSpeed",
         "default": "'default'",
         "description": "Speed preset for the shape morph and rotation animation. Each preset maps\nto one of the M3 Expressive spatial spring tokens (`fast`, `default`,\n`slow`) – see .\n\nChanging this signal at runtime tears down the active GSAP timelines and\nre-builds them with the new spring, so the indicator stays in sync with\nthe new motion language without recreating the component."
       }
     ],
     "outputs": [],
-    "description": "Material 3 Expressive loading indicator. Renders a continuously morphing and\nrotating shape that loops through the seven canonical M3 shapes.\n\nAll animation work is driven by GSAP – there are no CSS keyframes:\n\n- **Entry** – Angular's `(animate.enter)` event binding hands control to\n  GSAP, which fades the wrapper from `autoAlpha: 0 / scale: 0.85 → 1` over\n  ~200ms (`power2.out`) and calls `event.animationComplete()` once the\n  tween finishes.\n- **Exit** – `(animate.leave)` runs the inverse tween over ~150ms\n  (`power2.in`); Angular waits for `animationComplete()` before detaching\n  the element from the DOM.\n- **Rotation & shape morph** – modelled on the Compose Material3\n  `LoadingIndicator` choreography:\n  - a continuous **linear background rotation** on a wrapper `<g>`\n    (`intervalMs × ~7.178` per full revolution, matching Compose's ratio),\n  - on top of it, a **per-step spring** that morphs the inner `<path>` to\n    the next shape **and** kicks its rotation by 90°, eased through one of\n    the M3 Expressive spatial spring cubic-bezier presets. The spring's\n    overshoot is what produces the visible bounce at each morph boundary.\n\nMotion tokens live in `loading-indicator.animation.ts` – the SCSS only\nships visual tokens (size, colour, ratio). Override motion globally via\n`provideMatExpressiveLoadingIndicatorOptions` or per-instance via the\n`speed` input.\n\n`prefers-reduced-motion: reduce` is honoured on every layer: the entry /\nexit tweens short-circuit to `event.animationComplete()`, and the\nrotation / morph timelines are skipped via `gsap.matchMedia()`."
+    "description": "Material 3 Expressive loading indicator. Renders a continuously morphing and\nrotating shape that loops through the seven canonical M3 shapes.\n\nAll animation work is driven by GSAP – there are no CSS keyframes:\n\n- **Entry** – Angular's `(animate.enter)` event binding hands control to\n  GSAP, which fades the wrapper from `autoAlpha: 0 / scale: 0.85 → 1` over\n  ~200ms (`power2.out`) and calls `event.animationComplete()` once the\n  tween finishes.\n- **Exit** – `(animate.leave)` runs the inverse tween over ~150ms\n  (`power2.in`); Angular waits for `animationComplete()` before detaching\n  the element from the DOM.\n- **Rotation & shape morph** – modelled on the Compose Material3\n  `LoadingIndicator` choreography:\n  - a continuous **linear background rotation** on a wrapper `<g>`\n    (`intervalMs × ~7.178` per full revolution, matching Compose's ratio),\n  - on top of it, a **per-step spring** that morphs the inner `<path>` to\n    the next shape **and** kicks its rotation by 90°, eased through one of\n    the M3 Expressive spatial spring cubic-bezier presets. The spring's\n    overshoot is what produces the visible bounce at each morph boundary.\n\nMotion tokens live in `loading-indicator.animation.ts` – the SCSS only\nships visual tokens (size, colour, ratio). Override motion globally via\n`provideMatExpLoadingIndicatorOptions` or per-instance via the\n`speed` input.\n\n`prefers-reduced-motion: reduce` is honoured on every layer: the entry /\nexit tweens short-circuit to `event.animationComplete()`, and the\nrotation / morph timelines are skipped via `gsap.matchMedia()`."
   },
-  "MatExpressiveLoadingIndicatorOptions": {
+  "MatExpLoadingIndicatorOptions": {
     "kind": "interface",
-    "shape": "MatExpressiveLoadingIndicatorOptions",
+    "shape": "MatExpLoadingIndicatorOptions",
     "properties": [
       {
         "name": "config",
-        "type": "MatExpressiveLoadingIndicatorConfig | undefined",
+        "type": "MatExpLoadingIndicatorConfig | undefined",
         "isOptional": true,
         "description": "The config of the loading indicator.\n\nDefault: `default`"
       },
@@ -642,171 +674,179 @@
       },
       {
         "name": "speed",
-        "type": "MatExpressiveLoadingIndicatorSpeed | undefined",
+        "type": "MatExpLoadingIndicatorSpeed | undefined",
         "isOptional": true,
         "description": "Speed preset for the shape morph and rotation animation. Each preset maps\nto one of the M3 Expressive spatial spring tokens:\n\n- `fast`    – Expressive fast spatial    – `cubic-bezier(0.42, 1.67, 0.21, 0.90)`, 350ms per morph step.\n- `default` – Expressive default spatial – `cubic-bezier(0.38, 1.21, 0.22, 1.00)`, 500ms per morph step.\n- `slow`    – Expressive slow spatial    – `cubic-bezier(0.39, 1.29, 0.35, 0.98)`, 650ms per morph step.\n\nDefault: `fast` – matches the original M3 spec for the loading indicator."
       }
     ]
   },
-  "MAT_EXPRESSIVE_LOADING_INDICATOR_OPTIONS": {
+  "MAT_EXP_LOADING_INDICATOR_OPTIONS": {
     "kind": "const",
-    "value": "InjectionToken<MatExpressiveLoadingIndicatorOptions>"
+    "value": "InjectionToken<MatExpLoadingIndicatorOptions>"
   },
-  "provideMatExpressiveLoadingIndicatorOptions": {
-    "kind": "const",
-    "value": "(options: Partial<MatExpressiveLoadingIndicatorOptions> | (() => Partial<MatExpressiveLoadingIndicatorOptions>)) => FactoryProvider"
+  "provideMatExpLoadingIndicatorOptions": {
+    "kind": "function",
+    "signature": "(options: Partial<MatExpLoadingIndicatorOptions> | (() => Partial<MatExpLoadingIndicatorOptions>)) => FactoryProvider",
+    "params": [
+      {
+        "name": "options",
+        "type": "Partial<MatExpLoadingIndicatorOptions> | (() => Partial<MatExpLoadingIndicatorOptions>)"
+      }
+    ],
+    "returnType": "FactoryProvider"
   },
-  "injectMatExpressiveLoadingIndicatorOptions": {
-    "kind": "const",
-    "value": "() => MatExpressiveLoadingIndicatorOptions"
+  "injectMatExpLoadingIndicatorOptions": {
+    "kind": "function",
+    "signature": "() => MatExpLoadingIndicatorOptions",
+    "returnType": "MatExpLoadingIndicatorOptions"
   },
-  "MatExpressiveButtonSizeM": {
+  "MatExpButtonSizeM": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonSizeM = 'm';"
+    "shape": "export type MatExpButtonSizeM = 'm';"
   },
-  "MatExpressiveButtonSizeS": {
+  "MatExpButtonSizeS": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonSizeS = 's';"
+    "shape": "export type MatExpButtonSizeS = 's';"
   },
-  "MatExpressiveButtonSizeL": {
+  "MatExpButtonSizeL": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonSizeL = 'l';"
+    "shape": "export type MatExpButtonSizeL = 'l';"
   },
-  "MatExpressiveButtonSizeXS": {
+  "MatExpButtonSizeXS": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonSizeXS = 'xs';"
+    "shape": "export type MatExpButtonSizeXS = 'xs';"
   },
-  "MatExpressiveButtonSizeXL": {
+  "MatExpButtonSizeXL": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonSizeXL = 'xl';"
+    "shape": "export type MatExpButtonSizeXL = 'xl';"
   },
-  "MatExpressiveButtonSize": {
+  "MatExpButtonSize": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonSize =\n  | MatExpressiveButtonSizeXS\n  | MatExpressiveButtonSizeS\n  | MatExpressiveButtonSizeM\n  | MatExpressiveButtonSizeL\n  | MatExpressiveButtonSizeXL;"
+    "shape": "export type MatExpButtonSize =\n  | MatExpButtonSizeXS\n  | MatExpButtonSizeS\n  | MatExpButtonSizeM\n  | MatExpButtonSizeL\n  | MatExpButtonSizeXL;"
   },
-  "MatExpressiveButtonGroupSize": {
+  "MatExpButtonGroupSize": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupSize = MatExpressiveButtonSize;"
+    "shape": "export type MatExpButtonGroupSize = MatExpButtonSize;"
   },
-  "MatExpressiveButtonGroupSelectionSingleSelect": {
+  "MatExpButtonGroupSelectionSingleSelect": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupSelectionSingleSelect = 'single-select';"
+    "shape": "export type MatExpButtonGroupSelectionSingleSelect = 'single-select';"
   },
-  "MatExpressiveButtonGroupSelectionMultiSelect": {
+  "MatExpButtonGroupSelectionMultiSelect": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupSelectionMultiSelect = 'multi-select';"
+    "shape": "export type MatExpButtonGroupSelectionMultiSelect = 'multi-select';"
   },
-  "MatExpressiveButtonGroupSelection": {
+  "MatExpButtonGroupSelection": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupSelection =\n  | MatExpressiveButtonGroupSelectionSingleSelect\n  | MatExpressiveButtonGroupSelectionMultiSelect;"
+    "shape": "export type MatExpButtonGroupSelection =\n  | MatExpButtonGroupSelectionSingleSelect\n  | MatExpButtonGroupSelectionMultiSelect;"
   },
-  "MatExpressiveButtonShapeRound": {
+  "MatExpButtonShapeRound": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonShapeRound = 'round';"
+    "shape": "export type MatExpButtonShapeRound = 'round';"
   },
-  "MatExpressiveButtonShapeSquare": {
+  "MatExpButtonShapeSquare": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonShapeSquare = 'square';"
+    "shape": "export type MatExpButtonShapeSquare = 'square';"
   },
-  "MatExpressiveButtonShape": {
+  "MatExpButtonShape": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonShape =\n  | MatExpressiveButtonShapeRound\n  | MatExpressiveButtonShapeSquare;"
+    "shape": "export type MatExpButtonShape = MatExpButtonShapeRound | MatExpButtonShapeSquare;"
   },
-  "MatExpressiveButtonGroupShape": {
+  "MatExpButtonGroupShape": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupShape = MatExpressiveButtonShape;"
+    "shape": "export type MatExpButtonGroupShape = MatExpButtonShape;"
   },
-  "MatExpressiveButtonStatePressed": {
+  "MatExpButtonStatePressed": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonStatePressed = 'pressed';"
+    "shape": "export type MatExpButtonStatePressed = 'pressed';"
   },
-  "MatExpressiveButtonStateHovered": {
+  "MatExpButtonStateHovered": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonStateHovered = 'hovered';"
+    "shape": "export type MatExpButtonStateHovered = 'hovered';"
   },
-  "MatExpressiveButtonStateFocused": {
+  "MatExpButtonStateFocused": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonStateFocused = 'focused';"
+    "shape": "export type MatExpButtonStateFocused = 'focused';"
   },
-  "MatExpressiveButtonStateActive": {
+  "MatExpButtonStateActive": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonStateActive = 'active';"
+    "shape": "export type MatExpButtonStateActive = 'active';"
   },
-  "MatExpressiveButtonStateDisabled": {
+  "MatExpButtonStateDisabled": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonStateDisabled = 'disabled';"
+    "shape": "export type MatExpButtonStateDisabled = 'disabled';"
   },
-  "MatExpressiveButtonState": {
+  "MatExpButtonState": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonState =\n  | MatExpressiveButtonStatePressed\n  | MatExpressiveButtonStateHovered\n  | MatExpressiveButtonStateFocused\n  | MatExpressiveButtonStateActive\n  | MatExpressiveButtonStateDisabled;"
+    "shape": "export type MatExpButtonState =\n  | MatExpButtonStatePressed\n  | MatExpButtonStateHovered\n  | MatExpButtonStateFocused\n  | MatExpButtonStateActive\n  | MatExpButtonStateDisabled;"
   },
-  "MatExpressiveButtonToggleSelected": {
+  "MatExpButtonToggleSelected": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonToggleSelected = 'selected';"
+    "shape": "export type MatExpButtonToggleSelected = 'selected';"
   },
-  "MatExpressiveButtonToggleUnselected": {
+  "MatExpButtonToggleUnselected": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonToggleUnselected = 'unselected';"
+    "shape": "export type MatExpButtonToggleUnselected = 'unselected';"
   },
-  "MatExpressiveButtonToggle": {
+  "MatExpButtonToggle": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonToggle =\n  | MatExpressiveButtonToggleSelected\n  | MatExpressiveButtonToggleUnselected;"
+    "shape": "export type MatExpButtonToggle = MatExpButtonToggleSelected | MatExpButtonToggleUnselected;"
   },
-  "MatExpressiveIconButtonWidthDefault": {
+  "MatExpIconButtonWidthDefault": {
     "kind": "type",
-    "shape": "export type MatExpressiveIconButtonWidthDefault = 'default';"
+    "shape": "export type MatExpIconButtonWidthDefault = 'default';"
   },
-  "MatExpressiveIconButtonWidthNarrow": {
+  "MatExpIconButtonWidthNarrow": {
     "kind": "type",
-    "shape": "export type MatExpressiveIconButtonWidthNarrow = 'narrow';"
+    "shape": "export type MatExpIconButtonWidthNarrow = 'narrow';"
   },
-  "MatExpressiveIconButtonWidthWide": {
+  "MatExpIconButtonWidthWide": {
     "kind": "type",
-    "shape": "export type MatExpressiveIconButtonWidthWide = 'wide';"
+    "shape": "export type MatExpIconButtonWidthWide = 'wide';"
   },
-  "MatExpressiveIconButtonWidth": {
+  "MatExpIconButtonWidth": {
     "kind": "type",
-    "shape": "export type MatExpressiveIconButtonWidth =\n  | MatExpressiveIconButtonWidthDefault\n  | MatExpressiveIconButtonWidthNarrow\n  | MatExpressiveIconButtonWidthWide;"
+    "shape": "export type MatExpIconButtonWidth =\n  | MatExpIconButtonWidthDefault\n  | MatExpIconButtonWidthNarrow\n  | MatExpIconButtonWidthWide;"
   },
-  "MatExpressiveIconButtonAppearance": {
+  "MatExpIconButtonAppearance": {
     "kind": "type",
-    "shape": "export type MatExpressiveIconButtonAppearance = 'text' | 'filled' | 'outlined' | 'tonal';"
+    "shape": "export type MatExpIconButtonAppearance = 'text' | 'filled' | 'outlined' | 'tonal';"
   },
-  "MatExpressiveButtonGroupAppearance": {
+  "MatExpButtonGroupAppearance": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupAppearance = 'filled' | 'outlined' | 'tonal' | 'elevated';"
+    "shape": "export type MatExpButtonGroupAppearance = 'filled' | 'outlined' | 'tonal' | 'elevated';"
   },
-  "MatExpressiveSplitButtonAppearance": {
+  "MatExpSplitButtonAppearance": {
     "kind": "type",
-    "shape": "export type MatExpressiveSplitButtonAppearance = 'filled' | 'elevated' | 'outlined' | 'tonal';"
+    "shape": "export type MatExpSplitButtonAppearance = 'filled' | 'elevated' | 'outlined' | 'tonal';"
   },
-  "MatExpressiveFabMenuTriggerColor": {
+  "MatExpFabMenuTriggerColor": {
     "kind": "type",
-    "shape": "export type MatExpressiveFabMenuTriggerColor = 'primary' | 'secondary' | 'tertiary';"
+    "shape": "export type MatExpFabMenuTriggerColor = 'primary' | 'secondary' | 'tertiary';"
   },
-  "MatExpressiveFabMenuColor": {
+  "MatExpFabMenuColor": {
     "kind": "type",
-    "shape": "export type MatExpressiveFabMenuColor = MatExpressiveFabMenuTriggerColor;"
+    "shape": "export type MatExpFabMenuColor = MatExpFabMenuTriggerColor;"
   },
-  "MatExpressiveButtonGroupVariantStandard": {
+  "MatExpButtonGroupVariantStandard": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupVariantStandard = 'standard';"
+    "shape": "export type MatExpButtonGroupVariantStandard = 'standard';"
   },
-  "MatExpressiveButtonGroupVariantConnected": {
+  "MatExpButtonGroupVariantConnected": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupVariantConnected = 'connected';"
+    "shape": "export type MatExpButtonGroupVariantConnected = 'connected';"
   },
-  "MatExpressiveButtonGroupVariant": {
+  "MatExpButtonGroupVariant": {
     "kind": "type",
-    "shape": "export type MatExpressiveButtonGroupVariant =\n  | MatExpressiveButtonGroupVariantStandard\n  | MatExpressiveButtonGroupVariantConnected;"
+    "shape": "export type MatExpButtonGroupVariant =\n  | MatExpButtonGroupVariantStandard\n  | MatExpButtonGroupVariantConnected;"
   },
-  "MatExpressiveLoadingIndicatorConfig": {
+  "MatExpLoadingIndicatorConfig": {
     "kind": "type",
-    "shape": "export type MatExpressiveLoadingIndicatorConfig = 'default' | 'contained';"
+    "shape": "export type MatExpLoadingIndicatorConfig = 'default' | 'contained';"
   },
-  "MatExpressiveLoadingIndicatorSpeed": {
+  "MatExpLoadingIndicatorSpeed": {
     "kind": "type",
-    "shape": "export type MatExpressiveLoadingIndicatorSpeed = 'fast' | 'default' | 'slow';",
-    "description": "Speed preset for the `mat-expressive-loading-indicator`'s shape morph and\nrotation animation. Each preset maps to one of the M3 Expressive spatial\nspring tokens:\n\n- `fast`    – Expressive fast spatial    – `cubic-bezier(0.42, 1.67, 0.21, 0.90)`, 350ms per morph step.\n- `default` – Expressive default spatial – `cubic-bezier(0.38, 1.21, 0.22, 1.00)`, 500ms per morph step.\n- `slow`    – Expressive slow spatial    – `cubic-bezier(0.39, 1.29, 0.35, 0.98)`, 650ms per morph step."
+    "shape": "export type MatExpLoadingIndicatorSpeed = 'fast' | 'default' | 'slow';",
+    "description": "Speed preset for the `mat-exp-loading-indicator`'s shape morph and\nrotation animation. Each preset maps to one of the M3 Expressive spatial\nspring tokens:\n\n- `fast`    – Expressive fast spatial    – `cubic-bezier(0.42, 1.67, 0.21, 0.90)`, 350ms per morph step.\n- `default` – Expressive default spatial – `cubic-bezier(0.38, 1.21, 0.22, 1.00)`, 500ms per morph step.\n- `slow`    – Expressive slow spatial    – `cubic-bezier(0.39, 1.29, 0.35, 0.98)`, 650ms per morph step."
   }
 }

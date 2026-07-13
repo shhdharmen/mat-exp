@@ -6,37 +6,37 @@ description: Material Expressive Split Button combining a primary action button 
 
 ## Overview
 
-`MatExpressiveSplitButton` is a component that combines a primary action button with a secondary chevron button to reveal additional menu options in [Material 3 Design System Expressive styles](https://m3.material.io/components/split-button/overview).
+`MatExpSplitButton` is a component that combines a primary action button with a secondary chevron button to reveal additional menu options in [Material 3 Design System Expressive styles](https://m3.material.io/components/split-button/overview).
 
 ## Pre-requisites
 
-Make sure either you have included `mat-expressive-all-styles`, `mat-expressive-all-buttons-styles` or `mat-expressive-split-button-styles` in your global SCSS styles.
+Make sure either you have included `mat-exp-all-styles`, `mat-exp-all-buttons-styles` or `mat-exp-split-button-styles` in your global SCSS styles.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles();
+  @include mat-exp.mat-exp-all-styles();
 }
 ```
 
 or
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-buttons-styles();
+  @include mat-exp.mat-exp-all-buttons-styles();
 }
 ```
 
 or
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-split-button-styles();
+  @include mat-exp.mat-exp-split-button-styles();
 }
 ```
 
@@ -44,18 +44,18 @@ html {
 
 ```angular-ts name="app.ts"
 import {
-  MatExpressiveSplitButton,
-} from '@ngm-dev/mat-expressive';
+  MatExpSplitButton,
+} from '@ngm-dev/mat-exp';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuItem } from '@angular/material/menu';
 @Component({
   selector: 'app-root',
-  imports: [MatExpressiveSplitButton, MatButton, MatIcon, MatMenu, MatMenuItem],
+  imports: [MatExpSplitButton, MatButton, MatIcon, MatMenu, MatMenuItem],
   template: `
-    <mat-expressive-split-button [matMenuTriggerFor]="menu">
-      <button matButton matExpressiveButton>Primary Action</button>
-    </mat-expressive-split-button>
+    <mat-exp-split-button [matMenuTriggerFor]="menu">
+      <button matButton matExpButton>Primary Action</button>
+    </mat-exp-split-button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>Option 1</button>
       <button mat-menu-item>Option 2</button>

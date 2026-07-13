@@ -2,28 +2,28 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {
-  MatExpressiveIconButton,
-  MatExpressiveIconButtonAppearance,
-  type MatExpressiveButtonShape,
-  type MatExpressiveButtonSize,
-  type MatExpressiveButtonToggle,
-  type MatExpressiveIconButtonWidth,
-} from '@ngm-dev/mat-expressive';
+  MatExpIconButton,
+  MatExpIconButtonAppearance,
+  type MatExpButtonShape,
+  type MatExpButtonSize,
+  type MatExpButtonToggle,
+  type MatExpIconButtonWidth,
+} from '@ngm-dev/mat-exp';
 
-/** @playgroundFor MatExpressiveIconButton */
+/** @playgroundFor MatExpIconButton */
 @Component({
   selector: 'app-icon-button-preview',
   standalone: true,
-  imports: [MatIconButton, MatExpressiveIconButton, MatIcon],
+  imports: [MatIconButton, MatExpIconButton, MatIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './icon-button-preview.component.html',
   styleUrl: './icon-button-preview.component.scss',
 })
 export class IconButtonPreviewComponent {
-  readonly size = input<MatExpressiveButtonSize>('s');
-  readonly shape = input<MatExpressiveButtonShape>('round');
-  readonly width = input<MatExpressiveIconButtonWidth>('default');
-  readonly toggle = input<MatExpressiveButtonToggle | undefined>(undefined);
-  readonly appearance = input<MatExpressiveIconButtonAppearance>('text');
+  readonly size = input<MatExpButtonSize>('s');
+  readonly shape = input<MatExpButtonShape>('round');
+  readonly width = input<MatExpIconButtonWidth>('default');
+  readonly toggle = input<MatExpButtonToggle | undefined>(undefined);
+  readonly appearance = input<MatExpIconButtonAppearance>('text');
   readonly disabled = input<boolean>(false);
 }

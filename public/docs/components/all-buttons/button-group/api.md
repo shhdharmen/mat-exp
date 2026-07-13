@@ -1,9 +1,9 @@
 ---
 title: API
 order: 2
-description: API reference for the MatExpressiveButtonGroup component.
+description: API reference for the MatExpButtonGroup component.
 ---
 
-## MatExpressiveButtonGroup Component
+## MatExpButtonGroup Component
 
-You can view the API for `MatExpressiveButtonGroup` component [here](/docs/api/mat-expressive/components/MatExpressiveButtonGroup).
+You can view the API for `MatExpButtonGroup` component [here](/docs/api/mat-exp/components/MatExpButtonGroup).

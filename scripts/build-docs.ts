@@ -435,9 +435,14 @@ async function main(): Promise<void> {
 
   collectRoutes(nav);
 
-  // Append API routes from api-manifest.json (written by runMetadataExtraction below)
-  // We read the manifest if it already exists from a previous build pass; on a clean
-  // build it will be (re-)written by runMetadataExtraction after this block runs.
+  // TypeScript compiler-API extraction pass — must run before the API routes
+  // are appended below, since it's what (re)writes api-manifest.json. Running
+  // it after (as this used to) meant routes.txt was built from the *previous*
+  // build's manifest, one run stale — e.g. a symbol whose `kind` classification
+  // just changed would still get its old kind's URL segment until a second run.
+  await runMetadataExtraction();
+
+  // Append API routes from the api-manifest.json just written above.
   routeLines.push('/docs/api');
   // Standalone root routes (no /docs prefix — served by StandaloneShellComponent)
   routeLines.push('/');
@@ -450,7 +455,7 @@ async function main(): Promise<void> {
     for (const [symbolName, entry] of Object.entries(apiManifest)) {
       const segment = KIND_SEGMENT[entry.kind];
       if (segment) {
-        routeLines.push(`/docs/api/mat-expressive/${segment}/${symbolName}`);
+        routeLines.push(`/docs/api/mat-exp/${segment}/${symbolName}`);
       }
     }
   }
@@ -462,9 +467,6 @@ async function main(): Promise<void> {
   console.log(`Leaf pages: ${pages.length}`);
   console.log(`Routes: ${routeLines.length}`);
   console.log(`Section redirects: ${Object.keys(sectionRedirects).length}`);
-
-  // TypeScript compiler-API extraction pass
-  await runMetadataExtraction();
 }
 
 const isDirectRun = import.meta.url === pathToFileURL(process.argv[1] ?? '').href;

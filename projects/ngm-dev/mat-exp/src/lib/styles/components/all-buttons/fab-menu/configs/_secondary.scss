@@ -1,0 +1,10 @@
+@use '../tokens' as tokens;
+
+// prettier-ignore
+$config: (
+  (
+    color: 'secondary',
+    tokens: tokens.$secondary-fab-menu-secondary-tokens,
+    properties: tokens.$secondary-fab-menu-secondary-properties,
+  ),
+);

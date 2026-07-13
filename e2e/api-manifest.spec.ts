@@ -21,8 +21,8 @@ test.describe('api-manifest.json — enriched manifest shape', () => {
   });
 
   test('function entry has structured params[] and returnType', () => {
-    // provideMatExpressiveButtonOptions is a known exported function
-    const entry = manifest['provideMatExpressiveButtonOptions'] as Record<string, unknown>;
+    // provideMatExpButtonOptions is a known exported function
+    const entry = manifest['provideMatExpButtonOptions'] as Record<string, unknown>;
     expect(entry).toBeDefined();
     expect(entry.kind).toBe('function');
     // backwards-compat signature still present
@@ -38,8 +38,8 @@ test.describe('api-manifest.json — enriched manifest shape', () => {
   });
 
   test('interface entry has structured properties[] and methods[]', () => {
-    // MatExpressiveSelectableButton is a known exported interface with members
-    const entry = manifest['MatExpressiveSelectableButton'] as Record<string, unknown>;
+    // MatExpSelectableButton is a known exported interface with members
+    const entry = manifest['MatExpSelectableButton'] as Record<string, unknown>;
     expect(entry).toBeDefined();
     expect(entry.kind).toBe('interface');
     // backwards-compat shape still present
@@ -53,7 +53,7 @@ test.describe('api-manifest.json — enriched manifest shape', () => {
   });
 
   test('directive entry still has required fields (backwards compat)', () => {
-    const entry = manifest['MatExpressiveButton'] as Record<string, unknown>;
+    const entry = manifest['MatExpButton'] as Record<string, unknown>;
     expect(entry).toBeDefined();
     expect(entry.kind).toBe('directive');
     expect(typeof entry.selector).toBe('string');
@@ -78,8 +78,8 @@ test.describe('api-manifest.json — enriched manifest shape', () => {
   });
 
   test('class with constructor parameter properties captures them in properties[]', () => {
-    // MatExpressiveSelectableButtonChange declares `source` and `value` via constructor shorthand
-    const entry = manifest['MatExpressiveSelectableButtonChange'] as Record<string, unknown>;
+    // MatExpSelectableButtonChange declares `source` and `value` via constructor shorthand
+    const entry = manifest['MatExpSelectableButtonChange'] as Record<string, unknown>;
     expect(entry).toBeDefined();
     expect(entry.kind).toBe('class');
     expect(Array.isArray(entry.properties)).toBe(true);
@@ -88,7 +88,7 @@ test.describe('api-manifest.json — enriched manifest shape', () => {
     expect(names).toContain('source');
     expect(names).toContain('value');
     const sourceProp = props.find((p) => p.name === 'source');
-    expect(sourceProp?.type).toBe('MatExpressiveSelectableButton');
+    expect(sourceProp?.type).toBe('MatExpSelectableButton');
     const valueProp = props.find((p) => p.name === 'value');
     expect(valueProp?.type).toBe('unknown');
   });

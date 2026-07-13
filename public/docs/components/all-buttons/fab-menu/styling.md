@@ -1,22 +1,22 @@
 ---
 title: Styling
 order: 3
-description: Styling API for the mat-expressive-fab-menu-styles and mat-expressive-fab-menu-trigger-styles SCSS mixins.
+description: Styling API for the mat-exp-fab-menu-styles and mat-exp-fab-menu-trigger-styles SCSS mixins.
 ---
 
-FAB menu exposes two mixins — one for the menu panel and one for the FAB trigger — both of which are included automatically when you call `mat-expressive-all-styles` or `mat-expressive-all-buttons-styles`.
+FAB menu exposes two mixins — one for the menu panel and one for the FAB trigger — both of which are included automatically when you call `mat-exp-all-styles` or `mat-exp-all-buttons-styles`.
 
-## `mat-expressive-fab-menu-styles`
+## `mat-exp-fab-menu-styles`
 
-Controls the appearance of the menu panel overlay (`.mat-expressive-fab-menu`).
+Controls the appearance of the menu panel overlay (`.mat-exp-fab-menu`).
 
 ### Usage
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-fab-menu-styles($options);
+  @include mat-exp.mat-exp-fab-menu-styles($options);
 }
 ```
 
@@ -33,10 +33,10 @@ If `true`, the mixin will not apply styles to the underlying HTML elements.
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-fab-menu-styles(
+  @include mat-exp.mat-exp-fab-menu-styles(
     (
       skip-html-element-styles: true,
     )
@@ -64,10 +64,10 @@ Restricts the emitted CSS to only the given colors, dropping the rest of the col
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-fab-menu-styles(
+  @include mat-exp.mat-exp-fab-menu-styles(
     (
       colors: ('primary'),
     )
@@ -77,17 +77,17 @@ html {
 
 ---
 
-## `mat-expressive-fab-menu-trigger-styles`
+## `mat-exp-fab-menu-trigger-styles`
 
-Controls the appearance of the FAB button that opens the menu (`.mat-expressive-fab-menu-trigger`).
+Controls the appearance of the FAB button that opens the menu (`.mat-exp-fab-menu-trigger`).
 
 ### Usage
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-fab-menu-trigger-styles($options);
+  @include mat-exp.mat-exp-fab-menu-trigger-styles($options);
 }
 ```
 
@@ -104,10 +104,10 @@ If `true`, the mixin will not apply styles to the underlying HTML elements.
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-fab-menu-trigger-styles(
+  @include mat-exp.mat-exp-fab-menu-trigger-styles(
     (
       skip-html-element-styles: true,
     )
@@ -132,10 +132,10 @@ Restricts the emitted CSS to only the given colors, dropping the rest of the col
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-fab-menu-trigger-styles(
+  @include mat-exp.mat-exp-fab-menu-trigger-styles(
     (
       colors: ('primary'),
     )

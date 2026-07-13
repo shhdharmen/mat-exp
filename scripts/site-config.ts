@@ -9,7 +9,7 @@ export const SITE_DESCRIPTION =
   'Material 3 Expressive components for Angular Material — GSAP-powered spring motion, zero-config directives, SSR-safe.';
 
 /** `ng build` output directory for the docs app. */
-export const DIST_BROWSER_DIR = path.resolve(process.cwd(), 'dist/mat-expressive-docs/browser');
+export const DIST_BROWSER_DIR = path.resolve(process.cwd(), 'dist/mat-exp-docs/browser');
 
 export const ROUTES_OUT = path.resolve(process.cwd(), 'public/routes.txt');
 export const NAV_MANIFEST_OUT = path.resolve(process.cwd(), 'public/nav-manifest.json');

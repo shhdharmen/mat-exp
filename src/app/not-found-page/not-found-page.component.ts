@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import {
   GlobalMetadata,
   NgxMetaElementsService,
@@ -13,7 +13,7 @@ import {
 @Component({
   selector: 'app-not-found-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, MatButton, MatExpressiveButton],
+  imports: [RouterLink, MatButton, MatExpButton],
   template: `
     <section class="px-6 py-24 sm:py-32 text-center">
       <div class="max-w-2xl mx-auto">
@@ -25,13 +25,11 @@ import {
           The page you're looking for doesn't exist or may have moved.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a routerLink="/" mat-flat-button matExpressiveButton class="text-base px-6 py-3">
-            Go Home
-          </a>
+          <a routerLink="/" mat-flat-button matExpButton class="text-base px-6 py-3"> Go Home </a>
           <a
             routerLink="/docs/components"
             mat-stroked-button
-            matExpressiveButton
+            matExpButton
             class="text-base px-6 py-3"
           >
             View Components

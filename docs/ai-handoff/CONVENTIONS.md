@@ -12,12 +12,12 @@
    *Known legacy exceptions:* `icon-button.ts` `appearance`, `button-group.ts` `value`
    (ISSUES-TRIAGED.md #6) — do not copy them.
 3. **`host` object, never `@HostBinding`/`@HostListener`.** Host stamps: `'[class]'` bound to a
-   readonly `matExpressive<Name>Class` field, plus one `'[attr.data-<x>]': '<x>()'` per attribute.
+   readonly `matExp<Name>Class` field, plus one `'[attr.data-<x>]': '<x>()'` per attribute.
 4. **`ChangeDetectionStrategy.OnPush`** on every `@Component`.
-5. **Naming:** class `MatExpressive<Name>`; directive selector `[matExpressive<Name>]`;
-   component selector `mat-expressive-<kebab>` [lint]; options token
-   `MAT_EXPRESSIVE_<NAME>_OPTIONS`; provide/inject fns `provideMatExpressive<Name>Options` /
-   `injectMatExpressive<Name>Options`; internal class-name field `matExpressive<Name>Class`.
+5. **Naming:** class `MatExp<Name>`; directive selector `[matExp<Name>]`;
+   component selector `mat-exp-<kebab>` [lint]; options token
+   `MAT_EXP_<NAME>_OPTIONS`; provide/inject fns `provideMatExp<Name>Options` /
+   `injectMatExp<Name>Options`; internal class-name field `matExp<Name>Class`.
 6. **File layout per component:** `<name>.ts`, `<name>.options.ts`, `index.ts` barrel;
    `.html`/`.scss` only for real components; specs as `<name>.spec.ts` next to source.
    Types NEVER live in component files — they go in `lib/types/<attr>.ts`.
@@ -40,9 +40,9 @@
 
 12. Two style worlds — never mix them (ADR 0006): Button Family = global mixins under
     `lib/styles/components/all-buttons/`; standalone components = component `styleUrls` +
-    `ViewEncapsulation.None` + `--mat-expressive-<component>-*` custom properties with inline
+    `ViewEncapsulation.None` + `--mat-exp-<component>-*` custom properties with inline
     fallbacks.
-13. Directory grammar per family component: `_index.scss` (the `mat-expressive-<name>-styles`
+13. Directory grammar per family component: `_index.scss` (the `mat-exp-<name>-styles`
     mixin), `_config.scss` (joins lists), `configs/_<size>.scss` (combination entries),
     `tokens/_<size|common>.scss` (values). Config entry keys limited to
     `size, shape, state, toggle, width, appearance, variant, selection, color, open, menu-open,
@@ -62,7 +62,7 @@
 18. GSAP 3 only; register plugins via `register*Once()` functions called in constructors —
     never at module scope (`sideEffects: false`).
 19. Motion tokens are TS constants (`EXPRESSIVE_SPATIAL_SPRINGS` pattern:
-    ease name `mat-expressive-<speed>-spatial`, bezier, durationMs, intervalMs). SCSS carries
+    ease name `mat-exp-<speed>-spatial`, bezier, durationMs, intervalMs). SCSS carries
     only visual tokens.
 20. `prefers-reduced-motion` handled in every path: `gsap.matchMedia()` for loops,
     `prefersReducedMotion()` short-circuit + `event.animationComplete()` for enter/leave.

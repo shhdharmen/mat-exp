@@ -26,6 +26,6 @@ That's totally fine! But please note that you will not be able to see the full r
 
 ## Licensing
 
-`@ngm-dev/mat-expressive` is free and open source under the [MIT](./LICENSE) license.
+`@ngm-dev/mat-exp` is free and open source under the [MIT](./LICENSE) license.
 
 Questions? Contact [support@angular-material.dev](mailto:support@angular-material.dev).

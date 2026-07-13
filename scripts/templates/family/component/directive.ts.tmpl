@@ -1,6 +1,6 @@
 import { Directive, input, model } from '@angular/core';
 import { inject__CLASS__Options } from './__KEBAB__.options';
-import { type MatExpressiveButtonToggle } from '../../../types';
+import { type MatExpButtonToggle } from '../../../types';
 
 /**
  * Directive to style [TODO: name the underlying Angular Material
@@ -11,9 +11,9 @@ import { type MatExpressiveButtonToggle } from '../../../types';
  * host directive/component this decorates, forwarding its `disabled` (and,
  * if relevant, `appearance`) accessors — see `button.ts` / `icon-button.ts`
  * in `all-buttons/` for the pattern. If this directive participates in a
- * `MatExpressiveButtonGroup`, also
- * `inject(MatExpressiveButtonGroup, { optional: true })` and implement
- * `_onButtonClick()` / `MatExpressiveSelectableButton`.
+ * `MatExpButtonGroup`, also
+ * `inject(MatExpButtonGroup, { optional: true })` and implement
+ * `_onButtonClick()` / `MatExpSelectableButton`.
  */
 @Directive({
   selector: '[__SELECTOR_ATTR__]',
@@ -33,7 +33,7 @@ export class __CLASS__ {
   public readonly size = model(this._options.size);
   /** @default 'round' */
   public readonly shape = model(this._options.shape);
-  public readonly toggle = model<MatExpressiveButtonToggle | undefined>(this._options.toggle);
+  public readonly toggle = model<MatExpButtonToggle | undefined>(this._options.toggle);
 
   /**
    * @internal

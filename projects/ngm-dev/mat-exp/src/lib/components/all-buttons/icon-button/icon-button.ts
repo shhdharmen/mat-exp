@@ -1,0 +1,74 @@
+import { Directive, inject, Input, input, model } from '@angular/core';
+import { injectMatExpIconButtonOptions } from './icon-button.options';
+import { MatIconButton } from '@angular/material/button';
+import { MatExpSelectableButton } from '../selectable-button/selectable-button';
+import { MatExpButtonGroup } from '../button-group';
+import { MatExpButtonToggle, MatExpIconButtonAppearance } from '../../../types';
+import { MatMenuTrigger } from '@angular/material/menu';
+/**
+ * Directive to style the Angular Material Icon Button component with latest Material 3 Design System Expressive styles.
+ */
+@Directive({
+  selector: '[matExpIconButton]',
+  host: {
+    '[attr.data-size]': 'size()',
+    '[attr.data-shape]': 'shape()',
+    '[attr.data-appearance]': 'appearance',
+    '[attr.data-state]': 'state()',
+    '[attr.data-toggle]': 'toggle()',
+    '[attr.data-width]': 'width()',
+    '[attr.data-menu-open]': 'isMenuOpen',
+    '[class]': 'matExpIconButtonClass',
+    '(click)': '_onButtonClick()',
+  },
+  exportAs: 'matExpIconButton',
+})
+export class MatExpIconButton implements MatExpSelectableButton {
+  private readonly _options = injectMatExpIconButtonOptions();
+
+  /** @default 's' */
+  public readonly size = model(this._options.size);
+  /** @default 'round' */
+  public readonly shape = model(this._options.shape);
+  public readonly width = input(this._options.width);
+  public readonly toggle = model<MatExpButtonToggle | undefined>(this._options.toggle);
+  public readonly value = model<unknown>();
+
+  private _appearance = this._options.appearance;
+  @Input()
+  get appearance(): MatExpIconButtonAppearance | undefined {
+    return this._appearance;
+  }
+  set appearance(appearance: MatExpIconButtonAppearance | undefined) {
+    this._appearance = appearance;
+  }
+  /**
+   * @internal
+   */
+  public readonly matExpIconButtonClass = 'mat-exp-icon-button';
+
+  /**
+   * @internal
+   */
+  public readonly state = input(this._options.state);
+
+  get disabled(): boolean {
+    return this.matIconButton.disabled;
+  }
+  set disabled(disabled: boolean | undefined) {
+    this.matIconButton.disabled = disabled;
+  }
+
+  private readonly matIconButton = inject(MatIconButton);
+  private readonly buttonGroup = inject(MatExpButtonGroup, { optional: true });
+
+  _onButtonClick(): void {
+    this.buttonGroup?._onButtonClick(this);
+  }
+
+  private readonly matMenu = inject(MatMenuTrigger, { optional: true });
+
+  get isMenuOpen(): boolean {
+    return this.matMenu?.menuOpen ?? false;
+  }
+}

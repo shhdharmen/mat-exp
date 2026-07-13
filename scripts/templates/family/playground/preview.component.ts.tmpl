@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   __CLASS__,
-  type MatExpressiveButtonShape,
-  type MatExpressiveButtonSize,
-  type MatExpressiveButtonToggle,
-} from '@ngm-dev/mat-expressive';
+  type MatExpButtonShape,
+  type MatExpButtonSize,
+  type MatExpButtonToggle,
+} from '@ngm-dev/mat-exp';
 
 /** @playgroundFor __CLASS__ */
 @Component({
@@ -16,8 +16,8 @@ import {
   styleUrl: './__KEBAB__-preview.component.scss',
 })
 export class __PASCAL__PreviewComponent {
-  readonly size = input<MatExpressiveButtonSize>('s');
-  readonly shape = input<MatExpressiveButtonShape>('round');
-  readonly toggle = input<MatExpressiveButtonToggle | undefined>(undefined);
+  readonly size = input<MatExpButtonSize>('s');
+  readonly shape = input<MatExpButtonShape>('round');
+  readonly toggle = input<MatExpButtonToggle | undefined>(undefined);
   readonly disabled = input<boolean>(false);
 }

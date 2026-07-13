@@ -1,4 +1,4 @@
-# Contributing to mat-expressive
+# Contributing to Mat Expressive
 
 Thank you for contributing! This guide covers local development, testing, and commit conventions.
 
@@ -41,10 +41,10 @@ npm run watch:lib
 npm test
 
 # Library tests only
-ng test --project @ngm-dev/mat-expressive
+ng test --project @ngm-dev/mat-exp
 
 # Run a single test file
-ng test --project mat-expressive-docs --testPathPattern="foo"
+ng test --project mat-exp-docs --testPathPattern="foo"
 
 # End-to-end tests (Playwright — spins up a dev server automatically)
 ng e2e

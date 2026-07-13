@@ -9,7 +9,7 @@ const PAGEFIND_MOCK = `
         {
           id: '1',
           data: async () => ({
-            url: '/getting-started/installation',
+            url: '/docs/getting-started/installation',
             excerpt: 'Install <mark>Angular</mark> Material Expressive.',
             meta: { title: 'Installation' },
           }),
@@ -43,14 +43,14 @@ async function mockPagefind(page: Page): Promise<void> {
 
 test.describe('Search trigger button', () => {
   test('header contains a search button', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await expect(
       page.locator('app-header button[aria-label="Search docs (Ctrl+K)"]'),
     ).toBeVisible();
   });
 
   test('search button shows ⌃K keyboard hint on desktop', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     const kbd = page.locator('app-header kbd');
     await expect(kbd).toBeVisible();
   });
@@ -62,25 +62,25 @@ test.describe('Search trigger button', () => {
 
 test.describe('Search modal — open / close', () => {
   test('Ctrl+K opens the search modal', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
     await expect(page.locator('app-search-modal')).toBeVisible();
   });
 
   test('Meta+K opens the search modal (Mac)', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Meta+k');
     await expect(page.locator('app-search-modal')).toBeVisible();
   });
 
   test('clicking the search button opens the modal', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.locator('app-header button[aria-label="Search docs (Ctrl+K)"]').click();
     await expect(page.locator('app-search-modal')).toBeVisible();
   });
 
   test('Escape closes the modal', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
     await expect(page.locator('app-search-modal')).toBeVisible();
 
@@ -89,12 +89,15 @@ test.describe('Search modal — open / close', () => {
   });
 
   test('clicking the backdrop closes the modal', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
+    await page.locator('button[aria-label="Search docs (Ctrl+K)"]').waitFor({ state: 'visible' });
     await page.keyboard.press('Control+k');
     await expect(page.locator('app-search-modal')).toBeVisible();
 
-    // Click top-left corner outside the modal panel
-    await page.mouse.click(10, 10);
+    // Click the backdrop directly (rather than a blind coordinate click) so
+    // Playwright's actionability checks wait for the CDK overlay backdrop's
+    // outsidePointerEvents listener to actually be attached before clicking.
+    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 10, y: 10 } });
     await expect(page.locator('app-search-modal')).not.toBeVisible();
   });
 });
@@ -105,7 +108,7 @@ test.describe('Search modal — open / close', () => {
 
 test.describe('Search modal — input', () => {
   test('search input is auto-focused on open', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     const input = page.locator('app-search-modal input[type="search"]');
@@ -114,7 +117,7 @@ test.describe('Search modal — input', () => {
   });
 
   test('shows empty-state prompt before typing', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     await expect(page.locator('app-search-modal')).toContainText('Start typing to search');
@@ -128,7 +131,7 @@ test.describe('Search modal — input', () => {
 test.describe('Search modal — results', () => {
   test('typing a query shows matching results', async ({ page }) => {
     await mockPagefind(page);
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     await page.locator('app-search-modal input[type="search"]').fill('install');
@@ -139,7 +142,7 @@ test.describe('Search modal — results', () => {
 
   test('results show section group headers', async ({ page }) => {
     await mockPagefind(page);
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     await page.locator('app-search-modal input[type="search"]').fill('install');
@@ -150,7 +153,7 @@ test.describe('Search modal — results', () => {
 
   test('results show type tag pills', async ({ page }) => {
     await mockPagefind(page);
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     await page.locator('app-search-modal input[type="search"]').fill('install');
@@ -172,7 +175,7 @@ test.describe('Search modal — results', () => {
         `,
       }),
     );
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     await page.locator('app-search-modal input[type="search"]').fill('zzznomatch');
@@ -181,7 +184,7 @@ test.describe('Search modal — results', () => {
 
   test('ArrowDown / ArrowUp moves highlight through results', async ({ page }) => {
     await mockPagefind(page);
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
     await page.locator('app-search-modal input[type="search"]').fill('install');
 
@@ -200,7 +203,7 @@ test.describe('Search modal — results', () => {
 
   test('Enter on a highlighted result navigates and closes the modal', async ({ page }) => {
     await mockPagefind(page);
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
     await page.locator('app-search-modal input[type="search"]').fill('button');
 
@@ -217,7 +220,7 @@ test.describe('Search modal — results', () => {
 
   test('result count is shown in the footer', async ({ page }) => {
     await mockPagefind(page);
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     await page.locator('app-search-modal input[type="search"]').fill('install');
@@ -233,13 +236,13 @@ test.describe('Search modal — results', () => {
 test.describe('Search modal — recent searches', () => {
   test.beforeEach(async ({ page }) => {
     // Clear localStorage before each test
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.evaluate(() => localStorage.removeItem('docs-recent-searches'));
   });
 
   test('recent searches appear after navigating to a result', async ({ page }) => {
     await mockPagefind(page);
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.keyboard.press('Control+k');
 
     await page.locator('app-search-modal input[type="search"]').fill('install');
@@ -257,7 +260,7 @@ test.describe('Search modal — recent searches', () => {
   test('clicking a recent search populates the input and searches', async ({ page }) => {
     await mockPagefind(page);
     // Seed localStorage
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.evaluate(() =>
       localStorage.setItem('docs-recent-searches', JSON.stringify(['angular'])),
     );
@@ -272,10 +275,11 @@ test.describe('Search modal — recent searches', () => {
   });
 
   test('clear all removes all recent searches', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.evaluate(() =>
       localStorage.setItem('docs-recent-searches', JSON.stringify(['foo', 'bar'])),
     );
+    await page.locator('button[aria-label="Search docs (Ctrl+K)"]').waitFor({ state: 'visible' });
 
     await page.keyboard.press('Control+k');
     await expect(page.locator('app-search-modal')).toContainText('Recent');
@@ -286,10 +290,11 @@ test.describe('Search modal — recent searches', () => {
   });
 
   test('remove button deletes a single recent search', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await page.evaluate(() =>
       localStorage.setItem('docs-recent-searches', JSON.stringify(['foo', 'bar'])),
     );
+    await page.locator('button[aria-label="Search docs (Ctrl+K)"]').waitFor({ state: 'visible' });
 
     await page.keyboard.press('Control+k');
     await expect(page.locator('app-search-modal')).toContainText('foo');

@@ -44,14 +44,14 @@ import { pathToFileURL } from 'node:url';
 
 const ROOT = process.cwd();
 const TEMPLATES_ROOT = path.join(ROOT, 'scripts/templates');
-const LIB_COMPONENTS_ROOT = path.join(ROOT, 'projects/ngm-dev/mat-expressive/src/lib/components');
+const LIB_COMPONENTS_ROOT = path.join(ROOT, 'projects/ngm-dev/mat-exp/src/lib/components');
 const LIB_STYLES_ALL_BUTTONS_ROOT = path.join(
   ROOT,
-  'projects/ngm-dev/mat-expressive/src/lib/styles/components/all-buttons',
+  'projects/ngm-dev/mat-exp/src/lib/styles/components/all-buttons',
 );
 const LIB_STYLES_ROOT_INDEX = path.join(
   ROOT,
-  'projects/ngm-dev/mat-expressive/src/lib/styles/_index.scss',
+  'projects/ngm-dev/mat-exp/src/lib/styles/_index.scss',
 );
 const DOCS_COMPONENTS_ROOT = path.join(ROOT, 'public/docs/components');
 const APP_DOCS_COMPONENTS_ROOT = path.join(ROOT, 'src/app/docs/components');
@@ -402,11 +402,11 @@ async function main(): Promise<void> {
     CAMEL: toCamel(kebab),
     TITLE: title,
     TITLE_LOWER: title.toLowerCase(),
-    CLASS: `MatExpressive${toPascal(kebab)}`,
-    CONST: `MAT_EXPRESSIVE_${toConst(kebab)}`,
-    SELECTOR_ATTR: `matExpressive${toPascal(kebab)}`,
-    SELECTOR_EL: `mat-expressive-${kebab}`,
-    HOST_CLASS: `mat-expressive-${kebab}`,
+    CLASS: `MatExp${toPascal(kebab)}`,
+    CONST: `MAT_EXP_${toConst(kebab)}`,
+    SELECTOR_ATTR: `matExp${toPascal(kebab)}`,
+    SELECTOR_EL: `mat-exp-${kebab}`,
+    HOST_CLASS: `mat-exp-${kebab}`,
     OVERRIDES_FN: overridesFn,
     ORDER: String(order),
     GROUP_TITLE: toTitle(group),
@@ -561,7 +561,7 @@ async function main(): Promise<void> {
       insertAfterLastMatch(
         allButtonsIndexScss,
         /^\s*@include .+-styles\(\$options\);$/,
-        `  @include ${kebab}.mat-expressive-${kebab}-styles($options);`,
+        `  @include ${kebab}.mat-exp-${kebab}-styles($options);`,
         dryRun,
       );
       insertAfterLastMatch(

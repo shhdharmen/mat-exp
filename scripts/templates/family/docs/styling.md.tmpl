@@ -1,18 +1,18 @@
 ---
 title: Styling
 order: 3
-description: Styling API for the mat-expressive-__KEBAB__-styles SCSS mixin, including the skip-html-element-styles option.
+description: Styling API for the mat-exp-__KEBAB__-styles SCSS mixin, including the skip-html-element-styles option.
 ---
 
-This document outlines API for `mat-expressive-__KEBAB__-styles` mixin.
+This document outlines API for `mat-exp-__KEBAB__-styles` mixin.
 
 ## Usage
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-__KEBAB__-styles($options);
+  @include mat-exp.mat-exp-__KEBAB__-styles($options);
 }
 ```
 
@@ -29,10 +29,10 @@ If `true`, the mixin will not apply styles to the underlying HTML elements.
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-__KEBAB__-styles(
+  @include mat-exp.mat-exp-__KEBAB__-styles(
     (
       skip-html-element-styles: true,
     )

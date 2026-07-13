@@ -1,8 +1,0 @@
-@use '../tokens' as tokens;
-
-$config: (
-  (
-    tokens: tokens.$common-fab-menu-common-tokens,
-    properties: tokens.$common-fab-menu-common-properties,
-  ),
-);

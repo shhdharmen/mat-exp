@@ -1,0 +1,134 @@
+@use './config';
+@use '../../../utils/functions';
+@use '../../../utils/mixins';
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+$_mat-exp-icon-button-class: 'mat-exp-icon-button';
+
+@mixin mat-exp-icon-button-styles(
+  $options: (
+    skip-html-element-styles: false,
+    sizes: null,
+    appearances: null,
+    // mat-exp-icon-button-class: $_mat-exp-icon-button-class,
+  )
+) {
+  $skip-html-element-styles: map.get($options, skip-html-element-styles);
+  // $mat-exp-icon-button-class: '.' + map.get($options, mat-exp-icon-button-class);
+  $mat-exp-icon-button-class: '.' + $_mat-exp-icon-button-class;
+
+  // Validate the entire configuration
+  $validation-result: functions.validate-config(
+    config.$icon-button-config,
+    functions.$default-allowed-keys,
+    'icon-button-config'
+  );
+
+  @if $validation-result != true {
+    @error $validation-result;
+  }
+
+  // Opt out of unused size/appearance combinations at compile time (see
+  // issue #133) — pass `sizes: ('s', 'm')` and/or `appearances: ('filled')`
+  // to only emit those axes. Entries that don't declare the filtered
+  // attribute (e.g. the size-agnostic base entry) always stay. `null`
+  // (default) is a no-op for that axis.
+  $icon-button-config: functions.filter-config(
+    config.$icon-button-config,
+    (
+      size: map.get($options, sizes),
+      appearance: map.get($options, appearances),
+    )
+  );
+
+  // Process each combination item in the list
+  @each $item in $icon-button-config {
+    // Extract tokens and properties
+    $item-tokens: map.get($item, tokens);
+    $item-properties: map.get($item, properties);
+
+    // Build the selector based on the attributes present
+    $selector: $mat-exp-icon-button-class;
+
+    // Check for size attribute
+    @if map.has-key($item, size) {
+      $size: map.get($item, size);
+      $selector: $selector + "[data-size='#{$size}']";
+    }
+
+    // Check for shape attribute
+    @if map.has-key($item, shape) {
+      $shape: map.get($item, shape);
+      $selector: $selector + "[data-shape='#{$shape}']";
+    }
+
+    // Check for toggle attribute
+    @if map.has-key($item, toggle) {
+      $toggle: map.get($item, toggle);
+      $selector: $selector + "[data-toggle='#{$toggle}']";
+    }
+
+    // Check for appearance attribute
+    @if map.has-key($item, appearance) {
+      $appearance: map.get($item, appearance);
+      $selector: $selector + "[data-appearance='#{$appearance}']";
+    }
+
+    // Check for width attribute
+    @if map.has-key($item, width) {
+      $width: map.get($item, width);
+      $selector: $selector + "[data-width='#{$width}']";
+    }
+
+    // Check for state attribute
+    @if map.has-key($item, state) {
+      $state: map.get($item, state);
+      $pseudo-selector: functions.get-state-pseudo($state);
+
+      // Generate styles with data attribute selector
+      #{$selector}[data-state='#{$state}'] {
+        @include mixins.apply-tokens-properties(
+            $item-tokens,
+            $item-properties,
+            $skip-html-element-styles
+          )
+          using ($slot) {
+          @if $slot == tokens {
+            @include mat.icon-button-overrides($item-tokens);
+          }
+        }
+      }
+
+      // Also generate styles with CSS pseudo-selector if available
+      @if $pseudo-selector {
+        #{$selector}#{$pseudo-selector} {
+          @include mixins.apply-tokens-properties(
+              $item-tokens,
+              $item-properties,
+              $skip-html-element-styles
+            )
+            using ($slot) {
+            @if $slot == tokens {
+              @include mat.icon-button-overrides($item-tokens);
+            }
+          }
+        }
+      }
+    } @else {
+      // No state attribute, generate styles directly
+      #{$selector} {
+        @include mixins.apply-tokens-properties(
+            $item-tokens,
+            $item-properties,
+            $skip-html-element-styles
+          )
+          using ($slot) {
+          @if $slot == tokens {
+            @include mat.icon-button-overrides($item-tokens);
+          }
+        }
+      }
+    }
+  }
+}

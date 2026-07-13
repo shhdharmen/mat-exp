@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core';
 import { JsonLdMetadata } from '@davidlj95/ngx-meta/json-ld';
 import { MarkdownComponent } from '../docs/markdown/markdown.component';
@@ -16,24 +16,24 @@ import {
 
 const QUICKSTART_MARKDOWN = `
 \`\`\`bash
-npm install @ngm-dev/mat-expressive
+npm install @ngm-dev/mat-exp
 \`\`\`
 
 \`\`\`scss name="styles.scss"
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-button-styles();
+  @include mat-exp.mat-exp-button-styles();
 }
 \`\`\`
 
 \`\`\`angular-ts name="app.ts"
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import { MatButton } from '@angular/material/button';
 
 @Component({
-  imports: [MatButton, MatExpressiveButton],
-  template: \`<button matButton matExpressiveButton>Click me</button>\`,
+  imports: [MatButton, MatExpButton],
+  template: \`<button matButton matExpButton>Click me</button>\`,
 })
 export class AppComponent {}
 \`\`\`
@@ -106,12 +106,12 @@ const FEATURE_CARDS: FeatureCard[] = [
     description: 'Drop-in directive on any Angular Material button. No new component API to learn.',
     dialog: {
       headline: [{ text: 'One directive. ' }, { text: "That's it.", italic: true }],
-      imageUrl: 'https://placehold.co/480x270?text=matExpressiveButton',
-      imageAlt: 'Button with the matExpressiveButton directive applied',
+      imageUrl: 'https://placehold.co/480x270?text=matExpButton',
+      imageAlt: 'Button with the matExpButton directive applied',
       subFeatures: [
         {
           title: 'Single attribute',
-          description: 'Add matExpressiveButton to any existing Angular Material button to opt in.',
+          description: 'Add matExpButton to any existing Angular Material button to opt in.',
         },
         {
           title: 'Works on all Material button variants',
@@ -164,7 +164,7 @@ const FEATURE_CARDS: FeatureCard[] = [
   selector: 'app-landing-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RouterLink, MatButton, MatExpressiveButton, MatIcon, MarkdownComponent],
+  imports: [RouterLink, MatButton, MatExpButton, MatIcon, MarkdownComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })

@@ -62,11 +62,9 @@ test.describe('SEO — page titles include the site name', () => {
   test('API detail page title includes the symbol name and the site-name suffix', async ({
     page,
   }) => {
-    await page.goto('/docs/api/mat-expressive/directives/MatExpressiveButton');
+    await page.goto('/docs/api/mat-exp/directives/MatExpButton');
     await page.waitForFunction(
-      () =>
-        document.title.includes('MatExpressiveButton') &&
-        document.title.endsWith('| Mat Expressive'),
+      () => document.title.includes('MatExpButton') && document.title.endsWith('| Mat Expressive'),
       { timeout: 20_000 },
     );
   });
@@ -196,12 +194,12 @@ test.describe('SEO — JSON-LD structured data', () => {
   test('API detail page includes a BreadcrumbList ending with the symbol name', async ({
     page,
   }) => {
-    await page.goto('/docs/api/mat-expressive/directives/MatExpressiveButton');
+    await page.goto('/docs/api/mat-exp/directives/MatExpButton');
     const nodes = await getJsonLdNodes(page);
     const breadcrumb = nodes.find((n) => n['@type'] === 'BreadcrumbList') as {
       itemListElement: { name: string }[];
     };
-    expect(breadcrumb.itemListElement.at(-1)?.name).toBe('MatExpressiveButton');
+    expect(breadcrumb.itemListElement.at(-1)?.name).toBe('MatExpButton');
   });
 });
 

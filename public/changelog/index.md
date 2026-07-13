@@ -1,9 +1,9 @@
 ---
 title: Changelog
-description: Release history for @ngm-dev/mat-expressive.
+description: Release history for @ngm-dev/mat-exp.
 ---
 
-All notable changes to `@ngm-dev/mat-expressive` are documented here.
+All notable changes to `@ngm-dev/mat-exp` are documented here.
 
 This project follows [Semantic Versioning](https://semver.org/) and [Conventional Commits](https://www.conventionalcommits.org/).
 
@@ -23,7 +23,7 @@ _Initial public release_
 
 ### Components
 
-- **Button** (`matExpressiveButton`) — size, shape, toggle, and appearance variants; full GSAP motion support
+- **Button** (`matExpButton`) — size, shape, toggle, and appearance variants; full GSAP motion support
 - **Icon Button** — icon-only variant with the same motion system
 - **Button Group** — grouped button layout with shared size/shape context
 - **Split Button** — primary action + overflow menu in a single expressive control

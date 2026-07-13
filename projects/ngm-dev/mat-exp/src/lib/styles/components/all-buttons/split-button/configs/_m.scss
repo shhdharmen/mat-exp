@@ -1,0 +1,56 @@
+@use '../tokens/m' as m;
+@use '../../../../utils/functions';
+@use '../../utils/functions' as button-functions;
+
+// prettier removes trailing comma
+// prettier-ignore
+$config: (
+  (
+    size: 'm',
+    properties: m.$properties,
+  ),
+  (
+    size: 'm',
+    properties: (
+      ' > .mat-exp-icon-button .mat-icon': (
+        font-size : (
+          value: functions.rem(26),
+        ),
+        width: (
+          value: functions.rem(26),
+        ),
+        line-height: (
+          value: functions.rem(24),
+        )
+      ),
+    ),
+  ),
+  (
+    size: 'm',
+    menu-open: false,
+    properties: (
+      ' > .mat-exp-icon-button': (
+        padding-left: (
+          value: functions.rem(13),
+        ),
+        padding-right: (
+          value: functions.rem(17),
+        ),
+      ),
+    ),
+  ),
+  (
+    size: 'm',
+    menu-open: true,
+    properties: (
+      ' >:last-child.mat-exp-icon-button': (
+        padding-left: (
+          value: functions.rem(15),
+        ),
+        padding-right: (
+          value: functions.rem(15),
+        ),
+      ),
+    ),
+  )
+);

@@ -1,0 +1,8 @@
+@use '../tokens/common' as common;
+
+// prettier-ignore
+$config: (
+  (
+    properties: common.$common-properties,
+  ),
+);

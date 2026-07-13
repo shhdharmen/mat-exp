@@ -34,10 +34,10 @@
 #         run: npm run build:lib
 # 
 #       - name: Build app
-#         run: npm run build -- --base-href "/mat-expressive/"
+#         run: npm run build -- --base-href "/mat-exp/"
 # 
 #       - name: Deploy to GitHub Pages
 #         env:
 #           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         run: npx angular-cli-ghpages --name="mr. Dharmen's Bot" --email=shhdharmen@gmail.com --dir=dist/mat-expressive-docs/browser
+#         run: npx angular-cli-ghpages --name="mr. Dharmen's Bot" --email=shhdharmen@gmail.com --dir=dist/mat-exp-docs/browser
 # 

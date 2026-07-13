@@ -1,0 +1,56 @@
+@use '../tokens/xl' as xl;
+@use '../../../../utils/functions';
+@use '../../utils/functions' as button-functions;
+
+// prettier removes trailing comma
+// prettier-ignore
+$config: (
+  (
+    size: 'xl',
+    properties: xl.$properties,
+  ),
+  (
+    size: 'xl',
+    properties: (
+      ' > .mat-exp-icon-button .mat-icon': (
+        font-size : (
+          value: functions.rem(50),
+        ),
+        width: (
+          value: functions.rem(50),
+        ),
+        line-height: (
+          value: functions.rem(40),
+        )
+      ),
+    ),
+  ),
+  (
+    size: 'xl',
+    menu-open: false,
+    properties: (
+      ' > .mat-exp-icon-button': (
+        padding-left: (
+          value: functions.rem(37),
+        ),
+        padding-right: (
+          value: functions.rem(49),
+        ),
+      ),
+    ),
+  ),
+  (
+    size: 'xl',
+    menu-open: true,
+    properties: (
+      ' >:last-child.mat-exp-icon-button': (
+        padding-left: (
+          value: functions.rem(43),
+        ),
+        padding-right: (
+          value: functions.rem(43),
+        ),
+      ),
+    ),
+  )
+);

@@ -69,20 +69,20 @@ test.describe('ApiIndexPage — /docs/api', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('MatExpressiveButton is linked to its directive detail page', async ({ page }) => {
+  test('MatExpButton is linked to its directive detail page', async ({ page }) => {
     await waitForApiIndex(page);
-    const link = page.getByRole('link', { name: 'MatExpressiveButton', exact: true });
+    const link = page.getByRole('link', { name: 'MatExpButton', exact: true });
     await expect(link).toBeVisible();
     const href = await link.getAttribute('href');
-    expect(href).toBe('/docs/api/mat-expressive/directives/MatExpressiveButton');
+    expect(href).toBe('/docs/api/mat-exp/directives/MatExpButton');
   });
 
-  test('MatExpressiveButtonGroup is linked to its component detail page', async ({ page }) => {
+  test('MatExpButtonGroup is linked to its component detail page', async ({ page }) => {
     await waitForApiIndex(page);
-    const link = page.getByRole('link', { name: 'MatExpressiveButtonGroup', exact: true });
+    const link = page.getByRole('link', { name: 'MatExpButtonGroup', exact: true });
     await expect(link).toBeVisible();
     const href = await link.getAttribute('href');
-    expect(href).toBe('/docs/api/mat-expressive/components/MatExpressiveButtonGroup');
+    expect(href).toBe('/docs/api/mat-exp/components/MatExpButtonGroup');
   });
 
   test('filter hides non-matching symbols in real time', async ({ page }) => {
@@ -91,23 +91,19 @@ test.describe('ApiIndexPage — /docs/api', () => {
 
     await input.fill('ButtonGroup');
 
-    // MatExpressiveButtonGroup should remain visible
-    await expect(
-      page.getByRole('link', { name: 'MatExpressiveButtonGroup', exact: true }),
-    ).toBeVisible();
+    // MatExpButtonGroup should remain visible
+    await expect(page.getByRole('link', { name: 'MatExpButtonGroup', exact: true })).toBeVisible();
 
     // An unrelated symbol should disappear
-    await expect(
-      page.getByRole('link', { name: 'MatExpressiveLoadingIndicator' }),
-    ).not.toBeVisible();
+    await expect(page.getByRole('link', { name: 'MatExpLoadingIndicator' })).not.toBeVisible();
   });
 
   test('groups with zero matches after filtering are hidden', async ({ page }) => {
     await waitForApiIndex(page);
     const input = page.getByRole('searchbox');
 
-    // 'provideMatExpressive' only matches function entries
-    await input.fill('provideMatExpressive');
+    // 'provideMatExp' only matches function entries
+    await input.fill('provideMatExp');
 
     // Functions group heading should be visible
     await expect(page.getByRole('heading', { name: 'Functions' })).toBeVisible();
@@ -138,14 +134,14 @@ test.describe('ApiIndexPage — /docs/api', () => {
 // 2. API Detail Page (/docs/api/:package/:kind/:symbol)  — issue #64, #91
 // ---------------------------------------------------------------------------
 
-test.describe('ApiDetailPage — MatExpressiveButton', () => {
+test.describe('ApiDetailPage — MatExpButton', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/docs/api/mat-expressive/directives/MatExpressiveButton');
+    await page.goto('/docs/api/mat-exp/directives/MatExpButton');
     await waitForApiDetail(page);
   });
 
   test('renders the symbol name as a heading', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'MatExpressiveButton', level: 1 })).toBeVisible({
+    await expect(page.getByRole('heading', { name: 'MatExpButton', level: 1 })).toBeVisible({
       timeout: 10_000,
     });
   });
@@ -157,14 +153,16 @@ test.describe('ApiDetailPage — MatExpressiveButton', () => {
   });
 
   test('shows the CSS selector', async ({ page }) => {
-    await expect(page.locator('app-api-detail-page')).toContainText('[matExpressiveButton]', {
+    await expect(page.locator('app-api-detail-page')).toContainText('[matExpButton]', {
       timeout: 10_000,
     });
   });
 
-  test('renders "Inputs" section with table rows', async ({ page }) => {
-    const inputsHeading = page.getByRole('heading', { name: 'Inputs' });
-    await expect(inputsHeading).toBeVisible({ timeout: 10_000 });
+  test('renders "Models" section with table rows', async ({ page }) => {
+    // MatExpButton's size/shape/toggle/value are all two-way model() inputs, so
+    // they render under "Models" rather than "Inputs" — it has no regular inputs.
+    const modelsHeading = page.getByRole('heading', { name: 'Models' });
+    await expect(modelsHeading).toBeVisible({ timeout: 10_000 });
 
     const rows = page.locator('app-api-detail-page section table tbody tr');
     await expect(rows.first()).toBeVisible();
@@ -173,11 +171,13 @@ test.describe('ApiDetailPage — MatExpressiveButton', () => {
   });
 
   test('input rows have anchor links with id prefix "input-"', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Inputs' })).toBeVisible({ timeout: 10_000 });
+    // `size` is a two-way `model()` input, so it renders in the "Models" table —
+    // the shared `input-` id prefix still applies, since a model is still an input.
+    await expect(page.getByRole('heading', { name: 'Models' })).toBeVisible({ timeout: 10_000 });
 
     const sizeAnchor = page.locator('#input-size');
     await expect(sizeAnchor).toBeAttached();
-    const link = page.locator('a[href="#input-size"]');
+    const link = page.locator('a[href$="#input-size"]');
     await expect(link).toBeVisible();
   });
 
@@ -193,18 +193,18 @@ test.describe('ApiDetailPage — MatExpressiveButton', () => {
   });
 
   test('page title includes the symbol name', async ({ page }) => {
-    await page.waitForFunction(() => document.title.includes('MatExpressiveButton'), {
+    await page.waitForFunction(() => document.title.includes('MatExpButton'), {
       timeout: 10_000,
     });
-    expect(await page.title()).toMatch(/MatExpressiveButton/);
+    expect(await page.title()).toMatch(/MatExpButton/);
   });
 });
 
 test.describe('ApiDetailPage — symbol with description', () => {
-  test('MatExpressiveButton description section is visible', async ({ page }) => {
-    await page.goto('/docs/api/mat-expressive/directives/MatExpressiveButton');
+  test('MatExpButton description section is visible', async ({ page }) => {
+    await page.goto('/docs/api/mat-exp/directives/MatExpButton');
     await waitForApiDetail(page);
-    // The manifest entry has a description for MatExpressiveButton
+    // The manifest entry has a description for MatExpButton
     await expect(page.locator('app-api-detail-page')).toContainText('Directive to style', {
       timeout: 10_000,
     });
@@ -212,13 +212,11 @@ test.describe('ApiDetailPage — symbol with description', () => {
 });
 
 test.describe('ApiDetailPage — component symbol', () => {
-  test('MatExpressiveButtonGroup renders as Component kind', async ({ page }) => {
-    await page.goto('/docs/api/mat-expressive/components/MatExpressiveButtonGroup');
+  test('MatExpButtonGroup renders as Component kind', async ({ page }) => {
+    await page.goto('/docs/api/mat-exp/components/MatExpButtonGroup');
     await waitForApiDetail(page);
 
-    await expect(
-      page.getByRole('heading', { name: 'MatExpressiveButtonGroup', level: 1 }),
-    ).toBeVisible({
+    await expect(page.getByRole('heading', { name: 'MatExpButtonGroup', level: 1 })).toBeVisible({
       timeout: 10_000,
     });
     await expect(page.locator('app-api-detail-page')).toContainText('Component', {
@@ -228,12 +226,12 @@ test.describe('ApiDetailPage — component symbol', () => {
 });
 
 test.describe('ApiDetailPage — function symbol', () => {
-  test('provideMatExpressiveButtonOptions shows Signature section', async ({ page }) => {
-    await page.goto('/docs/api/mat-expressive/functions/provideMatExpressiveButtonOptions');
+  test('provideMatExpButtonOptions shows Signature section', async ({ page }) => {
+    await page.goto('/docs/api/mat-exp/functions/provideMatExpButtonOptions');
     await waitForApiDetail(page);
 
     await expect(
-      page.getByRole('heading', { name: 'provideMatExpressiveButtonOptions', level: 1 }),
+      page.getByRole('heading', { name: 'provideMatExpButtonOptions', level: 1 }),
     ).toBeVisible({ timeout: 10_000 });
     await expect(page.getByRole('heading', { name: 'Signature' })).toBeVisible({ timeout: 10_000 });
   });
@@ -241,7 +239,7 @@ test.describe('ApiDetailPage — function symbol', () => {
 
 test.describe('ApiDetailPage — unknown symbol (404 state)', () => {
   test('renders "Symbol not found" for an unknown symbol name', async ({ page }) => {
-    await page.goto('/docs/api/mat-expressive/directives/NonExistentSymbol');
+    await page.goto('/docs/api/mat-exp/directives/NonExistentSymbol');
     await waitForApiDetail(page);
 
     await expect(page.locator('app-api-detail-page')).toContainText('Symbol not found', {
@@ -256,14 +254,14 @@ test.describe('ApiDetailPage — unknown symbol (404 state)', () => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
 
-    await page.goto('/docs/api/mat-expressive/directives/NonExistentSymbol');
+    await page.goto('/docs/api/mat-exp/directives/NonExistentSymbol');
     await waitForApiDetail(page);
 
     expect(errors.filter((e) => !e.includes('favicon'))).toHaveLength(0);
   });
 
   test('"Symbol not found" page has a link back to /docs/api', async ({ page }) => {
-    await page.goto('/docs/api/mat-expressive/directives/NonExistentSymbol');
+    await page.goto('/docs/api/mat-exp/directives/NonExistentSymbol');
     await waitForApiDetail(page);
 
     const backLink = page.getByRole('link', { name: /Back to API Reference/ });
@@ -299,7 +297,7 @@ test.describe('ApiDetailPage — deprecated symbols', () => {
     if (!symbol || !entry) return;
 
     const segment = KIND_URL_SEGMENT[entry.kind] ?? entry.kind + 's';
-    await page.goto(`/docs/api/mat-expressive/${segment}/${symbol}`);
+    await page.goto(`/docs/api/mat-exp/${segment}/${symbol}`);
     await waitForApiDetail(page);
 
     await expect(page.locator('[role="alert"]')).toBeVisible({ timeout: 10_000 });
@@ -319,7 +317,7 @@ test.describe('ApiDetailPage — old kind-first URL format (pre-#91)', () => {
     // matches the new :package/:kind/:symbol route, so the page must validate that
     // the kind segment actually matches the symbol's kind rather than silently
     // rendering the correct content for a stale URL.
-    await page.goto('/docs/api/directives/mat-expressive/MatExpressiveButton');
+    await page.goto('/docs/api/directives/mat-exp/MatExpButton');
     await waitForApiDetail(page);
 
     await expect(page.locator('app-api-detail-page')).toContainText('Symbol not found', {
@@ -330,7 +328,7 @@ test.describe('ApiDetailPage — old kind-first URL format (pre-#91)', () => {
   test('old-format URL for a component symbol also renders "Symbol not found"', async ({
     page,
   }) => {
-    await page.goto('/docs/api/components/mat-expressive/MatExpressiveButtonGroup');
+    await page.goto('/docs/api/components/mat-exp/MatExpButtonGroup');
     await waitForApiDetail(page);
 
     await expect(page.locator('app-api-detail-page')).toContainText('Symbol not found', {
@@ -347,27 +345,27 @@ test.describe('Stale link fix — /docs/api/.../classes/... replaced with kind-c
   const cases = [
     {
       page: '/docs/components/all-buttons/button/api',
-      symbol: 'MatExpressiveButton',
+      symbol: 'MatExpButton',
       expectedKind: 'directives',
     },
     {
       page: '/docs/components/all-buttons/icon-button/api',
-      symbol: 'MatExpressiveIconButton',
+      symbol: 'MatExpIconButton',
       expectedKind: 'directives',
     },
     {
       page: '/docs/components/all-buttons/button-group/api',
-      symbol: 'MatExpressiveButtonGroup',
+      symbol: 'MatExpButtonGroup',
       expectedKind: 'components',
     },
     {
       page: '/docs/components/all-buttons/split-button/api',
-      symbol: 'MatExpressiveSplitButton',
+      symbol: 'MatExpSplitButton',
       expectedKind: 'components',
     },
     {
       page: '/docs/components/loading-and-progress/loading-indicator/api',
-      symbol: 'MatExpressiveLoadingIndicator',
+      symbol: 'MatExpLoadingIndicator',
       expectedKind: 'components',
     },
   ];
@@ -382,31 +380,31 @@ test.describe('Stale link fix — /docs/api/.../classes/... replaced with kind-c
       await expect(link).toBeVisible({ timeout: 10_000 });
 
       const href = await link.getAttribute('href');
-      expect(href).toContain(`/docs/api/mat-expressive/${expectedKind}/${symbol}`);
-      expect(href).not.toContain('/docs/api/mat-expressive/classes/');
+      expect(href).toContain(`/docs/api/mat-exp/${expectedKind}/${symbol}`);
+      expect(href).not.toContain('/docs/api/mat-exp/classes/');
     });
   }
 
-  test('fab-menu/api.md MatExpressiveFabMenu uses /directives/', async ({ page }) => {
+  test('fab-menu/api.md MatExpFabMenu uses /directives/', async ({ page }) => {
     await page.goto('/docs/components/all-buttons/fab-menu/api');
     await waitForMarkdown(page);
 
-    const link = page.locator('.markdown-body a[href*="MatExpressiveFabMenu"]').first();
+    const link = page.locator('.markdown-body a[href*="MatExpFabMenu"]').first();
     await expect(link).toBeVisible({ timeout: 10_000 });
 
     const href = await link.getAttribute('href');
-    expect(href).toContain('/docs/api/mat-expressive/directives/MatExpressiveFabMenu');
-    expect(href).not.toContain('/docs/api/mat-expressive/classes/');
+    expect(href).toContain('/docs/api/mat-exp/directives/MatExpFabMenu');
+    expect(href).not.toContain('/docs/api/mat-exp/classes/');
   });
 
-  test('no /docs/api/mat-expressive/classes/... links remain anywhere in public/docs markdown pages', async ({
+  test('no /docs/api/mat-exp/classes/... links remain anywhere in public/docs markdown pages', async ({
     page,
   }) => {
     // Spot-check by visiting button/api and verifying zero "classes" links
     await page.goto('/docs/components/all-buttons/button/api');
     await waitForMarkdown(page);
 
-    const staleLinks = page.locator('.markdown-body a[href*="/docs/api/mat-expressive/classes/"]');
+    const staleLinks = page.locator('.markdown-body a[href*="/docs/api/mat-exp/classes/"]');
     await expect(staleLinks).toHaveCount(0);
   });
 });
@@ -416,11 +414,11 @@ test.describe('Stale link fix — /docs/api/.../classes/... replaced with kind-c
 // ---------------------------------------------------------------------------
 
 test.describe('Markdown auto-link — inline code linked to API Detail Pages', () => {
-  test('`matExpressiveButton` in button/api.md is rendered as an api-link', async ({ page }) => {
+  test('`matExpButton` in button/api.md is rendered as an api-link', async ({ page }) => {
     await page.goto('/docs/components/all-buttons/button/api');
     await waitForMarkdown(page);
 
-    // The text "`matExpressiveButton` directive" should have an .api-link wrapping the code
+    // The text "`matExpButton` directive" should have an .api-link wrapping the code
     const apiLink = page.locator('.markdown-body a.api-link').first();
     await expect(apiLink).toBeVisible({ timeout: 10_000 });
   });
@@ -429,17 +427,17 @@ test.describe('Markdown auto-link — inline code linked to API Detail Pages', (
     await page.goto('/docs/components/all-buttons/button/api');
     await waitForMarkdown(page);
 
-    // The selector attribute `matExpressiveButton` should link to the directive URL
+    // The selector attribute `matExpButton` should link to the directive URL
     const apiLink = page
       .locator('.markdown-body a.api-link')
-      .filter({ hasText: 'matExpressiveButton' })
+      .filter({ hasText: 'matExpButton' })
       .first();
 
     const count = await apiLink.count();
-    test.skip(count === 0, '`matExpressiveButton` auto-link not present on this page');
+    test.skip(count === 0, '`matExpButton` auto-link not present on this page');
 
     const href = await apiLink.getAttribute('href');
-    expect(href).toBe('/docs/api/mat-expressive/directives/MatExpressiveButton');
+    expect(href).toBe('/docs/api/mat-exp/directives/MatExpButton');
   });
 
   test('auto-link wraps the text in a <code> element', async ({ page }) => {
@@ -495,13 +493,13 @@ test.describe('API Index → Detail navigation flow', () => {
     await page.goto('/docs/api');
     await waitForApiIndex(page);
 
-    const link = page.getByRole('link', { name: 'MatExpressiveButton', exact: true });
+    const link = page.getByRole('link', { name: 'MatExpButton', exact: true });
     await link.click();
 
-    await page.waitForURL(/\/docs\/api\/mat-expressive\/directives\/MatExpressiveButton/, {
+    await page.waitForURL(/\/docs\/api\/mat-exp\/directives\/MatExpButton/, {
       timeout: 10_000,
     });
-    await expect(page.getByRole('heading', { name: 'MatExpressiveButton', level: 1 })).toBeVisible({
+    await expect(page.getByRole('heading', { name: 'MatExpButton', level: 1 })).toBeVisible({
       timeout: 10_000,
     });
   });
@@ -513,7 +511,7 @@ test.describe('API Index → Detail navigation flow', () => {
     await waitForApiIndex(page);
 
     // Navigate to a detail page via the URL directly (simulates SPA navigation)
-    await page.goto('/docs/api/mat-expressive/directives/MatExpressiveButton');
+    await page.goto('/docs/api/mat-exp/directives/MatExpButton');
     await waitForApiDetail(page);
 
     // Click breadcrumb back

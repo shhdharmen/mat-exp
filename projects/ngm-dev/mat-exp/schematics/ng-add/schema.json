@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "NgmDevMatExpNgAdd",
+  "title": "Mat Expressive ng-add schema",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project to add Mat Expressive styles to.",
+      "$default": {
+        "$source": "projectName"
+      }
+    },
+    "configureStyles": {
+      "type": "boolean",
+      "description": "Whether ng-add should automatically wire up Mat Expressive's styles (global stylesheet for SCSS projects, or the angular.json \"styles\" array for CSS projects). When omitted in an interactive terminal, the schematic asks. When omitted in a non-interactive run, it defaults to true. Pass \"false\" explicitly (e.g. --configure-styles=false) to skip all stylesheet/angular.json changes and only print the getting-started docs link."
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Button Family components to include styles for in a SCSS project, or [\"all\"] (default). Valid keys: button, icon-button, button-group, split-button, fab-menu, fab-menu-trigger, or \"all\" — validated by the schematic itself (not this schema) so a single comma-separated entry (e.g. from --components=button,icon-button on the command line) and unknown keys are both handled gracefully with a warning rather than a hard schema-validation failure. When omitted in an interactive terminal for a SCSS project, the schematic asks which components to include. Ignored (with a log note) for CSS projects, which always get the full prebuilt stylesheet."
+    }
+  },
+  "additionalProperties": false
+}

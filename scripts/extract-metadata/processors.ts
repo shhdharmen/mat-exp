@@ -251,6 +251,27 @@ export function processVariable(
   const jsDocTags = getJsDocTags(jsDocNode);
   const type = checker.getTypeAtLocation(decl);
   const value = checker.typeToString(type);
+
+  // `export const foo = someFactory.provide` resolves to a callable type even
+  // though the declaration syntax is a const, not a `function` — classify by
+  // resolved type, not declaration kind, so callers see kind: 'function' with
+  // structured params[]/returnType instead of an opaque const value string.
+  const callSignatures = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
+  if (callSignatures.length > 0) {
+    const sig = callSignatures[0];
+    const params: ApiParam[] = sig.parameters.map((paramSymbol) => ({
+      name: paramSymbol.getName(),
+      type: checker.typeToString(checker.getTypeOfSymbolAtLocation(paramSymbol, decl)),
+    }));
+    const returnType = checker.typeToString(checker.getReturnTypeOfSignature(sig));
+    const entry: ApiFunctionEntry = { kind: 'function', signature: value, ...jsDocTags };
+    if (description) entry.description = description;
+    if (params.length > 0) entry.params = params;
+    if (returnType) entry.returnType = returnType;
+    apiManifest[name] = entry;
+    return;
+  }
+
   const entry: ApiConstEntry = { kind: 'const', value, ...jsDocTags };
   if (description) entry.description = description;
   apiManifest[name] = entry;

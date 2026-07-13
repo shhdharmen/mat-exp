@@ -1,0 +1,78 @@
+@use '../tokens/connected' as connected;
+@use '../../../../utils/functions';
+
+$config: (
+  (
+    variant: 'connected',
+    properties: connected.$variant-connected-properties,
+  ),
+  (
+    variant: 'connected',
+    size: 'xs',
+    shape: 'round',
+    properties: (
+      " > .mat-exp-icon-button:first-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(14),
+        ),
+        padding-right: (
+          value: functions.rem(10),
+        ),
+      ),
+      " > .mat-exp-icon-button:last-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(10),
+        ),
+        padding-right: (
+          value: functions.rem(14),
+        ),
+      ),
+    ),
+  ),
+  (
+    variant: 'connected',
+    size: 's',
+    shape: 'round',
+    properties: (
+      " > .mat-exp-icon-button:first-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(14),
+        ),
+        padding-right: (
+          value: functions.rem(10),
+        ),
+      ),
+      " > .mat-exp-icon-button:last-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(10),
+        ),
+        padding-right: (
+          value: functions.rem(14),
+        ),
+      ),
+    ),
+  ),
+  (
+    variant: 'connected',
+    size: 'm',
+    shape: 'round',
+    properties: (
+      " > .mat-exp-icon-button:first-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(18),
+        ),
+        padding-right: (
+          value: functions.rem(14),
+        ),
+      ),
+      " > .mat-exp-icon-button:last-child:not([data-toggle='selected'])": (
+        padding-left: (
+          value: functions.rem(14),
+        ),
+        padding-right: (
+          value: functions.rem(18),
+        ),
+      ),
+    ),
+  )
+);

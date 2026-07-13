@@ -4,15 +4,15 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-$_mat-expressive-__KEBAB__-class: '__HOST_CLASS__';
+$_mat-exp-__KEBAB__-class: '__HOST_CLASS__';
 
-@mixin mat-expressive-__KEBAB__-styles(
+@mixin mat-exp-__KEBAB__-styles(
   $options: (
     skip-html-element-styles: false,
   )
 ) {
   $skip-html-element-styles: map.get($options, skip-html-element-styles);
-  $mat-expressive-__KEBAB__-class: '.' + $_mat-expressive-__KEBAB__-class;
+  $mat-exp-__KEBAB__-class: '.' + $_mat-exp-__KEBAB__-class;
 
   // Validate the entire configuration
   $validation-result: functions.validate-config(
@@ -32,7 +32,7 @@ $_mat-expressive-__KEBAB__-class: '__HOST_CLASS__';
     $item-properties: map.get($item, properties);
 
     // Build the selector based on the attributes present
-    $selector: $mat-expressive-__KEBAB__-class;
+    $selector: $mat-exp-__KEBAB__-class;
 
     // Check for size attribute
     @if map.has-key($item, size) {

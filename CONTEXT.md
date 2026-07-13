@@ -1,6 +1,6 @@
-# mat-expressive Docs Site
+# mat-exp Docs Site
 
-The documentation website for the `@ngm-dev/mat-expressive` Angular component library. It is a separate Angular application (`mat-expressive-docs`) that consumes the library as a published package and presents guides, API references, and interactive component demos.
+The documentation website for the `@ngm-dev/mat-exp` Angular component library. It is a separate Angular application (`mat-exp-docs`) that consumes the library as a published package and presents guides, API references, and interactive component demos.
 
 ## Language
 
@@ -25,7 +25,7 @@ _Avoid_: Landing page, overview page, section home
 ### Library Concepts
 
 **Button Family**:
-The six `@ngm-dev/mat-expressive` components that share one combinatorial size/shape/appearance/state/selection/variant token system and must render pixel-identical wherever a value overlaps: `MatExpressiveButton`, `MatExpressiveIconButton`, `MatExpressiveFabMenu`, `MatExpressiveFabMenuTrigger` (all `@Directive`s applied to Angular Material's own button/menu components), plus `MatExpressiveButtonGroup` and `MatExpressiveSplitButton` (`@Component`s that deliberately stay on the same global-mixin styling path as the four directives instead of using component-scoped `styleUrls`, so the shared token system isn't forked). `MatExpressiveLoadingIndicator` is not a Button Family member — it has no discrete variant enum and ships ordinary component-scoped `styleUrls`. See `docs/adr/0006-button-family-style-mechanism.md` for the full reasoning.
+The six `@ngm-dev/mat-exp` components that share one combinatorial size/shape/appearance/state/selection/variant token system and must render pixel-identical wherever a value overlaps: `MatExpButton`, `MatExpIconButton`, `MatExpFabMenu`, `MatExpFabMenuTrigger` (all `@Directive`s applied to Angular Material's own button/menu components), plus `MatExpButtonGroup` and `MatExpSplitButton` (`@Component`s that deliberately stay on the same global-mixin styling path as the four directives instead of using component-scoped `styleUrls`, so the shared token system isn't forked). `MatExpLoadingIndicator` is not a Button Family member — it has no discrete variant enum and ships ordinary component-scoped `styleUrls`. See `docs/adr/0006-button-family-style-mechanism.md` for the full reasoning.
 _Avoid_: Button components, button variants, button suite
 
 ### Build Pipeline
@@ -67,7 +67,7 @@ The landing page for the API Reference at `/api`. Lists all exported symbols fro
 _Avoid_: API list, symbol index, API overview
 
 **API Detail Page**:
-A per-symbol page at `/api/{kind}/mat-expressive/{SymbolName}`. Renders the full documentation for one exported symbol: description, JSDoc tag sections (`@deprecated`, `@remarks`, `@example`, `@see`), inputs/outputs tables (for directives and components), structured members (for classes and interfaces), and parameter/return documentation (for functions).
+A per-symbol page at `/api/{kind}/mat-exp/{SymbolName}`. Renders the full documentation for one exported symbol: description, JSDoc tag sections (`@deprecated`, `@remarks`, `@example`, `@see`), inputs/outputs tables (for directives and components), structured members (for classes and interfaces), and parameter/return documentation (for functions).
 _Avoid_: Symbol page, API card page, reference detail
 
 ### Runtime Features

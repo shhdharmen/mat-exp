@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { pendingUntilEvent, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, firstValueFrom, from, map, of, switchMap } from 'rxjs';
 import { MatButton } from '@angular/material/button';
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core';
 import { JsonLdMetadata } from '@davidlj95/ngx-meta/json-ld';
 import { MarkdownComponent } from '../docs/markdown/markdown.component';
@@ -22,7 +22,7 @@ import { breadcrumbListJsonLd, webPageJsonLd, withBaseJsonLd } from '../shared/u
 @Component({
   selector: 'app-static-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MarkdownComponent, MatButton, MatExpressiveButton],
+  imports: [MarkdownComponent, MatButton, MatExpButton],
   template: `
     <div class="max-w-3xl mx-auto px-6 py-12">
       @if (content(); as c) {
@@ -32,7 +32,7 @@ import { breadcrumbListJsonLd, webPageJsonLd, withBaseJsonLd } from '../shared/u
         <div class="markdown-actions">
           <a
             matButton="outlined"
-            matExpressiveButton
+            matExpButton
             shape="square"
             size="xs"
             [href]="rawMarkdownUrl"
@@ -42,7 +42,7 @@ import { breadcrumbListJsonLd, webPageJsonLd, withBaseJsonLd } from '../shared/u
           >
           <button
             matButton="outlined"
-            matExpressiveButton
+            matExpButton
             size="xs"
             shape="square"
             (click)="copyMarkdown()"

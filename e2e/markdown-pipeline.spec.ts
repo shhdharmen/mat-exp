@@ -6,7 +6,7 @@ import { test, expect, type Page } from '@playwright/test';
 
 async function waitForPageContent(page: Page) {
   await page
-    .locator('.markdown-body, .not-found')
+    .locator('.markdown-body, app-not-found-page')
     .first()
     .waitFor({ state: 'visible', timeout: 10_000 });
 }
@@ -19,7 +19,7 @@ test.describe('Page fetch and render', () => {
   test('navigating to /getting-started/installation renders the correct markdown file', async ({
     page,
   }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     // Heading from the YAML frontmatter / first h2 in the file
@@ -31,17 +31,17 @@ test.describe('Page fetch and render', () => {
     await expect(page.locator('.markdown-body')).toContainText('ng add @angular/material');
   });
 
-  test('navigating to /getting-started/what-is-mat-expressive renders correct content', async ({
+  test('navigating to /getting-started/what-is-mat-exp renders correct content', async ({
     page,
   }) => {
-    await page.goto('/getting-started/what-is-mat-expressive');
+    await page.goto('/docs/getting-started/what-is-mat-expressive');
     await waitForPageContent(page);
 
     await expect(page.locator('.markdown-body h2').first()).toContainText('How does it work');
   });
 
   test('navigating to a component API tab renders the api.md file', async ({ page }) => {
-    await page.goto('/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/button/api');
     await waitForPageContent(page);
 
     // api.md starts with a heading about data attributes
@@ -55,7 +55,7 @@ test.describe('Page fetch and render', () => {
 
 test.describe('Shiki syntax highlighting', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
   });
 
@@ -99,28 +99,16 @@ test.describe('Shiki syntax highlighting', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 3. Alert callouts (> [!NOTE] / [!WARNING] / [!TIP] / [!DANGER])
+// 3. Alert callouts (> [!NOTE])
 //
-// Requires a markdown file that contains alert syntax.  The quickest way is
-// to add the following block to public/docs/getting-started/installation/index.md
-// and re-serve:
-//
-//   > [!NOTE]
-//   > This is a note callout.
-//
-//   > [!WARNING]
-//   > This is a warning callout.
-//
-//   > [!TIP]
-//   > This is a tip callout.
-//
-//   > [!DANGER]
-//   > This is a danger callout.
+// Only NOTE has example content in the docs (installation/index.md). Add a
+// `> [!WARNING]` / `[!TIP]` / `[!DANGER]` block to a real page before adding
+// coverage for those types back.
 // ---------------------------------------------------------------------------
 
 test.describe('Alert callouts', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
   });
 
@@ -132,23 +120,9 @@ test.describe('Alert callouts', () => {
     });
   });
 
-  test('WARNING renders as a styled callout box', async ({ page }) => {
-    const alert = page.locator('.markdown-alert.markdown-alert-warning');
-    await expect(alert).toBeVisible();
-    await expect(alert.locator('.markdown-alert-title')).toContainText('warning', {
-      ignoreCase: true,
-    });
-  });
-
-  test('TIP renders as a styled callout box', async ({ page }) => {
-    await expect(page.locator('.markdown-alert.markdown-alert-tip')).toBeVisible();
-  });
-
-  test('DANGER renders as a styled callout box', async ({ page }) => {
-    await expect(
-      page.locator('.markdown-alert.markdown-alert-caution, .markdown-alert.markdown-alert-danger'),
-    ).toBeVisible();
-  });
+  // WARNING/TIP/DANGER coverage removed along with the example callouts that
+  // used to live in installation/index.md — no page in public/docs currently
+  // uses those alert types, so there's no real content left to assert against.
 });
 
 // ---------------------------------------------------------------------------
@@ -157,7 +131,7 @@ test.describe('Alert callouts', () => {
 
 test.describe('Code block copy button and badge', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
   });
 
@@ -241,7 +215,7 @@ test.describe('Code block copy button and badge', () => {
 
 test.describe('Line highlighting', () => {
   test('highlighted line has the .highlighted class', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const highlighted = page.locator('.code-block .line.highlighted');
@@ -252,7 +226,7 @@ test.describe('Line highlighting', () => {
   });
 
   test('highlighted line has a distinct left border colour', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const highlighted = page.locator('.code-block .line.highlighted').first();
@@ -277,7 +251,7 @@ test.describe('Line highlighting', () => {
 
 test.describe('Line numbers', () => {
   test('code block with showLineNumbers has data-line-numbers attribute', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const lineNumBlock = page.locator('.code-block[data-line-numbers]');
@@ -288,7 +262,7 @@ test.describe('Line numbers', () => {
   });
 
   test('line number gutter is rendered via CSS counter', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const lineNumBlock = page.locator('.code-block[data-line-numbers]').first();
@@ -310,7 +284,7 @@ test.describe('Line numbers', () => {
 
 test.describe('Table of Contents', () => {
   test('TOC is populated with headings from the page', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const tocNav = page.locator('app-toc nav');
@@ -324,7 +298,7 @@ test.describe('Table of Contents', () => {
   });
 
   test('TOC links match h2/h3 headings in the content', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const headingTexts = await page.locator('.markdown-body h2, .markdown-body h3').allInnerTexts();
@@ -338,7 +312,7 @@ test.describe('Table of Contents', () => {
   });
 
   test('TOC links are anchor links that point to heading IDs', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const firstLink = page.locator('app-toc nav a').first();
@@ -360,13 +334,13 @@ test.describe('Table of Contents', () => {
 
 test.describe('Navigation between pages', () => {
   test('navigating from page A to page B replaces content', async ({ page }) => {
-    await page.goto('/getting-started/what-is-mat-expressive');
+    await page.goto('/docs/getting-started/what-is-mat-expressive');
     await waitForPageContent(page);
 
     const firstPageHeading = await page.locator('.markdown-body h2').first().innerText();
 
     // Navigate to a different page
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
 
     const secondPageHeading = await page.locator('.markdown-body h2').first().innerText();
@@ -374,11 +348,11 @@ test.describe('Navigation between pages', () => {
   });
 
   test('TOC is cleared and repopulated after navigation', async ({ page }) => {
-    await page.goto('/getting-started/what-is-mat-expressive');
+    await page.goto('/docs/getting-started/what-is-mat-expressive');
     await waitForPageContent(page);
     const tocCountA = await page.locator('app-toc nav a').count();
 
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
     const tocCountB = await page.locator('app-toc nav a').count();
 
@@ -388,12 +362,12 @@ test.describe('Navigation between pages', () => {
   });
 
   test('no stale content from the previous page remains after navigation', async ({ page }) => {
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
     // Installation page has 'ng add @angular/material'
     await expect(page.locator('.markdown-body')).toContainText('ng add @angular/material');
 
-    await page.goto('/getting-started/what-is-mat-expressive');
+    await page.goto('/docs/getting-started/what-is-mat-expressive');
     await waitForPageContent(page);
     // Installation-specific content must be gone
     await expect(page.locator('.markdown-body')).not.toContainText('ng add @angular/material');
@@ -409,7 +383,7 @@ test.describe('404 / not-found handling', () => {
     await page.goto('/this/route/does/not/exist');
     await waitForPageContent(page);
 
-    await expect(page.locator('.not-found h1')).toContainText('Page not found');
+    await expect(page.locator('app-not-found-page h1')).toContainText('Page not found');
   });
 
   test('not-found page does not render a markdown body', async ({ page }) => {
@@ -422,11 +396,11 @@ test.describe('404 / not-found handling', () => {
   test('navigating from a not-found page to a valid page recovers correctly', async ({ page }) => {
     await page.goto('/does/not/exist');
     await waitForPageContent(page);
-    await expect(page.locator('.not-found')).toBeVisible();
+    await expect(page.locator('app-not-found-page')).toBeVisible();
 
-    await page.goto('/getting-started/installation');
+    await page.goto('/docs/getting-started/installation');
     await waitForPageContent(page);
-    await expect(page.locator('.not-found')).not.toBeVisible();
+    await expect(page.locator('app-not-found-page')).not.toBeVisible();
     await expect(page.locator('.markdown-body')).toBeVisible();
   });
 });

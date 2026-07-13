@@ -1,0 +1,59 @@
+@use '@angular/material' as mat;
+@use '../utils/functions' as button-functions;
+@use '../../../utils/functions' as utils-functions;
+@use '../common-selectors';
+
+@mixin mat-exp-split-button-connected-xl-corners($host-selector) {
+  #{$host-selector}[data-size='xl'] {
+    > :first-child {
+      @include mat.button-overrides(
+        button-functions.button-shape-tokens-raw(
+          utils-functions.rem(68) utils-functions.rem(12) utils-functions.rem(12)
+            utils-functions.rem(68)
+        )
+      );
+      @include mat.icon-button-overrides(
+        button-functions.icon-button-shape-tokens-raw(
+          utils-functions.rem(68) utils-functions.rem(12) utils-functions.rem(12)
+            utils-functions.rem(68)
+        )
+      );
+
+      &[data-appearance='outlined']:active {
+        @each $selector in common-selectors.$icon-button-only-ripple-selectors {
+          #{$selector} {
+            border-radius: inherit;
+          }
+        }
+      }
+    }
+
+    > :last-child {
+      @include mat.button-overrides(
+        button-functions.button-shape-tokens-raw(
+          utils-functions.rem(12) utils-functions.rem(68) utils-functions.rem(68)
+            utils-functions.rem(12)
+        )
+      );
+      @include mat.icon-button-overrides(
+        button-functions.icon-button-shape-tokens-raw(
+          utils-functions.rem(12) utils-functions.rem(68) utils-functions.rem(68)
+            utils-functions.rem(12)
+        )
+      );
+
+      &[data-appearance='outlined']:active {
+        @each $selector in common-selectors.$icon-button-only-ripple-selectors {
+          #{$selector} {
+            border-radius: inherit;
+          }
+        }
+      }
+    }
+
+    > :last-child[data-menu-open='true'] {
+      @include mat.button-overrides(button-functions.button-shape-tokens(68));
+      @include mat.icon-button-overrides(button-functions.icon-button-shape-tokens(68));
+    }
+  }
+}

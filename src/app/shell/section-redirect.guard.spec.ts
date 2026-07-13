@@ -61,7 +61,7 @@ describe('sectionRedirectGuard', () => {
 
   it('allows navigation when no redirect is configured', async () => {
     Object.defineProperty(router, 'url', {
-      value: '/getting-started/what-is-mat-expressive',
+      value: '/getting-started/what-is-mat-exp',
       configurable: true,
     });
 

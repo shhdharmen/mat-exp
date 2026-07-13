@@ -1,12 +1,12 @@
 ---
 title: API
 order: 2
-description: API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpressiveIconButton directive.
+description: API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpIconButton directive.
 ---
 
-## Data Attributes with .mat-expressive-icon-button class
+## Data Attributes with .mat-exp-icon-button class
 
-You can use below `data-*` attributes with `.mat-expressive-icon-button` class to style the Angular Material Icon Button component.
+You can use below `data-*` attributes with `.mat-exp-icon-button` class to style the Angular Material Icon Button component.
 
 ### data-size
 
@@ -68,6 +68,6 @@ The width of the icon button.
 
 `default`, `narrow`, `wide`
 
-## matExpressiveIconButton Directive
+## matExpIconButton Directive
 
-You can view the API for `matExpressiveIconButton` directive [here](/docs/api/mat-expressive/directives/MatExpressiveIconButton).
+You can view the API for `matExpIconButton` directive [here](/docs/api/mat-exp/directives/MatExpIconButton).

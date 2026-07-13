@@ -1,0 +1,74 @@
+@use '../tokens/xs' as xs;
+@use '../../../../utils/functions';
+@use '../../utils/functions' as button-functions;
+
+// prettier removes trailing comma
+// prettier-ignore
+$config: (
+  (
+    size: 'xs',
+    properties: xs.$properties,
+  ),
+  (
+    size: 'xs',
+    properties: (
+      ' > .mat-exp-icon-button': (
+        width: (
+          value: functions.rem(48),
+        ),
+      ),
+      ' > .mat-exp-icon-button .mat-icon': (
+        font-size : (
+          value: functions.rem(22),
+        ),
+        width: (
+          value: functions.rem(22),
+        ),
+        line-height: (
+          value: functions.rem(20),
+        )
+      ),
+    ),
+  ),
+  (
+    size: 'xs',
+    properties: (
+      ' >:first-child.mat-exp-button': (
+        padding-left: (
+          value: functions.rem(12),
+        ),
+        padding-right: (
+          value: functions.rem(10),
+        ),
+      ),
+    ),
+  ),
+  (
+    size: 'xs',
+    menu-open: false,
+    properties: (
+      ' >:last-child.mat-exp-icon-button': (
+        padding-left: (
+          value: functions.rem(12),
+        ),
+        padding-right: (
+          value: functions.rem(14),
+        ),
+      ),
+    ),
+  ),
+  (
+    size: 'xs',
+    menu-open: true,
+    properties: (
+      ' >:last-child.mat-exp-icon-button': (
+        padding-left: (
+          value: functions.rem(13),
+        ),
+        padding-right: (
+          value: functions.rem(13),
+        ),
+      ),
+    ),
+  )
+);

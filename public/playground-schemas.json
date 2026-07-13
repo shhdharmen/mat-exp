@@ -1,7 +1,7 @@
 {
-  "MatExpressiveButtonGroup": {
-    "selector": "mat-expressive-button-group",
-    "className": "MatExpressiveButtonGroup",
+  "MatExpButtonGroup": {
+    "selector": "mat-exp-button-group",
+    "className": "MatExpButtonGroup",
     "inputs": [
       {
         "name": "size",
@@ -48,12 +48,12 @@
     "sourceFiles": [
       {
         "filename": "button-group-preview.component.ts",
-        "content": "import { JsonPipe } from '@angular/common';\nimport { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\nimport { MatButton, MatIconButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpressiveButton,\n  MatExpressiveButtonGroup,\n  MatExpressiveIconButton,\n  type MatExpressiveButtonGroupAppearance,\n  type MatExpressiveButtonGroupSelection,\n  type MatExpressiveButtonGroupShape,\n  type MatExpressiveButtonGroupSize,\n  type MatExpressiveButtonGroupVariant,\n} from '@ngm-dev/mat-expressive';\n\n/**\n * Preview wrapper for MatExpressiveButtonGroup.\n * Used by the playground as the override component — ButtonGroup needs projected\n * button content that cannot be auto-generated from the schema alone.\n * @playgroundFor MatExpressiveButtonGroup\n */\n@Component({\n  selector: 'app-button-group-preview',\n  standalone: true,\n  imports: [\n    MatButton,\n    MatIconButton,\n    MatIcon,\n    MatExpressiveButton,\n    MatExpressiveButtonGroup,\n    MatExpressiveIconButton,\n    ReactiveFormsModule,\n    JsonPipe,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './button-group-preview.component.html',\n  styleUrl: './button-group-preview.component.scss',\n})\nexport class ButtonGroupPreviewComponent {\n  readonly size = input<MatExpressiveButtonGroupSize>('s');\n  readonly shape = input<MatExpressiveButtonGroupShape>('round');\n  readonly variant = input<MatExpressiveButtonGroupVariant>('standard');\n  readonly appearance = input<MatExpressiveButtonGroupAppearance>('tonal');\n  readonly selection = input<MatExpressiveButtonGroupSelection>('single-select');\n  readonly disabled = input<boolean>(false);\n\n  readonly control = new FormControl<string | string[] | null>(null);\n}\n",
+        "content": "import { JsonPipe } from '@angular/common';\nimport { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\nimport { MatButton, MatIconButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpButton,\n  MatExpButtonGroup,\n  MatExpIconButton,\n  type MatExpButtonGroupAppearance,\n  type MatExpButtonGroupSelection,\n  type MatExpButtonGroupShape,\n  type MatExpButtonGroupSize,\n  type MatExpButtonGroupVariant,\n} from '@ngm-dev/mat-exp';\n\n/**\n * Preview wrapper for MatExpButtonGroup.\n * Used by the playground as the override component — ButtonGroup needs projected\n * button content that cannot be auto-generated from the schema alone.\n * @playgroundFor MatExpButtonGroup\n */\n@Component({\n  selector: 'app-button-group-preview',\n  standalone: true,\n  imports: [\n    MatButton,\n    MatIconButton,\n    MatIcon,\n    MatExpButton,\n    MatExpButtonGroup,\n    MatExpIconButton,\n    ReactiveFormsModule,\n    JsonPipe,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './button-group-preview.component.html',\n  styleUrl: './button-group-preview.component.scss',\n})\nexport class ButtonGroupPreviewComponent {\n  readonly size = input<MatExpButtonGroupSize>('s');\n  readonly shape = input<MatExpButtonGroupShape>('round');\n  readonly variant = input<MatExpButtonGroupVariant>('standard');\n  readonly appearance = input<MatExpButtonGroupAppearance>('tonal');\n  readonly selection = input<MatExpButtonGroupSelection>('single-select');\n  readonly disabled = input<boolean>(false);\n\n  readonly control = new FormControl<string | string[] | null>(null);\n}\n",
         "lang": "angular-ts"
       },
       {
         "filename": "button-group-preview.component.html",
-        "content": "<div class=\"preview-container\">\n  <mat-expressive-button-group\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [variant]=\"variant()\"\n    [appearance]=\"appearance()\"\n    [selection]=\"selection()\"\n    [disabled]=\"disabled()\"\n  >\n    <button matIconButton matExpressiveIconButton>\n      <mat-icon>delete</mat-icon>\n    </button>\n    <button matButton matExpressiveButton>Label</button>\n    <button matButton matExpressiveButton>\n      <mat-icon>edit</mat-icon>\n      Label\n    </button>\n    <button matIconButton matExpressiveIconButton>\n      <mat-icon>favorite</mat-icon>\n    </button>\n  </mat-expressive-button-group>\n  <mat-expressive-button-group\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [variant]=\"variant()\"\n    [appearance]=\"appearance()\"\n    [selection]=\"selection()\"\n    [disabled]=\"disabled()\"\n  >\n    <button matButton matExpressiveButton>Label</button>\n    <button matButton matExpressiveButton>Label</button>\n    <button matButton matExpressiveButton>\n      <mat-icon>edit</mat-icon>\n      Label\n    </button>\n    <button matButton matExpressiveButton>\n      <mat-icon>edit</mat-icon>\n      Label\n    </button>\n  </mat-expressive-button-group>\n  <div>\n    <h3>Usage with reactive form</h3>\n    <mat-expressive-button-group\n      [size]=\"size()\"\n      [shape]=\"shape()\"\n      [variant]=\"variant()\"\n      [appearance]=\"appearance()\"\n      [selection]=\"selection()\"\n      [disabled]=\"disabled()\"\n      [formControl]=\"control\"\n    >\n      <button matIconButton matExpressiveIconButton value=\"delete\">\n        <mat-icon>delete</mat-icon>\n      </button>\n      <button matIconButton matExpressiveIconButton value=\"edit\">\n        <mat-icon>edit</mat-icon>\n      </button>\n      <button matIconButton matExpressiveIconButton value=\"star\">\n        <mat-icon>star</mat-icon>\n      </button>\n      <button matIconButton matExpressiveIconButton value=\"favorite\">\n        <mat-icon>favorite</mat-icon>\n      </button>\n    </mat-expressive-button-group>\n\n    <pre>\n    <code>\n      {{ control.value | json }}\n    </code>\n  </pre>\n  </div>\n</div>\n",
+        "content": "<div class=\"preview-container\">\n  <mat-exp-button-group\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [variant]=\"variant()\"\n    [appearance]=\"appearance()\"\n    [selection]=\"selection()\"\n    [disabled]=\"disabled()\"\n  >\n    <button matIconButton matExpIconButton>\n      <mat-icon>delete</mat-icon>\n    </button>\n    <button matButton matExpButton>Label</button>\n    <button matButton matExpButton>\n      <mat-icon>edit</mat-icon>\n      Label\n    </button>\n    <button matIconButton matExpIconButton>\n      <mat-icon>favorite</mat-icon>\n    </button>\n  </mat-exp-button-group>\n  <mat-exp-button-group\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [variant]=\"variant()\"\n    [appearance]=\"appearance()\"\n    [selection]=\"selection()\"\n    [disabled]=\"disabled()\"\n  >\n    <button matButton matExpButton>Label</button>\n    <button matButton matExpButton>Label</button>\n    <button matButton matExpButton>\n      <mat-icon>edit</mat-icon>\n      Label\n    </button>\n    <button matButton matExpButton>\n      <mat-icon>edit</mat-icon>\n      Label\n    </button>\n  </mat-exp-button-group>\n  <div>\n    <h3>Usage with reactive form</h3>\n    <mat-exp-button-group\n      [size]=\"size()\"\n      [shape]=\"shape()\"\n      [variant]=\"variant()\"\n      [appearance]=\"appearance()\"\n      [selection]=\"selection()\"\n      [disabled]=\"disabled()\"\n      [formControl]=\"control\"\n    >\n      <button matIconButton matExpIconButton value=\"delete\">\n        <mat-icon>delete</mat-icon>\n      </button>\n      <button matIconButton matExpIconButton value=\"edit\">\n        <mat-icon>edit</mat-icon>\n      </button>\n      <button matIconButton matExpIconButton value=\"star\">\n        <mat-icon>star</mat-icon>\n      </button>\n      <button matIconButton matExpIconButton value=\"favorite\">\n        <mat-icon>favorite</mat-icon>\n      </button>\n    </mat-exp-button-group>\n\n    <pre>\n    <code>\n      {{ control.value | json }}\n    </code>\n  </pre>\n  </div>\n</div>\n",
         "lang": "html"
       },
       {
@@ -63,9 +63,9 @@
       }
     ]
   },
-  "MatExpressiveButton": {
-    "selector": "[matExpressiveButton]",
-    "className": "MatExpressiveButton",
+  "MatExpButton": {
+    "selector": "[matExpButton]",
+    "className": "MatExpButton",
     "inputs": [
       {
         "name": "size",
@@ -112,12 +112,12 @@
     "sourceFiles": [
       {
         "filename": "button-preview.component.ts",
-        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatButton, MatButtonAppearance } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpressiveButton,\n  type MatExpressiveButtonShape,\n  type MatExpressiveButtonSize,\n  type MatExpressiveButtonToggle,\n} from '@ngm-dev/mat-expressive';\n\n/** @playgroundFor MatExpressiveButton */\n@Component({\n  selector: 'app-button-preview',\n  standalone: true,\n  imports: [MatButton, MatExpressiveButton, MatIcon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './button-preview.component.html',\n  styleUrl: './button-preview.component.scss',\n})\nexport class ButtonPreviewComponent {\n  readonly size = input<MatExpressiveButtonSize>('s');\n  readonly shape = input<MatExpressiveButtonShape>('round');\n  readonly toggle = input<MatExpressiveButtonToggle | undefined>(undefined);\n  readonly appearance = input<MatButtonAppearance>('text');\n  /**\n   * @name Icon Position\n   */\n  readonly iconPosition = input<'before' | 'after'>('before');\n  readonly disabled = input<boolean>(false);\n}\n",
+        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatButton, MatButtonAppearance } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpButton,\n  type MatExpButtonShape,\n  type MatExpButtonSize,\n  type MatExpButtonToggle,\n} from '@ngm-dev/mat-exp';\n\n/** @playgroundFor MatExpButton */\n@Component({\n  selector: 'app-button-preview',\n  standalone: true,\n  imports: [MatButton, MatExpButton, MatIcon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './button-preview.component.html',\n  styleUrl: './button-preview.component.scss',\n})\nexport class ButtonPreviewComponent {\n  readonly size = input<MatExpButtonSize>('s');\n  readonly shape = input<MatExpButtonShape>('round');\n  readonly toggle = input<MatExpButtonToggle | undefined>(undefined);\n  readonly appearance = input<MatButtonAppearance>('text');\n  /**\n   * @name Icon Position\n   */\n  readonly iconPosition = input<'before' | 'after'>('before');\n  readonly disabled = input<boolean>(false);\n}\n",
         "lang": "angular-ts"
       },
       {
         "filename": "button-preview.component.html",
-        "content": "<div class=\"preview-row\">\n  <button\n    [matButton]=\"appearance()\"\n    matExpressiveButton\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [toggle]=\"toggle()\"\n    [disabled]=\"disabled()\"\n  >\n    Button\n  </button>\n  <button\n    [matButton]=\"appearance()\"\n    matExpressiveButton\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [toggle]=\"toggle()\"\n    [disabled]=\"disabled()\"\n  >\n    @if (iconPosition() === 'before') {\n      <mat-icon>star</mat-icon>\n    } @else {\n      <mat-icon iconPositionEnd>star</mat-icon>\n    }\n    With Icon\n  </button>\n</div>\n",
+        "content": "<div class=\"preview-row\">\n  <button\n    [matButton]=\"appearance()\"\n    matExpButton\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [toggle]=\"toggle()\"\n    [disabled]=\"disabled()\"\n  >\n    Button\n  </button>\n  <button\n    [matButton]=\"appearance()\"\n    matExpButton\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [toggle]=\"toggle()\"\n    [disabled]=\"disabled()\"\n  >\n    @if (iconPosition() === 'before') {\n      <mat-icon>star</mat-icon>\n    } @else {\n      <mat-icon iconPositionEnd>star</mat-icon>\n    }\n    With Icon\n  </button>\n</div>\n",
         "lang": "html"
       },
       {
@@ -127,9 +127,9 @@
       }
     ]
   },
-  "MatExpressiveFabMenu": {
-    "selector": "[matExpressiveFabMenu]",
-    "className": "MatExpressiveFabMenu",
+  "MatExpFabMenu": {
+    "selector": "[matExpFabMenu]",
+    "className": "MatExpFabMenu",
     "inputs": [
       {
         "name": "color",
@@ -142,12 +142,12 @@
     "sourceFiles": [
       {
         "filename": "fab-menu-preview.component.ts",
-        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatFabButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';\nimport {\n  MatExpressiveFabMenu,\n  MatExpressiveFabMenuTrigger,\n  type MatExpressiveFabMenuColor,\n} from '@ngm-dev/mat-expressive';\n\n/** @playgroundFor MatExpressiveFabMenu */\n@Component({\n  selector: 'app-fab-menu-preview',\n  standalone: true,\n  imports: [\n    MatFabButton,\n    MatIcon,\n    MatMenu,\n    MatMenuItem,\n    MatMenuTrigger,\n    MatExpressiveFabMenu,\n    MatExpressiveFabMenuTrigger,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './fab-menu-preview.component.html',\n  styleUrl: './fab-menu-preview.component.scss',\n})\nexport class FabMenuPreviewComponent {\n  readonly color = input<MatExpressiveFabMenuColor>('primary');\n}\n",
+        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatFabButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';\nimport { MatExpFabMenu, MatExpFabMenuTrigger, type MatExpFabMenuColor } from '@ngm-dev/mat-exp';\n\n/** @playgroundFor MatExpFabMenu */\n@Component({\n  selector: 'app-fab-menu-preview',\n  standalone: true,\n  imports: [\n    MatFabButton,\n    MatIcon,\n    MatMenu,\n    MatMenuItem,\n    MatMenuTrigger,\n    MatExpFabMenu,\n    MatExpFabMenuTrigger,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './fab-menu-preview.component.html',\n  styleUrl: './fab-menu-preview.component.scss',\n})\nexport class FabMenuPreviewComponent {\n  readonly color = input<MatExpFabMenuColor>('primary');\n}\n",
         "lang": "angular-ts"
       },
       {
         "filename": "fab-menu-preview.component.html",
-        "content": "<div class=\"preview-container\">\n  <button\n    matFab\n    [matMenuTriggerFor]=\"menu\"\n    matExpressiveFabMenuTrigger\n    #menuTrigger=\"matMenuTrigger\"\n    [color]=\"color()\"\n  >\n    <mat-icon>\n      @if (menuTrigger.menuOpen) {\n        close\n      } @else {\n        more_vert\n      }\n    </mat-icon>\n  </button>\n  <mat-menu #menu=\"matMenu\" matExpressiveFabMenu [color]=\"color()\">\n    <button mat-menu-item>\n      <mat-icon>description</mat-icon>\n      Document\n    </button>\n    <button mat-menu-item>\n      <mat-icon>message</mat-icon>\n      Message\n    </button>\n    <button mat-menu-item>\n      <mat-icon>folder</mat-icon>\n      Folder\n    </button>\n  </mat-menu>\n</div>\n",
+        "content": "<div class=\"preview-container\">\n  <button\n    matFab\n    [matMenuTriggerFor]=\"menu\"\n    matExpFabMenuTrigger\n    #menuTrigger=\"matMenuTrigger\"\n    [color]=\"color()\"\n  >\n    <mat-icon>\n      @if (menuTrigger.menuOpen) {\n        close\n      } @else {\n        more_vert\n      }\n    </mat-icon>\n  </button>\n  <mat-menu #menu=\"matMenu\" matExpFabMenu [color]=\"color()\">\n    <button mat-menu-item>\n      <mat-icon>description</mat-icon>\n      Document\n    </button>\n    <button mat-menu-item>\n      <mat-icon>message</mat-icon>\n      Message\n    </button>\n    <button mat-menu-item>\n      <mat-icon>folder</mat-icon>\n      Folder\n    </button>\n  </mat-menu>\n</div>\n",
         "lang": "html"
       },
       {
@@ -157,9 +157,9 @@
       }
     ]
   },
-  "MatExpressiveIconButton": {
-    "selector": "[matExpressiveIconButton]",
-    "className": "MatExpressiveIconButton",
+  "MatExpIconButton": {
+    "selector": "[matExpIconButton]",
+    "className": "MatExpIconButton",
     "inputs": [
       {
         "name": "size",
@@ -206,12 +206,12 @@
     "sourceFiles": [
       {
         "filename": "icon-button-preview.component.ts",
-        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatIconButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpressiveIconButton,\n  MatExpressiveIconButtonAppearance,\n  type MatExpressiveButtonShape,\n  type MatExpressiveButtonSize,\n  type MatExpressiveButtonToggle,\n  type MatExpressiveIconButtonWidth,\n} from '@ngm-dev/mat-expressive';\n\n/** @playgroundFor MatExpressiveIconButton */\n@Component({\n  selector: 'app-icon-button-preview',\n  standalone: true,\n  imports: [MatIconButton, MatExpressiveIconButton, MatIcon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './icon-button-preview.component.html',\n  styleUrl: './icon-button-preview.component.scss',\n})\nexport class IconButtonPreviewComponent {\n  readonly size = input<MatExpressiveButtonSize>('s');\n  readonly shape = input<MatExpressiveButtonShape>('round');\n  readonly width = input<MatExpressiveIconButtonWidth>('default');\n  readonly toggle = input<MatExpressiveButtonToggle | undefined>(undefined);\n  readonly appearance = input<MatExpressiveIconButtonAppearance>('text');\n  readonly disabled = input<boolean>(false);\n}\n",
+        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatIconButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpIconButton,\n  MatExpIconButtonAppearance,\n  type MatExpButtonShape,\n  type MatExpButtonSize,\n  type MatExpButtonToggle,\n  type MatExpIconButtonWidth,\n} from '@ngm-dev/mat-exp';\n\n/** @playgroundFor MatExpIconButton */\n@Component({\n  selector: 'app-icon-button-preview',\n  standalone: true,\n  imports: [MatIconButton, MatExpIconButton, MatIcon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './icon-button-preview.component.html',\n  styleUrl: './icon-button-preview.component.scss',\n})\nexport class IconButtonPreviewComponent {\n  readonly size = input<MatExpButtonSize>('s');\n  readonly shape = input<MatExpButtonShape>('round');\n  readonly width = input<MatExpIconButtonWidth>('default');\n  readonly toggle = input<MatExpButtonToggle | undefined>(undefined);\n  readonly appearance = input<MatExpIconButtonAppearance>('text');\n  readonly disabled = input<boolean>(false);\n}\n",
         "lang": "angular-ts"
       },
       {
         "filename": "icon-button-preview.component.html",
-        "content": "<div class=\"preview-row\">\n  <button\n    matIconButton\n    matExpressiveIconButton\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [width]=\"width()\"\n    [toggle]=\"toggle()\"\n    [appearance]=\"appearance()\"\n    [disabled]=\"disabled()\"\n  >\n    <mat-icon>star</mat-icon>\n  </button>\n</div>\n",
+        "content": "<div class=\"preview-row\">\n  <button\n    matIconButton\n    matExpIconButton\n    [size]=\"size()\"\n    [shape]=\"shape()\"\n    [width]=\"width()\"\n    [toggle]=\"toggle()\"\n    [appearance]=\"appearance()\"\n    [disabled]=\"disabled()\"\n  >\n    <mat-icon>star</mat-icon>\n  </button>\n</div>\n",
         "lang": "html"
       },
       {
@@ -221,9 +221,9 @@
       }
     ]
   },
-  "MatExpressiveLoadingIndicator": {
-    "selector": "mat-expressive-loading-indicator",
-    "className": "MatExpressiveLoadingIndicator",
+  "MatExpLoadingIndicator": {
+    "selector": "mat-exp-loading-indicator",
+    "className": "MatExpLoadingIndicator",
     "inputs": [
       {
         "name": "config",
@@ -249,12 +249,12 @@
     "sourceFiles": [
       {
         "filename": "loading-indicator-preview.component.ts",
-        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport {\n  MatExpressiveLoadingIndicator,\n  type MatExpressiveLoadingIndicatorConfig,\n  type MatExpressiveLoadingIndicatorSpeed,\n} from '@ngm-dev/mat-expressive';\n\n/** @playgroundFor MatExpressiveLoadingIndicator */\n@Component({\n  selector: 'app-loading-indicator-preview',\n  standalone: true,\n  imports: [MatExpressiveLoadingIndicator],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './loading-indicator-preview.component.html',\n  styleUrl: './loading-indicator-preview.component.scss',\n})\nexport class LoadingIndicatorPreviewComponent {\n  readonly config = input<MatExpressiveLoadingIndicatorConfig>('default');\n  readonly speed = input<MatExpressiveLoadingIndicatorSpeed>('default');\n  readonly ariaLabel = input<string | null>(null);\n}\n",
+        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport {\n  MatExpLoadingIndicator,\n  type MatExpLoadingIndicatorConfig,\n  type MatExpLoadingIndicatorSpeed,\n} from '@ngm-dev/mat-exp';\n\n/** @playgroundFor MatExpLoadingIndicator */\n@Component({\n  selector: 'app-loading-indicator-preview',\n  standalone: true,\n  imports: [MatExpLoadingIndicator],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './loading-indicator-preview.component.html',\n  styleUrl: './loading-indicator-preview.component.scss',\n})\nexport class LoadingIndicatorPreviewComponent {\n  readonly config = input<MatExpLoadingIndicatorConfig>('default');\n  readonly speed = input<MatExpLoadingIndicatorSpeed>('default');\n  readonly ariaLabel = input<string | null>(null);\n}\n",
         "lang": "angular-ts"
       },
       {
         "filename": "loading-indicator-preview.component.html",
-        "content": "<div class=\"preview-container\">\n  <mat-expressive-loading-indicator\n    [config]=\"config()\"\n    [speed]=\"speed()\"\n    [ariaLabel]=\"ariaLabel() ?? 'Loading'\"\n  ></mat-expressive-loading-indicator>\n</div>\n",
+        "content": "<div class=\"preview-container\">\n  <mat-exp-loading-indicator\n    [config]=\"config()\"\n    [speed]=\"speed()\"\n    [ariaLabel]=\"ariaLabel() ?? 'Loading'\"\n  ></mat-exp-loading-indicator>\n</div>\n",
         "lang": "html"
       },
       {
@@ -264,9 +264,9 @@
       }
     ]
   },
-  "MatExpressiveSplitButton": {
-    "selector": "mat-expressive-split-button",
-    "className": "MatExpressiveSplitButton",
+  "MatExpSplitButton": {
+    "selector": "mat-exp-split-button",
+    "className": "MatExpSplitButton",
     "inputs": [
       {
         "name": "size",
@@ -286,12 +286,12 @@
     "sourceFiles": [
       {
         "filename": "split-button-preview.component.ts",
-        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatButton, MatIconButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpressiveButton,\n  MatExpressiveIconButton,\n  MatExpressiveSplitButton,\n  type MatExpressiveButtonSize,\n  type MatExpressiveSplitButtonAppearance,\n} from '@ngm-dev/mat-expressive';\nimport { MatMenu, MatMenuTrigger, MatMenuItem } from \"@angular/material/menu\";\n\n/** @playgroundFor MatExpressiveSplitButton */\n@Component({\n  selector: 'app-split-button-preview',\n  standalone: true,\n  imports: [\n    MatButton,\n    MatIconButton,\n    MatIcon,\n    MatExpressiveButton,\n    MatExpressiveIconButton,\n    MatExpressiveSplitButton,\n    MatMenu,\n    MatMenuTrigger,\n    MatMenuItem\n],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './split-button-preview.component.html',\n  styleUrl: './split-button-preview.component.scss',\n})\nexport class SplitButtonPreviewComponent {\n  readonly size = input<MatExpressiveButtonSize>('s');\n  readonly appearance = input<MatExpressiveSplitButtonAppearance>('tonal');\n}\n",
+        "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { MatButton, MatIconButton } from '@angular/material/button';\nimport { MatIcon } from '@angular/material/icon';\nimport {\n  MatExpButton,\n  MatExpIconButton,\n  MatExpSplitButton,\n  type MatExpButtonSize,\n  type MatExpSplitButtonAppearance,\n} from '@ngm-dev/mat-exp';\nimport { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';\n\n/** @playgroundFor MatExpSplitButton */\n@Component({\n  selector: 'app-split-button-preview',\n  standalone: true,\n  imports: [\n    MatButton,\n    MatIconButton,\n    MatIcon,\n    MatExpButton,\n    MatExpIconButton,\n    MatExpSplitButton,\n    MatMenu,\n    MatMenuTrigger,\n    MatMenuItem,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  templateUrl: './split-button-preview.component.html',\n  styleUrl: './split-button-preview.component.scss',\n})\nexport class SplitButtonPreviewComponent {\n  readonly size = input<MatExpButtonSize>('s');\n  readonly appearance = input<MatExpSplitButtonAppearance>('tonal');\n}\n",
         "lang": "angular-ts"
       },
       {
         "filename": "split-button-preview.component.html",
-        "content": "<div class=\"preview-container\">\n  <mat-expressive-split-button [size]=\"size()\" [appearance]=\"appearance()\">\n    <button matButton matExpressiveButton>Action</button>\n    <button matIconButton matExpressiveIconButton [matMenuTriggerFor]=\"menu\" aria-label=\"Toggle menu\">\n      <mat-icon>expand_more</mat-icon>\n    </button>\n  </mat-expressive-split-button>\n  <mat-menu #menu=\"matMenu\">\n    <button mat-menu-item>Option 1</button>\n    <button mat-menu-item>Option 2</button>\n    <button mat-menu-item>Option 3</button>\n  </mat-menu>\n</div>\n",
+        "content": "<div class=\"preview-container\">\n  <mat-exp-split-button [size]=\"size()\" [appearance]=\"appearance()\">\n    <button matButton matExpButton>Action</button>\n    <button matIconButton matExpIconButton [matMenuTriggerFor]=\"menu\" aria-label=\"Toggle menu\">\n      <mat-icon>expand_more</mat-icon>\n    </button>\n  </mat-exp-split-button>\n  <mat-exp-split-button [size]=\"size()\" [appearance]=\"appearance()\">\n    <button matButton matExpButton>\n      <mat-icon>edit</mat-icon>\n    </button>\n    <button matIconButton matExpIconButton [matMenuTriggerFor]=\"menu\" aria-label=\"Toggle menu\">\n      <mat-icon>expand_more</mat-icon>\n    </button>\n  </mat-exp-split-button>\n  <mat-menu #menu=\"matMenu\">\n    <button mat-menu-item>Option 1</button>\n    <button mat-menu-item>Option 2</button>\n    <button mat-menu-item>Option 3</button>\n  </mat-menu>\n</div>\n",
         "lang": "html"
       },
       {

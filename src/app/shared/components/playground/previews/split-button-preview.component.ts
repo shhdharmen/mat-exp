@@ -2,15 +2,15 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {
-  MatExpressiveButton,
-  MatExpressiveIconButton,
-  MatExpressiveSplitButton,
-  type MatExpressiveButtonSize,
-  type MatExpressiveSplitButtonAppearance,
-} from '@ngm-dev/mat-expressive';
+  MatExpButton,
+  MatExpIconButton,
+  MatExpSplitButton,
+  type MatExpButtonSize,
+  type MatExpSplitButtonAppearance,
+} from '@ngm-dev/mat-exp';
 import { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
 
-/** @playgroundFor MatExpressiveSplitButton */
+/** @playgroundFor MatExpSplitButton */
 @Component({
   selector: 'app-split-button-preview',
   standalone: true,
@@ -18,9 +18,9 @@ import { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
     MatButton,
     MatIconButton,
     MatIcon,
-    MatExpressiveButton,
-    MatExpressiveIconButton,
-    MatExpressiveSplitButton,
+    MatExpButton,
+    MatExpIconButton,
+    MatExpSplitButton,
     MatMenu,
     MatMenuTrigger,
     MatMenuItem,
@@ -30,6 +30,6 @@ import { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
   styleUrl: './split-button-preview.component.scss',
 })
 export class SplitButtonPreviewComponent {
-  readonly size = input<MatExpressiveButtonSize>('s');
-  readonly appearance = input<MatExpressiveSplitButtonAppearance>('tonal');
+  readonly size = input<MatExpButtonSize>('s');
+  readonly appearance = input<MatExpSplitButtonAppearance>('tonal');
 }

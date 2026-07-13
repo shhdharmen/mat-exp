@@ -12,7 +12,7 @@ import { ThemeService } from '../theme.service';
 import { DeviceService } from '../../shared/services/device.service';
 import { SearchModalComponent } from '../search-modal/search-modal.component';
 import { CommunityDialogComponent } from '../community-dialog/community-dialog.component';
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
 
 @Component({
@@ -23,7 +23,7 @@ import { LogoComponent } from '../../shared/components/logo/logo.component';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatExpressiveButton,
+    MatExpButton,
     LogoComponent,
   ],
   host: { class: 'header' },

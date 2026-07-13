@@ -8,7 +8,7 @@ import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/materi
 import { ThemeService } from '../theme.service';
 import { FooterComponent, FOOTER_COLUMNS, FooterColumn } from '../footer/footer.component';
 import { CommunityDialogComponent } from '../community-dialog/community-dialog.component';
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
 
 @Component({
@@ -24,7 +24,7 @@ import { LogoComponent } from '../../shared/components/logo/logo.component';
     MatDrawerContainer,
     MatDrawerContent,
     FooterComponent,
-    MatExpressiveButton,
+    MatExpButton,
     LogoComponent,
   ],
   host: { class: 'standalone-shell' },

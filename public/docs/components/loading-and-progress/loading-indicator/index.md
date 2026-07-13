@@ -6,20 +6,20 @@ description: Material Expressive Loading Indicator — a GSAP-animated SVG that 
 
 ## What it is
 
-`MatExpressiveLoadingIndicator` is a [Material 3 Expressive](https://m3.material.io/) loading indicator: a single SVG path that morphs through seven canonical shapes while a slow background rotation and per-step spring rotation run on nested `<g>` elements. Motion is implemented with **GSAP** (including `MorphSVGPlugin` and `CustomEase`); there are no CSS keyframes for the loop.
+`MatExpLoadingIndicator` is a [Material 3 Expressive](https://m3.material.io/) loading indicator: a single SVG path that morphs through seven canonical shapes while a slow background rotation and per-step spring rotation run on nested `<g>` elements. Motion is implemented with **GSAP** (including `MorphSVGPlugin` and `CustomEase`); there are no CSS keyframes for the loop.
 
 The host is exposed as a **`progressbar`** with `aria-busy="true"`, `aria-valuemin` / `aria-valuemax` (static 0–100 for role compatibility), and an **`aria-label`** you should set for context (defaults to `"Loading"` from options).
 
 ## Import
 
 ```angular-ts name="app.ts"
-import { MatExpressiveLoadingIndicator } from '@ngm-dev/mat-expressive';
+import { MatExpLoadingIndicator } from '@ngm-dev/mat-exp';
 
 @Component({
   selector: 'app-root',
-  imports: [MatExpressiveLoadingIndicator],
+  imports: [MatExpLoadingIndicator],
   template: `
-    <mat-expressive-loading-indicator
+    <mat-exp-loading-indicator
       [ariaLabel]="'Saving your changes'"
       [config]="'contained'"
       [speed]="'default'"
@@ -37,7 +37,7 @@ When the host is **inserted** or **removed** from the DOM, Angular's **`(animate
 
 ```angular-html
 @if (loading()) {
-  <mat-expressive-loading-indicator [ariaLabel]="'Loading data'" />
+  <mat-exp-loading-indicator [ariaLabel]="'Loading data'" />
 }
 ```
 
@@ -55,4 +55,4 @@ If the enter/leave hooks never run (the host is always present), you only see th
 - **`config="default"`** – Morphing shape only.
 - **`config="contained"`** – Same shape on a circular **tonal** background (`primary-container` by default).
 
-Global defaults (including `ariaLabel`, `config`, and `speed`) can be set with **`provideMatExpressiveLoadingIndicatorOptions`**; see the [API](./api) page.
+Global defaults (including `ariaLabel`, `config`, and `speed`) can be set with **`provideMatExpLoadingIndicatorOptions`**; see the [API](./api) page.

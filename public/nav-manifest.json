@@ -47,26 +47,26 @@
               "label": "Button",
               "path": "/docs/components/all-buttons/button",
               "order": 1,
-              "description": "Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-expressive-button CSS class approach and the matExpressiveButton directive.",
+              "description": "Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive.",
               "isComponentPage": true,
               "children": [
                 {
                   "label": "Overview",
                   "path": "/docs/components/all-buttons/button",
                   "order": 1,
-                  "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-expressive-button CSS class approach and the matExpressiveButton directive."
+                  "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive."
                 },
                 {
                   "label": "API",
                   "path": "/docs/components/all-buttons/button/api",
                   "order": 2,
-                  "description": "API reference for the Mat Expressive Button — data attributes for the CSS class approach and the matExpressiveButton directive."
+                  "description": "API reference for the Mat Expressive Button — data attributes for the CSS class approach and the matExpButton directive."
                 },
                 {
                   "label": "Styling",
                   "path": "/docs/components/all-buttons/button/styling",
                   "order": 3,
-                  "description": "Styling API for the mat-expressive-button-styles SCSS mixin, including the skip-html-element-styles option and its effects."
+                  "description": "Styling API for the mat-exp-button-styles SCSS mixin, including the skip-html-element-styles option and its effects."
                 },
                 {
                   "label": "Playground",
@@ -80,26 +80,26 @@
               "label": "Icon Button",
               "path": "/docs/components/all-buttons/icon-button",
               "order": 2,
-              "description": "Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpressiveIconButton directive.",
+              "description": "Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpIconButton directive.",
               "isComponentPage": true,
               "children": [
                 {
                   "label": "Overview",
                   "path": "/docs/components/all-buttons/icon-button",
                   "order": 1,
-                  "description": "Overview: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpressiveIconButton directive."
+                  "description": "Overview: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpIconButton directive."
                 },
                 {
                   "label": "API",
                   "path": "/docs/components/all-buttons/icon-button/api",
                   "order": 2,
-                  "description": "API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpressiveIconButton directive."
+                  "description": "API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpIconButton directive."
                 },
                 {
                   "label": "Styling",
                   "path": "/docs/components/all-buttons/icon-button/styling",
                   "order": 3,
-                  "description": "Styling API for the mat-expressive-icon-button-styles SCSS mixin, including the skip-html-element-styles option."
+                  "description": "Styling API for the mat-exp-icon-button-styles SCSS mixin, including the skip-html-element-styles option."
                 },
                 {
                   "label": "Playground",
@@ -126,13 +126,13 @@
                   "label": "API",
                   "path": "/docs/components/all-buttons/button-group/api",
                   "order": 2,
-                  "description": "API reference for the MatExpressiveButtonGroup component."
+                  "description": "API reference for the MatExpButtonGroup component."
                 },
                 {
                   "label": "Styling",
                   "path": "/docs/components/all-buttons/button-group/styling",
                   "order": 3,
-                  "description": "Styling API for the mat-expressive-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout."
+                  "description": "Styling API for the mat-exp-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout."
                 },
                 {
                   "label": "Playground",
@@ -159,13 +159,13 @@
                   "label": "API",
                   "path": "/docs/components/all-buttons/split-button/api",
                   "order": 2,
-                  "description": "API reference for the MatExpressiveSplitButton component."
+                  "description": "API reference for the MatExpSplitButton component."
                 },
                 {
                   "label": "Styling",
                   "path": "/docs/components/all-buttons/split-button/styling",
                   "order": 3,
-                  "description": "Styling API for the mat-expressive-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects."
+                  "description": "Styling API for the mat-exp-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects."
                 },
                 {
                   "label": "Playground",
@@ -192,13 +192,13 @@
                   "label": "API",
                   "path": "/docs/components/all-buttons/fab-menu/api",
                   "order": 2,
-                  "description": "API reference for the MatExpressiveFabMenu directive and MatExpressiveFabMenuTrigger directive."
+                  "description": "API reference for the MatExpFabMenu directive and MatExpFabMenuTrigger directive."
                 },
                 {
                   "label": "Styling",
                   "path": "/docs/components/all-buttons/fab-menu/styling",
                   "order": 3,
-                  "description": "Styling API for the mat-expressive-fab-menu-styles and mat-expressive-fab-menu-trigger-styles SCSS mixins."
+                  "description": "Styling API for the mat-exp-fab-menu-styles and mat-exp-fab-menu-trigger-styles SCSS mixins."
                 },
                 {
                   "label": "Playground",
@@ -235,7 +235,7 @@
                   "label": "API",
                   "path": "/docs/components/loading-and-progress/loading-indicator/api",
                   "order": 2,
-                  "description": "API reference for MatExpressiveLoadingIndicator — host attributes, inputs, animation callbacks, provider options, and advanced exports."
+                  "description": "API reference for MatExpLoadingIndicator — host attributes, inputs, animation callbacks, provider options, and advanced exports."
                 },
                 {
                   "label": "Styling",
@@ -267,13 +267,13 @@
           "label": "All Styles API",
           "path": "/docs/styles-api/all-styles",
           "order": 1,
-          "description": "API reference for the mat-expressive-all-styles SCSS mixin that applies all Mat Expressive component styles at once."
+          "description": "API reference for the mat-exp-all-styles SCSS mixin that applies all Mat Expressive component styles at once."
         },
         {
           "label": "All Buttons Styles API",
           "path": "/docs/styles-api/all-buttons",
           "order": 2,
-          "description": "API reference for the mat-expressive-all-buttons-styles SCSS mixin that applies all button-related Mat Expressive styles at once."
+          "description": "API reference for the mat-exp-all-buttons-styles SCSS mixin that applies all button-related Mat Expressive styles at once."
         }
       ]
     }
@@ -295,19 +295,19 @@
       "label": "Overview",
       "path": "/docs/components/all-buttons/button",
       "order": 1,
-      "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-expressive-button CSS class approach and the matExpressiveButton directive."
+      "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive."
     },
     {
       "label": "API",
       "path": "/docs/components/all-buttons/button/api",
       "order": 2,
-      "description": "API reference for the Mat Expressive Button — data attributes for the CSS class approach and the matExpressiveButton directive."
+      "description": "API reference for the Mat Expressive Button — data attributes for the CSS class approach and the matExpButton directive."
     },
     {
       "label": "Styling",
       "path": "/docs/components/all-buttons/button/styling",
       "order": 3,
-      "description": "Styling API for the mat-expressive-button-styles SCSS mixin, including the skip-html-element-styles option and its effects."
+      "description": "Styling API for the mat-exp-button-styles SCSS mixin, including the skip-html-element-styles option and its effects."
     },
     {
       "label": "Playground",
@@ -319,19 +319,19 @@
       "label": "Overview",
       "path": "/docs/components/all-buttons/icon-button",
       "order": 1,
-      "description": "Overview: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpressiveIconButton directive."
+      "description": "Overview: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpIconButton directive."
     },
     {
       "label": "API",
       "path": "/docs/components/all-buttons/icon-button/api",
       "order": 2,
-      "description": "API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpressiveIconButton directive."
+      "description": "API reference for the Mat Expressive Icon Button — data attributes for the CSS class approach and the matExpIconButton directive."
     },
     {
       "label": "Styling",
       "path": "/docs/components/all-buttons/icon-button/styling",
       "order": 3,
-      "description": "Styling API for the mat-expressive-icon-button-styles SCSS mixin, including the skip-html-element-styles option."
+      "description": "Styling API for the mat-exp-icon-button-styles SCSS mixin, including the skip-html-element-styles option."
     },
     {
       "label": "Playground",
@@ -349,13 +349,13 @@
       "label": "API",
       "path": "/docs/components/all-buttons/button-group/api",
       "order": 2,
-      "description": "API reference for the MatExpressiveButtonGroup component."
+      "description": "API reference for the MatExpButtonGroup component."
     },
     {
       "label": "Styling",
       "path": "/docs/components/all-buttons/button-group/styling",
       "order": 3,
-      "description": "Styling API for the mat-expressive-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout."
+      "description": "Styling API for the mat-exp-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout."
     },
     {
       "label": "Playground",
@@ -373,13 +373,13 @@
       "label": "API",
       "path": "/docs/components/all-buttons/split-button/api",
       "order": 2,
-      "description": "API reference for the MatExpressiveSplitButton component."
+      "description": "API reference for the MatExpSplitButton component."
     },
     {
       "label": "Styling",
       "path": "/docs/components/all-buttons/split-button/styling",
       "order": 3,
-      "description": "Styling API for the mat-expressive-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects."
+      "description": "Styling API for the mat-exp-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects."
     },
     {
       "label": "Playground",
@@ -397,13 +397,13 @@
       "label": "API",
       "path": "/docs/components/all-buttons/fab-menu/api",
       "order": 2,
-      "description": "API reference for the MatExpressiveFabMenu directive and MatExpressiveFabMenuTrigger directive."
+      "description": "API reference for the MatExpFabMenu directive and MatExpFabMenuTrigger directive."
     },
     {
       "label": "Styling",
       "path": "/docs/components/all-buttons/fab-menu/styling",
       "order": 3,
-      "description": "Styling API for the mat-expressive-fab-menu-styles and mat-expressive-fab-menu-trigger-styles SCSS mixins."
+      "description": "Styling API for the mat-exp-fab-menu-styles and mat-exp-fab-menu-trigger-styles SCSS mixins."
     },
     {
       "label": "Playground",
@@ -421,7 +421,7 @@
       "label": "API",
       "path": "/docs/components/loading-and-progress/loading-indicator/api",
       "order": 2,
-      "description": "API reference for MatExpressiveLoadingIndicator — host attributes, inputs, animation callbacks, provider options, and advanced exports."
+      "description": "API reference for MatExpLoadingIndicator — host attributes, inputs, animation callbacks, provider options, and advanced exports."
     },
     {
       "label": "Styling",
@@ -439,13 +439,13 @@
       "label": "All Styles API",
       "path": "/docs/styles-api/all-styles",
       "order": 1,
-      "description": "API reference for the mat-expressive-all-styles SCSS mixin that applies all Mat Expressive component styles at once."
+      "description": "API reference for the mat-exp-all-styles SCSS mixin that applies all Mat Expressive component styles at once."
     },
     {
       "label": "All Buttons Styles API",
       "path": "/docs/styles-api/all-buttons",
       "order": 2,
-      "description": "API reference for the mat-expressive-all-buttons-styles SCSS mixin that applies all button-related Mat Expressive styles at once."
+      "description": "API reference for the mat-exp-all-buttons-styles SCSS mixin that applies all button-related Mat Expressive styles at once."
     }
   ],
   "sectionRedirects": {

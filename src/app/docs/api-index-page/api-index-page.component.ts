@@ -93,7 +93,7 @@ const KIND_URL_SEGMENT: Record<ApiKind, string> = {
     <div class="max-w-7xl mx-auto px-4 py-8">
       <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">API Reference</h1>
       <p class="text-gray-500 dark:text-gray-400 mb-6">
-        All exported symbols from <code class="font-mono text-sm">&#64;ngm-dev/mat-expressive</code>
+        All exported symbols from <code class="font-mono text-sm">&#64;ngm-dev/mat-exp</code>
       </p>
 
       <label class="block mb-8">
@@ -189,7 +189,7 @@ export class ApiIndexPageComponent {
     this.ngxMetaService.set({
       title: 'API Reference',
       description:
-        'Browse the complete API reference for @ngm-dev/mat-expressive — components, directives, types, and utilities.',
+        'Browse the complete API reference for @ngm-dev/mat-exp — components, directives, types, and utilities.',
       jsonLd: withBaseJsonLd(
         breadcrumbListJsonLd([
           { name: 'Mat Expressive', path: '/' },
@@ -213,7 +213,7 @@ export class ApiIndexPageComponent {
               rows.push({
                 name,
                 description: entry.description,
-                url: `/docs/api/mat-expressive/${KIND_URL_SEGMENT[kind]}/${name}`,
+                url: `/docs/api/mat-exp/${KIND_URL_SEGMENT[kind]}/${name}`,
               });
             }
           }

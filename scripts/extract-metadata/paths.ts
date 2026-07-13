@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 
-export const LIB_ROOT = path.resolve(process.cwd(), 'projects/ngm-dev/mat-expressive');
+export const LIB_ROOT = path.resolve(process.cwd(), 'projects/ngm-dev/mat-exp');
 export const LIB_TSCONFIG = path.join(LIB_ROOT, 'tsconfig.lib.json');
 export const PUBLIC_API_PATH = path.normalize(path.join(LIB_ROOT, 'src/public-api.ts'));
 export const PLAYGROUND_SCHEMAS_OUT = path.resolve(process.cwd(), 'public/playground-schemas.json');

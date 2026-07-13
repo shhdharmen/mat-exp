@@ -1,18 +1,18 @@
 ---
 title: Styling
 order: 3
-description: Styling API for the mat-expressive-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects.
+description: Styling API for the mat-exp-split-button-styles SCSS mixin, including the skip-html-element-styles option and layout effects.
 ---
 
-This document outlines the API for the `mat-expressive-split-button-styles` mixin.
+This document outlines the API for the `mat-exp-split-button-styles` mixin.
 
 ## Usage
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-split-button-styles($options);
+  @include mat-exp.mat-exp-split-button-styles($options);
 }
 ```
 
@@ -29,10 +29,10 @@ If `true`, the mixin will not apply styles to the underlying HTML elements.
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-split-button-styles(
+  @include mat-exp.mat-exp-split-button-styles(
     (
       skip-html-element-styles: true,
     )
@@ -61,10 +61,10 @@ Restricts the emitted CSS to only the given sizes, including the per-size connec
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-split-button-styles(
+  @include mat-exp.mat-exp-split-button-styles(
     (
       sizes: ('s', 'm'),
     )

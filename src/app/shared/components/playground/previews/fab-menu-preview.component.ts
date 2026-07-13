@@ -2,13 +2,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
-import {
-  MatExpressiveFabMenu,
-  MatExpressiveFabMenuTrigger,
-  type MatExpressiveFabMenuColor,
-} from '@ngm-dev/mat-expressive';
+import { MatExpFabMenu, MatExpFabMenuTrigger, type MatExpFabMenuColor } from '@ngm-dev/mat-exp';
 
-/** @playgroundFor MatExpressiveFabMenu */
+/** @playgroundFor MatExpFabMenu */
 @Component({
   selector: 'app-fab-menu-preview',
   standalone: true,
@@ -18,13 +14,13 @@ import {
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
-    MatExpressiveFabMenu,
-    MatExpressiveFabMenuTrigger,
+    MatExpFabMenu,
+    MatExpFabMenuTrigger,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './fab-menu-preview.component.html',
   styleUrl: './fab-menu-preview.component.scss',
 })
 export class FabMenuPreviewComponent {
-  readonly color = input<MatExpressiveFabMenuColor>('primary');
+  readonly color = input<MatExpFabMenuColor>('primary');
 }

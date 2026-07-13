@@ -98,13 +98,11 @@ test.describe('routes.txt — static asset', () => {
       .map((l) => l.trim())
       .filter(Boolean);
 
-    expect(lines).toContain('/docs/api/mat-expressive/directives/MatExpressiveButton');
-    expect(lines).toContain('/docs/api/mat-expressive/directives/MatExpressiveIconButton');
+    expect(lines).toContain('/docs/api/mat-exp/directives/MatExpButton');
+    expect(lines).toContain('/docs/api/mat-exp/directives/MatExpIconButton');
   });
 
-  test('routes.txt API routes follow /docs/api/mat-expressive/:kind/:symbol pattern', async ({
-    page,
-  }) => {
+  test('routes.txt API routes follow /docs/api/mat-exp/:kind/:symbol pattern', async ({ page }) => {
     const response = await page.request.get('/routes.txt');
     const text = await response.text();
     const apiRoutes = text
@@ -114,7 +112,7 @@ test.describe('routes.txt — static asset', () => {
 
     expect(apiRoutes.length).toBeGreaterThan(1);
     for (const route of apiRoutes) {
-      expect(route).toMatch(/^\/docs\/api\/mat-expressive\/[a-z]+\/\w+$/);
+      expect(route).toMatch(/^\/docs\/api\/mat-exp\/[a-z]+\/\w+$/);
     }
   });
 });
@@ -127,7 +125,6 @@ test.describe('SSG route smoke tests — key pages load content', () => {
   const keyRoutes = [
     '/docs/getting-started/installation',
     '/docs/getting-started/what-is-mat-expressive',
-    '/docs/getting-started/licensing',
     '/docs/components/all-buttons/button',
     '/docs/components/all-buttons/button/api',
     '/docs/components/all-buttons/button/styling',
@@ -209,17 +206,15 @@ test.describe('API Reference routes', () => {
     await expect(page.locator('app-root')).toBeVisible({ timeout: 10_000 });
   });
 
-  test('/docs/api/mat-expressive/directives/MatExpressiveButton loads without 404', async ({
-    page,
-  }) => {
-    const response = await page.goto('/docs/api/mat-expressive/directives/MatExpressiveButton');
+  test('/docs/api/mat-exp/directives/MatExpButton loads without 404', async ({ page }) => {
+    const response = await page.goto('/docs/api/mat-exp/directives/MatExpButton');
     expect(response?.status()).not.toBe(404);
-    expect(page.url()).toContain('/docs/api/mat-expressive/directives/MatExpressiveButton');
+    expect(page.url()).toContain('/docs/api/mat-exp/directives/MatExpButton');
     await expect(page.locator('app-root')).toBeVisible({ timeout: 10_000 });
   });
 
   test('/docs/api/:package/:kind/:symbol does not fall through to not-found', async ({ page }) => {
-    await page.goto('/docs/api/mat-expressive/classes/MatExpressiveSelectableButtonChange');
+    await page.goto('/docs/api/mat-exp/classes/MatExpSelectableButtonChange');
     await expect(page.locator('.not-found')).not.toBeVisible({ timeout: 10_000 });
     await expect(page.locator('app-root')).toBeVisible();
   });
@@ -233,7 +228,7 @@ test.describe('Wave 10 — API URL restructure', () => {
   test('old kind-first URL format renders "Symbol not found" instead of the real page', async ({
     page,
   }) => {
-    await page.goto('/docs/api/directives/mat-expressive/MatExpressiveButton');
+    await page.goto('/docs/api/directives/mat-exp/MatExpButton');
     await expect(page.locator('app-api-detail-page')).toContainText('Symbol not found', {
       timeout: 10_000,
     });
@@ -248,7 +243,7 @@ test.describe('Wave 10 — API URL restructure', () => {
       .filter(Boolean);
 
     const oldFormat = lines.filter((l) =>
-      /^\/docs\/api\/(components|directives|classes|interfaces|types|functions|constants)\/mat-expressive\//.test(
+      /^\/docs\/api\/(components|directives|classes|interfaces|types|functions|constants)\/mat-exp\//.test(
         l,
       ),
     );
@@ -337,18 +332,20 @@ test.describe('Wave 8 — Landing page', () => {
     await expect(cta).toBeVisible({ timeout: 10_000 });
   });
 
-  test('landing page demo section shows interactive buttons', async ({ page }) => {
+  test('landing page gallery section shows component preview cards', async ({ page }) => {
+    // Wave 11 redesign replaced the old .demo-section (interactive buttons) with
+    // a scrollable .gallery-section strip of links to component pages.
     await page.goto('/');
-    await expect(page.locator('.demo-section')).toBeVisible({ timeout: 10_000 });
-    const buttons = page.locator('.demo-section button');
-    await expect(buttons).toHaveCount(4);
+    await expect(page.locator('.gallery-section')).toBeVisible({ timeout: 10_000 });
+    const cards = page.locator('.gallery-section a.gallery-card');
+    await expect(cards).toHaveCount(6);
   });
 
   test('landing page features section renders feature cards', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('.features-section')).toBeVisible({ timeout: 10_000 });
     const cards = page.locator('.features-section .grid > div');
-    await expect(cards).toHaveCount(6);
+    await expect(cards).toHaveCount(3);
   });
 
   test('landing page quickstart section renders code snippet', async ({ page }) => {

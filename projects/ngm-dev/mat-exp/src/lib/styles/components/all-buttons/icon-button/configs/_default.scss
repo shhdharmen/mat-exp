@@ -1,0 +1,8 @@
+@use '../tokens' as tokens;
+
+// prettier-ignore
+$config: (
+  (
+    tokens: tokens.$s-tokens,
+  ),
+);

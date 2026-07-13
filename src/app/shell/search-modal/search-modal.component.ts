@@ -18,6 +18,14 @@ import { MatButtonModule } from '@angular/material/button';
 
 type Pagefind = typeof import('/_pagefind/pagefind.js');
 let cachedPagefind: Pagefind | null = null;
+// Caches the in-flight load, not just the resolved module — without this,
+// every keystroke before the first load settles (the normal case: users
+// type a query character by character) starts its own concurrent
+// import()+init() call. Pagefind's init() is not safe to call concurrently
+// more than once; racing it corrupts internal state so every later search
+// on that cachedPagefind instance silently returns zero results for the
+// rest of the page session.
+let pagefindPromise: Promise<Pagefind> | null = null;
 
 // new Function keeps this import opaque to esbuild/Vite so they do not bundle
 // pagefind.types.ts in place of the real runtime URL fetch.
@@ -27,10 +35,15 @@ const _dynamicImport = new Function('url', 'return import(url)') as (
 
 async function loadPagefind(): Promise<Pagefind> {
   if (cachedPagefind) return cachedPagefind;
-  const mod = await _dynamicImport('/_pagefind/pagefind.js');
-  await mod.init();
-  cachedPagefind = mod;
-  return mod;
+  if (!pagefindPromise) {
+    pagefindPromise = (async () => {
+      const mod = await _dynamicImport('/_pagefind/pagefind.js');
+      await mod.init();
+      cachedPagefind = mod;
+      return mod;
+    })();
+  }
+  return pagefindPromise;
 }
 
 // ── Result metadata ──────────────────────────────────────────────────────────

@@ -1,38 +1,38 @@
 ---
 title: Button
 order: 1
-description: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-expressive-button CSS class approach and the matExpressiveButton directive.
+description: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive.
 ---
 
 ## Pre-requisites
 
-Make sure either you have included `mat-expressive-all-styles`, `mat-expressive-all-buttons-styles` or `mat-expressive-button-styles` in your global SCSS styles.
+Make sure either you have included `mat-exp-all-styles`, `mat-exp-all-buttons-styles` or `mat-exp-button-styles` in your global SCSS styles.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles();
+  @include mat-exp.mat-exp-all-styles();
 }
 ```
 
 or
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-buttons-styles();
+  @include mat-exp.mat-exp-all-buttons-styles();
 }
 ```
 
 or
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-button-styles();
+  @include mat-exp.mat-exp-button-styles();
 }
 ```
 
@@ -40,10 +40,10 @@ html {
 
 The styles for Material Expressive Button can be applied in two ways:
 
-1. Using the `.mat-expressive-button` class with the `data-*` attributes
-2. Using the `matExpressiveButton` directive
+1. Using the `.mat-exp-button` class with the `data-*` attributes
+2. Using the `matExpButton` directive
 
-### Using the .mat-expressive-button class with the data-\* attributes
+### Using the .mat-exp-button class with the data-\* attributes
 
 ```angular-ts name="app.ts"
 import { MatButton } from '@angular/material/button';
@@ -51,27 +51,27 @@ import { MatButton } from '@angular/material/button';
   selector: 'app-root',
   imports: [MatButton],
   template: `
-    <button matButton="elevated" class="mat-expressive-button" data-size="xs" data-shape="square">
+    <button matButton="elevated" class="mat-exp-button" data-size="xs" data-shape="square">
       Elevated
     </button>
-    <button matButton="tonal" class="mat-expressive-button" data-size="s">Tonal</button>
+    <button matButton="tonal" class="mat-exp-button" data-size="s">Tonal</button>
   `,
 })
 export class App {}
 ```
 
-### Using the matExpressiveButton directive
+### Using the matExpButton directive
 
-If you do not want to use `data-*` attributes and the `.mat-expressive-button` class and want full type safety, you can use `matExpressiveButton` directive.
+If you do not want to use `data-*` attributes and the `.mat-exp-button` class and want full type safety, you can use `matExpButton` directive.
 
 ```angular-ts name="app.ts"
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 @Component({
   selector: 'app-root',
-  imports: [MatButton, MatExpressiveButton],
+  imports: [MatButton, MatExpButton],
   template: `
-    <button matButton="elevated" size="xs" shape="square" matExpressiveButton>Elevated</button>
-    <button matButton="tonal" size="s" matExpressiveButton>Tonal</button>
+    <button matButton="elevated" size="xs" shape="square" matExpButton>Elevated</button>
+    <button matButton="tonal" size="s" matExpButton>Tonal</button>
   `,
 })
 export class App {}

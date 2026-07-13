@@ -1,0 +1,12 @@
+@use './components/all-buttons';
+
+@mixin mat-exp-all-styles(
+  $options: (
+    skip-html-element-styles: false,
+    // mat-exp-button-class: 'mat-exp-button',
+    // mat-exp-icon-button-class: 'mat-exp-icon-button',
+     // mat-exp-button-group-class: 'mat-exp-button-group',
+  )
+) {
+  @include all-buttons.mat-exp-all-buttons-styles($options);
+}

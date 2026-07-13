@@ -70,7 +70,7 @@ test.describe('Playground skeleton', () => {
       await route.continue();
     });
 
-    await page.goto('/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button/playground');
     await page.locator('app-playground').waitFor({ state: 'visible', timeout: 10_000 });
 
     const skeleton = page.locator('app-playground .component-preview-skeleton');
@@ -80,7 +80,7 @@ test.describe('Playground skeleton', () => {
   });
 
   test('skeleton is replaced by playground-layout once schema loads', async ({ page }) => {
-    await page.goto('/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button/playground');
     await waitForPlayground(page);
 
     await expect(page.locator('app-playground .playground-layout')).toBeVisible();
@@ -89,29 +89,31 @@ test.describe('Playground skeleton', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 2. MatExpressiveButton playground
+// 2. MatExpButton playground
 // ---------------------------------------------------------------------------
 
-test.describe('MatExpressiveButton playground', () => {
+test.describe('MatExpButton playground', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button/playground');
     await waitForPlayground(page);
   });
 
   test('renders the two-panel playground layout', async ({ page }) => {
-    const pg = playgroundEl(page, 'MatExpressiveButton');
+    const pg = playgroundEl(page, 'MatExpButton');
     await expect(pg.locator('.playground-layout')).toBeVisible();
     await expect(pg.locator('.playground-preview')).toBeVisible();
     await expect(pg.locator('.playground-controls')).toBeVisible();
   });
 
-  test('controls panel has exactly 3 controls (size, shape, toggle)', async ({ page }) => {
-    const rows = controlsPanel(page, 'MatExpressiveButton').locator('.control-row');
-    await expect(rows).toHaveCount(3);
+  test('controls panel has exactly 6 controls (size, shape, toggle, appearance, iconPosition, disabled)', async ({
+    page,
+  }) => {
+    const rows = controlsPanel(page, 'MatExpButton').locator('.control-row');
+    await expect(rows).toHaveCount(6);
   });
 
   test('size control renders as a mat-select with all size options', async ({ page }) => {
-    const sizeSelect = controlsPanel(page, 'MatExpressiveButton')
+    const sizeSelect = controlsPanel(page, 'MatExpButton')
       .locator('.control-row')
       .filter({ has: page.locator('mat-label', { hasText: 'size' }) })
       .locator('mat-select');
@@ -126,36 +128,36 @@ test.describe('MatExpressiveButton playground', () => {
   });
 
   test('live button preview renders inside the preview area', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveButton');
-    await expect(preview.locator('button.mat-expressive-button').first()).toBeVisible();
+    const preview = previewArea(page, 'MatExpButton');
+    await expect(preview.locator('button.mat-exp-button').first()).toBeVisible();
   });
 
   test('changing size control updates the live button data-size attribute', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveButton');
-    const firstButton = preview.locator('button.mat-expressive-button').first();
+    const preview = previewArea(page, 'MatExpButton');
+    const firstButton = preview.locator('button.mat-exp-button').first();
 
-    await selectControlValue(page, 'MatExpressiveButton', 'size', 'xl');
+    await selectControlValue(page, 'MatExpButton', 'size', 'xl');
 
     await expect(firstButton).toHaveAttribute('data-size', 'xl');
   });
 
   test('changing shape control updates the live button data-shape attribute', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveButton');
-    const firstButton = preview.locator('button.mat-expressive-button').first();
+    const preview = previewArea(page, 'MatExpButton');
+    const firstButton = preview.locator('button.mat-exp-button').first();
 
-    await selectControlValue(page, 'MatExpressiveButton', 'shape', 'square');
+    await selectControlValue(page, 'MatExpButton', 'shape', 'square');
 
     await expect(firstButton).toHaveAttribute('data-shape', 'square');
   });
 
   test('reset button restores controls to default values', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveButton');
-    const firstButton = preview.locator('button.mat-expressive-button').first();
+    const preview = previewArea(page, 'MatExpButton');
+    const firstButton = preview.locator('button.mat-exp-button').first();
 
-    await selectControlValue(page, 'MatExpressiveButton', 'size', 'xl');
+    await selectControlValue(page, 'MatExpButton', 'size', 'xl');
     await expect(firstButton).toHaveAttribute('data-size', 'xl');
 
-    await controlsPanel(page, 'MatExpressiveButton')
+    await controlsPanel(page, 'MatExpButton')
       .locator('button[aria-label="Reset all controls to defaults"]')
       .click();
 
@@ -164,35 +166,35 @@ test.describe('MatExpressiveButton playground', () => {
 
   test('controls title label is visible', async ({ page }) => {
     await expect(
-      controlsPanel(page, 'MatExpressiveButton').locator('.playground-controls-title'),
+      controlsPanel(page, 'MatExpButton').locator('.playground-controls-title'),
     ).toBeVisible();
   });
 });
 
 // ---------------------------------------------------------------------------
-// 3. MatExpressiveLoadingIndicator playground
+// 3. MatExpLoadingIndicator playground
 // ---------------------------------------------------------------------------
 
-test.describe('MatExpressiveLoadingIndicator playground', () => {
+test.describe('MatExpLoadingIndicator playground', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/components/loading-and-progress/loading-indicator/playground');
+    await page.goto('/docs/components/loading-and-progress/loading-indicator/playground');
     await waitForPlayground(page);
   });
 
   test('renders the two-panel playground layout', async ({ page }) => {
-    const pg = playgroundEl(page, 'MatExpressiveLoadingIndicator');
+    const pg = playgroundEl(page, 'MatExpLoadingIndicator');
     await expect(pg.locator('.playground-layout')).toBeVisible();
     await expect(pg.locator('.playground-preview')).toBeVisible();
     await expect(pg.locator('.playground-controls')).toBeVisible();
   });
 
   test('controls panel has 3 controls (config, ariaLabel, speed)', async ({ page }) => {
-    const rows = controlsPanel(page, 'MatExpressiveLoadingIndicator').locator('.control-row');
+    const rows = controlsPanel(page, 'MatExpLoadingIndicator').locator('.control-row');
     await expect(rows).toHaveCount(3);
   });
 
   test('speed control is a select with fast, default, slow options', async ({ page }) => {
-    const speedSelect = controlsPanel(page, 'MatExpressiveLoadingIndicator')
+    const speedSelect = controlsPanel(page, 'MatExpLoadingIndicator')
       .locator('.control-row')
       .filter({ has: page.locator('mat-label', { hasText: 'speed' }) })
       .locator('mat-select');
@@ -207,44 +209,44 @@ test.describe('MatExpressiveLoadingIndicator playground', () => {
   });
 
   test('ariaLabel control is a text input', async ({ page }) => {
-    const textInput = controlsPanel(page, 'MatExpressiveLoadingIndicator')
+    const textInput = controlsPanel(page, 'MatExpLoadingIndicator')
       .locator('.control-row')
-      .filter({ has: page.locator('mat-label', { hasText: 'ariaLabel' }) })
+      .filter({ has: page.locator('mat-label', { hasText: 'Aria label' }) })
       .locator('input[type="text"]');
 
     await expect(textInput).toBeVisible();
   });
 
   test('live loading indicator renders inside the preview area', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveLoadingIndicator');
-    await expect(preview.locator('mat-expressive-loading-indicator')).toBeVisible();
+    const preview = previewArea(page, 'MatExpLoadingIndicator');
+    await expect(preview.locator('mat-exp-loading-indicator')).toBeVisible();
   });
 
   test('changing speed updates the data-speed attribute on the indicator', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveLoadingIndicator');
-    const indicator = preview.locator('mat-expressive-loading-indicator');
+    const preview = previewArea(page, 'MatExpLoadingIndicator');
+    const indicator = preview.locator('mat-exp-loading-indicator');
 
-    await selectControlValue(page, 'MatExpressiveLoadingIndicator', 'speed', 'fast');
+    await selectControlValue(page, 'MatExpLoadingIndicator', 'speed', 'fast');
 
     await expect(indicator).toHaveAttribute('data-speed', 'fast');
   });
 
   test('changing config updates the live indicator', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveLoadingIndicator');
-    const indicator = preview.locator('mat-expressive-loading-indicator');
+    const preview = previewArea(page, 'MatExpLoadingIndicator');
+    const indicator = preview.locator('mat-exp-loading-indicator');
 
-    await selectControlValue(page, 'MatExpressiveLoadingIndicator', 'config', 'contained');
+    await selectControlValue(page, 'MatExpLoadingIndicator', 'config', 'contained');
 
     await expect(indicator).toBeVisible();
   });
 
   test('typing into ariaLabel updates the aria-label on the indicator', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveLoadingIndicator');
-    const indicator = preview.locator('mat-expressive-loading-indicator');
+    const preview = previewArea(page, 'MatExpLoadingIndicator');
+    const indicator = preview.locator('mat-exp-loading-indicator');
 
-    const textInput = controlsPanel(page, 'MatExpressiveLoadingIndicator')
+    const textInput = controlsPanel(page, 'MatExpLoadingIndicator')
       .locator('.control-row')
-      .filter({ has: page.locator('mat-label', { hasText: 'ariaLabel' }) })
+      .filter({ has: page.locator('mat-label', { hasText: 'Aria label' }) })
       .locator('input[type="text"]');
 
     await textInput.fill('Processing…');
@@ -255,33 +257,35 @@ test.describe('MatExpressiveLoadingIndicator playground', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 4. MatExpressiveButtonGroup playground (override preview)
+// 4. MatExpButtonGroup playground (override preview)
 // ---------------------------------------------------------------------------
 
-test.describe('MatExpressiveButtonGroup playground', () => {
+test.describe('MatExpButtonGroup playground', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/components/all-buttons/button-group/playground');
+    await page.goto('/docs/components/all-buttons/button-group/playground');
     await waitForPlayground(page);
   });
 
   test('renders the two-panel playground layout', async ({ page }) => {
-    const pg = playgroundEl(page, 'MatExpressiveButtonGroup');
+    const pg = playgroundEl(page, 'MatExpButtonGroup');
     await expect(pg.locator('.playground-layout')).toBeVisible();
   });
 
   test('live ButtonGroup preview renders projected button children', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveButtonGroup');
-    await expect(preview.locator('mat-expressive-button-group')).toBeVisible();
-    const buttons = preview.locator('mat-expressive-button-group button');
+    const preview = previewArea(page, 'MatExpButtonGroup');
+    // The preview showcases multiple example button-group configurations
+    // side by side, all wired to the same live controls — target the first.
+    await expect(preview.locator('mat-exp-button-group').first()).toBeVisible();
+    const buttons = preview.locator('mat-exp-button-group').first().locator('button');
     const count = await buttons.count();
     expect(count).toBeGreaterThanOrEqual(4);
   });
 
   test('disabled slide-toggle changes the disabled attribute on the group', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveButtonGroup');
-    const group = preview.locator('mat-expressive-button-group');
+    const preview = previewArea(page, 'MatExpButtonGroup');
+    const group = preview.locator('mat-exp-button-group').first();
 
-    const toggle = controlsPanel(page, 'MatExpressiveButtonGroup').locator('mat-slide-toggle');
+    const toggle = controlsPanel(page, 'MatExpButtonGroup').locator('mat-slide-toggle');
     await expect(toggle).toBeVisible();
 
     await toggle.click();
@@ -292,10 +296,10 @@ test.describe('MatExpressiveButtonGroup playground', () => {
   });
 
   test('changing size control updates the button-group data-size attribute', async ({ page }) => {
-    const preview = previewArea(page, 'MatExpressiveButtonGroup');
-    const group = preview.locator('mat-expressive-button-group');
+    const preview = previewArea(page, 'MatExpButtonGroup');
+    const group = preview.locator('mat-exp-button-group').first();
 
-    await selectControlValue(page, 'MatExpressiveButtonGroup', 'size', 'l');
+    await selectControlValue(page, 'MatExpButtonGroup', 'size', 'l');
 
     await expect(group).toHaveAttribute('data-size', 'l');
   });
@@ -307,23 +311,23 @@ test.describe('MatExpressiveButtonGroup playground', () => {
 
 test.describe('Playground dark mode', () => {
   test('controls panel is visible in dark mode', async ({ page }) => {
-    await page.goto('/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button/playground');
     await waitForPlayground(page);
 
     await page.evaluate(() => document.documentElement.classList.add('dark'));
 
-    const panel = controlsPanel(page, 'MatExpressiveButton');
+    const panel = controlsPanel(page, 'MatExpButton');
     await expect(panel).toBeVisible();
     await expect(panel.locator('.playground-controls-title')).toBeVisible();
   });
 
   test('live preview area is visible in dark mode', async ({ page }) => {
-    await page.goto('/components/loading-and-progress/loading-indicator/playground');
+    await page.goto('/docs/components/loading-and-progress/loading-indicator/playground');
     await waitForPlayground(page);
 
     await page.evaluate(() => document.documentElement.classList.add('dark'));
 
-    await expect(previewArea(page, 'MatExpressiveLoadingIndicator')).toBeVisible();
+    await expect(previewArea(page, 'MatExpLoadingIndicator')).toBeVisible();
   });
 });
 
@@ -334,14 +338,14 @@ test.describe('Playground dark mode', () => {
 test.describe('Playground responsive layout', () => {
   test('playground stacks vertically on a 375px-wide viewport', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto('/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button/playground');
     await waitForPlayground(page);
 
-    const layout = playgroundEl(page, 'MatExpressiveButton').locator('.playground-layout');
+    const layout = playgroundEl(page, 'MatExpButton').locator('.playground-layout');
     await expect(layout).toBeVisible();
 
-    const preview = previewArea(page, 'MatExpressiveButton');
-    const controls = controlsPanel(page, 'MatExpressiveButton');
+    const preview = previewArea(page, 'MatExpButton');
+    const controls = controlsPanel(page, 'MatExpButton');
     const previewBox = await preview.boundingBox();
     const controlsBox = await controls.boundingBox();
     expect(previewBox!.y).toBeLessThan(controlsBox!.y);
@@ -349,11 +353,11 @@ test.describe('Playground responsive layout', () => {
 
   test('playground shows side-by-side panels on a 1024px viewport', async ({ page }) => {
     await page.setViewportSize({ width: 1024, height: 768 });
-    await page.goto('/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button/playground');
     await waitForPlayground(page);
 
-    const preview = previewArea(page, 'MatExpressiveButton');
-    const controls = controlsPanel(page, 'MatExpressiveButton');
+    const preview = previewArea(page, 'MatExpButton');
+    const controls = controlsPanel(page, 'MatExpButton');
     const previewBox = await preview.boundingBox();
     const controlsBox = await controls.boundingBox();
 

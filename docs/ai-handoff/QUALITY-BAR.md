@@ -8,10 +8,10 @@
 | # | Rule | How to check | Level |
 |---|---|---|---|
 | C1 | Standalone, `OnPush`, signals-based state; no `@HostBinding/@HostListener`; `host` object only | ESLint + grep `@Input\(|@Output\(|@HostBinding|@HostListener` in `projects/` — decorator inputs currently exist only in `icon-button.ts` and `button-group.ts` (tracked, ISSUES-TRIAGED.md #6); no new ones | MUST |
-| C2 | Directive/component selector prefixes `matExpressive`/`mat-expressive` | `ng lint` (angular-eslint rules) | MUST |
+| C2 | Directive/component selector prefixes `matExp`/`mat-exp` | `ng lint` (angular-eslint rules) | MUST |
 | C3 | No `any`; prefer `unknown` | `ng lint` + review | MUST |
 | C4 | Public members JSDoc'd with `@default`; private ones `_`-prefixed + `@internal` | review; the docs pipeline makes missing `@internal` a *public API leak*, not a style nit | MUST |
-| C5 | Options-bag DI pattern for all configurable defaults (`matExpressiveCreateOptions`) | new `*.options.ts` matches `button.options.ts` shape | MUST |
+| C5 | Options-bag DI pattern for all configurable defaults (`matExpCreateOptions`) | new `*.options.ts` matches `button.options.ts` shape | MUST |
 | C6 | SSR-safe: no bare `window`/`document`; guards or `afterRenderEffect` | grep + `npm run build:docs` (prerender executes the code) | MUST |
 | C7 | `sideEffects: false` preserved — no module-scope side effects in lib | review imports/top-level statements | MUST |
 | C8 | Motion tokens in TS, never SCSS; GSAP-only animation; `prefers-reduced-motion` respected in every code path | grep `matchMedia\|prefers-reduced-motion` next to any `gsap.` usage | MUST |
@@ -40,7 +40,7 @@ implementation for motion, which `loading-indicator.animation.ts` already mirror
 |---|---|---|
 | A1 | Both usage styles work: plain CSS class + `data-*` attributes (no import), and the typed directive — and their outputs are identical | MUST |
 | A2 | Inputs are string-literal unions exported from `lib/types/` (autocomplete + compile-time validation) | MUST |
-| A3 | Defaults overridable at any injector level via `provideMatExpressive<X>Options` | MUST |
+| A3 | Defaults overridable at any injector level via `provideMatExp<X>Options` | MUST |
 | A4 | Two-way state uses `model()`; container-broadcast state writable by the container only through `ButtonGroupChild` adapters | MUST |
 | A5 | Forms-facing components implement CVA (`button-group.ts` is the reference) | MUST where applicable |
 | A6 | No required inputs unless the component is meaningless without them | SHOULD |
@@ -55,7 +55,7 @@ implementation for motion, which `loading-indicator.animation.ts` already mirror
 | D3 | Frontmatter: `title`, `order`, `description` present; only legal keys (build enforces) | `npm run build:docs` | MUST |
 | D4 | Spellcheck pass over changed `.md` | cspell or careful read | MUST |
 | D5 | Every claim about defaults matches `*_DEFAULT_OPTIONS` in code | cross-check | MUST |
-| D6 | API tab links use scope-first URLs (`/docs/api/mat-expressive/<kind>/<Symbol>`) | grep old `/api/classes/` pattern (5 stale files tracked in issue #65) | MUST |
+| D6 | API tab links use scope-first URLs (`/docs/api/mat-exp/<kind>/<Symbol>`) | grep old `/api/classes/` pattern (5 stale files tracked in issue #65) | MUST |
 | D7 | Playground defaults look good — the default render is the product screenshot everyone sees | eyeball | SHOULD |
 
 ## 5. Pre-release checklist (run mechanically, in order)
@@ -66,21 +66,21 @@ implementation for motion, which `loading-indicator.animation.ts` already mirror
 3.  npm run generate:style-constants         # must produce no diff (else commit it first)
 4.  ng lint                                  # zero errors
 5.  npm test -- --watch=false                # BOTH projects; zero failures
-      npx ng test --project @ngm-dev/mat-expressive --watch=false
-      npx ng test --project mat-expressive-docs --watch=false
+      npx ng test --project @ngm-dev/mat-exp --watch=false
+      npx ng test --project mat-exp-docs --watch=false
 6.  npm run build:lib                        # sass validate-config gates token typos
 7.  PACKAGE SMOKE TEST:
-      cd dist/ngm-dev/mat-expressive && npm pack
+      cd dist/ngm-dev/mat-exp && npm pack
       install tarball in fresh ng-new app; @use the sass entry; include all-styles mixin;
-      ng build; assert output CSS contains ".mat-expressive-button["
+      ng build; assert output CSS contains ".mat-exp-button["
       assert package tarball contains src/lib/styles/**/*.scss and non-empty styles.css
 8.  npm run build:docs                       # 0 prerender errors; route count didn't shrink
-9.  npx ng e2e --project=mat-expressive-docs --test-project=chromium
+9.  npx ng e2e --project=mat-exp-docs --test-project=chromium
 10. Manual playground sweep: every component × sizes × light/dark × reduced-motion
 11. Verify CHANGELOG-worthy commits use correct conventional types
 12. Push to main; WATCH the release action to completion; then:
-      npm view @ngm-dev/mat-expressive versions   # new version MUST appear (ISSUES #2)
-      npm view @ngm-dev/mat-expressive license    # must say PolyForm-Noncommercial-1.0.0
+      npm view @ngm-dev/mat-exp versions   # new version MUST appear (ISSUES #2)
+      npm view @ngm-dev/mat-exp license    # must say PolyForm-Noncommercial-1.0.0
 13. Open the live docs site; hard-refresh; click one playground.
 ```
 

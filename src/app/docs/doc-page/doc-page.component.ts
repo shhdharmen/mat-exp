@@ -14,7 +14,7 @@ import { firstValueFrom, of } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MatButton } from '@angular/material/button';
-import { MatExpressiveButton } from '@ngm-dev/mat-expressive';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core';
 import { JsonLdMetadata } from '@davidlj95/ngx-meta/json-ld';
 import { environment } from '../../../environments/environment';
@@ -105,7 +105,7 @@ function findAncestorChain(
     NgTemplateOutlet,
     NgComponentOutlet,
     MatButton,
-    MatExpressiveButton,
+    MatExpButton,
   ],
   templateUrl: './doc-page.component.html',
   styleUrl: './doc-page.component.scss',

@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@use '../../projects/ngm-dev/mat-expressive/src/lib/styles' as mat-expressive;
+@use '../../projects/ngm-dev/mat-exp/src/lib/styles' as mat-exp;
 @use '../styles_theme-colors.scss' as mat-theme-colors;
 
 html {
@@ -21,7 +21,7 @@ html {
   );
 
   @include mat.system-classes();
-  @include mat-expressive.mat-expressive-all-styles();
+  @include mat-exp.mat-exp-all-styles();
 
   &.dark {
     color-scheme: dark;

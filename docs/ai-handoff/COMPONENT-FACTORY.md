@@ -14,7 +14,7 @@ the Button Family?**
   global SCSS mixin; every step below applies.
 - **NO** (e.g. progress bar, navigation rail) → **Standalone path**: `@Component` with
   `styleUrls` + `ViewEncapsulation.None` + CSS custom properties
-  (`--mat-expressive-<component>-<prop>` with inline fallbacks). Model it on
+  (`--mat-exp-<component>-<prop>` with inline fallbacks). Model it on
   `loading-and-progress/loading-indicator/` — copy its file set. Skip §3 (SCSS mixin steps);
   everything else still applies.
 
@@ -22,17 +22,17 @@ Time to ship a component today, all-manual: **1–3 days** for a family member (
 transcription from the M3 spec dominates), ~1 day for a standalone component. The checklist
 below is ~20 files touched for a family member; §9 proposes generators that cut it to ~5.
 
-## 1. Types (`projects/ngm-dev/mat-expressive/src/lib/types/`)
+## 1. Types (`projects/ngm-dev/mat-exp/src/lib/types/`)
 
 1. If the component introduces a new attribute (like `width` for icon-button): create
    `lib/types/<attr>.ts` exporting one string-literal union
-   (`export type MatExpressive<X> = 'a' | 'b';`), following the existing one-alias-per-value
+   (`export type MatExp<X> = 'a' | 'b';`), following the existing one-alias-per-value
    style in `size.ts`.
 2. Re-export from `lib/types/index.ts`.
 3. If the attribute must be a `data-*` selector in SCSS: add an entry to `ATTRIBUTE_SOURCES` in
    `scripts/generate-style-constants.ts` (~line 61) pointing at the file + union name(s), then
    run `npm run generate:style-constants`.
-   VERIFY: `git diff projects/ngm-dev/mat-expressive/src/lib/styles/utils/_generated-attributes.scss`
+   VERIFY: `git diff projects/ngm-dev/mat-exp/src/lib/styles/utils/_generated-attributes.scss`
    shows your values. Never edit that file by hand.
 4. If the attribute has no TS union (rare), add it to the hand-maintained half of
    `$known-attributes` in `lib/styles/utils/_constants.scss` instead.
@@ -46,24 +46,24 @@ manifest is generated from its exports).
 
 `<name>.options.ts` — copy `button/button.options.ts` exactly:
 ```ts
-export interface MatExpressive<Name>Options { /* JSDoc every field, note defaults */ }
-export const MAT_EXPRESSIVE_<NAME>_DEFAULT_OPTIONS: MatExpressive<Name>Options = { … };
-const _options = matExpressiveCreateOptions(MAT_EXPRESSIVE_<NAME>_DEFAULT_OPTIONS);
-export const MAT_EXPRESSIVE_<NAME>_OPTIONS = _options.token;
-export const provideMatExpressive<Name>Options = _options.provide;
-export const injectMatExpressive<Name>Options = _options.inject;
+export interface MatExp<Name>Options { /* JSDoc every field, note defaults */ }
+export const MAT_EXP_<NAME>_DEFAULT_OPTIONS: MatExp<Name>Options = { … };
+const _options = matExpCreateOptions(MAT_EXP_<NAME>_DEFAULT_OPTIONS);
+export const MAT_EXP_<NAME>_OPTIONS = _options.token;
+export const provideMatExp<Name>Options = _options.provide;
+export const injectMatExp<Name>Options = _options.inject;
 ```
 
 `<name>.ts` — rules (all enforced by ESLint or convention, see CONVENTIONS.md):
-- Directive selector `[matExpressive<Name>]` (camelCase); component selector
-  `mat-expressive-<name>` (kebab).
-- `host` object stamps `class` (a readonly `matExpressive<Name>Class = 'mat-expressive-<name>'`
+- Directive selector `[matExp<Name>]` (camelCase); component selector
+  `mat-exp-<name>` (kebab).
+- `host` object stamps `class` (a readonly `matExp<Name>Class = 'mat-exp-<name>'`
   field tagged `@internal`) and one `[attr.data-<attr>]` binding per attribute.
 - State via `input()` / `model()` initialized from `this._options.<x>` (use `model()` when a
   container may write it — group broadcast writes size/shape/appearance).
 - `inject(MatX)` for the Material host; `inject(Y, { optional: true })` for contextual parents
   (see `button.ts:59-65`).
-- Add `exportAs: 'matExpressive<Name>'` (button has it; split-button/fab-menu forgot — don't
+- Add `exportAs: 'matExp<Name>'` (button has it; split-button/fab-menu forgot — don't
   repeat that).
 - `ChangeDetectionStrategy.OnPush` on every `@Component`.
 - Anything not for consumers: `_` prefix + `@internal` JSDoc (this removes it from docs/playground).
@@ -78,7 +78,7 @@ export const injectMatExpressive<Name>Options = _options.inject;
 Copy the `button/` directory shape:
 ```
 <name>/
-├── _index.scss     # mat-expressive-<name>-styles($options) mixin — copy button/_index.scss,
+├── _index.scss     # mat-exp-<name>-styles($options) mixin — copy button/_index.scss,
 │                   # swap class name, config var, and mat.<x>-overrides() call
 ├── _config.scss    # joins configs/* lists into $<name>-config
 ├── configs/_default.scss, _xs.scss … _xl.scss   # combination entries
@@ -91,7 +91,7 @@ Copy the `button/` directory shape:
    tokens can't express goes into `properties:` maps keyed by child selector — reuse
    `_common-selectors.scss` lists.
 2. Register the mixin: `@forward` in `lib/styles/components/all-buttons/_index.scss` and add an
-   `@include` to `mat-expressive-all-buttons-styles()`; `lib/styles/_index.scss` forwards the
+   `@include` to `mat-exp-all-buttons-styles()`; `lib/styles/_index.scss` forwards the
    directory.
 3. VERIFY: `npm run build:lib` (validate-config @errors on any typo'd key/value) and the docs
    app renders it (`npm start` after build:lib).
@@ -102,7 +102,7 @@ Minimum spec (see QUALITY-BAR.md §3): defaults render; each input maps to its `
 attribute; options provider overrides defaults; container broadcast (if family);
 reduced-motion + SSR construction (if animated). Pattern references:
 `button-group.spec.ts` (TestBed + host template), `button-group-child.spec.ts` (plain class).
-Run: `npx ng test --project @ngm-dev/mat-expressive --watch=false`.
+Run: `npx ng test --project @ngm-dev/mat-exp --watch=false`.
 
 ## 5. Docs page (`public/docs/components/<group>/<name>/`)
 
@@ -112,7 +112,7 @@ Three markdown files — copy frontmatter shape from `button/`:
   **Compile every code snippet in a scratch app before committing** — a broken first snippet is
   the most expensive bug this product has had (ISSUES-TRIAGED.md #3).
 - `api.md` — data attributes with defaults/possible values; directive/component inputs;
-  link to `/docs/api/mat-expressive/...` detail pages (scope-first URL scheme).
+  link to `/docs/api/mat-exp/...` detail pages (scope-first URL scheme).
 - `styling.md` — the mixin name, `$options` table, `skip-html-element-styles` effects.
 If the group is new, add `<group>/index.md` with `title` + `order`.
 `scripts/build-docs.ts` auto-discovers the folder (Component Page = index.md + api.md/styling.md);

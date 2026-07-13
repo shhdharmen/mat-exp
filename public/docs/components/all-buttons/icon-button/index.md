@@ -1,38 +1,38 @@
 ---
 title: Icon Button
 order: 2
-description: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpressiveIconButton directive.
+description: Material Expressive Icon Button with size, shape, toggle, appearance, and width variations. Supports both the CSS class approach and the matExpIconButton directive.
 ---
 
 ## Pre-requisites
 
-Make sure either you have included `mat-expressive-all-styles`, `mat-expressive-all-buttons-styles` or `mat-expressive-icon-button-styles` in your global SCSS styles.
+Make sure either you have included `mat-exp-all-styles`, `mat-exp-all-buttons-styles` or `mat-exp-icon-button-styles` in your global SCSS styles.
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-styles();
+  @include mat-exp.mat-exp-all-styles();
 }
 ```
 
 or
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-all-buttons-styles();
+  @include mat-exp.mat-exp-all-buttons-styles();
 }
 ```
 
 or
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-icon-button-styles();
+  @include mat-exp.mat-exp-icon-button-styles();
 }
 ```
 
@@ -40,10 +40,10 @@ html {
 
 The styles for Material Expressive Button can be applied in two ways:
 
-1. Using the `.mat-expressive-icon-button` class with the `data-*` attributes
-2. Using the `matExpressiveIconButton` directive
+1. Using the `.mat-exp-icon-button` class with the `data-*` attributes
+2. Using the `matExpIconButton` directive
 
-### Using the .mat-expressive-icon-button class with the data-\* attributes
+### Using the .mat-exp-icon-button class with the data-\* attributes
 
 ```angular-ts name="app.ts"
 import { MatIconButton } from '@angular/material/button';
@@ -52,10 +52,10 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'app-root',
   imports: [MatIconButton, MatIcon],
   template: `
-    <button mat-icon-button class="mat-expressive-icon-button" data-size="xs" data-shape="square">
+    <button mat-icon-button class="mat-exp-icon-button" data-size="xs" data-shape="square">
       <mat-icon>home</mat-icon>
     </button>
-    <button mat-icon-button class="mat-expressive-icon-button" data-size="sm">
+    <button mat-icon-button class="mat-exp-icon-button" data-size="sm">
       <mat-icon>home</mat-icon>
     </button>
   `,
@@ -63,21 +63,21 @@ import { MatIcon } from '@angular/material/icon';
 export class App {}
 ```
 
-### Using the matExpressiveIconButton directive
+### Using the matExpIconButton directive
 
-If you do not want to use `data-*` attributes and the `.mat-expressive-icon-button` class and want full type safety, you can use `matExpressiveIconButton` directive.
+If you do not want to use `data-*` attributes and the `.mat-exp-icon-button` class and want full type safety, you can use `matExpIconButton` directive.
 
 ```angular-ts name="app.ts"
-import { MatExpressiveIconButton } from '@ngm-dev/mat-expressive';
+import { MatExpIconButton } from '@ngm-dev/mat-exp';
 import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-root',
-  imports: [MatIconButton, MatExpressiveIconButton, MatIcon],
+  imports: [MatIconButton, MatExpIconButton, MatIcon],
   template: `
-    <button mat-icon-button size="xs" shape="square" matExpressiveIconButton>
+    <button mat-icon-button size="xs" shape="square" matExpIconButton>
       <mat-icon>home</mat-icon>
     </button>
-    <button mat-icon-button size="sm" matExpressiveIconButton>
+    <button mat-icon-button size="sm" matExpIconButton>
       <mat-icon>home</mat-icon>
     </button>
   `,

@@ -26,12 +26,12 @@ export interface PlaygroundRegistryEntry {
  * override) because it requires projected button children.
  */
 export const PLAYGROUND_REGISTRY: Record<string, PlaygroundRegistryEntry> = {
-  MatExpressiveButton: { previewComponent: ButtonPreviewComponent },
-  MatExpressiveIconButton: { previewComponent: IconButtonPreviewComponent },
-  MatExpressiveButtonGroup: { previewComponent: ButtonGroupPreviewComponent },
-  MatExpressiveSplitButton: { previewComponent: SplitButtonPreviewComponent },
-  MatExpressiveFabMenu: { previewComponent: FabMenuPreviewComponent },
-  MatExpressiveFabMenuTrigger: { previewComponent: FabMenuPreviewComponent },
-  MatExpressiveLoadingIndicator: { previewComponent: LoadingIndicatorPreviewComponent },
+  MatExpButton: { previewComponent: ButtonPreviewComponent },
+  MatExpIconButton: { previewComponent: IconButtonPreviewComponent },
+  MatExpButtonGroup: { previewComponent: ButtonGroupPreviewComponent },
+  MatExpSplitButton: { previewComponent: SplitButtonPreviewComponent },
+  MatExpFabMenu: { previewComponent: FabMenuPreviewComponent },
+  MatExpFabMenuTrigger: { previewComponent: FabMenuPreviewComponent },
+  MatExpLoadingIndicator: { previewComponent: LoadingIndicatorPreviewComponent },
   // <generator:insert-entry>
 };

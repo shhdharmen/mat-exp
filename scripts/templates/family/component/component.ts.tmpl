@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { inject__CLASS__Options } from './__KEBAB__.options';
-import { type MatExpressiveButtonToggle } from '../../../types';
+import { type MatExpButtonToggle } from '../../../types';
 
 /**
  * Component composing several Angular Material primitives, styled with
@@ -33,7 +33,7 @@ export class __CLASS__ {
   public readonly size = model(this._options.size);
   /** @default 'round' */
   public readonly shape = model(this._options.shape);
-  public readonly toggle = model<MatExpressiveButtonToggle | undefined>(this._options.toggle);
+  public readonly toggle = model<MatExpButtonToggle | undefined>(this._options.toggle);
 
   /**
    * @internal

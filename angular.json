@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "mat-expressive-docs": {
+    "mat-exp-docs": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -80,10 +80,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "mat-expressive-docs:build:production"
+              "buildTarget": "mat-exp-docs:build:production"
             },
             "development": {
-              "buildTarget": "mat-expressive-docs:build:development"
+              "buildTarget": "mat-exp-docs:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,30 +100,30 @@
         "e2e": {
           "builder": "playwright-ng-schematics:playwright",
           "options": {
-            "devServerTarget": "mat-expressive-docs:serve"
+            "devServerTarget": "mat-exp-docs:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mat-expressive-docs:serve:production"
+              "devServerTarget": "mat-exp-docs:serve:production"
             }
           }
         }
       }
     },
-    "@ngm-dev/mat-expressive": {
+    "@ngm-dev/mat-exp": {
       "projectType": "library",
-      "root": "projects/ngm-dev/mat-expressive",
-      "sourceRoot": "projects/ngm-dev/mat-expressive/src",
+      "root": "projects/ngm-dev/mat-exp",
+      "sourceRoot": "projects/ngm-dev/mat-exp/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngm-dev/mat-expressive/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngm-dev/mat-exp/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngm-dev/mat-expressive/tsconfig.lib.json"
+              "tsConfig": "projects/ngm-dev/mat-exp/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -131,27 +131,27 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/ngm-dev/mat-expressive/tsconfig.spec.json"
+            "tsConfig": "projects/ngm-dev/mat-exp/tsconfig.spec.json"
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/ngm-dev/mat-expressive/**/*.ts",
-              "projects/ngm-dev/mat-expressive/**/*.html"
+              "projects/ngm-dev/mat-exp/**/*.ts",
+              "projects/ngm-dev/mat-exp/**/*.html"
             ],
-            "eslintConfig": "projects/ngm-dev/mat-expressive/eslint.config.js"
+            "eslintConfig": "projects/ngm-dev/mat-exp/eslint.config.js"
           }
         },
         "e2e": {
           "builder": "playwright-ng-schematics:playwright",
           "options": {
-            "devServerTarget": "@ngm-dev/mat-expressive:serve"
+            "devServerTarget": "@ngm-dev/mat-exp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "@ngm-dev/mat-expressive:serve:production"
+              "devServerTarget": "@ngm-dev/mat-exp:serve:production"
             }
           }
         }

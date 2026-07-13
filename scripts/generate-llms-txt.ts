@@ -119,7 +119,7 @@ function main(): void {
   const apiLink: LlmsLink = {
     label: 'API Reference',
     url: `${SITE_URL}/docs/api`,
-    description: `Full API reference for ${'`@ngm-dev/mat-expressive`'} — every exported component, directive, type, and utility.`,
+    description: `Full API reference for ${'`@ngm-dev/mat-exp`'} — every exported component, directive, type, and utility.`,
   };
 
   const changelogFrontmatter = readStaticPageFrontmatter('/changelog');

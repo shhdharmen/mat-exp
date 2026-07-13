@@ -1,18 +1,18 @@
 ---
 title: Styling
 order: 3
-description: Styling API for the mat-expressive-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout.
+description: Styling API for the mat-exp-button-group-styles SCSS mixin, including the skip-html-element-styles option and its effects on layout.
 ---
 
-This document outlines the API for the `mat-expressive-button-group-styles` mixin.
+This document outlines the API for the `mat-exp-button-group-styles` mixin.
 
 ## Usage
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-button-group-styles($options);
+  @include mat-exp.mat-exp-button-group-styles($options);
 }
 ```
 
@@ -29,10 +29,10 @@ If `true`, the mixin will not apply styles to the underlying HTML elements.
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-button-group-styles(
+  @include mat-exp.mat-exp-button-group-styles(
     (
       skip-html-element-styles: true,
     )
@@ -60,10 +60,10 @@ Restricts the emitted CSS to only the given sizes, including the per-size connec
 **Usage example:**
 
 ```scss
-@use '@ngm-dev/mat-expressive' as mat-expressive;
+@use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-expressive.mat-expressive-button-group-styles(
+  @include mat-exp.mat-exp-button-group-styles(
     (
       sizes: ('s', 'm'),
     )

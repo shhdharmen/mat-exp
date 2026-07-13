@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, Injector, inject } from '@angular/core';
 import { pendingUntilEvent } from '@angular/core/rxjs-interop';
@@ -279,6 +280,7 @@ function wrapCodeBlock(
 export class MarkdownService {
   private readonly http = inject(HttpClient);
   private readonly injector = inject(Injector);
+  private readonly location = inject(Location);
   private highlighterPromise: Promise<Highlighter> | null = null;
   private apiLinkMapPromise: Promise<Map<string, string>> | null = null;
 
@@ -302,7 +304,7 @@ export class MarkdownService {
           for (const [name, entry] of Object.entries(manifest)) {
             const segment = API_KIND_URL_SEGMENT[entry.kind];
             if (!segment) continue;
-            const url = `/docs/api/mat-expressive/${segment}/${name}`;
+            const url = `/docs/api/mat-exp/${segment}/${name}`;
             map.set(name, url);
             if (entry.selector) {
               const attr = entry.selector.match(/\[([^\]]+)\]/)?.[1];
@@ -335,6 +337,10 @@ export class MarkdownService {
   private async processMarkdown(content: string): Promise<DocPage> {
     const { frontmatter, body } = parseFrontmatter(content);
     const apiLinkMap = await this.loadApiLinkMap();
+    // Same-page anchors (`[text](#foo)`) resolve against the document's
+    // <base href="/"> per the HTML spec, not the current path — without this,
+    // they render as "/#foo" instead of "/docs/.../current-page#foo".
+    const currentPath = this.location.path();
 
     const markedInstance = new Marked({ async: true, gfm: true });
 
@@ -342,6 +348,12 @@ export class MarkdownService {
 
     markedInstance.use({
       renderer: {
+        link(token: Tokens.Link): string {
+          const href = token.href.startsWith('#') ? `${currentPath}${token.href}` : token.href;
+          const titleAttr = token.title ? ` title="${token.title}"` : '';
+          const text = this.parser.parseInline(token.tokens);
+          return `<a href="${href}"${titleAttr}>${text}</a>`;
+        },
         codespan(token: Tokens.Codespan): string {
           const escaped = token.text
             .replace(/&/g, '&amp;')

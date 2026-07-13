@@ -1,7 +1,7 @@
 ---
 title: Button
 order: 1
-description: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive.
+description: Material Expressive Button with size, shape, and toggle variations. Supports both the `.mat-exp-button` CSS class approach and the `[matExpButton]` directive.
 primarySymbol: MatExpButton
 ---
 

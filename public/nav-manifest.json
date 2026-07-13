@@ -47,7 +47,7 @@
               "label": "Button",
               "path": "/docs/components/all-buttons/button",
               "order": 1,
-              "description": "Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive.",
+              "description": "Material Expressive Button with size, shape, and toggle variations. Supports both the `.mat-exp-button` CSS class approach and the `[matExpButton]` directive.",
               "primarySymbol": ["MatExpButton"],
               "isComponentPage": true,
               "children": [
@@ -55,7 +55,7 @@
                   "label": "Overview",
                   "path": "/docs/components/all-buttons/button",
                   "order": 1,
-                  "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive."
+                  "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the `.mat-exp-button` CSS class approach and the `[matExpButton]` directive."
                 },
                 {
                   "label": "API",
@@ -301,7 +301,7 @@
       "label": "Overview",
       "path": "/docs/components/all-buttons/button",
       "order": 1,
-      "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the .mat-exp-button CSS class approach and the matExpButton directive."
+      "description": "Overview: Material Expressive Button with size, shape, and toggle variations. Supports both the `.mat-exp-button` CSS class approach and the `[matExpButton]` directive."
     },
     {
       "label": "API",

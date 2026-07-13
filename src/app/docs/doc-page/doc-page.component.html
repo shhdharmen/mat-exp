@@ -1,6 +1,19 @@
 @let ctx = componentPageContext();
-@if (pageTitle(); as title) {
-  <h1 class="doc-page-title">{{ title }}</h1>
+@let showCard = pageTitle() || ctx?.description;
+@if (showCard) {
+  <mat-card class="mb-4 shadow-none!">
+    <mat-card-content>
+      @if (pageTitle(); as title) {
+        <h1 class="font-display-large text-display-large">{{ title }}</h1>
+      }
+      @if (ctx?.description; as description) {
+        <p
+          class="font-body-large text-body-large mt-4"
+          [innerHTML]="description | markdown | async"
+        ></p>
+      }
+    </mat-card-content>
+  </mat-card>
 }
 @if (showMetaTable()) {
   <app-doc-page-meta

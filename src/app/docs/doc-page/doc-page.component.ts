@@ -1,4 +1,4 @@
-import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Type, computed, effect, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -24,6 +24,8 @@ import {
   techArticleJsonLd,
   withBaseJsonLd,
 } from '../../shared/utils/json-ld';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MarkdownPipe } from '../../shared/pipes/markdown.pipe';
 
 /**
  * Collects every URL path the nav manifest actually renders — section landing
@@ -97,6 +99,10 @@ function findAncestorChain(
     NgTemplateOutlet,
     NgComponentOutlet,
     DocPageMetaComponent,
+    MatCard,
+    MatCardContent,
+    MarkdownPipe,
+    AsyncPipe,
   ],
   templateUrl: './doc-page.component.html',
   styleUrl: './doc-page.component.scss',

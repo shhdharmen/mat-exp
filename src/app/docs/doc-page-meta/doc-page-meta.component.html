@@ -1,5 +1,5 @@
 @if (importStatement(); as statement) {
-  <mat-card class="shadow-none! border! border-outline-variant! mb-4">
+  <mat-card class="shadow-none! mb-4">
     <mat-card-header class="flex items-center">
       <div
         mat-card-avatar
@@ -17,9 +17,9 @@
 @let showGHCard = sourceFolderUrl() || reportIssueUrl();
 @let showDocCard = editPageUrl() || rawMarkdownUrl();
 
-<div class="grid gap-4" [class.grid-cols-2]="showGHCard && showDocCard">
+<div class="grid gap-4" [class.lg:grid-cols-2]="showGHCard && showDocCard">
   @if (showGHCard) {
-    <mat-card class="shadow-none! border! border-outline-variant!">
+    <mat-card class="shadow-none!">
       <mat-card-content>
         <div class="flex gap-2">
           <div
@@ -45,7 +45,7 @@
     </mat-card>
   }
   @if (showDocCard) {
-    <mat-card class="shadow-none! border! border-outline-variant!">
+    <mat-card class="shadow-none!">
       <mat-card-content>
         <div class="flex gap-2">
           <div

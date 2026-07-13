@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
+import { registerCustomIcons } from './shared/utils/custom-icons';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,8 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   template: `<router-outlet />`,
 })
-export class App {}
+export class App {
+  constructor() {
+    registerCustomIcons(inject(MatIconRegistry), inject(DomSanitizer));
+  }
+}

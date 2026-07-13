@@ -356,3 +356,26 @@ moving it again afterward.
 
 Both extend the `DocPageMetaComponent` table #168 creates; independent of each other, safe to
 run in parallel once #168 lands.
+
+**Wave 17 — Remove Component Page tabs; combine into a single `index.md`**
+
+Collapses the four-tab Component Page (Overview/API/Styling/Playground, `app-doc-tabs`) into one
+markdown page per component. `api.md`/`styling.md` fold into `index.md` as `## API`/`## Styling`
+sections (order: Overview → Playground → API → Styling); old sub-tab URLs (`/slug/api`,
+`/slug/styling`, `/slug/playground`) 404, no redirects. Playground moves from a route-driven
+`NgComponentOutlet` (`PLAYGROUND_PAGE_REGISTRY`, keyed by full path) to a markdown-authored
+`<playground-preview preview="{slug}">` Angular custom element (lazy-registered, slug-keyed
+`PLAYGROUND_PREVIEW_REGISTRY`), reversing `docs/adr/0001-angular-elements-for-markdown-embeds.md`'s
+prior removal of `@angular/elements` — that ADR gets superseded as part of #177. Sequenced as a
+pilot (prove the mechanism on one component) before the mechanical rollout to the rest, so there's
+no interim window where Playground stops working on components not yet migrated.
+
+| Issue | Title | Blocked by |
+|---|---|---|
+| #177 | Playground custom element + Button migration (pilot) | None |
+| #178 | Migrate remaining 5 components off tabs (icon-button, button-group, split-button, fab-menu, loading-indicator) | #177 (hard) |
+| #179 | Remove dead tabs architecture (`app-doc-tabs`, `build-docs.ts` tab-emission, old `PLAYGROUND_PAGE_REGISTRY`) | #178 (hard) |
+
+#178's 5 components are mechanically identical to each other (merge, delete, add tag) and
+independent of one another — parallelizable once #177 lands. #179 must wait for all 6 components
+off tabs before the shared `app-doc-tabs` infrastructure can be safely deleted.

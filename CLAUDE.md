@@ -311,3 +311,43 @@ parallel, just worth a heads-up if two contributors land at once:
 "Soft" = recommended sequencing to avoid rework; technically startable in parallel if needed.
 Wave 15 issues have no dependencies on each other and can each start as soon as their own
 listed blocker(s) land — none of them need to wait for the *entire* Wave 14 to finish.
+
+**Wave 16 — Doc Page metadata table (ant-design-style action rows)**
+
+Replaces the flat "Edit this page / View markdown / Copy markdown" button row with a compact
+metadata table modeled on ant-design's component-page action rows. See
+`docs/adr/0007-doc-page-metadata-table.md` and the `CONTEXT.md` entries for **Docs Row**,
+**Import Row**, and **GitHub Row**. Sub-waves are dependency tiers — issues within a sub-wave
+have no blockers on each other and can be worked in parallel; each sub-wave is blocked by the
+one before it.
+
+"View markdown" and "Copy markdown" are dropped outright (not folded into the new table) — see
+ADR 0007 for the rationale, including why a live GitHub open-issues count (considered, mirroring
+ant-design) was rejected in favor of static links only.
+
+**Wave 16a — prefactor**
+
+| Issue | Title | Blocked by |
+|---|---|---|
+| #167 | Centralize custom SVG icon registration | None |
+
+Moves `CommunityDialogComponent`'s local icon registration to one shared app-wide spot and adds
+the new icons the table needs (edit, design, doc, folder, flag).
+
+**Wave 16b — Docs Row foundation**
+
+| Issue | Title | Blocked by |
+|---|---|---|
+| #168 | Docs Row on every Doc Page (new `DocPageMetaComponent`) | #167 (hard) |
+
+New component consumes the icons #167 registers; introduces the table itself.
+
+**Wave 16c — Component Page rows**
+
+| Issue | Title | Blocked by |
+|---|---|---|
+| #169 | Import Row on Component Pages | #168 (hard) |
+| #170 | GitHub Row on Component Pages | #168 (hard) |
+
+Both extend the `DocPageMetaComponent` table #168 creates; independent of each other, safe to
+run in parallel once #168 lands.

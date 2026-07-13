@@ -22,6 +22,18 @@ _Avoid_: Component doc, component guide
 An optional `index.md` within a Section folder. The router always redirects Section paths to the first child Doc Page by `order`; the Index Page is not used as a landing page.
 _Avoid_: Landing page, overview page, section home
 
+**Docs Row**:
+A row in the metadata table shown above every markdown-backed Doc Page's rendered content, containing "Edit this page" (opens the backing markdown file in GitHub's web editor), an optional "Design" link (shown only when the page's `designUrl` frontmatter field is set), and "LLMs.md" (links to that page's own raw markdown source, per the llms.txt convention). Present on every Doc Page, not just Component Pages.
+_Avoid_: Action row, markdown actions, edit toolbar
+
+**Import Row**:
+A Component-Page-only row in the metadata table showing a copyable `import { ... } from '@ngm-dev/mat-exp';` statement. Sourced from the page's `primarySymbol` frontmatter field, which names one or more exported symbols (e.g. FAB Menu's page lists both `MatExpFabMenu` and `MatExpFabMenuTrigger`).
+_Avoid_: Import statement, usage snippet
+
+**GitHub Row**:
+A Component-Page-only row in the metadata table linking to the component's source folder and a pre-filled "Report an issue" link on GitHub. Deliberately excludes a live open-issues count — an earlier design considered it (mirroring ant-design's component pages) but rejected it because GitHub's search API caps unauthenticated requests at 10/min, which prerendered/SSG'd pages would exhaust immediately.
+_Avoid_: Source link, repo row, issues badge
+
 ### Library Concepts
 
 **Button Family**:
@@ -51,10 +63,6 @@ _Avoid_: Route manifest, URL list, sitemap
 **Latest**:
 The documentation reflecting the current `main` branch, deployed to GitHub Pages. It is the only live deployment of the docs site — there is no versioned subdomain or per-branch deployment. Prior major-version docs are not redeployed anywhere; they're read directly on GitHub via that release's tag or branch.
 _Avoid_: Current, head, trunk, main docs
-
-**Edit this page**:
-A button on every Doc Page that opens the backing markdown file in GitHub's web editor, at a URL built from `environment.githubRepoUrl` and `environment.githubBranch`. Sits alongside the "View markdown" and "Copy markdown" buttons.
-_Avoid_: Edit link, edit button, propose changes
 
 ### API Reference
 

@@ -4,9 +4,6 @@
 /docs/components
 /docs/components/all-buttons
 /docs/components/all-buttons/button
-/docs/components/all-buttons/button/api
-/docs/components/all-buttons/button/styling
-/docs/components/all-buttons/button/playground
 /docs/components/all-buttons/icon-button
 /docs/components/all-buttons/icon-button/api
 /docs/components/all-buttons/icon-button/styling

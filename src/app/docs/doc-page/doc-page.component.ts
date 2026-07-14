@@ -17,7 +17,7 @@ import { TocService } from '../../shared/services/toc.service';
 import { NavManifestService, NavPage } from '../../shell/nav-manifest.service';
 import { TocComponent } from '../../shell/toc/toc.component';
 import { TabsComponent } from '../tabs/tabs.component';
-import { PLAYGROUND_PAGE_REGISTRY } from '../playground-page-registry';
+import { PLAYGROUND_PREVIEW_REGISTRY } from '../playground-preview-registry';
 import { DocPageMetaComponent } from '../doc-page-meta/doc-page-meta.component';
 import {
   breadcrumbListJsonLd,
@@ -257,7 +257,8 @@ export class DocPageComponent {
     const known = this.validPagePaths();
     if (!known?.has(path)) return null;
     const basePath = path.replace(/\/playground$/, '');
-    return PLAYGROUND_PAGE_REGISTRY[basePath] ?? null;
+    const slug = basePath.split('/').pop();
+    return slug ? (PLAYGROUND_PREVIEW_REGISTRY[slug] ?? null) : null;
   });
 
   private readonly routeAndKnownPaths = computed(() => ({

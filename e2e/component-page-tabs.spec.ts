@@ -35,24 +35,28 @@ const activeTab = (page: Page) => page.locator('app-doc-tabs [mat-tab-link].mdc-
 // ---------------------------------------------------------------------------
 // 1. Tab bar renders on component pages
 // ---------------------------------------------------------------------------
+//
+// Icon Button is used as the tabs fixture throughout this file — Button was
+// migrated off tabs onto a single page (#177) and is covered in its own
+// describe block below.
 
 test.describe('Tab bar visibility', () => {
   test('tab bar is visible on a component page base path', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     await expect(tabBar(page)).toBeVisible();
   });
 
   test('tab bar is visible when deep-linking to a tab URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
 
     await expect(tabBar(page)).toBeVisible();
   });
 
   test('tab bar renders exactly four tabs in order', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     const tabs = tabLinks(page);
@@ -92,7 +96,7 @@ test.describe('Tab bar visibility', () => {
 
 test.describe('Active tab highlighting', () => {
   test('Overview tab is active on the component page base path', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     const active = activeTab(page);
@@ -101,7 +105,7 @@ test.describe('Active tab highlighting', () => {
   });
 
   test('API tab is active on the /api URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
 
     const active = activeTab(page);
@@ -110,7 +114,7 @@ test.describe('Active tab highlighting', () => {
   });
 
   test('Styling tab is active on the /styling URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/styling');
+    await page.goto('/docs/components/all-buttons/icon-button/styling');
     await waitForPageContent(page);
 
     const active = activeTab(page);
@@ -119,7 +123,7 @@ test.describe('Active tab highlighting', () => {
   });
 
   test('Playground tab is active on the /playground URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/icon-button/playground');
     await waitForPageContent(page);
 
     const active = activeTab(page);
@@ -128,7 +132,7 @@ test.describe('Active tab highlighting', () => {
   });
 
   test('Overview tab is NOT active when on /api (exact matching enforced)', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
 
     const overviewTab = tabLinks(page).filter({ hasText: 'Overview' });
@@ -137,10 +141,10 @@ test.describe('Active tab highlighting', () => {
 
   test('exactly one tab is active at a time', async ({ page }) => {
     for (const url of [
-      '/docs/components/all-buttons/button',
-      '/docs/components/all-buttons/button/api',
-      '/docs/components/all-buttons/button/styling',
-      '/docs/components/all-buttons/button/playground',
+      '/docs/components/all-buttons/icon-button',
+      '/docs/components/all-buttons/icon-button/api',
+      '/docs/components/all-buttons/icon-button/styling',
+      '/docs/components/all-buttons/icon-button/playground',
     ]) {
       await page.goto(url);
       await waitForPageContent(page);
@@ -155,56 +159,56 @@ test.describe('Active tab highlighting', () => {
 
 test.describe('Tab click navigation', () => {
   test('clicking the API tab navigates to the /api URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     await tabLinks(page).filter({ hasText: 'API' }).click();
-    await waitForTabNavigation(page, '**/button/api');
+    await waitForTabNavigation(page, '**/icon-button/api');
 
-    expect(page.url()).toContain('/docs/components/all-buttons/button/api');
+    expect(page.url()).toContain('/docs/components/all-buttons/icon-button/api');
   });
 
   test('clicking the Styling tab navigates to the /styling URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     await tabLinks(page).filter({ hasText: 'Styling' }).click();
-    await waitForTabNavigation(page, '**/button/styling');
+    await waitForTabNavigation(page, '**/icon-button/styling');
 
-    expect(page.url()).toContain('/docs/components/all-buttons/button/styling');
+    expect(page.url()).toContain('/docs/components/all-buttons/icon-button/styling');
   });
 
   test('clicking the Playground tab navigates to the /playground URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     await tabLinks(page).filter({ hasText: 'Playground' }).click();
-    await waitForTabNavigation(page, '**/button/playground');
+    await waitForTabNavigation(page, '**/icon-button/playground');
 
-    expect(page.url()).toContain('/docs/components/all-buttons/button/playground');
+    expect(page.url()).toContain('/docs/components/all-buttons/icon-button/playground');
   });
 
   test('clicking Overview tab from API tab returns to the base path', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
 
     await tabLinks(page).filter({ hasText: 'Overview' }).click();
-    await waitForTabNavigation(page, /\/docs\/components\/all-buttons\/button$/);
+    await waitForTabNavigation(page, /\/docs\/components\/all-buttons\/icon-button$/);
 
     // URL must be exactly the base path, not /api
-    expect(page.url()).toMatch(/\/docs\/components\/all-buttons\/button$/);
+    expect(page.url()).toMatch(/\/docs\/components\/all-buttons\/icon-button$/);
   });
 
   test('tab bar stays visible after switching between tabs', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     await tabLinks(page).filter({ hasText: 'API' }).click();
-    await waitForTabNavigation(page, '**/button/api');
+    await waitForTabNavigation(page, '**/icon-button/api');
     await expect(tabBar(page)).toBeVisible();
 
     await tabLinks(page).filter({ hasText: 'Styling' }).click();
-    await waitForTabNavigation(page, '**/button/styling');
+    await waitForTabNavigation(page, '**/icon-button/styling');
     await expect(tabBar(page)).toBeVisible();
   });
 });
@@ -215,7 +219,7 @@ test.describe('Tab click navigation', () => {
 
 test.describe('Per-tab content rendering', () => {
   test('Overview tab loads index.md content', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     // index.md should have some content in the markdown body
@@ -225,20 +229,20 @@ test.describe('Per-tab content rendering', () => {
   });
 
   test('API tab loads api.md and shows API-specific content', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
 
-    // api.md for the Button component contains 'Data Attributes'
+    // api.md for Icon Button contains 'Data Attributes'
     await expect(page.locator('.markdown-body')).toContainText('Data Attributes');
   });
 
   test('content changes when switching from Overview to API tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
     const overviewContent = await page.locator('.markdown-body').textContent();
 
     await tabLinks(page).filter({ hasText: 'API' }).click();
-    await waitForTabNavigation(page, '**/button/api');
+    await waitForTabNavigation(page, '**/icon-button/api');
     await expect(page.locator('.markdown-body')).toContainText('Data Attributes');
     const apiContent = await page.locator('.markdown-body').textContent();
 
@@ -246,7 +250,7 @@ test.describe('Per-tab content rendering', () => {
   });
 
   test('styling.md content is rendered on the Styling tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/styling');
+    await page.goto('/docs/components/all-buttons/icon-button/styling');
     await waitForPageContent(page);
 
     await expect(page.locator('.markdown-body')).not.toBeEmpty();
@@ -254,7 +258,7 @@ test.describe('Per-tab content rendering', () => {
   });
 
   test('playground is rendered on the Playground tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/icon-button/playground');
     await waitForPageContent(page);
 
     await expect(page.locator('app-playground')).toBeVisible();
@@ -267,7 +271,7 @@ test.describe('Per-tab content rendering', () => {
 
 test.describe('Deep-linking to tab URLs', () => {
   test('deep-link to /api renders content without visiting base path first', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
 
     await expect(page.locator('.markdown-body')).toContainText('Data Attributes');
@@ -275,7 +279,7 @@ test.describe('Deep-linking to tab URLs', () => {
   });
 
   test('deep-link to /styling renders the Styling tab active', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/styling');
+    await page.goto('/docs/components/all-buttons/icon-button/styling');
     await waitForPageContent(page);
 
     await expect(page.locator('.markdown-body')).toBeVisible();
@@ -283,7 +287,7 @@ test.describe('Deep-linking to tab URLs', () => {
   });
 
   test('deep-link to /playground renders the Playground tab active', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/icon-button/playground');
     await waitForPageContent(page);
 
     await expect(page.locator('app-playground')).toBeVisible();
@@ -305,10 +309,10 @@ test.describe('Deep-linking to tab URLs', () => {
 // ---------------------------------------------------------------------------
 
 test.describe('Cross-component navigation', () => {
-  test('switching from button/api to icon-button shows icon-button tabs with Overview active', async ({
+  test('switching from split-button/api to icon-button shows icon-button tabs with Overview active', async ({
     page,
   }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/split-button/api');
     await waitForPageContent(page);
     await expect(activeTab(page)).toContainText('API');
 
@@ -341,7 +345,7 @@ test.describe('Cross-component navigation', () => {
 
 test.describe('Tab bar accessibility', () => {
   test('tab nav has role="tablist" and correct aria-label', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     const nav = tabBar(page);
@@ -352,7 +356,7 @@ test.describe('Tab bar accessibility', () => {
   });
 
   test('each tab link has role="tab"', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     const tabs = tabLinks(page);
@@ -364,7 +368,7 @@ test.describe('Tab bar accessibility', () => {
   });
 
   test('active tab is focusable and other tabs are reachable via arrow keys', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForPageContent(page);
 
     // mat-tab-nav-bar follows WAI-ARIA tablist pattern: Tab focuses the active tab,
@@ -376,5 +380,59 @@ test.describe('Tab bar accessibility', () => {
     // ArrowRight moves focus to the next tab (API)
     await page.keyboard.press('ArrowRight');
     await expect(tabLinks(page).nth(1)).toBeFocused();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 8. Button — migrated off tabs onto a single page (#177)
+// ---------------------------------------------------------------------------
+
+test.describe('Button — migrated off tabs (#177)', () => {
+  test('base path renders with no tab bar', async ({ page }) => {
+    await page.goto('/docs/components/all-buttons/button');
+    await waitForPageContent(page);
+
+    await expect(page.locator('app-doc-tabs')).not.toBeVisible();
+    await expect(page.locator('.markdown-body')).toBeVisible();
+  });
+
+  test('old /api tab URL 404s (no redirect)', async ({ page }) => {
+    await page.goto('/docs/components/all-buttons/button/api');
+    await waitForPageContent(page);
+
+    expect(page.url()).toContain('/docs/components/all-buttons/button/api');
+    await expect(page.locator('.not-found')).toBeVisible();
+  });
+
+  test('old /styling tab URL 404s (no redirect)', async ({ page }) => {
+    await page.goto('/docs/components/all-buttons/button/styling');
+    await waitForPageContent(page);
+
+    expect(page.url()).toContain('/docs/components/all-buttons/button/styling');
+    await expect(page.locator('.not-found')).toBeVisible();
+  });
+
+  test('old /playground tab URL 404s (no redirect)', async ({ page }) => {
+    await page.goto('/docs/components/all-buttons/button/playground');
+    await waitForPageContent(page);
+
+    expect(page.url()).toContain('/docs/components/all-buttons/button/playground');
+    await expect(page.locator('.not-found')).toBeVisible();
+  });
+
+  test('base page contains the Playground, API, and Styling sections in order', async ({
+    page,
+  }) => {
+    await page.goto('/docs/components/all-buttons/button');
+    await waitForPageContent(page);
+
+    const headings = page.locator('.markdown-body h2');
+    const texts = (await headings.allInnerTexts()).map((t) => t.trim());
+
+    expect(texts).toContain('Playground');
+    expect(texts).toContain('API');
+    expect(texts).toContain('Styling');
+    expect(texts.indexOf('Playground')).toBeLessThan(texts.indexOf('API'));
+    expect(texts.indexOf('API')).toBeLessThan(texts.indexOf('Styling'));
   });
 });

@@ -81,27 +81,31 @@ test.describe('SEO — Component Page tab titles are unique per component', () =
     await waitForTitle(page, 'Button | Mat Expressive');
   });
 
-  test('Button API tab title is prefixed with the component name', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
-    await waitForPageContent(page);
-    await waitForTitle(page, 'Button API | Mat Expressive');
-  });
-
-  test('Button Styling tab title is prefixed with the component name', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/styling');
-    await waitForPageContent(page);
-    await waitForTitle(page, 'Button Styling | Mat Expressive');
-  });
-
-  test('Button Playground tab title is prefixed with the component name', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
-    await waitForTitle(page, 'Button Playground | Mat Expressive');
-  });
-
-  test("Icon Button's API tab title differs from Button's API tab title", async ({ page }) => {
+  test('Icon Button API tab title is prefixed with the component name', async ({ page }) => {
     await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
     await waitForTitle(page, 'Icon Button API | Mat Expressive');
+  });
+
+  test('Icon Button Styling tab title is prefixed with the component name', async ({ page }) => {
+    await page.goto('/docs/components/all-buttons/icon-button/styling');
+    await waitForPageContent(page);
+    await waitForTitle(page, 'Icon Button Styling | Mat Expressive');
+  });
+
+  test('Icon Button Playground tab title is prefixed with the component name', async ({
+    page,
+  }) => {
+    await page.goto('/docs/components/all-buttons/icon-button/playground');
+    await waitForTitle(page, 'Icon Button Playground | Mat Expressive');
+  });
+
+  test("Button Group's API tab title differs from Icon Button's API tab title", async ({
+    page,
+  }) => {
+    await page.goto('/docs/components/all-buttons/button-group/api');
+    await waitForPageContent(page);
+    await waitForTitle(page, 'Button Group API | Mat Expressive');
   });
 });
 

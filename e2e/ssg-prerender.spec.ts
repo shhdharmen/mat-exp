@@ -49,10 +49,17 @@ test.describe('routes.txt — static asset', () => {
       .map((l) => l.trim())
       .filter(Boolean);
 
+    // Button was migrated off tabs (#177) — single route, no /api /styling /playground.
     expect(lines).toContain('/docs/components/all-buttons/button');
-    expect(lines).toContain('/docs/components/all-buttons/button/api');
-    expect(lines).toContain('/docs/components/all-buttons/button/styling');
-    expect(lines).toContain('/docs/components/all-buttons/button/playground');
+    expect(lines).not.toContain('/docs/components/all-buttons/button/api');
+    expect(lines).not.toContain('/docs/components/all-buttons/button/styling');
+    expect(lines).not.toContain('/docs/components/all-buttons/button/playground');
+
+    // icon-button is still on the tabs architecture.
+    expect(lines).toContain('/docs/components/all-buttons/icon-button');
+    expect(lines).toContain('/docs/components/all-buttons/icon-button/api');
+    expect(lines).toContain('/docs/components/all-buttons/icon-button/styling');
+    expect(lines).toContain('/docs/components/all-buttons/icon-button/playground');
   });
 
   test('all routes in routes.txt start with /', async ({ page }) => {
@@ -126,8 +133,8 @@ test.describe('SSG route smoke tests — key pages load content', () => {
     '/docs/getting-started/installation',
     '/docs/getting-started/what-is-mat-expressive',
     '/docs/components/all-buttons/button',
-    '/docs/components/all-buttons/button/api',
-    '/docs/components/all-buttons/button/styling',
+    '/docs/components/all-buttons/icon-button/api',
+    '/docs/components/all-buttons/icon-button/styling',
   ];
 
   for (const route of keyRoutes) {

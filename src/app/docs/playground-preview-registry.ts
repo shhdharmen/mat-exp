@@ -8,17 +8,20 @@ import { LoadingIndicatorPlaygroundComponent } from './components/loading-and-pr
 // <generator:insert-import>
 
 /**
- * Maps a component page's base URL path to the Angular component that should
- * be rendered on its Playground tab. DocPageComponent uses this to replace the
- * markdown render with a direct Angular component embed when the URL ends with
- * `/playground`.
+ * Maps a component's slug (e.g. "button", "icon-button") to the Angular
+ * component rendered for its Playground. Slug-keyed rather than path-keyed:
+ * the `<playground-preview>` custom element (markdown-authored, see
+ * PlaygroundPreviewElementComponent) only knows the slug an author wrote in
+ * markdown, not the URL it happens to be embedded on. DocPageComponent also
+ * consults this registry for the components still on the tab route
+ * (`/playground`), deriving the slug from the last path segment.
  */
-export const PLAYGROUND_PAGE_REGISTRY: Record<string, Type<unknown>> = {
-  '/docs/components/all-buttons/button': ButtonPlaygroundComponent,
-  '/docs/components/all-buttons/icon-button': IconButtonPlaygroundComponent,
-  '/docs/components/all-buttons/button-group': ButtonGroupPlaygroundComponent,
-  '/docs/components/all-buttons/split-button': SplitButtonPlaygroundComponent,
-  '/docs/components/all-buttons/fab-menu': FabMenuPlaygroundComponent,
-  '/docs/components/loading-and-progress/loading-indicator': LoadingIndicatorPlaygroundComponent,
+export const PLAYGROUND_PREVIEW_REGISTRY: Record<string, Type<unknown>> = {
+  button: ButtonPlaygroundComponent,
+  'icon-button': IconButtonPlaygroundComponent,
+  'button-group': ButtonGroupPlaygroundComponent,
+  'split-button': SplitButtonPlaygroundComponent,
+  'fab-menu': FabMenuPlaygroundComponent,
+  'loading-indicator': LoadingIndicatorPlaygroundComponent,
   // <generator:insert-entry>
 };

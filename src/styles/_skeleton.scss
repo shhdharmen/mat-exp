@@ -30,3 +30,21 @@
   min-height: 320px;
   margin-block: 1.5rem;
 }
+
+// Custom elements default to `display: inline` with no UA stylesheet rule —
+// set block unconditionally so layout stays identical before and after
+// @angular/elements upgrades the tag (no layout shift).
+playground-preview {
+  display: block;
+}
+
+// Shown for a <playground-preview> custom element tag before @angular/elements
+// upgrades it — the site is SSG-prerendered, so the bare tag exists in the
+// HTML pre-hydration. `:not(:defined)` stops matching the instant the
+// element is upgraded, so this never fights with the component's own
+// (nested) loading skeleton.
+playground-preview:not(:defined) {
+  @extend %skeleton-base;
+  min-height: 320px;
+  margin-block: 1.5rem;
+}

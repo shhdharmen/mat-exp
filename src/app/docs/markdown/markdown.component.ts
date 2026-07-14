@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -20,9 +20,18 @@ export class MarkdownComponent {
 
   html = input.required<string>();
 
-  protected safeHtml() {
-    return this.sanitizer.bypassSecurityTrustHtml(this.html());
-  }
+  /**
+   * Memoized so `[innerHTML]` only gets a new value when `html()` actually
+   * changes. An unmemoized method call here would return a fresh `SafeHtml`
+   * wrapper on every change-detection pass — including passes triggered by
+   * `onHostClick` bubbling up from a click deep inside embedded interactive
+   * content like `<playground-preview>` — making Angular re-assign
+   * `innerHTML` and the browser destroy and recreate the whole subtree,
+   * wiping out that content's live state (e.g. an open mat-select panel).
+   */
+  protected readonly safeHtml = computed(() =>
+    this.sanitizer.bypassSecurityTrustHtml(this.html()),
+  );
 
   protected onHostClick(event: Event): void {
     const target = event.target as Element;

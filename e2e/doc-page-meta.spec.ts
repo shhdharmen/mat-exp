@@ -44,7 +44,7 @@ test.describe('Docs Row — visibility', () => {
   });
 
   test('appears on the API tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForMarkdownContent(page);
 
     await expect(docsRow(page)).toBeVisible();
@@ -53,7 +53,7 @@ test.describe('Docs Row — visibility', () => {
   });
 
   test('appears on the Styling tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/styling');
+    await page.goto('/docs/components/all-buttons/icon-button/styling');
     await waitForMarkdownContent(page);
 
     await expect(docsRow(page)).toBeVisible();
@@ -62,7 +62,7 @@ test.describe('Docs Row — visibility', () => {
   });
 
   test('is NOT shown on the Playground tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/icon-button/playground');
     await waitForPageContent(page);
 
     await expect(docsRow(page)).not.toBeVisible();
@@ -94,12 +94,12 @@ test.describe('"Edit this page" link', () => {
   });
 
   test('has correct href pointing to GitHub edit mode for the API tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForMarkdownContent(page);
 
     const href = await editBtn(page).getAttribute('href');
     expect(href).toBe(
-      'https://github.com/Angular-Material-Dev/mat-expressive/edit/main/public/docs/components/all-buttons/button/api.md',
+      'https://github.com/Angular-Material-Dev/mat-expressive/edit/main/public/docs/components/all-buttons/icon-button/api.md',
     );
   });
 
@@ -134,19 +134,19 @@ test.describe('"LLMs.md" link', () => {
   });
 
   test('has correct href pointing to the raw api.md for the API tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForMarkdownContent(page);
 
     const href = await llmsBtn(page).getAttribute('href');
-    expect(href).toBe('/docs/components/all-buttons/button/api.md');
+    expect(href).toBe('/docs/components/all-buttons/icon-button/api.md');
   });
 
   test('has correct href pointing to the raw styling.md for the Styling tab', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/styling');
+    await page.goto('/docs/components/all-buttons/icon-button/styling');
     await waitForMarkdownContent(page);
 
     const href = await llmsBtn(page).getAttribute('href');
-    expect(href).toBe('/docs/components/all-buttons/button/styling.md');
+    expect(href).toBe('/docs/components/all-buttons/icon-button/styling.md');
   });
 
   test('has target="_blank"', async ({ page }) => {
@@ -164,17 +164,17 @@ test.describe('"LLMs.md" link', () => {
   });
 
   test('href updates when navigating between tabs', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button');
+    await page.goto('/docs/components/all-buttons/icon-button');
     await waitForMarkdownContent(page);
 
     const overviewHref = await llmsBtn(page).getAttribute('href');
-    expect(overviewHref).toBe('/docs/components/all-buttons/button/index.md');
+    expect(overviewHref).toBe('/docs/components/all-buttons/icon-button/index.md');
 
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForMarkdownContent(page);
 
     const apiHref = await llmsBtn(page).getAttribute('href');
-    expect(apiHref).toBe('/docs/components/all-buttons/button/api.md');
+    expect(apiHref).toBe('/docs/components/all-buttons/icon-button/api.md');
   });
 });
 

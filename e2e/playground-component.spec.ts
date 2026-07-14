@@ -6,11 +6,11 @@ import { test, expect, type Page, type Locator } from '@playwright/test';
 
 /**
  * Wait for the <app-playground> Angular component to finish loading its schema
- * and replace the skeleton with the live playground layout.
- *
- * Playground tab pages are rendered via NgComponentOutlet (not markdown), so
- * there is no .markdown-body and no .loading-state to wait for — only the
- * app-playground element and its inner .playground-layout matter.
+ * and replace the skeleton with the live playground layout. Works whether
+ * app-playground is reached via the legacy /playground tab route
+ * (NgComponentOutlet) or embedded in markdown via <playground-preview>
+ * (#177) — only the app-playground element and its inner .playground-layout
+ * matter here.
  */
 async function waitForPlayground(page: Page): Promise<void> {
   await page.locator('app-playground').waitFor({ state: 'visible', timeout: 10_000 });
@@ -25,10 +25,7 @@ async function waitForPlayground(page: Page): Promise<void> {
     .waitFor({ state: 'visible', timeout: 15_000 });
 }
 
-/**
- * The <app-playground> Angular component host for a given component name.
- * Used for playground tab pages (rendered via NgComponentOutlet).
- */
+/** The <app-playground> Angular component host for a given component name. */
 const playgroundEl = (page: Page, component: string): Locator =>
   page.locator(`app-playground[component="${component}"]`);
 
@@ -64,13 +61,13 @@ async function selectControlValue(
 // ---------------------------------------------------------------------------
 
 test.describe('Playground skeleton', () => {
-  test('shows skeleton while schema is loading on the button playground page', async ({ page }) => {
+  test('shows skeleton while schema is loading on the button page', async ({ page }) => {
     await page.route('**/playground-schemas.json', async (route) => {
       await new Promise((resolve) => setTimeout(resolve, 200));
       await route.continue();
     });
 
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button');
     await page.locator('app-playground').waitFor({ state: 'visible', timeout: 10_000 });
 
     const skeleton = page.locator('app-playground .component-preview-skeleton');
@@ -80,7 +77,7 @@ test.describe('Playground skeleton', () => {
   });
 
   test('skeleton is replaced by playground-layout once schema loads', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForPlayground(page);
 
     await expect(page.locator('app-playground .playground-layout')).toBeVisible();
@@ -94,7 +91,7 @@ test.describe('Playground skeleton', () => {
 
 test.describe('MatExpButton playground', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForPlayground(page);
   });
 
@@ -311,7 +308,7 @@ test.describe('MatExpButtonGroup playground', () => {
 
 test.describe('Playground dark mode', () => {
   test('controls panel is visible in dark mode', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForPlayground(page);
 
     await page.evaluate(() => document.documentElement.classList.add('dark'));
@@ -338,7 +335,7 @@ test.describe('Playground dark mode', () => {
 test.describe('Playground responsive layout', () => {
   test('playground stacks vertically on a 375px-wide viewport', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForPlayground(page);
 
     const layout = playgroundEl(page, 'MatExpButton').locator('.playground-layout');
@@ -353,7 +350,7 @@ test.describe('Playground responsive layout', () => {
 
   test('playground shows side-by-side panels on a 1024px viewport', async ({ page }) => {
     await page.setViewportSize({ width: 1024, height: 768 });
-    await page.goto('/docs/components/all-buttons/button/playground');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForPlayground(page);
 
     const preview = previewArea(page, 'MatExpButton');

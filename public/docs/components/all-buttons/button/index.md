@@ -100,3 +100,120 @@ Mat Expressive Button supports this shape morphing by default.
 In addition to changing shape when pressed, toggle buttons also change the resting shape from round (unselected) to square (selected).
 
 If the resting unselected shape is square, the selected shape should be round.
+
+## Playground
+
+<playground-preview preview="button"></playground-preview>
+
+## API
+
+### Data Attributes with .mat-exp-button class
+
+You can use below `data-*` attributes with `.mat-exp-button` class to style the Angular Material Button component.
+
+#### data-size
+
+The size of the button.
+
+##### Default Value
+
+`s`
+
+##### Possible Values
+
+`xs`, `s`, `m`, `l`, `xl`
+
+#### data-shape
+
+The shape of the button.
+
+##### Default Value
+
+`round`
+
+##### Possible Values
+
+`round`, `square`
+
+#### data-toggle
+
+The toggle state of the button.
+
+##### Default Value
+
+`unselected`
+
+##### Possible Values
+
+`selected`, `unselected`
+
+### matExpButton Directive
+
+You can view the API for `matExpButton` directive [here](/docs/api/mat-exp/directives/MatExpButton).
+
+## Styling
+
+This document outlines API for `mat-exp-button-styles` mixin.
+
+### Usage
+
+```scss
+@use '@ngm-dev/mat-exp' as mat-exp;
+
+html {
+  @include mat-exp.mat-exp-button-styles($options);
+}
+```
+
+### Options
+
+#### skip-html-element-styles
+
+Type: `boolean`
+
+Default: `false`
+
+If `true`, the mixin will not apply styles to the underlying HTML elements.
+
+**Usage example:**
+
+```scss
+@use '@ngm-dev/mat-exp' as mat-exp;
+
+html {
+  @include mat-exp.mat-exp-button-styles(
+    (
+      skip-html-element-styles: true,
+    )
+  );
+}
+```
+
+##### Effects
+
+If you set `skip-html-element-styles` to `true`, the mixin will not apply styles to the underlying HTML elements. And below are some styles which will not work as expected:
+
+- Icon sizes
+- Shape morphing
+
+#### sizes
+
+Type: `list` of `'xs' | 's' | 'm' | 'l' | 'xl'`
+
+Default: `null` (all sizes emitted)
+
+Restricts the emitted CSS to only the given sizes, dropping the rest of the size × shape × state × toggle combination matrix at compile time. Use this to cut the CSS payload when your app only uses a subset of sizes — see [Reducing the CSS payload](/docs/getting-started/installation#reducing-the-css-payload).
+
+**Usage example:**
+
+```scss
+@use '@ngm-dev/mat-exp' as mat-exp;
+
+html {
+  @include mat-exp.mat-exp-button-styles(
+    (
+      sizes: ('s', 'm'),
+    )
+  );
+}
+```

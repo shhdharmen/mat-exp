@@ -60,7 +60,7 @@ const PLAYGROUND_REGISTRY_FILE = path.join(
   ROOT,
   'src/app/shared/components/playground/playground-registry.ts',
 );
-const PLAYGROUND_PAGE_REGISTRY_FILE = path.join(ROOT, 'src/app/docs/playground-page-registry.ts');
+const PLAYGROUND_PAGE_REGISTRY_FILE = path.join(ROOT, 'src/app/docs/playground-preview-registry.ts');
 
 const SIZES = ['xs', 's', 'm', 'l', 'xl'] as const;
 
@@ -664,11 +664,11 @@ async function main(): Promise<void> {
     insertAtMarker(
       PLAYGROUND_PAGE_REGISTRY_FILE,
       '// <generator:insert-entry>',
-      `'/docs/components/${group}/${kebab}': ${vars.PASCAL}PlaygroundComponent,`,
+      `'${kebab}': ${vars.PASCAL}PlaygroundComponent,`,
       dryRun,
     );
   } else {
-    console.log('  [dry-run] would wire PLAYGROUND_REGISTRY and PLAYGROUND_PAGE_REGISTRY');
+    console.log('  [dry-run] would wire PLAYGROUND_REGISTRY and PLAYGROUND_PREVIEW_REGISTRY');
   }
 
   // -- Summary --------------------------------------------------------------

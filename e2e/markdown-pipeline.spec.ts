@@ -41,7 +41,7 @@ test.describe('Page fetch and render', () => {
   });
 
   test('navigating to a component API tab renders the api.md file', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/icon-button/api');
     await waitForPageContent(page);
 
     // api.md starts with a heading about data attributes

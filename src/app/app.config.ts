@@ -1,6 +1,12 @@
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
 import {
   ANGULAR_ROUTER_URL,
   provideNgxMetaCore,
@@ -21,6 +27,7 @@ import { routes } from './app.routes';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { environment } from '../environments/environment';
 import { SITE_NAME } from './shared/utils/json-ld';
+import { CustomElementsService } from './shared/services/custom-elements.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -75,5 +82,21 @@ export const appConfig: ApplicationConfig = {
         fontSet: 'material-symbols-outlined',
       },
     },
+    // CDK's native-Popover-API overlay strategy (default since Angular 21) inserts the
+    // overlay pane as a light-DOM descendant of its trigger instead of appending it to a
+    // global `.cdk-overlay-container` on <body>. Descendants of a `createCustomElement`
+    // host (see PlaygroundPreviewElementComponent) never get their popover shown in that
+    // mode — MatSelect/MatMenu panels attach but stay `display: none` — so opt every
+    // overlay in the app back into the classic container-based strategy.
+    {
+      provide: OVERLAY_DEFAULT_CONFIG,
+      useValue: { usePopover: false },
+    },
+    // Registers every markdown-embeddable custom element (see CustomElementsService) once,
+    // at bootstrap. Not awaited: each element's component still loads via its own dynamic
+    // import(), so this doesn't block the app from becoming interactive.
+    provideAppInitializer(() => {
+      inject(CustomElementsService).registerAll();
+    }),
   ],
 };

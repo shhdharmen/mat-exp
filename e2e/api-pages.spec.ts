@@ -344,7 +344,7 @@ test.describe('ApiDetailPage — old kind-first URL format (pre-#91)', () => {
 test.describe('Stale link fix — /docs/api/.../classes/... replaced with kind-correct URLs', () => {
   const cases = [
     {
-      page: '/docs/components/all-buttons/button/api',
+      page: '/docs/components/all-buttons/button',
       symbol: 'MatExpButton',
       expectedKind: 'directives',
     },
@@ -400,8 +400,8 @@ test.describe('Stale link fix — /docs/api/.../classes/... replaced with kind-c
   test('no /docs/api/mat-exp/classes/... links remain anywhere in public/docs markdown pages', async ({
     page,
   }) => {
-    // Spot-check by visiting button/api and verifying zero "classes" links
-    await page.goto('/docs/components/all-buttons/button/api');
+    // Spot-check by visiting the button page (API section) and verifying zero "classes" links
+    await page.goto('/docs/components/all-buttons/button');
     await waitForMarkdown(page);
 
     const staleLinks = page.locator('.markdown-body a[href*="/docs/api/mat-exp/classes/"]');
@@ -414,8 +414,10 @@ test.describe('Stale link fix — /docs/api/.../classes/... replaced with kind-c
 // ---------------------------------------------------------------------------
 
 test.describe('Markdown auto-link — inline code linked to API Detail Pages', () => {
-  test('`matExpButton` in button/api.md is rendered as an api-link', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+  test("`matExpButton` in the button page's API section is rendered as an api-link", async ({
+    page,
+  }) => {
+    await page.goto('/docs/components/all-buttons/button');
     await waitForMarkdown(page);
 
     // The text "`matExpButton` directive" should have an .api-link wrapping the code
@@ -424,7 +426,7 @@ test.describe('Markdown auto-link — inline code linked to API Detail Pages', (
   });
 
   test('auto-link points to the correct API Detail Page URL', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForMarkdown(page);
 
     // The selector attribute `matExpButton` should link to the directive URL
@@ -441,7 +443,7 @@ test.describe('Markdown auto-link — inline code linked to API Detail Pages', (
   });
 
   test('auto-link wraps the text in a <code> element', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForMarkdown(page);
 
     const apiLink = page.locator('.markdown-body a.api-link').first();
@@ -468,7 +470,7 @@ test.describe('Markdown auto-link — inline code linked to API Detail Pages', (
   });
 
   test('clicking an auto-link navigates to the API detail page', async ({ page }) => {
-    await page.goto('/docs/components/all-buttons/button/api');
+    await page.goto('/docs/components/all-buttons/button');
     await waitForMarkdown(page);
 
     const apiLink = page.locator('.markdown-body a.api-link').first();

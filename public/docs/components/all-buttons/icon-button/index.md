@@ -37,7 +37,7 @@ html {
 }
 ```
 
-## Usages
+## Usage
 
 The styles for Material Expressive Button can be applied in two ways:
 

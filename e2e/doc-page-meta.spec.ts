@@ -18,8 +18,10 @@ async function waitForPageContent(page: Page) {
 const editBtn = (page: Page) => page.locator('app-doc-page-meta a.edit-page-link');
 const llmsBtn = (page: Page) => page.locator('app-doc-page-meta a.llms-md-link');
 const designBtn = (page: Page) => page.locator('app-doc-page-meta a.design-link');
-const sourceFolderBtn = (page: Page) => page.locator('app-doc-page-meta a', { hasText: 'View source folder' });
-const reportIssueBtn = (page: Page) => page.locator('app-doc-page-meta a', { hasText: 'Report an issue' });
+const sourceFolderBtn = (page: Page) =>
+  page.locator('app-doc-page-meta a', { hasText: 'View source folder' });
+const reportIssueBtn = (page: Page) =>
+  page.locator('app-doc-page-meta a', { hasText: 'Report an issue' });
 const importCard = (page: Page) =>
   page.locator('app-doc-page-meta mat-card-subtitle', { hasText: 'Import Statement' });
 // "Docs Row" visibility is represented by the Edit-this-page link — the two
@@ -91,11 +93,11 @@ test.describe('"Edit this page" link', () => {
     await expect(editBtn(page)).toHaveAttribute('target', '_blank');
   });
 
-  test('has rel="noopener"', async ({ page }) => {
+  test('has rel="noopener noreferrer"', async ({ page }) => {
     await page.goto('/docs/getting-started/installation');
     await waitForMarkdownContent(page);
 
-    await expect(editBtn(page)).toHaveAttribute('rel', 'noopener');
+    await expect(editBtn(page)).toHaveAttribute('rel', 'noopener noreferrer');
   });
 });
 
@@ -129,11 +131,11 @@ test.describe('"LLMs.md" link', () => {
     await expect(llmsBtn(page)).toHaveAttribute('target', '_blank');
   });
 
-  test('has rel="noopener"', async ({ page }) => {
+  test('has rel="noopener noreferrer"', async ({ page }) => {
     await page.goto('/docs/getting-started/installation');
     await waitForMarkdownContent(page);
 
-    await expect(llmsBtn(page)).toHaveAttribute('rel', 'noopener');
+    await expect(llmsBtn(page)).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
   test('href updates when navigating between different pages', async ({ page }) => {
@@ -186,7 +188,7 @@ test.describe('"Design" link', () => {
     await expect(designBtn(page)).toBeVisible();
     await expect(designBtn(page)).toHaveAttribute('href', 'https://example.com/design-file');
     await expect(designBtn(page)).toHaveAttribute('target', '_blank');
-    await expect(designBtn(page)).toHaveAttribute('rel', 'noopener');
+    await expect(designBtn(page)).toHaveAttribute('rel', 'noopener noreferrer');
   });
 });
 

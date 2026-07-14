@@ -41,7 +41,11 @@ import { CodeComponent } from '../../shared/components/code/code.component';
     MatExpButton,
   ],
   templateUrl: './doc-page-meta.component.html',
-  styleUrl: './doc-page-meta.component.scss',
+  styles: `
+    :host {
+      display: block;
+    }
+  `,
 })
 export class DocPageMetaComponent {
   readonly editPageUrl = input<string | undefined>();

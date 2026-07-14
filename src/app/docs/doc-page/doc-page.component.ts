@@ -1,6 +1,5 @@
-import { AsyncPipe, NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Type, computed, effect, inject } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, switchMap } from 'rxjs/operators';
@@ -16,8 +15,6 @@ import {
 import { TocService } from '../../shared/services/toc.service';
 import { NavManifestService, NavPage } from '../../shell/nav-manifest.service';
 import { TocComponent } from '../../shell/toc/toc.component';
-import { TabsComponent } from '../tabs/tabs.component';
-import { PLAYGROUND_PREVIEW_REGISTRY } from '../playground-preview-registry';
 import { DocPageMetaComponent } from '../doc-page-meta/doc-page-meta.component';
 import {
   breadcrumbListJsonLd,
@@ -26,21 +23,24 @@ import {
 } from '../../shared/utils/json-ld';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MarkdownPipe } from '../../shared/pipes/markdown.pipe';
+import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpIconButton, MatExpButtonGroup } from '@ngm-dev/mat-exp';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { RouteHandlerComponent } from '../../shared/components/route-handler.component';
 
 /**
  * Collects every URL path the nav manifest actually renders — section landing
- * pages, component-page tabs (including Playground), and plain content pages.
- * Mirrors `collectRoutes` in scripts/build-docs.ts so hidden pages (dropped
- * from the manifest via `isHidden`) resolve to a 404 here too, not just from
- * the sidebar.
+ * pages and plain content pages. Mirrors `collectRoutes` in
+ * scripts/build-docs.ts so hidden pages (dropped from the manifest via
+ * `isHidden`) resolve to a 404 here too, not just from the sidebar.
  */
 function collectValidPagePaths(nodes: NavPage[], paths = new Set<string>()): Set<string> {
   for (const node of nodes) {
     if (node.isSection) {
       paths.add(node.path);
       if (node.children) collectValidPagePaths(node.children, paths);
-    } else if (node.isComponentPage && node.children) {
-      for (const child of node.children) paths.add(child.path);
     } else if (!node.isExternal) {
       paths.add(node.path);
     }
@@ -48,36 +48,10 @@ function collectValidPagePaths(nodes: NavPage[], paths = new Set<string>()): Set
   return paths;
 }
 
-function findComponentPage(currentPath: string, nodes: NavPage[]): NavPage | null {
-  for (const node of nodes) {
-    if (node.isComponentPage) {
-      if (node.path === currentPath || node.children?.some((child) => child.path === currentPath)) {
-        return node;
-      }
-    } else if (node.children) {
-      const found = findComponentPage(currentPath, node.children);
-      if (found) return found;
-    }
-  }
-  return null;
-}
-
-/**
- * Finds the nav node that owns `currentPath`, regardless of whether it's a
- * (now effectively unused) tabbed Component Page. Used to look up
- * `primarySymbol` for the Import and GitHub rows, which apply to any page
- * documenting a library symbol — since #177/#178 migrated every component
- * off tabs onto a single page, that's no longer the same thing as
- * `isComponentPage`. Tab children (old-style, still scaffolded by
- * `new-component.ts` until #137/#179) don't carry their own `primarySymbol`,
- * so a match there resolves to the parent Component Page node instead.
- */
+/** Finds the nav node that owns `currentPath`. Source of `primarySymbol` for the Import and GitHub rows. */
 function findPageNode(currentPath: string, nodes: NavPage[]): NavPage | null {
   for (const node of nodes) {
     if (node.path === currentPath) return node;
-    if (node.isComponentPage && node.children?.some((child) => child.path === currentPath)) {
-      return node;
-    }
     if (node.children) {
       const found = findPageNode(currentPath, node.children);
       if (found) return found;
@@ -88,8 +62,8 @@ function findPageNode(currentPath: string, nodes: NavPage[]): NavPage | null {
 
 /**
  * Walks the nav tree to find the ordered chain of ancestor nodes (section by
- * section) leading to the node that owns `currentPath`, including component
- * page tab children. Returns null when the path isn't found.
+ * section) leading to the node that owns `currentPath`. Returns null when the
+ * path isn't found.
  */
 function findAncestorChain(
   currentPath: string,
@@ -98,13 +72,7 @@ function findAncestorChain(
 ): NavPage[] | null {
   for (const node of nodes) {
     const nextTrail = [...trail, node];
-    if (node.isComponentPage && node.children) {
-      const tab = node.children.find((child) => child.path === currentPath);
-      if (tab && tab.path !== node.path) return [...nextTrail, tab];
-      if (node.path === currentPath) return nextTrail;
-    } else if (node.path === currentPath) {
-      return nextTrail;
-    }
+    if (node.path === currentPath) return nextTrail;
     if (node.children) {
       const found = findAncestorChain(currentPath, node.children, nextTrail);
       if (found) return found;
@@ -118,15 +86,19 @@ function findAncestorChain(
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MarkdownComponent,
-    TabsComponent,
     TocComponent,
-    NgTemplateOutlet,
-    NgComponentOutlet,
     DocPageMetaComponent,
     MatCard,
     MatCardContent,
     MarkdownPipe,
     AsyncPipe,
+    MatButtonModule,
+    MatExpIconButton,
+    MatTooltip,
+    RouterLink,
+    MatIcon,
+    RouteHandlerComponent,
+    MatExpButtonGroup,
   ],
   templateUrl: './doc-page.component.html',
   styleUrl: './doc-page.component.scss',
@@ -138,7 +110,7 @@ export class DocPageComponent {
   private readonly ngxMetaService = inject(NgxMetaService);
   private readonly navManifestService = inject(NavManifestService);
 
-  /** Current clean route path — protected so the template can pass it to TabsComponent. */
+  /** Current clean route path. */
   protected readonly routePath = toSignal(
     this.router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
@@ -171,9 +143,8 @@ export class DocPageComponent {
    * pattern. The docs route and library source folder structure are 1:1
    * (e.g. /docs/components/all-buttons/button ->
    * projects/ngm-dev/mat-exp/src/lib/components/all-buttons/button), so no
-   * frontmatter is needed; gated on `primarySymbol` (via `currentPageNode`)
-   * rather than `componentPageContext`/`isComponentPage`, since every
-   * component is now a single page with no tabs (#177, #178).
+   * frontmatter is needed; gated on `primarySymbol` (via `currentPageNode`),
+   * since every component is now a single page with no tabs (#177, #178).
    */
   protected readonly sourceFolderUrl = computed<string | undefined>(() => {
     const node = this.currentPageNode();
@@ -191,54 +162,27 @@ export class DocPageComponent {
 
   protected readonly tocItems = this.tocService.items;
 
-  /**
-   * Display title shown once above the tab bar (or above plain page content).
-   * Component Page tabs (api.md / styling.md) share generic frontmatter titles
-   * ("API", "Styling") across every component — prefix with the component name
-   * so each tab gets a unique, descriptive title, e.g. "Button API". The
-   * Overview tab's own route equals the component's base path, so it's excluded.
-   * Playground tabs have no backing markdown, so their title is built from the
-   * component page context instead of frontmatter.
-   */
+  /** Display title shown above the page content, from the page's frontmatter. */
   protected readonly pageTitle = computed<string | undefined>(() => {
-    const ctx = this.componentPageContext();
-    if (this.playgroundPageComponent()) {
-      return ctx ? `${ctx.label} Playground` : 'Playground';
-    }
     const p = this.page();
     if (!p || p.notFound) return undefined;
-    const rawTitle = p.frontmatter['title'] as string | undefined;
-    const path = this.routePath();
-    return ctx && ctx.path !== path && rawTitle ? `${ctx.label} ${rawTitle}` : rawTitle;
+    return p.frontmatter['title'] as string | undefined;
   });
 
-  /** The Docs Row applies only to markdown-backed pages, not Playground tabs or 404s. */
+  /** Display description shown above the page content, from the page's frontmatter. */
+  protected readonly pageDescription = computed<string | undefined>(() => {
+    const p = this.page();
+    if (!p || p.notFound) return undefined;
+    return p.frontmatter['description'] as string | undefined;
+  });
+
+  /** The Docs Row applies only to markdown-backed pages, not 404s. */
   protected readonly showDocsRow = computed(() => {
     const p = this.page();
-    return !this.playgroundPageComponent() && !!p && !p.notFound;
+    return !!p && !p.notFound;
   });
 
-  /**
-   * When the current path belongs to a Component Page (base or one of its
-   * still-tabbed children), returns the component page nav node. Returns
-   * null for non-component pages (e.g. Getting Started). Now only used by
-   * the (effectively dead until a new component is scaffolded pre-#137)
-   * tabs template branch and Playground-tab title fallback — the Import and
-   * GitHub rows use `currentPageNode` instead, since it doesn't require
-   * `isComponentPage`.
-   */
-  protected readonly componentPageContext = computed(() => {
-    const manifest = this.navManifestService.manifest();
-    const path = this.routePath();
-    if (!manifest) return null;
-    return findComponentPage(path, manifest.nav);
-  });
-
-  /**
-   * The nav node for the current path, regardless of whether it's a tabbed
-   * Component Page — see `findPageNode`. Source of `primarySymbol` for the
-   * Import and GitHub rows.
-   */
+  /** The nav node for the current path — see `findPageNode`. Source of `primarySymbol` for the Import and GitHub rows. */
   protected readonly currentPageNode = computed(() => {
     const manifest = this.navManifestService.manifest();
     const path = this.routePath();
@@ -264,7 +208,7 @@ export class DocPageComponent {
   );
 
   /**
-   * Ordered ancestor chain (sections down to the current page/tab) used to
+   * Ordered ancestor chain (sections down to the current page) used to
    * build the `BreadcrumbList` structured data. `null` until the nav
    * manifest has loaded or when the current path isn't found in it.
    */
@@ -288,22 +232,6 @@ export class DocPageComponent {
     return collectValidPagePaths(manifest.nav);
   });
 
-  /**
-   * When the current URL is a `/playground` tab for a registered component page,
-   * returns the Angular component type to render instead of the markdown content.
-   * Returns null for all other paths (markdown is rendered normally) and while
-   * the path hasn't been confirmed against the nav manifest yet.
-   */
-  protected readonly playgroundPageComponent = computed((): Type<unknown> | null => {
-    const path = this.routePath();
-    if (!path.endsWith('/playground')) return null;
-    const known = this.validPagePaths();
-    if (!known?.has(path)) return null;
-    const basePath = path.replace(/\/playground$/, '');
-    const slug = basePath.split('/').pop();
-    return slug ? (PLAYGROUND_PREVIEW_REGISTRY[slug] ?? null) : null;
-  });
-
   private readonly routeAndKnownPaths = computed(() => ({
     path: this.routePath(),
     known: this.validPagePaths(),
@@ -316,21 +244,38 @@ export class DocPageComponent {
         // than fetching content that might turn out to be hidden.
         if (known === null) return of(null);
         if (!known.has(path)) return of(NOT_FOUND_PAGE);
-        // Playground tabs render via playgroundPageComponent, not markdown.
-        if (path.endsWith('/playground')) return of(null);
         return this.markdownService.getPage(path);
       }),
     ),
     { initialValue: null },
   );
 
+  private readonly jumpToIcons: Record<string, string> = {
+    usage: 'keyboard',
+    playground: 'joystick',
+    api: 'api',
+    styling: 'css',
+  };
+
+  private readonly jumpToOrder = ['usage', 'playground', 'api', 'styling'];
+
+  protected readonly jumpToLinks = computed(() => {
+    const headings = this.page()?.headings ?? [];
+
+    return headings
+      .filter((h) => h.level === 2)
+      .filter((h) => ['usage', 'playground', 'api', 'styling'].includes(h.label.toLowerCase()))
+      .sort((a, b) => this.jumpToOrder.indexOf(a.id) - this.jumpToOrder.indexOf(b.id))
+      .map((h) => ({
+        id: h.id,
+        tooltip: h.label,
+        icon: this.jumpToIcons[h.label.toLowerCase()],
+      }));
+  });
+
   constructor() {
     effect(() => {
       const p = this.page();
-      if (this.playgroundPageComponent()) {
-        this.setPlaygroundMetadata();
-        return;
-      }
       if (p && !p.notFound) {
         this.tocService.setItems(p.headings);
         this.setPageMetadata(p);
@@ -339,28 +284,6 @@ export class DocPageComponent {
         this.ngxMetaService.set({});
       }
     });
-  }
-
-  /**
-   * Sets page metadata for playground tabs. Title and description are derived
-   * from the parent component page's nav context, since playground tabs have no
-   * backing markdown file with frontmatter.
-   */
-  private setPlaygroundMetadata(): void {
-    const ctx = this.componentPageContext();
-    const title = this.pageTitle() ?? 'Playground';
-    const description = ctx?.description ?? null;
-    const path = this.routePath();
-
-    this.tocService.clear();
-    this.ngxMetaService.set({
-      title,
-      description,
-      jsonLd: withBaseJsonLd(
-        breadcrumbListJsonLd(this.breadcrumbEntries(path)),
-        techArticleJsonLd({ headline: title, description, path }),
-      ),
-    } satisfies GlobalMetadata & JsonLdMetadata);
   }
 
   private setPageMetadata(page: DocPage): void {

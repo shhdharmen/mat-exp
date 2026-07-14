@@ -6,22 +6,18 @@
  * Folder classification:
  *   - Section     : contains subdirectories that themselves hold .md files
  *   - Component Page : contains index.md AND at least one of api.md / styling.md
+ *     (legacy marker only — no page in public/docs has api.md/styling.md
+ *     anymore since #177/#178 merged them into index.md; kept because
+ *     sidebar-nav.html and generate-llms-txt.ts still key off the flag)
  *   - Content Page   : contains only index.md (and no subdirectories with .md content)
  *
  * Section folders without an index.md of their own are labelled from their
  * directory name (kebab → Title Case) and ordered last (order = Infinity).
  *
- * For Component Pages the nav tree emits four child route entries:
- *   overview → /<slug>
- *   api      → /<slug>/api
- *   styling  → /<slug>/styling
- *   playground → /<slug>/playground
- *
  * Frontmatter `isHidden: true` on a directory's index.md excludes that page,
  * component, or entire section (including all descendants) from the nav tree
- * and routes.txt. `isHidden: true` on api.md / styling.md excludes just that
- * tab from a Component Page. A directory with no index.md has no frontmatter
- * source, so sections without an index.md cannot be hidden this way.
+ * and routes.txt. A directory with no index.md has no frontmatter source, so
+ * sections without an index.md cannot be hidden this way.
  *
  * Frontmatter is validated against KNOWN_FRONTMATTER_KEYS: title, order,
  * description, isHidden, designUrl, primarySymbol. An unrecognized key (e.g.
@@ -305,73 +301,20 @@ export function walkDir(dir: string, urlSlug: string): NavPage | null {
     return sectionNode;
   }
 
-  if (isComponentPage) {
-    // Emit four child pages
-    const componentChildren: NavPage[] = [
-      {
-        label: 'Overview',
-        path: pagePath,
-        order: 1,
-        description: description ? `Overview: ${description}` : undefined,
-      },
-    ];
-
-    if (hasApiMd) {
-      const apiFm = readFrontmatter(path.join(dir, 'api.md'));
-      if (apiFm['isHidden'] !== true) {
-        componentChildren.push({
-          label: typeof apiFm['title'] === 'string' ? apiFm['title'] : 'API',
-          path: `${pagePath}/api`,
-          order: typeof apiFm['order'] === 'number' ? apiFm['order'] : 2,
-          description: typeof apiFm['description'] === 'string' ? apiFm['description'] : undefined,
-        });
-      }
-    }
-
-    if (hasStylingMd) {
-      const stylingFm = readFrontmatter(path.join(dir, 'styling.md'));
-      if (stylingFm['isHidden'] !== true) {
-        componentChildren.push({
-          label: typeof stylingFm['title'] === 'string' ? stylingFm['title'] : 'Styling',
-          path: `${pagePath}/styling`,
-          order: typeof stylingFm['order'] === 'number' ? stylingFm['order'] : 3,
-          description:
-            typeof stylingFm['description'] === 'string' ? stylingFm['description'] : undefined,
-        });
-      }
-    }
-
-    componentChildren.push({
-      label: 'Playground',
-      path: `${pagePath}/playground`,
-      order: 4,
-      description: description ? `Interactive playground for ${label}.` : undefined,
-    });
-
-    componentChildren.sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity));
-
-    return {
-      label,
-      path: pagePath,
-      order,
-      description,
-      primarySymbol,
-      isComponentPage: true,
-      children: componentChildren,
-    };
-  }
-
   if (hasIndexMd) {
-    // Plain content page. Component Pages that have been migrated off tabs
-    // (#177, #178) land here too, once they no longer have api.md/styling.md
-    // — carry primarySymbol through regardless, so DocPageComponent can still
-    // find it for the Import and GitHub rows without depending on isComponentPage.
+    // Plain content page. Component Pages (single-page since #177/#178) land
+    // here too — carry primarySymbol through regardless, so DocPageComponent
+    // can still find it for the Import and GitHub rows without depending on
+    // isComponentPage. isComponentPage itself is still set when api.md/
+    // styling.md exist (sidebar-nav.html and generate-llms-txt.ts key off
+    // it), though no page in public/docs actually has those files anymore.
     return {
       label,
       path: pagePath,
       order,
       description,
       primarySymbol,
+      isComponentPage: isComponentPage || undefined,
     };
   }
 
@@ -384,7 +327,7 @@ export function walkDir(dir: string, urlSlug: string): NavPage | null {
 
 /**
  * Flatten the nav tree into an ordered list of all leaf pages.
- * Section nodes are excluded; for component pages the four child pages are included.
+ * Section nodes are excluded.
  */
 function flattenPages(nodes: NavPage[]): NavPage[] {
   const result: NavPage[] = [];
@@ -392,8 +335,6 @@ function flattenPages(nodes: NavPage[]): NavPage[] {
   for (const node of nodes) {
     if (node.isSection && node.children) {
       result.push(...flattenPages(node.children));
-    } else if (node.isComponentPage && node.children) {
-      result.push(...node.children);
     } else if (!node.isSection && !node.isExternal) {
       result.push(node);
     }
@@ -456,10 +397,6 @@ async function main(): Promise<void> {
         // Include section route for redirect handling
         routeLines.push(node.path);
         collectRoutes(node.children);
-      } else if (node.isComponentPage && node.children) {
-        for (const child of node.children) {
-          routeLines.push(child.path);
-        }
       } else if (!node.isSection && !node.isExternal) {
         routeLines.push(node.path);
       }

@@ -12,9 +12,7 @@ import { LoadingIndicatorPlaygroundComponent } from './components/loading-and-pr
  * component rendered for its Playground. Slug-keyed rather than path-keyed:
  * the `<playground-preview>` custom element (markdown-authored, see
  * PlaygroundPreviewElementComponent) only knows the slug an author wrote in
- * markdown, not the URL it happens to be embedded on. DocPageComponent also
- * consults this registry for the components still on the tab route
- * (`/playground`), deriving the slug from the last path segment.
+ * markdown, not the URL it happens to be embedded on.
  */
 export const PLAYGROUND_PREVIEW_REGISTRY: Record<string, Type<unknown>> = {
   button: ButtonPlaygroundComponent,

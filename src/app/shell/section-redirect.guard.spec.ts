@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import {
   ActivatedRouteSnapshot,
   provideRouter,
-  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -24,8 +23,6 @@ describe('normalizeDocPath', () => {
 });
 
 describe('sectionRedirectGuard', () => {
-  let router: Router;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -44,12 +41,13 @@ describe('sectionRedirectGuard', () => {
         },
       ],
     });
-
-    router = TestBed.inject(Router);
   });
 
   it('redirects when manifest maps the current path', async () => {
-    Object.defineProperty(router, 'url', { value: '/no-index-section', configurable: true });
+    Object.defineProperty(stateSnapshot, 'url', {
+      value: '/no-index-section',
+      configurable: true,
+    });
 
     const result = await TestBed.runInInjectionContext(() =>
       sectionRedirectGuard(routeSnapshot, stateSnapshot),
@@ -60,7 +58,7 @@ describe('sectionRedirectGuard', () => {
   });
 
   it('allows navigation when no redirect is configured', async () => {
-    Object.defineProperty(router, 'url', {
+    Object.defineProperty(stateSnapshot, 'url', {
       value: '/getting-started/what-is-mat-exp',
       configurable: true,
     });

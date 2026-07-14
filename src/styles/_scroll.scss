@@ -1,0 +1,22 @@
+$scrollbar-height: 8px;
+$scrollbar-width: 8px;
+
+code,
+code[class*='language-'],
+pre,
+pre[class*='language-'],
+.mat-drawer-content,
+.docs-toc-container,
+.mat-drawer-inner-container {
+  @media (pointer: fine) {
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      height: $scrollbar-height;
+      width: $scrollbar-width;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--mat-sys-surface-variant);
+      border-radius: 0;
+    }
+  }
+}

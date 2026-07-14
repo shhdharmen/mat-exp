@@ -1,45 +1,48 @@
-@let ctx = componentPageContext();
-@let showCard = pageTitle() || ctx?.description;
-@if (showCard) {
-  <mat-card class="mb-4 shadow-none!">
-    <mat-card-content>
-      @if (pageTitle(); as title) {
+<app-route-handler>
+  @if (pageTitle(); as title) {
+    <mat-card class="mb-4 shadow-none!">
+      <mat-card-content>
         <h1 class="font-display-large text-display-large">{{ title }}</h1>
-      }
-      @if (ctx?.description; as description) {
-        <p
-          class="font-body-large text-body-large mt-4"
-          [innerHTML]="description | markdown | async"
-        ></p>
-      }
-    </mat-card-content>
-  </mat-card>
-}
-@if (showMetaTable()) {
-  <app-doc-page-meta
-    [editPageUrl]="showDocsRow() ? editPageUrl() : undefined"
-    [rawMarkdownUrl]="showDocsRow() ? rawMarkdownUrl() : undefined"
-    [designUrl]="designUrl()"
-    [primarySymbol]="primarySymbol()"
-    [sourceFolderUrl]="sourceFolderUrl()"
-    [reportIssueUrl]="reportIssueUrl()"
-  />
-}
+        @if (pageDescription(); as description) {
+          <p
+            class="font-body-large text-body-large mt-2"
+            [innerHTML]="description | markdown | async"
+          ></p>
+        }
+        @if (jumpToLinks().length > 0) {
+          <div class="flex gap-1 mt-4 md:mt-0 md:absolute top-4 right-4">
+            @for (item of jumpToLinks(); track item.id) {
+              <a
+                matIconButton
+                matExpIconButton
+                appearance="tonal"
+                [matTooltip]="item.tooltip"
+                [routerLink]="[]"
+                [fragment]="item.id"
+              >
+                <mat-icon>{{ item.icon }}</mat-icon>
+              </a>
+            }
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+  @if (showMetaTable()) {
+    <app-doc-page-meta
+      [editPageUrl]="showDocsRow() ? editPageUrl() : undefined"
+      [rawMarkdownUrl]="showDocsRow() ? rawMarkdownUrl() : undefined"
+      [designUrl]="designUrl()"
+      [primarySymbol]="primarySymbol()"
+      [sourceFolderUrl]="sourceFolderUrl()"
+      [reportIssueUrl]="reportIssueUrl()"
+      class="mb-8"
+    />
+  }
 
-@if (ctx) {
-  <app-doc-tabs [tabs]="ctx.children!" [currentPath]="routePath()">
-    <ng-container *ngTemplateOutlet="contentTpl" />
-  </app-doc-tabs>
-} @else {
-  <ng-container *ngTemplateOutlet="contentTpl" />
-}
-
-<ng-template #contentTpl>
   <div class="flex gap-8 items-start">
     <div class="flex-1 min-w-0">
-      @if (playgroundPageComponent(); as playgroundCmp) {
-        <ng-container *ngComponentOutlet="playgroundCmp" />
-      } @else if (page(); as p) {
+      @if (page(); as p) {
         @if (p.notFound) {
           <div class="not-found">
             <h1>Page not found</h1>
@@ -61,14 +64,9 @@
       }
     </div>
     @if (tocItems().length > 0) {
-      <aside
-        class="hidden lg:block w-52 xl:w-60 shrink-0 sticky"
-        [class.top-8]="ctx"
-        [class.top-0]="!ctx"
-        aria-label="On this page"
-      >
+      <aside class="hidden lg:block w-52 xl:w-60 shrink-0 sticky top-4" aria-label="On this page">
         <app-toc />
       </aside>
     }
   </div>
-</ng-template>
+</app-route-handler>

@@ -17,7 +17,6 @@ export type { NavPage as NavItem };
     :host {
       display: block;
       height: 100%;
-      overflow-y: auto;
     }
 
     mat-expansion-panel {

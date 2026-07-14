@@ -15,7 +15,7 @@
     <mat-drawer
       [opened]="isMobile() ? drawerOpen() : true"
       [mode]="isMobile() ? 'over' : 'side'"
-      class="border-r! border-outline-variant!"
+      class="w-[300px]! border-e! border-outline-variant!"
       (closed)="drawerOpen.set(false)"
     >
       <app-sidebar-nav (linkClicked)="drawerOpen.set(false)" />
@@ -23,11 +23,7 @@
 
     <mat-drawer-content class="flex! overflow-hidden">
       <!-- Main content area -->
-      <main
-        class="flex-1 overflow-y-auto scrollbar-gutter-stable px-6 py-8 max-w-7xl mx-auto w-full"
-        id="main-content"
-        tabindex="-1"
-      >
+      <main class="flex-1 px-6 py-8 max-w-7xl mx-auto w-full" id="main-content" tabindex="-1">
         <router-outlet />
         <app-doc-prev-next />
         <div class="my-24"></div>

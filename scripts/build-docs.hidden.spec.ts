@@ -25,25 +25,21 @@ describe('isHidden frontmatter', () => {
     expect(walkDir(root, 'secret')).toBeNull();
   });
 
-  it('hides a component page (all tabs) when index.md is hidden', () => {
+  it('hides a component page when index.md is hidden', () => {
     write(path.join(root, 'index.md'), '---\ntitle: Button\nisHidden: true\n---\n');
     write(path.join(root, 'api.md'), '---\ntitle: API\n---\n');
     write(path.join(root, 'styling.md'), '---\ntitle: Styling\n---\n');
     expect(walkDir(root, 'button')).toBeNull();
   });
 
-  it('hides just the api tab when api.md is hidden', () => {
+  it('sets isComponentPage but emits no children when api.md/styling.md exist', () => {
     write(path.join(root, 'index.md'), '---\ntitle: Button\n---\n');
-    write(path.join(root, 'api.md'), '---\ntitle: API\nisHidden: true\n---\n');
+    write(path.join(root, 'api.md'), '---\ntitle: API\n---\n');
     write(path.join(root, 'styling.md'), '---\ntitle: Styling\n---\n');
 
     const node = walkDir(root, 'button');
     expect(node?.isComponentPage).toBe(true);
-    const labels = node?.children?.map((c) => c.label);
-    expect(labels).toContain('Overview');
-    expect(labels).toContain('Styling');
-    expect(labels).toContain('Playground');
-    expect(labels).not.toContain('API');
+    expect(node?.children).toBeUndefined();
   });
 
   it('hides an entire section, including descendants, via the section index.md', () => {
@@ -81,13 +77,6 @@ describe('frontmatter key validation', () => {
   it('rejects an unrecognized key on index.md', () => {
     write(path.join(root, 'index.md'), '---\ntitle: Button\nisHideen: true\n---\n');
     expect(() => walkDir(root, 'button')).toThrowError(/unknown key\(s\) "isHideen"/);
-  });
-
-  it('rejects an unrecognized key on api.md', () => {
-    write(path.join(root, 'index.md'), '---\ntitle: Button\n---\n');
-    write(path.join(root, 'api.md'), '---\ntitle: API\nhidden: true\n---\n');
-    write(path.join(root, 'styling.md'), '---\ntitle: Styling\n---\n');
-    expect(() => walkDir(root, 'button')).toThrowError(/unknown key\(s\) "hidden"/);
   });
 
   it('accepts all known keys together', () => {

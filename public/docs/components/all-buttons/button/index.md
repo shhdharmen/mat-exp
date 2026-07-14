@@ -87,6 +87,46 @@ Mat Expressive Button supports the following variations:
 - Toggle: `selected`, `unselected`
 - State: `pressed` (`:active` pseudo-selector)
 
+## Toggle Behavior
+
+Mat Expressive Button supports a `toggle` state (`selected` / `unselected`), but toggling on click
+is only automatic **inside a `MatExpButtonGroup`** — the group owns selection state for every
+button it manages.
+
+**Standalone toggle buttons (outside a `MatExpButtonGroup`) do not flip `toggle` on click.** This
+is intentional (see [issue #188](https://github.com/Angular-Material-Dev/mat-expressive-private/issues/188)):
+a lone button's click handler only has one consumer to satisfy, so the library leaves the state
+transition up to you rather than guessing what a click should mean. Two-way bind `toggle` and
+flip it yourself in your own `(click)` handler:
+
+```angular-ts name="app.ts"
+import { signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatExpButton } from '@ngm-dev/mat-exp';
+
+@Component({
+  selector: 'app-root',
+  imports: [MatButton, MatExpButton],
+  template: `
+    <button
+      matButton="tonal"
+      matExpButton
+      [(toggle)]="favorited"
+      (click)="favorited.set(favorited() === 'selected' ? 'unselected' : 'selected')"
+    >
+      Favorite
+    </button>
+  `,
+})
+export class App {
+  protected readonly favorited = model<'selected' | 'unselected'>('unselected');
+}
+```
+
+Inside a `MatExpButtonGroup`, don't do this — the group already manages `toggle` for its
+projected buttons based on the group's single-/multi-select state, and a manual click handler
+would fight the group's own state management.
+
 ## Shape Morph
 
 Mat Expressive Button supports this shape morphing by default.

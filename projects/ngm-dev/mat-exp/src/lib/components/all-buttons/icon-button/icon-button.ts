@@ -32,6 +32,20 @@ export class MatExpIconButton implements MatExpSelectableButton {
   /** @default 'round' */
   public readonly shape = model(this._options.shape);
   public readonly width = input(this._options.width);
+  /**
+   * The toggle state of the icon button (`'selected' | 'unselected'`).
+   *
+   * Inside a `MatExpButtonGroup`, the group is the source of truth: it manages this model for
+   * every projected button in response to clicks, keeping it in sync with the group's
+   * single-/multi-select state.
+   *
+   * Standalone (outside a group), a click does **not** flip this value automatically — the
+   * directive's click handler only delegates to a parent group when one is present. Toggling a
+   * standalone button is consumer-driven: two-way bind `toggle` and flip it yourself in your own
+   * `(click)` handler, e.g.
+   * `[(toggle)]="state" (click)="state.set(state() === 'selected' ? 'unselected' : 'selected')"`.
+   * This is an intentional, documented contract (see issue #188) — not a bug.
+   */
   public readonly toggle = model<MatExpButtonToggle | undefined>(this._options.toggle);
   public readonly value = model<unknown>();
 

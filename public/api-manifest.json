@@ -56,7 +56,8 @@
       {
         "name": "toggle",
         "type": "ModelSignal<MatExpButtonToggle | undefined>",
-        "isModel": true
+        "isModel": true,
+        "description": "The toggle state of the button (`'selected' | 'unselected'`).\n\nInside a `MatExpButtonGroup`, the group is the source of truth: it manages this model for\nevery projected button in response to clicks, keeping it in sync with the group's\nsingle-/multi-select state.\n\nStandalone (outside a group), a click does **not** flip this value automatically — the\ndirective's click handler only delegates to a parent group when one is present. Toggling a\nstandalone button is consumer-driven: two-way bind `toggle` and flip it yourself in your own\n`(click)` handler, e.g.\n`[(toggle)]=\"state\" (click)=\"state.set(state() === 'selected' ? 'unselected' : 'selected')\"`.\nThis is an intentional, documented contract (see issue #188) — not a bug."
       },
       {
         "name": "value",
@@ -134,7 +135,8 @@
       {
         "name": "toggle",
         "type": "ModelSignal<MatExpButtonToggle | undefined>",
-        "isModel": true
+        "isModel": true,
+        "description": "The toggle state of the icon button (`'selected' | 'unselected'`).\n\nInside a `MatExpButtonGroup`, the group is the source of truth: it manages this model for\nevery projected button in response to clicks, keeping it in sync with the group's\nsingle-/multi-select state.\n\nStandalone (outside a group), a click does **not** flip this value automatically — the\ndirective's click handler only delegates to a parent group when one is present. Toggling a\nstandalone button is consumer-driven: two-way bind `toggle` and flip it yourself in your own\n`(click)` handler, e.g.\n`[(toggle)]=\"state\" (click)=\"state.set(state() === 'selected' ? 'unselected' : 'selected')\"`.\nThis is an intentional, documented contract (see issue #188) — not a bug."
       },
       {
         "name": "value",

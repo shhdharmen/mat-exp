@@ -130,4 +130,20 @@ describe('MatExpButtonGroup selection-sync', () => {
       expect(button.disabled).toBe(true);
     }
   });
+
+  it('has `role="group"` and reflects `disabled` as `aria-disabled` on the host', () => {
+    const { fixture, host, group } = setup();
+
+    const nativeElement = fixture.debugElement.query(By.directive(MatExpButtonGroup))
+      .nativeElement as HTMLElement;
+
+    expect(nativeElement.getAttribute('role')).toBe('group');
+    expect(nativeElement.getAttribute('aria-disabled')).toBe('false');
+
+    host.disabled.set(true);
+    fixture.detectChanges();
+
+    expect(nativeElement.getAttribute('aria-disabled')).toBe('true');
+    expect(group.disabled()).toBe(true);
+  });
 });

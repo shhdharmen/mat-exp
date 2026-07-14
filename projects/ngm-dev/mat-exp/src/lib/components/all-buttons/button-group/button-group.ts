@@ -59,6 +59,7 @@ export const MAT_EXP_BUTTON_GROUP_VALUE_ACCESSOR: Provider = {
   templateUrl: './button-group.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
+    role: 'group',
     '[class]': 'matExpButtonGroupClass',
     '[attr.data-variant]': 'variant()',
     '[attr.data-selection]': 'selection()',
@@ -66,6 +67,7 @@ export const MAT_EXP_BUTTON_GROUP_VALUE_ACCESSOR: Provider = {
     '[attr.data-shape]': 'shape()',
     '[attr.data-appearance]': 'appearance()',
     '[attr.data-disabled]': 'disabled()',
+    '[attr.aria-disabled]': 'disabled()',
   },
 })
 export class MatExpButtonGroup implements ControlValueAccessor {

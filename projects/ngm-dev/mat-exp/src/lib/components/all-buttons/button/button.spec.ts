@@ -134,6 +134,42 @@ describe('MatExpButton input -> host attribute mapping', () => {
 
     expect(nativeElement.getAttribute('data-toggle')).toBe('unselected');
   });
+
+  it('renders no `aria-pressed` attribute when the button does not participate in toggle behavior', () => {
+    const fixture = TestBed.createComponent(ButtonDefaultsTestHost);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.debugElement.query(By.directive(MatExpButton))
+      .nativeElement as HTMLElement;
+
+    expect(nativeElement.hasAttribute('aria-pressed')).toBe(false);
+  });
+
+  it('reflects `toggle` as `aria-pressed`, in sync with selection/deselection', () => {
+    const fixture = TestBed.createComponent(ButtonBoundTestHost);
+    const host = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const nativeElement = fixture.debugElement.query(By.directive(MatExpButton))
+      .nativeElement as HTMLElement;
+
+    expect(nativeElement.hasAttribute('aria-pressed')).toBe(false);
+
+    host.toggle.set('selected');
+    fixture.detectChanges();
+
+    expect(nativeElement.getAttribute('aria-pressed')).toBe('true');
+
+    host.toggle.set('unselected');
+    fixture.detectChanges();
+
+    expect(nativeElement.getAttribute('aria-pressed')).toBe('false');
+
+    host.toggle.set(undefined);
+    fixture.detectChanges();
+
+    expect(nativeElement.hasAttribute('aria-pressed')).toBe(false);
+  });
 });
 
 describe('MatExpButton with provideMatExpButtonOptions', () => {
@@ -190,6 +226,29 @@ describe('MatExpButton inside a MatExpButtonGroup', () => {
 
     expect(onButtonClickSpy).toHaveBeenCalledTimes(1);
     expect(onButtonClickSpy).toHaveBeenCalledWith(button);
+  });
+
+  it('reflects `aria-pressed` in sync when the group syncs toggle state programmatically (CVA writeValue)', () => {
+    const fixture = TestBed.createComponent(ButtonGroupBroadcastTestHost);
+    fixture.detectChanges();
+
+    const group = fixture.debugElement
+      .query(By.directive(MatExpButtonGroup))
+      .injector.get(MatExpButtonGroup);
+    const debugElement = fixture.debugElement.query(By.directive(MatExpButton));
+    const nativeElement = debugElement.nativeElement as HTMLElement;
+
+    expect(nativeElement.getAttribute('aria-pressed')).toBe('false');
+
+    group.writeValue('a');
+    fixture.detectChanges();
+
+    expect(nativeElement.getAttribute('aria-pressed')).toBe('true');
+
+    group.writeValue(undefined);
+    fixture.detectChanges();
+
+    expect(nativeElement.getAttribute('aria-pressed')).toBe('false');
   });
 });
 

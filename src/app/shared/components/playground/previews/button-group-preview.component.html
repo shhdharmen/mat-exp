@@ -7,7 +7,7 @@
     [selection]="selection()"
     [disabled]="disabled()"
   >
-    <button matIconButton matExpIconButton>
+    <button matIconButton matExpIconButton aria-label="Delete">
       <mat-icon>delete</mat-icon>
     </button>
     <button matButton matExpButton>Label</button>
@@ -15,7 +15,7 @@
       <mat-icon>edit</mat-icon>
       Label
     </button>
-    <button matIconButton matExpIconButton>
+    <button matIconButton matExpIconButton aria-label="Favorite">
       <mat-icon>favorite</mat-icon>
     </button>
   </mat-exp-button-group>
@@ -49,16 +49,16 @@
       [disabled]="disabled()"
       [formControl]="control"
     >
-      <button matIconButton matExpIconButton value="delete">
+      <button matIconButton matExpIconButton value="delete" aria-label="Delete">
         <mat-icon>delete</mat-icon>
       </button>
-      <button matIconButton matExpIconButton value="edit">
+      <button matIconButton matExpIconButton value="edit" aria-label="Edit">
         <mat-icon>edit</mat-icon>
       </button>
-      <button matIconButton matExpIconButton value="star">
+      <button matIconButton matExpIconButton value="star" aria-label="Star">
         <mat-icon>star</mat-icon>
       </button>
-      <button matIconButton matExpIconButton value="favorite">
+      <button matIconButton matExpIconButton value="favorite" aria-label="Favorite">
         <mat-icon>favorite</mat-icon>
       </button>
     </mat-exp-button-group>

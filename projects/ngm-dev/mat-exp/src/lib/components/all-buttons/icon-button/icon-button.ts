@@ -1,4 +1,4 @@
-import { Directive, inject, Input, input, model } from '@angular/core';
+import { Directive, computed, inject, Input, input, model } from '@angular/core';
 import { injectMatExpIconButtonOptions } from './icon-button.options';
 import { MatIconButton } from '@angular/material/button';
 import { MatExpSelectableButton } from '../selectable-button/selectable-button';
@@ -18,6 +18,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
     '[attr.data-toggle]': 'toggle()',
     '[attr.data-width]': 'width()',
     '[attr.data-menu-open]': 'isMenuOpen',
+    '[attr.aria-pressed]': 'ariaPressed()',
     '[class]': 'matExpIconButtonClass',
     '(click)': '_onButtonClick()',
   },
@@ -33,6 +34,18 @@ export class MatExpIconButton implements MatExpSelectableButton {
   public readonly width = input(this._options.width);
   public readonly toggle = model<MatExpButtonToggle | undefined>(this._options.toggle);
   public readonly value = model<unknown>();
+
+  /**
+   * `aria-pressed`, derived from `toggle()`. `null` when the button does not
+   * participate in toggle behavior, so the attribute is omitted entirely
+   * rather than rendered as `aria-pressed="false"` (its mere presence changes
+   * how assistive technology announces the control).
+   * @internal
+   */
+  public readonly ariaPressed = computed(() => {
+    const toggle = this.toggle();
+    return toggle === undefined ? null : toggle === 'selected' ? 'true' : 'false';
+  });
 
   private _appearance = this._options.appearance;
   @Input()

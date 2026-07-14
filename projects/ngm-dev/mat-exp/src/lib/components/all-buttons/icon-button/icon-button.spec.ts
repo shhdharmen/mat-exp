@@ -145,6 +145,42 @@ describe('MatExpIconButton', () => {
     expect(nativeElement.getAttribute('data-appearance')).toBe('filled');
     expect(nativeElement.getAttribute('data-toggle')).toBe('selected');
   });
+
+  it('renders no `aria-pressed` attribute when the icon button does not participate in toggle behavior', () => {
+    const fixture = TestBed.createComponent(IconButtonDefaultsTestHost);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.debugElement.query(By.directive(MatExpIconButton))
+      .nativeElement as HTMLElement;
+
+    expect(nativeElement.hasAttribute('aria-pressed')).toBe(false);
+  });
+
+  it('reflects `toggle` as `aria-pressed`, in sync with selection/deselection', () => {
+    const fixture = TestBed.createComponent(IconButtonBoundTestHost);
+    const host = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const nativeElement = fixture.debugElement.query(By.directive(MatExpIconButton))
+      .nativeElement as HTMLElement;
+
+    expect(nativeElement.hasAttribute('aria-pressed')).toBe(false);
+
+    host.toggle.set('selected');
+    fixture.detectChanges();
+
+    expect(nativeElement.getAttribute('aria-pressed')).toBe('true');
+
+    host.toggle.set('unselected');
+    fixture.detectChanges();
+
+    expect(nativeElement.getAttribute('aria-pressed')).toBe('false');
+
+    host.toggle.set(undefined);
+    fixture.detectChanges();
+
+    expect(nativeElement.hasAttribute('aria-pressed')).toBe(false);
+  });
 });
 
 describe('MatExpIconButton with provideMatExpIconButtonOptions', () => {
@@ -216,6 +252,32 @@ describe('MatExpIconButton inside MatExpButtonGroup', () => {
     expect(iconButtons[0].toggle()).toBe('selected');
     expect(iconButtons[1].toggle()).toBe('unselected');
     expect(group.value).toBe('a');
+  });
+
+  it('reflects `aria-pressed` in sync when the group syncs toggle state programmatically (CVA writeValue)', () => {
+    const { fixture, group, iconButtons } = setup();
+
+    const nativeElements = iconButtons.map(
+      (button) =>
+        fixture.debugElement
+          .queryAll(By.directive(MatExpIconButton))
+          .find((el) => el.injector.get(MatExpIconButton) === button)?.nativeElement as HTMLElement,
+    );
+
+    expect(nativeElements[0].getAttribute('aria-pressed')).toBe('false');
+    expect(nativeElements[1].getAttribute('aria-pressed')).toBe('false');
+
+    group.writeValue('a');
+    fixture.detectChanges();
+
+    expect(nativeElements[0].getAttribute('aria-pressed')).toBe('true');
+    expect(nativeElements[1].getAttribute('aria-pressed')).toBe('false');
+
+    group.writeValue('b');
+    fixture.detectChanges();
+
+    expect(nativeElements[0].getAttribute('aria-pressed')).toBe('false');
+    expect(nativeElements[1].getAttribute('aria-pressed')).toBe('true');
   });
 });
 

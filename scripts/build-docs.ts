@@ -50,11 +50,14 @@ export interface NavPage {
   description?: string;
   order?: number;
   /**
-   * Exported library symbol(s) this Component Page documents, e.g.
-   * ["MatExpButton"] or ["MatExpFabMenu", "MatExpFabMenuTrigger"]. Drives the
-   * Import Row's `import { ... } from '@ngm-dev/mat-exp';` statement. Only
-   * set on Component Page nodes (isComponentPage: true); normalized from the
-   * frontmatter's string-or-string[] `primarySymbol` field.
+   * Exported library symbol(s) this page documents, e.g. ["MatExpButton"] or
+   * ["MatExpFabMenu", "MatExpFabMenuTrigger"]. Drives the Import and GitHub
+   * rows (`DocPageComponent`'s `primarySymbol`/`sourceFolderUrl`/
+   * `reportIssueUrl`). Set on any node whose index.md sets `primarySymbol`
+   * frontmatter — component pages set this whether or not they still have
+   * api.md/styling.md (isComponentPage), since #177/#178 migrated every
+   * component off tabs onto a single page. Normalized from the frontmatter's
+   * string-or-string[] `primarySymbol` field.
    */
   primarySymbol?: string[];
   /** True when this folder also contains api.md / styling.md. */
@@ -359,12 +362,16 @@ export function walkDir(dir: string, urlSlug: string): NavPage | null {
   }
 
   if (hasIndexMd) {
-    // Plain content page
+    // Plain content page. Component Pages that have been migrated off tabs
+    // (#177, #178) land here too, once they no longer have api.md/styling.md
+    // — carry primarySymbol through regardless, so DocPageComponent can still
+    // find it for the Import and GitHub rows without depending on isComponentPage.
     return {
       label,
       path: pagePath,
       order,
       description,
+      primarySymbol,
     };
   }
 

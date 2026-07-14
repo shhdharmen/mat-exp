@@ -63,6 +63,30 @@ function findComponentPage(currentPath: string, nodes: NavPage[]): NavPage | nul
 }
 
 /**
+ * Finds the nav node that owns `currentPath`, regardless of whether it's a
+ * (now effectively unused) tabbed Component Page. Used to look up
+ * `primarySymbol` for the Import and GitHub rows, which apply to any page
+ * documenting a library symbol — since #177/#178 migrated every component
+ * off tabs onto a single page, that's no longer the same thing as
+ * `isComponentPage`. Tab children (old-style, still scaffolded by
+ * `new-component.ts` until #137/#179) don't carry their own `primarySymbol`,
+ * so a match there resolves to the parent Component Page node instead.
+ */
+function findPageNode(currentPath: string, nodes: NavPage[]): NavPage | null {
+  for (const node of nodes) {
+    if (node.path === currentPath) return node;
+    if (node.isComponentPage && node.children?.some((child) => child.path === currentPath)) {
+      return node;
+    }
+    if (node.children) {
+      const found = findPageNode(currentPath, node.children);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+/**
  * Walks the nav tree to find the ordered chain of ancestor nodes (section by
  * section) leading to the node that owns `currentPath`, including component
  * page tab children. Returns null when the path isn't found.
@@ -147,20 +171,22 @@ export class DocPageComponent {
    * pattern. The docs route and library source folder structure are 1:1
    * (e.g. /docs/components/all-buttons/button ->
    * projects/ngm-dev/mat-exp/src/lib/components/all-buttons/button), so no
-   * frontmatter is needed; only rendered on Component Pages.
+   * frontmatter is needed; gated on `primarySymbol` (via `currentPageNode`)
+   * rather than `componentPageContext`/`isComponentPage`, since every
+   * component is now a single page with no tabs (#177, #178).
    */
   protected readonly sourceFolderUrl = computed<string | undefined>(() => {
-    const ctx = this.componentPageContext();
-    if (!ctx) return undefined;
-    const suffix = ctx.path.replace(/^\/docs\/components\//, '');
+    const node = this.currentPageNode();
+    if (!node?.primarySymbol?.length) return undefined;
+    const suffix = node.path.replace(/^\/docs\/components\//, '');
     return `${environment.githubRepoUrl}/tree/${environment.githubBranch}/projects/ngm-dev/mat-exp/src/lib/components/${suffix}`;
   });
 
   /** GitHub Row "Report an issue" link, pre-filled with a component-specific title. */
   protected readonly reportIssueUrl = computed<string | undefined>(() => {
-    const ctx = this.componentPageContext();
-    if (!ctx) return undefined;
-    return `${environment.githubRepoUrl}/issues/new?title=${encodeURIComponent(`[${ctx.label}] `)}`;
+    const node = this.currentPageNode();
+    if (!node?.primarySymbol?.length) return undefined;
+    return `${environment.githubRepoUrl}/issues/new?title=${encodeURIComponent(`[${node.label}] `)}`;
   });
 
   protected readonly tocItems = this.tocService.items;
@@ -193,9 +219,13 @@ export class DocPageComponent {
   });
 
   /**
-   * When the current path belongs to a Component Page (base or one of its tabs),
-   * returns the component page nav node (which carries the tab children).
-   * Returns null for non-component pages (e.g. Getting Started).
+   * When the current path belongs to a Component Page (base or one of its
+   * still-tabbed children), returns the component page nav node. Returns
+   * null for non-component pages (e.g. Getting Started). Now only used by
+   * the (effectively dead until a new component is scaffolded pre-#137)
+   * tabs template branch and Playground-tab title fallback — the Import and
+   * GitHub rows use `currentPageNode` instead, since it doesn't require
+   * `isComponentPage`.
    */
   protected readonly componentPageContext = computed(() => {
     const manifest = this.navManifestService.manifest();
@@ -205,19 +235,32 @@ export class DocPageComponent {
   });
 
   /**
-   * Exported library symbol(s) for the Import Row, sourced from the
-   * Component Page's own `primarySymbol` frontmatter (carried on the nav
-   * manifest node, so it's available on every tab — not just Overview).
+   * The nav node for the current path, regardless of whether it's a tabbed
+   * Component Page — see `findPageNode`. Source of `primarySymbol` for the
+   * Import and GitHub rows.
    */
-  protected readonly primarySymbol = computed(() => this.componentPageContext()?.primarySymbol);
+  protected readonly currentPageNode = computed(() => {
+    const manifest = this.navManifestService.manifest();
+    const path = this.routePath();
+    if (!manifest) return null;
+    return findPageNode(path, manifest.nav);
+  });
+
+  /**
+   * Exported library symbol(s) for the Import Row, sourced from the current
+   * page's own `primarySymbol` frontmatter (carried on the nav manifest
+   * node).
+   */
+  protected readonly primarySymbol = computed(() => this.currentPageNode()?.primarySymbol);
 
   /**
    * The metadata table renders when the Docs Row applies, or when the
-   * current page is a Component Page (which adds the Import and/or GitHub
-   * Row, independent of whether there's backing markdown for the Docs Row).
+   * current page documents a library symbol (which adds the Import and/or
+   * GitHub Row, independent of whether there's backing markdown for the
+   * Docs Row).
    */
   protected readonly showMetaTable = computed(
-    () => this.showDocsRow() || !!this.componentPageContext(),
+    () => this.showDocsRow() || !!this.currentPageNode()?.primarySymbol,
   );
 
   /**

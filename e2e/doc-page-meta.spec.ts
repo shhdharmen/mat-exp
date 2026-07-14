@@ -15,10 +15,16 @@ async function waitForPageContent(page: Page) {
     .waitFor({ state: 'visible', timeout: 10_000 });
 }
 
-const docsRow = (page: Page) => page.locator('app-doc-page-meta .doc-page-meta');
 const editBtn = (page: Page) => page.locator('app-doc-page-meta a.edit-page-link');
 const llmsBtn = (page: Page) => page.locator('app-doc-page-meta a.llms-md-link');
 const designBtn = (page: Page) => page.locator('app-doc-page-meta a.design-link');
+const sourceFolderBtn = (page: Page) => page.locator('app-doc-page-meta a', { hasText: 'View source folder' });
+const reportIssueBtn = (page: Page) => page.locator('app-doc-page-meta a', { hasText: 'Report an issue' });
+const importCard = (page: Page) =>
+  page.locator('app-doc-page-meta mat-card-subtitle', { hasText: 'Import Statement' });
+// "Docs Row" visibility is represented by the Edit-this-page link — the two
+// always render together (both gated on showDocsRow()).
+const docsRow = editBtn;
 
 // ---------------------------------------------------------------------------
 // 1. Docs Row visibility — shown on markdown pages, hidden elsewhere
@@ -185,7 +191,63 @@ test.describe('"Design" link', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 5. Structure and accessibility
+// 5. Import Row — Component Pages only, sourced from primarySymbol frontmatter
+// ---------------------------------------------------------------------------
+
+test.describe('Import Row', () => {
+  test('appears on a Component Page with the import statement', async ({ page }) => {
+    await page.goto('/docs/components/all-buttons/button');
+    await waitForMarkdownContent(page);
+
+    await expect(importCard(page)).toBeVisible();
+    await expect(page.locator('app-doc-page-meta app-code')).toContainText(
+      "import { MatExpButton } from '@ngm-dev/mat-exp';",
+    );
+  });
+
+  test('is absent on a non-component page (no primarySymbol)', async ({ page }) => {
+    await page.goto('/docs/getting-started/installation');
+    await waitForMarkdownContent(page);
+
+    await expect(importCard(page)).toHaveCount(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 6. GitHub Row — Component Pages only, source folder + report issue links
+// ---------------------------------------------------------------------------
+
+test.describe('GitHub Row', () => {
+  test('appears on a Component Page with correct source-folder and issue links', async ({
+    page,
+  }) => {
+    await page.goto('/docs/components/all-buttons/button');
+    await waitForMarkdownContent(page);
+
+    await expect(sourceFolderBtn(page)).toBeVisible();
+    await expect(sourceFolderBtn(page)).toHaveAttribute(
+      'href',
+      'https://github.com/Angular-Material-Dev/mat-expressive/tree/main/projects/ngm-dev/mat-exp/src/lib/components/all-buttons/button',
+    );
+
+    await expect(reportIssueBtn(page)).toBeVisible();
+    const issueHref = await reportIssueBtn(page).getAttribute('href');
+    expect(issueHref).toBe(
+      'https://github.com/Angular-Material-Dev/mat-expressive/issues/new?title=%5BButton%5D%20',
+    );
+  });
+
+  test('is absent on a non-component page (no primarySymbol)', async ({ page }) => {
+    await page.goto('/docs/getting-started/installation');
+    await waitForMarkdownContent(page);
+
+    await expect(sourceFolderBtn(page)).toHaveCount(0);
+    await expect(reportIssueBtn(page)).toHaveCount(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 7. Structure and accessibility
 // ---------------------------------------------------------------------------
 
 test.describe('Docs Row structure', () => {
@@ -229,7 +291,7 @@ test.describe('Docs Row structure', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 6. Docs Row on non-component Doc Pages rendered via StaticPageComponent
+// 8. Docs Row on non-component Doc Pages rendered via StaticPageComponent
 // ---------------------------------------------------------------------------
 
 test.describe('Docs Row on the Changelog page', () => {

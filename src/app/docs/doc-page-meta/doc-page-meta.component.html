@@ -15,7 +15,7 @@
   </mat-card>
 }
 @let showGHCard = sourceFolderUrl() || reportIssueUrl();
-@let showDocCard = editPageUrl() || rawMarkdownUrl();
+@let showDocCard = editPageUrl() || designUrl() || rawMarkdownUrl();
 
 <div class="grid gap-4" [class.lg:grid-cols-2]="showGHCard && showDocCard">
   @if (showGHCard) {
@@ -55,13 +55,40 @@
             <mat-icon>docs</mat-icon>
           </div>
           @if (editPageUrl(); as url) {
-            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
+            <a
+              matButton
+              matExpButton
+              class="edit-page-link"
+              [href]="url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <mat-icon>edit</mat-icon>
               Edit this page
             </a>
           }
+          @if (designUrl(); as url) {
+            <a
+              matButton
+              matExpButton
+              class="design-link"
+              [href]="url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <mat-icon>design_services</mat-icon>
+              Design
+            </a>
+          }
           @if (rawMarkdownUrl(); as url) {
-            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
+            <a
+              matButton
+              matExpButton
+              class="llms-md-link"
+              [href]="url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <mat-icon>description</mat-icon>
               LLMs.md
             </a>

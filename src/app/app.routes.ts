@@ -20,6 +20,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
       },
+      {
+        path: 'sponsor',
+        loadComponent: () =>
+          import('./sponsor-page/sponsor-page.component').then((m) => m.SponsorPageComponent),
+      },
     ],
   },
   {

@@ -96,13 +96,57 @@ export class App {}
 
 ## API
 
-### MatExpFabMenu Directive
+### `MatExpFabMenu`
 
-You can view the API for `MatExpFabMenu` directive [here](/docs/api/mat-exp/directives/MatExpFabMenu).
+Standalone directive, selector **`[matExpFabMenu]`**.
 
-### MatExpFabMenuTrigger Directive
+You can view the generated API for `MatExpFabMenu` [here](/docs/api/mat-exp/directives/MatExpFabMenu).
 
-You can view the API for `MatExpFabMenuTrigger` directive [here](/docs/api/mat-exp/directives/MatExpFabMenuTrigger).
+#### Host
+
+No static host bindings. `MatExpFabMenu` instead sets `MatMenu.panelClass` programmatically via an effect, combining the consumer's original panel class (captured once, before Angular Material's own `panelClass` setter clears it), `mat-exp-fab-menu`, and `mat-exp-fab-menu-<color>`.
+
+#### Inputs
+
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| **`color`** | `MatExpFabMenuColor` | `'primary'` | Color applied to the menu panel. Pass the same value to the trigger's `color` so the two stay in sync. |
+
+`color` uses `input()`.
+
+Types:
+
+- **`MatExpFabMenuColor`** (alias of `MatExpFabMenuTriggerColor`) – `'primary' | 'secondary' | 'tertiary'`
+
+---
+
+### `MatExpFabMenuTrigger`
+
+Standalone directive, selector **`[matExpFabMenuTrigger]`**.
+
+You can view the generated API for `MatExpFabMenuTrigger` [here](/docs/api/mat-exp/directives/MatExpFabMenuTrigger).
+
+#### Host
+
+| Attribute / binding | Value |
+| --- | --- |
+| `data-menu-open` | `true` while the associated `MatMenuTrigger`'s menu is open |
+| `data-color` | From **`color()`** input |
+| `class` | `mat-exp-fab-menu-trigger` |
+
+#### Inputs
+
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| **`color`** | `MatExpFabMenuTriggerColor` | `'primary'` | Color of the trigger FAB. Pass the same value to the menu's `color` so the two stay in sync. |
+
+`color` uses `input()`.
+
+Types:
+
+- **`MatExpFabMenuTriggerColor`** – `'primary' | 'secondary' | 'tertiary'`
+
+Neither directive has an options/provider pattern — set `color` directly on each element.
 
 ## Styling
 
@@ -124,15 +168,19 @@ html {
 
 #### Options
 
-##### skip-html-element-styles
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `skip-html-element-styles` | `boolean` | `false` | If `true`, the mixin won't apply styles to the underlying HTML elements. |
+| `colors` | list of `'primary' \| 'secondary' \| 'tertiary'` | `null` (all colors emitted) | Restricts the emitted CSS to only the given colors, dropping the rest of the color combination matrix at compile time. |
 
-Type: `boolean`
+##### `skip-html-element-styles`
 
-Default: `false`
+Setting this to `true` means the following styles won't be applied:
 
-If `true`, the mixin will not apply styles to the underlying HTML elements.
-
-**Usage example:**
+- Menu content flex layout (column direction, row gap)
+- Menu item alignment based on position (`before` / `after`)
+- Menu item pill shape (border-radius) and minimum height
+- Per-color item background colors
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;
@@ -146,24 +194,7 @@ html {
 }
 ```
 
-###### Effects
-
-If you set `skip-html-element-styles` to `true`, the following styles will not be applied:
-
-- Menu content flex layout (column direction, row gap)
-- Menu item alignment based on position (`before` / `after`)
-- Menu item pill shape (border-radius) and minimum height
-- Per-color item background colors
-
-###### colors
-
-Type: `list` of `'primary' | 'secondary' | 'tertiary'`
-
-Default: `null` (all colors emitted)
-
-Restricts the emitted CSS to only the given colors, dropping the rest of the color combination matrix at compile time.
-
-**Usage example:**
+##### `colors`
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;
@@ -195,15 +226,16 @@ html {
 
 #### Options
 
-##### skip-html-element-styles
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `skip-html-element-styles` | `boolean` | `false` | If `true`, the mixin won't apply styles to the underlying HTML elements. |
+| `colors` | list of `'primary' \| 'secondary' \| 'tertiary'` | `null` (all colors emitted) | Restricts the emitted CSS to only the given colors, dropping the rest of the color combination matrix at compile time. |
 
-Type: `boolean`
+##### `skip-html-element-styles`
 
-Default: `false`
+Setting this to `true` means the following styles won't be applied:
 
-If `true`, the mixin will not apply styles to the underlying HTML elements.
-
-**Usage example:**
+- Shape-morph and color transition animation on the trigger FAB
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;
@@ -217,21 +249,7 @@ html {
 }
 ```
 
-###### Effects
-
-If you set `skip-html-element-styles` to `true`, the following styles will not be applied:
-
-- Shape-morph and color transition animation on the trigger FAB
-
-###### colors
-
-Type: `list` of `'primary' | 'secondary' | 'tertiary'`
-
-Default: `null` (all colors emitted)
-
-Restricts the emitted CSS to only the given colors, dropping the rest of the color combination matrix at compile time.
-
-**Usage example:**
+##### `colors`
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;

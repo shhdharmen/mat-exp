@@ -80,9 +80,74 @@ Mat Expressive Split Button supports the following variations:
 
 ## API
 
-### MatExpSplitButton Component
+### `MatExpSplitButton`
 
-You can view the API for `MatExpSplitButton` component [here](/docs/api/mat-exp/components/MatExpSplitButton).
+Standalone component, **`OnPush`**, selector **`mat-exp-split-button`**.
+
+You can view the generated API for `MatExpSplitButton` [here](/docs/api/mat-exp/components/MatExpSplitButton).
+
+#### Host
+
+| Attribute / binding | Value |
+| --- | --- |
+| `data-size` | From **`size()`** input |
+| `data-appearance` | From **`appearance()`** input |
+| `class` | `mat-exp-split-button` |
+
+#### Inputs
+
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| **`size`** | `MatExpButtonSize` | `'s'` | Size broadcast to the projected primary button and the chevron button. |
+| **`appearance`** | `MatExpSplitButtonAppearance` | `'tonal'` | Appearance broadcast to the projected primary button and the chevron button. |
+
+Both are declared with `model()`, so they're two-way bindable (e.g. `[(size)]="mySize"`).
+
+Types:
+
+- **`MatExpButtonSize`** – `'xs' | 's' | 'm' | 'l' | 'xl'`
+- **`MatExpSplitButtonAppearance`** – `'filled' | 'elevated' | 'outlined' | 'tonal'`
+
+---
+
+### Options and provider
+
+#### `MatExpSplitButtonOptions`
+
+```ts
+interface MatExpSplitButtonOptions {
+  readonly size?: MatExpButtonSize;
+  readonly appearance?: MatExpSplitButtonAppearance;
+}
+```
+
+#### `MAT_EXP_SPLIT_BUTTON_DEFAULT_OPTIONS`
+
+Default object used when no provider overrides values:
+
+- `size: 's'`
+- `appearance: 'tonal'`
+
+#### `MAT_EXP_SPLIT_BUTTON_OPTIONS`
+
+`InjectionToken` for the resolved options object; used internally by the component.
+
+#### `provideMatExpSplitButtonOptions`
+
+```angular-ts
+import { provideMatExpSplitButtonOptions } from '@ngm-dev/mat-exp';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideMatExpSplitButtonOptions({
+      size: 'm',
+      appearance: 'filled',
+    }),
+  ],
+};
+```
+
+You may pass a **partial static object** or a **factory** `() => Partial<MatExpSplitButtonOptions>`.
 
 ## Styling
 
@@ -100,15 +165,20 @@ html {
 
 ### Options
 
-#### skip-html-element-styles
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `skip-html-element-styles` | `boolean` | `false` | If `true`, the mixin won't apply styles to the underlying HTML elements. |
+| `sizes` | list of `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `null` (all sizes emitted) | Restricts the emitted CSS to only the given sizes, including the per-size connected-variant inner-corner overrides. See [Reducing the CSS Payload](/docs/styles-api/reducing-css-payload). |
 
-Type: `boolean`
+#### `skip-html-element-styles`
 
-Default: `false`
+Setting this to `true` means the following styles won't be applied:
 
-If `true`, the mixin will not apply styles to the underlying HTML elements.
-
-**Usage example:**
+- Split button container layout (`display: inline-flex`, `flex-direction`, `white-space`, `column-gap`)
+- Size-based container height
+- Chevron button fixed width, padding, and text alignment
+- Icon size inside the chevron button
+- Connected inner-corner shape morphing for each size
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;
@@ -122,25 +192,7 @@ html {
 }
 ```
 
-##### Effects
-
-If you set `skip-html-element-styles` to `true`, the following styles will not be applied:
-
-- Split button container layout (`display: inline-flex`, `flex-direction`, `white-space`, `column-gap`)
-- Size-based container height
-- Chevron button fixed width, padding, and text alignment
-- Icon size inside the chevron button
-- Connected inner-corner shape morphing for each size
-
-#### sizes
-
-Type: `list` of `'xs' | 's' | 'm' | 'l' | 'xl'`
-
-Default: `null` (all sizes emitted)
-
-Restricts the emitted CSS to only the given sizes, including the per-size connected-variant inner-corner overrides. See [Reducing the CSS payload](/docs/getting-started/installation#reducing-the-css-payload).
-
-**Usage example:**
+#### `sizes`
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;

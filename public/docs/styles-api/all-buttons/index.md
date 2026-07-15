@@ -18,15 +18,14 @@ html {
 
 ## Options
 
-### skip-html-element-styles
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `skip-html-element-styles` | `boolean` | `false` | If `true`, the mixin won't apply styles to the underlying HTML elements. Side effects are outlined in each component's **Styling** section. |
+| `sizes` | list of `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `null` (all sizes emitted) | Forwarded unchanged to every underlying button-family mixin that accepts a `sizes` filter (e.g. `mat-exp-button-styles`), applied across every button-family component at once. See [Reducing the CSS Payload](/docs/styles-api/reducing-css-payload) for measured numbers. |
+| `appearances` | list of `'text' \| 'filled' \| 'outlined' \| 'tonal'` | `null` (all appearances emitted) | Forwarded unchanged to every underlying button-family mixin that accepts an `appearances` filter (e.g. `mat-exp-icon-button-styles`), applied across every button-family component at once. |
+| `colors` | list of `'primary' \| 'secondary' \| 'tertiary'` | `null` (all colors emitted) | Forwarded unchanged to every underlying button-family mixin that accepts a `colors` filter (e.g. `mat-exp-fab-menu-styles`), applied across every button-family component at once. |
 
-Type: `boolean`
-
-Default: `false`
-
-If `true`, the mixin will not apply styles to the underlying HTML elements.
-
-**Usage example:**
+### `skip-html-element-styles`
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;
@@ -40,13 +39,7 @@ html {
 }
 ```
 
-Side effects of setting `skip-html-element-styles` to `true` are outlined in each components **Styling** tab
-
-### sizes / appearances / colors
-
-`mat-exp-all-buttons-styles($options)` forwards `$options` unchanged to every underlying button-family mixin, so any of the size/appearance/color filter options documented on the individual component **Styling** tabs (e.g. `sizes` on `mat-exp-button-styles`, `colors` on `mat-exp-fab-menu-styles`) work here too — they just apply across every button-family component at once. See [Reducing the CSS payload](/docs/getting-started/installation#reducing-the-css-payload) for measured numbers.
-
-**Usage example:**
+### `sizes` / `appearances` / `colors`
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;

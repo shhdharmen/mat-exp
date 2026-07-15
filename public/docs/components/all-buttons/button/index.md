@@ -149,47 +149,93 @@ If the resting unselected shape is square, the selected shape should be round.
 
 ### Data Attributes with .mat-exp-button class
 
-You can use below `data-*` attributes with `.mat-exp-button` class to style the Angular Material Button component.
+Use these `data-*` attributes with the `.mat-exp-button` class to style the Angular Material Button component:
 
-#### data-size
+| Attribute | Default | Possible values |
+| --- | --- | --- |
+| `data-size` | `s` | `xs`, `s`, `m`, `l`, `xl` |
+| `data-shape` | `round` | `round`, `square` |
+| `data-toggle` | `unselected` | `selected`, `unselected` |
 
-The size of the button.
+### `MatExpButton`
 
-##### Default Value
+Standalone directive, selector **`[matExpButton]`**, exported as **`matExpButton`**.
 
-`s`
+You can view the generated API for `MatExpButton` [here](/docs/api/mat-exp/directives/MatExpButton).
 
-##### Possible Values
+#### Host
 
-`xs`, `s`, `m`, `l`, `xl`
+| Attribute / binding | Value |
+| --- | --- |
+| `data-size` | From **`size()`** input |
+| `data-shape` | From **`shape()`** input |
+| `data-toggle` | From **`toggle()`** input |
+| `data-menu-open` | `true` when a `[matMenuTriggerFor]` on the same host has its menu open |
+| `aria-pressed` | `'true'` / `'false'` derived from `toggle()`; omitted entirely when `toggle()` is `undefined` |
+| `class` | `mat-exp-button` |
+| `(click)` | Delegates the click to the parent `MatExpButtonGroup`, if any |
 
-#### data-shape
+#### Inputs
 
-The shape of the button.
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| **`size`** | `MatExpButtonSize` | `'s'` | Size of the button. |
+| **`shape`** | `MatExpButtonShape` | `'round'` | Shape of the button. |
+| **`toggle`** | `MatExpButtonToggle \| undefined` | `undefined` | Toggle state. Only auto-managed inside a `MatExpButtonGroup` — see [Toggle Behavior](#toggle-behavior) above. |
+| **`value`** | `unknown` | `undefined` | Value read by a parent `MatExpButtonGroup` when computing its own form value. |
 
-##### Default Value
+`size`, `shape`, `toggle`, and `value` are all declared with `model()`, so they're two-way bindable (e.g. `[(size)]="mySize"`).
 
-`round`
+Types:
 
-##### Possible Values
+- **`MatExpButtonSize`** – `'xs' | 's' | 'm' | 'l' | 'xl'`
+- **`MatExpButtonShape`** – `'round' | 'square'`
+- **`MatExpButtonToggle`** – `'selected' | 'unselected'`
 
-`round`, `square`
+> [!NOTE]
+> `MatExpButton` also exposes plain `appearance` / `disabled` accessors that read and write the underlying Angular Material `matButton` directive's own `appearance` / `disabled` inputs directly — bind those through `matButton` as usual (e.g. `matButton="tonal"`, `[disabled]`).
 
-#### data-toggle
+---
 
-The toggle state of the button.
+### Options and provider
 
-##### Default Value
+#### `MatExpButtonOptions`
 
-`unselected`
+```ts
+interface MatExpButtonOptions {
+  readonly size?: MatExpButtonSize;
+  readonly shape?: MatExpButtonShape;
+  readonly toggle?: MatExpButtonToggle;
+}
+```
 
-##### Possible Values
+#### `MAT_EXP_BUTTON_DEFAULT_OPTIONS`
 
-`selected`, `unselected`
+Default object used when no provider overrides values:
 
-### matExpButton Directive
+- `size: 's'`
+- `shape: 'round'`
 
-You can view the API for `matExpButton` directive [here](/docs/api/mat-exp/directives/MatExpButton).
+#### `MAT_EXP_BUTTON_OPTIONS`
+
+`InjectionToken` for the resolved options object; used internally by the directive.
+
+#### `provideMatExpButtonOptions`
+
+```angular-ts
+import { provideMatExpButtonOptions } from '@ngm-dev/mat-exp';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideMatExpButtonOptions({
+      size: 'm',
+      shape: 'square',
+    }),
+  ],
+};
+```
+
+You may pass a **partial static object** or a **factory** `() => Partial<MatExpButtonOptions>`.
 
 ## Styling
 
@@ -207,15 +253,17 @@ html {
 
 ### Options
 
-#### skip-html-element-styles
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `skip-html-element-styles` | `boolean` | `false` | If `true`, the mixin won't apply styles to the underlying HTML elements. |
+| `sizes` | list of `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `null` (all sizes emitted) | Restricts the emitted CSS to only the given sizes. Use this to cut the CSS payload when your app only uses a subset of sizes — see [Reducing the CSS Payload](/docs/styles-api/reducing-css-payload). |
 
-Type: `boolean`
+#### `skip-html-element-styles`
 
-Default: `false`
+Setting this to `true` means the following won't work as expected:
 
-If `true`, the mixin will not apply styles to the underlying HTML elements.
-
-**Usage example:**
+- Icon sizes
+- Shape morphing
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;
@@ -229,22 +277,9 @@ html {
 }
 ```
 
-##### Effects
+#### `sizes`
 
-If you set `skip-html-element-styles` to `true`, the mixin will not apply styles to the underlying HTML elements. And below are some styles which will not work as expected:
-
-- Icon sizes
-- Shape morphing
-
-#### sizes
-
-Type: `list` of `'xs' | 's' | 'm' | 'l' | 'xl'`
-
-Default: `null` (all sizes emitted)
-
-Restricts the emitted CSS to only the given sizes, dropping the rest of the size × shape × state × toggle combination matrix at compile time. Use this to cut the CSS payload when your app only uses a subset of sizes — see [Reducing the CSS payload](/docs/getting-started/installation#reducing-the-css-payload).
-
-**Usage example:**
+Drops the rest of the size × shape × state × toggle combination matrix at compile time.
 
 ```scss
 @use '@ngm-dev/mat-exp' as mat-exp;

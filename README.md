@@ -1,28 +1,27 @@
 # Mat Expressive
 
-Mat Expressive is a library that provides a set of components and styles for Angular Material based on the latest Material Design 3 Expressive Design System.
+Mat Expressive is a library of components and styles for Angular Material, built on the latest Material Design 3 Expressive Design System.
 
-Mat Expressive is neither a replacement for Angular Material nor a fork of Angular Material. It is mainly a collection of:
+It is **not** a replacement for Angular Material and **not** a fork of it. Instead, it's a collection of:
 
-- Styles - These are applied to the existing Angular Material components to make them more expressive and consistent with the latest Material Design 3 Expressive Design System.
-- Directives - Same as styles, but when we need to apply styles to the underlying HTML elements or handle some specific behavior.
-- Components - These are created where we need to create a new component that is not available in Angular Material.
+| Kind | What it does |
+| --- | --- |
+| **Styles** | Applied to existing Angular Material components to make them expressive and consistent with M3 Expressive. |
+| **Directives** | Same goal as styles, but used when styles need to reach the underlying HTML elements or add specific behavior. |
+| **Components** | New components for cases Angular Material doesn't cover. |
 
 ## How does it work?
 
-Mat Expressive uses Angular Material's [`overrides` APIs](https://material.angular.dev/guide/theming#component-tokens) & [CSS variables](https://material.angular.dev/guide/theming-your-components) to achieve the desired styles. When a change is not possible with the overrides, Mat Expressive directly applies styles to the underlying HTML elements.
+Mat Expressive styles components using Angular Material's [`overrides` APIs](https://material.angular.dev/guide/theming#component-tokens) and [CSS variables](https://material.angular.dev/guide/theming-your-components). When a change isn't possible through those APIs, Mat Expressive applies styles directly to the underlying HTML elements instead (for example, Angular Material's `.mdc-button` class).
 
-## Is applying styles to the underlying HTML elements a good idea?
+> [!NOTE]
+> Applying styles directly to underlying HTML elements means Mat Expressive could break if Angular Material changes those classes in a future release. We track Angular Material releases and update accordingly when that happens.
 
-Well, generally it is not a good idea to apply styles to the underlying HTML elements. However, in the case of Mat Expressive, it is necessary to apply styles to the underlying HTML elements to achieve the desired styles.
+Don't want styles applied to underlying HTML elements? You can opt out — see [Skip HTML element styles](https://expressive.angular-material.dev/docs/styles-api/reducing-css-payload#skip-html-element-styles) in the Styles API section. Note that some visual results (like icon sizing and shape morphing) won't be available without them.
 
-We use Angular Material's CSS classes like `.mdc-button` to apply styles to the underlying HTML elements. We also understand that this may break in the future when Angular Material updates their CSS classes.
+## Getting started
 
-But, to accommodate such changes, we will be updating the library to use the new CSS classes as soon as they are released.
-
-## I do not want to apply styles to the underlying HTML elements.
-
-That's totally fine! But please note that you will not be able to see the full results provided by Mat Expressive. To learn more about how to skip HTML element styles, please refer to the [skipping HTML element styles](/getting-started/installation#skip-html-element-styles) section.
+See the [installation guide](https://expressive.angular-material.dev/docs/getting-started/installation) for setup instructions, or browse the [full documentation](https://expressive.angular-material.dev/docs) for components, styling APIs, and playgrounds.
 
 ## Licensing
 

@@ -26,6 +26,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { label: 'GitHub', href: 'https://github.com/Angular-Material-Dev/community' },
       { label: 'X', href: 'https://x.com/ngMaterialDev' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/angular-material-dev/' },
+      { label: 'Sponsor', routerLink: '/sponsor' },
     ],
   },
 ];

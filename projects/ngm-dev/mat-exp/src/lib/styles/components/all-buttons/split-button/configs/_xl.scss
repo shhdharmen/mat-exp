@@ -9,22 +9,22 @@ $config: (
     size: 'xl',
     properties: xl.$properties,
   ),
-  (
-    size: 'xl',
-    properties: (
-      ' > .mat-exp-icon-button .mat-icon': (
-        font-size : (
-          value: functions.rem(50),
-        ),
-        width: (
-          value: functions.rem(50),
-        ),
-        line-height: (
-          value: functions.rem(40),
-        )
-      ),
-    ),
-  ),
+  // (
+  //   size: 'xl',
+  //   properties: (
+  //     ' > .mat-exp-icon-button .mat-icon': (
+  //       font-size : (
+  //         value: functions.rem(50),
+  //       ),
+  //       width: (
+  //         value: functions.rem(50),
+  //       ),
+  //       line-height: (
+  //         value: functions.rem(40),
+  //       )
+  //     ),
+  //   ),
+  // ),
   (
     size: 'xl',
     menu-open: false,

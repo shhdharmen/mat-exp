@@ -16,18 +16,18 @@ $config: (
         width: (
           value: functions.rem(48),
         ),
-      ),
-      ' > .mat-exp-icon-button .mat-icon': (
-        font-size : (
-          value: functions.rem(22),
-        ),
-        width: (
-          value: functions.rem(22),
-        ),
-        line-height: (
-          value: functions.rem(20),
-        )
-      ),
+      )
+      // ' > .mat-exp-icon-button .mat-icon': (
+      //   font-size : (
+      //     value: functions.rem(22),
+      //   ),
+      //   width: (
+      //     value: functions.rem(22),
+      //   ),
+      //   line-height: (
+      //     value: functions.rem(20),
+      //   )
+      // ),
     ),
   ),
   (

@@ -9,22 +9,22 @@ $config: (
     size: 'm',
     properties: m.$properties,
   ),
-  (
-    size: 'm',
-    properties: (
-      ' > .mat-exp-icon-button .mat-icon': (
-        font-size : (
-          value: functions.rem(26),
-        ),
-        width: (
-          value: functions.rem(26),
-        ),
-        line-height: (
-          value: functions.rem(24),
-        )
-      ),
-    ),
-  ),
+  // (
+  //   size: 'm',
+  //   properties: (
+  //     ' > .mat-exp-icon-button .mat-icon': (
+  //       font-size : (
+  //         value: functions.rem(26),
+  //       ),
+  //       width: (
+  //         value: functions.rem(26),
+  //       ),
+  //       line-height: (
+  //         value: functions.rem(24),
+  //       )
+  //     ),
+  //   ),
+  // ),
   (
     size: 'm',
     menu-open: false,

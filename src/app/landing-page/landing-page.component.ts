@@ -16,14 +16,18 @@ import {
 
 const QUICKSTART_MARKDOWN = `
 \`\`\`bash
-npm install @ngm-dev/mat-exp
+ng add @ngm-dev/mat-exp
 \`\`\`
 
 \`\`\`scss name="styles.scss"
 @use '@ngm-dev/mat-exp' as mat-exp;
 
 html {
-  @include mat-exp.mat-exp-button-styles();
+  @include mat-exp.mat-exp-button-styles(
+    (
+        sizes: ('s'),
+    )
+  );
 }
 \`\`\`
 

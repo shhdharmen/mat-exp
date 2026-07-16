@@ -21,7 +21,7 @@
       <app-sidebar-nav (linkClicked)="drawerOpen.set(false)" />
     </mat-drawer>
 
-    <mat-drawer-content class="flex! overflow-hidden">
+    <mat-drawer-content #drawerContent class="flex! overflow-hidden">
       <!-- Main content area -->
       <main class="flex-1 px-6 py-8 max-w-7xl mx-auto w-full" id="main-content" tabindex="-1">
         <router-outlet />

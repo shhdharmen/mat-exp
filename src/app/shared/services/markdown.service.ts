@@ -231,6 +231,11 @@ function parseInfoString(infoStr: string): {
   return { lang, meta, showLineNumbers, filename };
 }
 
+/** Root-relative hrefs stay in the SPA and can route via `<router-link>`; everything else (external URLs, mailto:, etc.) stays a plain anchor. */
+function isInternalHref(href: string): boolean {
+  return href.startsWith('/') && !href.startsWith('//');
+}
+
 /** Extract headings (h1–h3) from rendered HTML. */
 function extractHeadings(html: string): TocItem[] {
   const headingPattern = /<h([1-3])[^>]*id="([^"]*)"[^>]*>(.*?)<\/h[1-3]>/gi;
@@ -352,6 +357,10 @@ export class MarkdownService {
           const href = token.href.startsWith('#') ? `${currentPath}${token.href}` : token.href;
           const titleAttr = token.title ? ` title="${token.title}"` : '';
           const text = this.parser.parseInline(token.tokens);
+          if (isInternalHref(href)) {
+            const [url, fragment = ''] = href.split('#');
+            return `<router-link url="${url}" fragment="${fragment}"${titleAttr}>${text}</router-link>`;
+          }
           return `<a href="${href}"${titleAttr}>${text}</a>`;
         },
         codespan(token: Tokens.Codespan): string {
@@ -361,7 +370,7 @@ export class MarkdownService {
             .replace(/>/g, '&gt;');
           const url = apiLinkMap.get(token.text);
           if (url) {
-            return `<a href="${url}" class="api-link"><code>${escaped}</code></a>`;
+            return `<router-link url="${url}" fragment="" class="api-link"><code>${escaped}</code></router-link>`;
           }
           return `<code>${escaped}</code>`;
         },

@@ -104,8 +104,7 @@ click is only automatic **inside a `MatExpButtonGroup`** — the group owns sele
 every button it manages.
 
 **Standalone toggle buttons (outside a `MatExpButtonGroup`) do not flip `toggle` on click.** This
-is intentional (see [issue #188](https://github.com/Angular-Material-Dev/mat-expressive-private/issues/188)):
-a lone button's click handler only has one consumer to satisfy, so the library leaves the state
+is intentional: a lone button's click handler only has one consumer to satisfy, so the library leaves the state
 transition up to you rather than guessing what a click should mean. Two-way bind `toggle` and
 flip it yourself in your own `(click)` handler:
 

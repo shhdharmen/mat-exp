@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-router-link',
-  template: `<a [routerLink]="url.split('#')[0]" [fragment]="fragment ?? urlFragment">
+  template: `<a [routerLink]="url.split('#')[0]" [fragment]="fragment || urlFragment">
     <ng-content></ng-content>
   </a>`,
   imports: [RouterLink],

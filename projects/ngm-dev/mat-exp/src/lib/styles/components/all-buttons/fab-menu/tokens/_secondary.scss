@@ -1,10 +1,12 @@
 $fab-menu-secondary-tokens: (
   item-icon-color: var(--mat-sys-on-secondary-container),
   item-label-text-color: var(--mat-sys-on-secondary-container),
+  // See _primary.scss — mix toward the item's own solid background, not `transparent`, since
+  // the fab-menu panel behind it has no opaque backdrop of its own.
   item-hover-state-layer-color: color-mix(
       in srgb,
       var(--mat-sys-on-secondary-container) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
-      transparent
+      var(--mat-sys-secondary-container)
     ),
 );
 

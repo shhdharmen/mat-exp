@@ -1,10 +1,13 @@
 $fab-menu-primary-tokens: (
   item-icon-color: var(--mat-sys-on-primary-container),
   item-label-text-color: var(--mat-sys-on-primary-container),
+  // The fab-menu panel's own container-color is transparent (see tokens/_common.scss), so
+  // mixing toward `transparent` here would let page content show through on hover instead of a
+  // tinted item. Mix toward the item's own solid background instead for an opaque hover color.
   item-hover-state-layer-color: color-mix(
       in srgb,
       var(--mat-sys-on-primary-container) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
-      transparent
+      var(--mat-sys-primary-container)
     ),
 );
 

@@ -48,7 +48,6 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/mat-exp/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

@@ -2,6 +2,7 @@ import * as path from 'node:path';
 
 /** Production origin `main` is deployed to. */
 export const SITE_URL = 'https://expressive.angular-material.dev';
+export const GH_URL = 'https://github.com/Angular-Material-Dev/mat-exp';
 
 export const SITE_NAME = 'Mat Expressive';
 

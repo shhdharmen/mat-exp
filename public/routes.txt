@@ -18,7 +18,6 @@
 /docs/styles-api/reducing-css-payload
 /docs/api
 /
-/changelog
 /sponsor
 /docs/api/mat-exp/interfaces/MatExpSelectableButton
 /docs/api/mat-exp/classes/MatExpSelectableButtonChange

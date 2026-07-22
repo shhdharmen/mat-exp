@@ -18,10 +18,11 @@ import {
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
+  GH_URL,
 } from './site-config';
 
 const LLMS_TXT_OUT = path.resolve(DIST_BROWSER_DIR, 'llms.txt');
-const PUBLIC_DIR = path.resolve(process.cwd(), 'public');
+// const PUBLIC_DIR = path.resolve(process.cwd(), 'public');
 
 export interface NavPage {
   label: string;
@@ -56,11 +57,11 @@ export function parseFrontmatterFields(raw: string): { title?: string; descripti
 }
 
 /** Reads `title`/`description` frontmatter out of a standalone (non-docs) page's `index.md`. */
-function readStaticPageFrontmatter(routePath: string): { title?: string; description?: string } {
-  const filePath = path.join(PUBLIC_DIR, routePath, 'index.md');
-  if (!fs.existsSync(filePath)) return {};
-  return parseFrontmatterFields(fs.readFileSync(filePath, 'utf-8'));
-}
+// function readStaticPageFrontmatter(routePath: string): { title?: string; description?: string } {
+//   const filePath = path.join(PUBLIC_DIR, routePath, 'index.md');
+//   if (!fs.existsSync(filePath)) return {};
+//   return parseFrontmatterFields(fs.readFileSync(filePath, 'utf-8'));
+// }
 
 /**
  * Flattens the nav tree into one link per real "topic": section landing pages,
@@ -122,12 +123,10 @@ function main(): void {
     description: `Full API reference for ${'`@ngm-dev/mat-exp`'} — every exported component, directive, type, and utility.`,
   };
 
-  const changelogFrontmatter = readStaticPageFrontmatter('/changelog');
   const optionalLinks: LlmsLink[] = [
     {
-      label: changelogFrontmatter.title ?? 'changelog',
-      url: `${SITE_URL}/changelog/index.md`,
-      description: changelogFrontmatter.description,
+      label: 'Changelog',
+      url: `${GH_URL}/blob/main/CHANGELOG.md`,
     },
   ];
 

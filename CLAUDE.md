@@ -2,6 +2,32 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## What this repo is
+
+Mat Expressive (`@ngm-dev/mat-exp`) is **not** a fork or replacement of Angular Material — it's a
+layer on top of it: SCSS/CSS that restyles existing Angular Material components toward Material
+Design 3 Expressive (via Angular Material's `overrides()` token APIs and, where those don't reach
+far enough, direct styling of Material's underlying HTML/CSS classes), directives that carry that
+same styling to the DOM when tokens can't, and a handful of net-new components for gaps Angular
+Material doesn't cover. Because some styling reaches into Material's compiled internals (e.g.
+`.mdc-button`), it can break on Angular Material upgrades — see `README.md` and
+`public/docs/styles-api/reducing-css-payload.md` for the opt-out escape hatch.
+
+## Before non-trivial changes, read `docs/ai-handoff/`
+
+That directory is a from-zero onboarding set for a model/human with no prior context, meant to be
+read in this order (per `docs/ai-handoff/README.md`):
+
+1. **ARCHITECTURE.md** — how the library and docs site actually work; invariants; dragons. Read before any code change.
+2. **CONVENTIONS.md** — mechanical style rules. Read before writing code.
+3. **COMPONENT-FACTORY.md** — step-by-step playbook for shipping a new component (also what `npm run new:component` scaffolds from).
+4. **QUALITY-BAR.md** — pass/fail rubrics + the mechanical pre-release checklist.
+5. **DECISION-LOG.md** — why things are the way they are; when to revisit each decision.
+
+Ground rule those docs assume: when a doc and the code disagree, trust the code and fix the doc in
+the same PR. Design decisions with lasting rationale also live in `docs/adr/` (numbered, some
+marked superseded — check before citing one).
+
 ## Commands
 
 ```bash
@@ -11,20 +37,25 @@ npm run watch:lib                # Watch-build the library during development
 npm start                        # Serve docs app on localhost:4200
 
 # Build
-npm run build:docs               # Full docs pipeline: build-docs.ts -> ng build -> Pagefind indexing -> (postbuild:docs) sitemap + llms.txt
+npm run build:docs               # Full docs pipeline: build-docs.ts -> ng build -> fix-redirect-html-lang -> Pagefind indexing -> (postbuild:docs) sitemap + llms.txt
 ng build                         # Docs app build only — does NOT regenerate manifests/routes.txt; run build:docs for a from-scratch build
-npm run build:lib                # Build library (use this, not ng build directly)
+npm run build:lib                # Build library (use this, not ng build directly) — also regenerates SCSS style-constants and compiles schematics first (prebuild:lib)
 
 # Test
 npm test                         # Run docs app tests (Vitest via the Angular CLI unit-test builder)
 ng test --project @ngm-dev/mat-exp           # Library tests only
 ng test --project mat-exp-docs --filter="foo"  # Run tests matching a name pattern (Vitest builder option, not Jest's testPathPattern)
+npm run test:schematics          # Test the `ng add` schematic (projects/ngm-dev/mat-exp/schematics)
 
 # E2E
 ng e2e                           # Run Playwright e2e tests (spins up dev server automatically)
 
 # Lint
-ng lint
+ng lint                          # Runs lint:tokens first (validates per-size key-set consistency across SCSS token files), then ESLint
+
+# Scaffolding
+npm run new:component -- --name=chip --group=all-buttons --class=family --selector=directive
+                                  # Scaffolds a new library component per COMPONENT-FACTORY.md; interactive if flags omitted
 
 # Commits (enforces Conventional Commits via commitizen)
 npm run commit
@@ -48,18 +79,22 @@ public/docs/
   components/
     all-buttons/
       button/
-        index.md      # Overview tab
-        api.md        # API tab
-        styling.md    # Styling tab
-                      # Playground tab is a live Angular component, not markdown
+        index.md      # Single page: Overview -> Playground -> ## API -> ## Styling
   styles-api/
 ```
 
-A **Component Page** has three markdown files (`index.md`, `api.md`, `styling.md`) and a live Playground. The Playground tab is driven by `PLAYGROUND_PAGE_REGISTRY` in `src/app/docs/playground-page-registry.ts`, which maps each component's URL path to a hand-crafted Angular component under `src/app/docs/components/<component>/playground/`.
+A **Component Page** is a single `index.md` (frontmatter: `title`, `order`, `description`,
+`primarySymbol`) with `## API` and `## Styling` sections folded in — there are no more
+`api.md`/`styling.md` files or tabs (Wave 17 removed the tabbed architecture; `app-doc-tabs` is
+gone). Playground is embedded inline as a markdown-authored custom element,
+`<playground-preview preview="{slug}"></playground-preview>`, lazy-registered against
+`PLAYGROUND_PREVIEW_REGISTRY` in `src/app/docs/playground-preview-registry.ts`, which maps a slug
+to a hand-crafted Angular component under `src/app/docs/components/<component>/playground/`
+(rendered via `@angular/elements`, not `NgComponentOutlet`).
 
 ## Build Pipeline
 
-`npm run build:docs` is one chained script (`tsx scripts/build-docs.ts && ng build && npx pagefind ...`), plus `postbuild:docs` (sitemap + `llms.txt` generation), which npm runs automatically afterward because its name matches the `build:docs` script:
+`npm run build:docs` is one chained script (`tsx scripts/build-docs.ts && ng build && tsx scripts/fix-redirect-html-lang.ts && npx pagefind ...`), plus `postbuild:docs` (sitemap + `llms.txt` generation), which npm runs automatically afterward because its name matches the `build:docs` script:
 
 1. `scripts/build-docs.ts` scans `public/docs/` to build the navigation tree → `public/nav-manifest.json`, and calls `scripts/extract-metadata.ts` (re-export barrel → `scripts/extract-metadata/`) (TypeScript compiler API) to parse the library source and emit:
    - `public/api-manifest.json` — all exported selectors, inputs, outputs, JSDoc
@@ -81,6 +116,10 @@ Running plain `ng build` skips all of the above except the Angular build itself 
 - **Native control flow** — `@if`, `@for`, `@switch` — never `*ngIf`, `*ngFor`
 - **No arrow functions in templates**
 - **Strict TypeScript** — avoid `any`; prefer `unknown`
+- **No `standalone: true`** in decorators — it's the default in v20+; setting it explicitly is a lint nit
+- **No `ngClass`/`ngStyle`** — use `class`/`style` bindings
+- **No `.mutate()` on signals** — use `.update()` or `.set()`
+- **`inject()`** over constructor injection
 
 ## Component Patterns
 

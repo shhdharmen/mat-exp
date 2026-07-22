@@ -18,7 +18,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     heading: 'Product',
     links: [
       { label: 'Docs', routerLink: '/docs/getting-started/installation' },
-      { label: 'Changelog', routerLink: '/changelog' },
+      { label: 'Changelog', href: `${environment.githubRepoUrl}/blob/main/CHANGELOG.md` },
     ],
   },
   {

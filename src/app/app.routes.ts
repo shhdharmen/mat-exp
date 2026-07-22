@@ -16,11 +16,6 @@ export const routes: Routes = [
           import('./landing-page/landing-page.component').then((m) => m.LandingPageComponent),
       },
       {
-        path: 'changelog',
-        loadComponent: () =>
-          import('./static-page/static-page.component').then((m) => m.StaticPageComponent),
-      },
-      {
         path: 'sponsor',
         loadComponent: () =>
           import('./sponsor-page/sponsor-page.component').then((m) => m.SponsorPageComponent),

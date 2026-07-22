@@ -16,7 +16,7 @@ interface SponsorReason {
 const SPONSOR_REASONS: SponsorReason[] = [
   {
     icon: 'auto_awesome',
-    title: 'Components Material doesn’t ship',
+    title: "Components Material doesn't ship",
     description:
       'Funds building the M3 Expressive surfaces Angular Material lacks — the split button, FAB menu, and expressive loading indicator are already here, and sponsorship pays for the next ones.',
   },
@@ -49,17 +49,13 @@ const SPONSOR_REASONS: SponsorReason[] = [
           one person &mdash; if it saves you or your team time shipping Material 3 Expressive UI,
           sponsorship is the most direct way to keep it moving.
         </p>
-        <p class="text-sm text-on-surface-variant mb-10 max-w-xl mx-auto">
-          Sponsoring doesn&rsquo;t unlock anything &mdash; everything is already open. It simply
-          funds the time that makes the next release happen.
-        </p>
         <a
           [href]="sponsorUrl"
           target="_blank"
           rel="noopener noreferrer"
           mat-flat-button
           matExpButton
-          class="text-base px-6 py-3"
+          size="m"
         >
           Sponsor on GitHub
         </a>
@@ -107,6 +103,7 @@ const SPONSOR_REASONS: SponsorReason[] = [
             rel="noopener noreferrer"
             mat-stroked-button
             matExpButton
+            size="m"
           >
             <mat-icon>star</mat-icon>
             Star on GitHub
@@ -117,6 +114,7 @@ const SPONSOR_REASONS: SponsorReason[] = [
             rel="noopener noreferrer"
             mat-stroked-button
             matExpButton
+            size="m"
           >
             <mat-icon>bug_report</mat-icon>
             Report a bug

@@ -9,12 +9,14 @@ html {
   @include mat.theme(
     (
       color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
+        // primary: mat.$azure-palette,
+        // tertiary: mat.$blue-palette,
+        primary: mat-theme-colors.$primary-palette,
+        tertiary: mat-theme-colors.$tertiary-palette,
       ),
       typography: (
-        plain-family: 'Inter, sans-serif',
-        brand-family: 'Poppins, sans-serif',
+        plain-family: '"Hanken Grotesk", sans-serif',
+        brand-family: '"Plus Jakarta Sans", sans-serif',
       ),
       density: 0,
     )

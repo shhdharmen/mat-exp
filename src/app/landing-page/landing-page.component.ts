@@ -13,6 +13,7 @@ import {
   FeatureDialogComponent,
   FeatureDialogData,
 } from './feature-dialog/feature-dialog.component';
+import { environment } from '../../environments/environment';
 
 const QUICKSTART_MARKDOWN = `
 \`\`\`bash
@@ -167,10 +168,8 @@ const FEATURE_CARDS: FeatureCard[] = [
 @Component({
   selector: 'app-landing-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-
   imports: [RouterLink, MatButton, MatExpButton, MatIcon, MarkdownComponent],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
   private readonly markdownService = inject(MarkdownService);
@@ -201,4 +200,6 @@ export class LandingPageComponent {
       panelClass: 'dialog-outlined',
     });
   }
+
+  protected readonly GH_HREF = environment.githubRepoUrl;
 }

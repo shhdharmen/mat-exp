@@ -427,7 +427,6 @@ async function main(): Promise<void> {
   routeLines.push('/docs/api');
   // Standalone root routes (no /docs prefix — served by StandaloneShellComponent)
   routeLines.push('/');
-  routeLines.push('/changelog');
   routeLines.push('/sponsor');
   if (fs.existsSync(API_MANIFEST_OUT)) {
     const apiManifest = JSON.parse(fs.readFileSync(API_MANIFEST_OUT, 'utf-8')) as Record<

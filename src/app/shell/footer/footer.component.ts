@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 export interface FooterLink {
   label: string;
@@ -41,4 +42,5 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 export class FooterComponent {
   protected readonly columns = FOOTER_COLUMNS;
   protected readonly currentYear = new Date().getFullYear();
+  protected LICENSE_HREF = `${environment.githubRepoUrl}/blob/main/LICENSE`;
 }

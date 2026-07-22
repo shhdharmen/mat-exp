@@ -28,11 +28,7 @@ This installs the package and configures its styles for you:
 
 - It first verifies `@angular/material` is installed (Mat Expressive builds on top of it), and
   aborts with instructions to run `ng add @angular/material` first if it isn't.
-- It then asks: **"would you like ng-add to configure Mat Expressive's styles automatically?"**
-  If you decline, nothing else is touched and it prints a link back to this page so you can wire
-  styles up manually later — see [Manual installation](#manual-installation) below.
-- If you accept, it looks at your project's global stylesheet (the `styles` array in
-  `angular.json`):
+- It then looks at your project's global stylesheet (the `styles` array in `angular.json`):
   - **CSS project** — it adds `"@ngm-dev/mat-exp/styles.css"` as the first entry of the
     `styles` array in `angular.json` for you (see [Not using Sass?](#not-using-sass) below for
     what that ships).
@@ -44,12 +40,9 @@ This installs the package and configures its styles for you:
     already wrote).
 - Re-running `ng add @ngm-dev/mat-exp` is safe — every step is idempotent.
 
-For non-interactive or scripted use (e.g. CI), skip both prompts with explicit flags:
+For non-interactive or scripted use (e.g. CI), skip the components prompt with an explicit flag:
 
 ```bash
-# Decline automatic style setup entirely
-ng add @ngm-dev/mat-exp --configure-styles=false
-
 # Configure styles for only the Button and Icon Button components
 ng add @ngm-dev/mat-exp --components=button,icon-button
 ```
@@ -60,8 +53,7 @@ CSS projects, which always receive the full prebuilt stylesheet.
 
 ## Manual installation
 
-If `ng add` doesn't fit your setup, or you declined its automatic style configuration, install
-the package via npm and wire up styles yourself:
+If `ng add` doesn't fit your setup, install the package via npm and wire up styles yourself:
 
 ```bash
 npm install @ngm-dev/mat-exp

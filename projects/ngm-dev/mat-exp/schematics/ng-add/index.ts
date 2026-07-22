@@ -1,7 +1,7 @@
 import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { addCssStylesheetEntry, findGlobalStylesheet } from './angular-json';
 import { GETTING_STARTED_URL } from './constants';
-import { resolveComponents, resolveConfigureStyles } from './prompts';
+import { resolveComponents } from './prompts';
 import { buildManualInstructions, insertStylesBlock } from './stylesheet';
 import type { NgAddOptions } from './types';
 
@@ -15,31 +15,18 @@ interface PackageJson {
 /**
  * `ng add @ngm-dev/mat-exp` schematic.
  *
- * 1. Verifies `@angular/material` is installed (Mat Expressive builds on top of it) — this check
- *    always runs, regardless of `configureStyles`.
- * 2. Asks (or reads `configureStyles`) whether to configure styles at all. If declined, only the
- *    getting-started docs link is printed.
- * 3. Locates the project's global stylesheet via `angular.json`.
+ * 1. Verifies `@angular/material` is installed (Mat Expressive builds on top of it).
+ * 2. Locates the project's global stylesheet via `angular.json`.
  *    - CSS projects: adds `@ngm-dev/mat-exp/styles.css` as the first entry of the build
  *      target's `styles` array (idempotent).
  *    - SCSS/Sass projects: asks (or reads `components`) which Button Family components to
  *      include, then inserts the `@use` + `@include` block into the global stylesheet, positioned
  *      after any existing `@use`/`@forward` statements but before any other rule.
- * 4. Prints a pointer to the getting-started docs (always, even when declined).
+ * 3. Prints a pointer to the getting-started docs.
  */
 export default function ngAdd(options: NgAddOptions): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     verifyAngularMaterialInstalled(tree);
-
-    const configureStyles = resolveConfigureStyles(options);
-    if (!configureStyles) {
-      context.logger.info(
-        'mat-exp: skipping automatic style setup, as requested. You can configure ' +
-          'styles manually at any time — see the getting-started guide below.',
-      );
-      printGettingStartedLink(context);
-      return tree;
-    }
 
     const stylesheet = findGlobalStylesheet(tree, options.project);
     if (!stylesheet) {
@@ -74,8 +61,7 @@ function printGettingStartedLink(context: SchematicContext): void {
 /**
  * Mat Expressive is built on top of Angular Material and its styles assume Angular Material's
  * theme (`mat.theme()`) is already configured. Abort with an actionable message rather than
- * silently wiring up a broken install. Runs unconditionally, before the `configureStyles`
- * question, since a working Angular Material install is a hard requirement either way.
+ * silently wiring up a broken install.
  */
 function verifyAngularMaterialInstalled(tree: Tree): void {
   const raw = tree.read('/package.json');

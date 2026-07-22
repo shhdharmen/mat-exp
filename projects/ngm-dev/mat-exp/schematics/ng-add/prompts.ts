@@ -3,17 +3,6 @@ import { COMPONENT_STYLE_MIXINS } from './constants';
 import type { ComponentSelection, NgAddOptions } from './types';
 
 /**
- * Resolves whether to configure styles at all. Interactive prompting is handled entirely by the
- * Angular CLI via `schema.json`'s `x-prompt` on `configureStyles` — by the time `ng add` invokes
- * this schematic's `Rule`, an interactive run has already resolved the prompt answer into
- * `options.configureStyles`. This only supplies the fallback for a non-interactive run (or a
- * direct `Rule` invocation, e.g. in tests) where the option was never set.
- */
-export function resolveConfigureStyles(options: NgAddOptions): boolean {
-  return options.configureStyles ?? true;
-}
-
-/**
  * Resolves which components to include styles for (SCSS projects only). Same
  * explicit-option-wins, x-prompt-handles-interactive-elsewhere precedence as
  * {@link resolveConfigureStyles} — the CLI's `components` x-prompt (`schema.json`) already

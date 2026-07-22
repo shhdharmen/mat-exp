@@ -5,11 +5,6 @@ export interface NgAddOptions {
   /** Name of the workspace project to configure. Defaults to the active/default project. */
   project?: string;
   /**
-   * Whether to automatically wire up Mat Expressive's styles. When omitted, the schematic asks
-   * (interactive) or defaults to `true` (non-interactive).
-   */
-  configureStyles?: boolean;
-  /**
    * Component keys to include styles for (SCSS projects only), or `['all']`. When omitted, the
    * schematic asks (interactive, SCSS only) or defaults to `'all'` (non-interactive).
    */

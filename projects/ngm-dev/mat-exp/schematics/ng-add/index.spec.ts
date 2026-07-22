@@ -33,13 +33,13 @@ body {
 const DEFAULT_CSS_STYLES = `:root {\n  color-scheme: light;\n}\n`;
 
 /**
- * Every `runSchematic` call below passes `configureStyles` (and `components`, where the SCSS
- * branch is reached) explicitly, mirroring how non-interactive/CI usage drives the schematic.
- * This is no longer required to avoid hanging: interactive prompting is handled entirely by the
- * Angular CLI via `schema.json`'s `x-prompt` (a layer `SchematicTestRunner` never invokes), so
- * `resolveConfigureStyles`/`resolveComponents` (`prompts.ts`) never touch a prompt library
- * themselves — omitting an option here just resolves its documented default (see the "resolves
- * omitted options to their documented defaults" test below).
+ * Every `runSchematic` call below passes `components` explicitly (where the SCSS branch is
+ * reached), mirroring how non-interactive/CI usage drives the schematic. This is no longer
+ * required to avoid hanging: interactive prompting is handled entirely by the Angular CLI via
+ * `schema.json`'s `x-prompt` (a layer `SchematicTestRunner` never invokes), so
+ * `resolveComponents` (`prompts.ts`) never touches a prompt library itself — omitting an option
+ * here just resolves its documented default (see the "resolves omitted options to their
+ * documented defaults" test below).
  */
 function createWorkspaceTree(
   options: {
@@ -102,11 +102,7 @@ describe('ng-add schematic', () => {
   it('inserts the @use/@include block before any existing rule', async () => {
     const tree = createWorkspaceTree();
 
-    const result = await runner.runSchematic(
-      'ng-add',
-      { configureStyles: true, components: ['all'] },
-      tree,
-    );
+    const result = await runner.runSchematic('ng-add', { components: ['all'] }, tree);
     const content = result.readContent('/src/styles.scss');
 
     const ourUseIndex = content.indexOf("@use '@ngm-dev/mat-exp'");
@@ -130,11 +126,7 @@ describe('ng-add schematic', () => {
   it('inserts at the very top when the stylesheet has no leading @use statements', async () => {
     const tree = createWorkspaceTree({ stylesheet: 'body {\n  margin: 0;\n}\n' });
 
-    const result = await runner.runSchematic(
-      'ng-add',
-      { configureStyles: true, components: ['all'] },
-      tree,
-    );
+    const result = await runner.runSchematic('ng-add', { components: ['all'] }, tree);
     const content = result.readContent('/src/styles.scss');
 
     expect(content.indexOf("@use '@ngm-dev/mat-exp'")).toBe(0);
@@ -143,16 +135,8 @@ describe('ng-add schematic', () => {
   it('is idempotent when the stylesheet already references the package', async () => {
     const tree = createWorkspaceTree();
 
-    const first = await runner.runSchematic(
-      'ng-add',
-      { configureStyles: true, components: ['all'] },
-      tree,
-    );
-    const second = await runner.runSchematic(
-      'ng-add',
-      { configureStyles: true, components: ['all'] },
-      first,
-    );
+    const first = await runner.runSchematic('ng-add', { components: ['all'] }, tree);
+    const second = await runner.runSchematic('ng-add', { components: ['all'] }, first);
     const content = second.readContent('/src/styles.scss');
     const occurrences = content.split('@ngm-dev/mat-exp').length - 1;
 
@@ -165,12 +149,12 @@ describe('ng-add schematic', () => {
     await expect(runner.runSchematic('ng-add', {}, tree)).rejects.toThrow(/angular\/material/i);
   });
 
-  it('throws for missing @angular/material regardless of configureStyles/components options', async () => {
+  it('throws for missing @angular/material regardless of the components option', async () => {
     const tree = createWorkspaceTree({ hasMaterial: false });
 
-    await expect(
-      runner.runSchematic('ng-add', { configureStyles: false, components: ['button'] }, tree),
-    ).rejects.toThrow(/angular\/material/i);
+    await expect(runner.runSchematic('ng-add', { components: ['button'] }, tree)).rejects.toThrow(
+      /angular\/material/i,
+    );
   });
 
   it('prints a pointer to the getting-started docs on completion', async () => {
@@ -183,27 +167,8 @@ describe('ng-add schematic', () => {
       }
     });
 
-    await runner.runSchematic('ng-add', { configureStyles: true, components: ['all'] }, tree);
+    await runner.runSchematic('ng-add', { components: ['all'] }, tree);
 
-    expect(infoMessages.some((message) => message.includes('getting-started'))).toBe(true);
-  });
-
-  it('leaves the stylesheet and angular.json untouched when configureStyles is declined, but still prints the docs link', async () => {
-    const tree = createWorkspaceTree();
-    const originalStyles = tree.read('/src/styles.scss')?.toString('utf-8');
-    const originalAngularJson = tree.read('/angular.json')?.toString('utf-8');
-
-    const infoMessages: string[] = [];
-    runner.logger.subscribe((entry) => {
-      if (entry.level === 'info') {
-        infoMessages.push(entry.message);
-      }
-    });
-
-    const result = await runner.runSchematic('ng-add', { configureStyles: false }, tree);
-
-    expect(result.readContent('/src/styles.scss')).toBe(originalStyles);
-    expect(result.readContent('/angular.json')).toBe(originalAngularJson);
     expect(infoMessages.some((message) => message.includes('getting-started'))).toBe(true);
   });
 
@@ -211,14 +176,14 @@ describe('ng-add schematic', () => {
     const tree = createWorkspaceTree({ flavor: 'css' });
     const originalCss = tree.read('/src/styles.css')?.toString('utf-8');
 
-    const first = await runner.runSchematic('ng-add', { configureStyles: true }, tree);
+    const first = await runner.runSchematic('ng-add', {}, tree);
     const angularJson = JSON.parse(first.readContent('/angular.json'));
     const styles: string[] = angularJson.projects.demo.architect.build.options.styles;
 
     expect(styles[0]).toBe('@ngm-dev/mat-exp/styles.css');
     expect(first.readContent('/src/styles.css')).toBe(originalCss);
 
-    const second = await runner.runSchematic('ng-add', { configureStyles: true }, first);
+    const second = await runner.runSchematic('ng-add', {}, first);
     const angularJson2 = JSON.parse(second.readContent('/angular.json'));
     const styles2: string[] = angularJson2.projects.demo.architect.build.options.styles;
     const occurrences = styles2.filter((entry) => entry === '@ngm-dev/mat-exp/styles.css').length;
@@ -237,7 +202,7 @@ describe('ng-add schematic', () => {
       }
     });
 
-    await runner.runSchematic('ng-add', { configureStyles: true, components: ['button'] }, tree);
+    await runner.runSchematic('ng-add', { components: ['button'] }, tree);
 
     expect(infoMessages.some((message) => message.includes('"components" option is ignored'))).toBe(
       true,
@@ -249,7 +214,7 @@ describe('ng-add schematic', () => {
 
     const first = await runner.runSchematic(
       'ng-add',
-      { configureStyles: true, components: ['button', 'icon-button'] },
+      { components: ['button', 'icon-button'] },
       tree,
     );
     const content = first.readContent('/src/styles.scss');
@@ -262,7 +227,7 @@ describe('ng-add schematic', () => {
 
     const second = await runner.runSchematic(
       'ng-add',
-      { configureStyles: true, components: ['button', 'icon-button'] },
+      { components: ['button', 'icon-button'] },
       first,
     );
     const secondContent = second.readContent('/src/styles.scss');
@@ -275,7 +240,7 @@ describe('ng-add schematic', () => {
 
     const result = await runner.runSchematic(
       'ng-add',
-      { configureStyles: true, components: ['button,icon-button'] },
+      { components: ['button,icon-button'] },
       tree,
     );
     const content = result.readContent('/src/styles.scss');
@@ -297,7 +262,7 @@ describe('ng-add schematic', () => {
 
     const result = await runner.runSchematic(
       'ng-add',
-      { configureStyles: true, components: ['button', 'not-a-real-component'] },
+      { components: ['button', 'not-a-real-component'] },
       tree,
     );
     const content = result.readContent('/src/styles.scss');
@@ -310,11 +275,7 @@ describe('ng-add schematic', () => {
   it('falls back to "all" when every given component key is unknown', async () => {
     const tree = createWorkspaceTree();
 
-    const result = await runner.runSchematic(
-      'ng-add',
-      { configureStyles: true, components: ['totally-bogus'] },
-      tree,
-    );
+    const result = await runner.runSchematic('ng-add', { components: ['totally-bogus'] }, tree);
     const content = result.readContent('/src/styles.scss');
 
     expect(content).toContain('@include mat-exp.mat-exp-all-styles();');
@@ -323,20 +284,12 @@ describe('ng-add schematic', () => {
   it('emits mat-exp-all-styles() when components is "all" (unchanged existing behavior), and is idempotent', async () => {
     const tree = createWorkspaceTree();
 
-    const first = await runner.runSchematic(
-      'ng-add',
-      { configureStyles: true, components: ['all'] },
-      tree,
-    );
+    const first = await runner.runSchematic('ng-add', { components: ['all'] }, tree);
     const content = first.readContent('/src/styles.scss');
 
     expect(content).toContain('@include mat-exp.mat-exp-all-styles();');
 
-    const second = await runner.runSchematic(
-      'ng-add',
-      { configureStyles: true, components: ['all'] },
-      first,
-    );
+    const second = await runner.runSchematic('ng-add', { components: ['all'] }, first);
     const occurrences = second.readContent('/src/styles.scss').split('@ngm-dev/mat-exp').length - 1;
 
     expect(occurrences).toBe(1);
@@ -367,7 +320,7 @@ describe('ng-add schematic', () => {
       }
     });
 
-    await runner.runSchematic('ng-add', { configureStyles: true }, tree);
+    await runner.runSchematic('ng-add', {}, tree);
 
     const warning = warnMessages.find((message) => message.includes('could not automatically'));
     expect(warning).toBeDefined();

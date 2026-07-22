@@ -1,7 +1,8 @@
 /docs/getting-started
 /docs/getting-started/what-is-mat-expressive
 /docs/getting-started/installation
-/docs/getting-started/reduced-motion
+/docs/accessibility
+/docs/accessibility/reduced-motion
 /docs/components
 /docs/components/all-buttons
 /docs/components/all-buttons/button

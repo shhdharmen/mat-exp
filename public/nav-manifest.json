@@ -21,12 +21,6 @@
           "description": "Step-by-step guide to installing and configuring Mat Expressive in your Angular project, including style setup and HTML element style options."
         },
         {
-          "label": "Reduced Motion",
-          "path": "/docs/getting-started/reduced-motion",
-          "order": 3,
-          "description": "How Mat Expressive respects prefers-reduced-motion — which animations are explicitly gated, and which are neutralized automatically by Angular Material."
-        },
-        {
           "label": "llms.txt",
           "path": "/llms.txt",
           "isExternal": true
@@ -34,9 +28,25 @@
       ]
     },
     {
+      "label": "Accessibility",
+      "path": "/docs/accessibility",
+      "order": 2,
+      "description": "How Mat Expressive respects Accessibility",
+      "isSection": true,
+      "hasIndexPage": true,
+      "children": [
+        {
+          "label": "Reduced Motion",
+          "path": "/docs/accessibility/reduced-motion",
+          "order": 1,
+          "description": "How Mat Expressive respects prefers-reduced-motion — which animations are explicitly gated, and which are neutralized automatically by Angular Material."
+        }
+      ]
+    },
+    {
       "label": "Components",
       "path": "/docs/components",
-      "order": 2,
+      "order": 3,
       "description": "Browse all Mat Expressive components with interactive demos, API references, and styling guides.",
       "isSection": true,
       "hasIndexPage": true,
@@ -108,7 +118,7 @@
     {
       "label": "Styles API",
       "path": "/docs/styles-api",
-      "order": 3,
+      "order": 4,
       "description": "SCSS mixin API reference for Mat Expressive styles — apply all styles or selectively include specific component styles.",
       "isSection": true,
       "hasIndexPage": true,
@@ -149,8 +159,8 @@
     },
     {
       "label": "Reduced Motion",
-      "path": "/docs/getting-started/reduced-motion",
-      "order": 3,
+      "path": "/docs/accessibility/reduced-motion",
+      "order": 1,
       "description": "How Mat Expressive respects prefers-reduced-motion — which animations are explicitly gated, and which are neutralized automatically by Angular Material."
     },
     {
@@ -216,6 +226,7 @@
   ],
   "sectionRedirects": {
     "/docs/getting-started": "/docs/getting-started/what-is-mat-expressive",
+    "/docs/accessibility": "/docs/accessibility/reduced-motion",
     "/docs/components": "/docs/components/all-buttons",
     "/docs/components/all-buttons": "/docs/components/all-buttons/button",
     "/docs/components/loading-and-progress": "/docs/components/loading-and-progress/loading-indicator",

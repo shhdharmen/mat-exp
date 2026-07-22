@@ -1,6 +1,6 @@
 ---
 title: Reduced Motion
-order: 3
+order: 1
 description: How Mat Expressive respects prefers-reduced-motion — which animations are explicitly gated, and which are neutralized automatically by Angular Material.
 ---
 

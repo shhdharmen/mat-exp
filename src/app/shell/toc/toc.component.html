@@ -2,7 +2,7 @@
   <p class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-3">
     On this page
   </p>
-  <ul class="space-y-1 list-none p-0 m-0">
+  <ul class="space-y-1 list-none p-0 m-0 border-l-4 border-primary-container">
     @for (item of items(); track item.id) {
       <li [style.padding-left.rem]="(item.level - 1) * 0.75">
         <a

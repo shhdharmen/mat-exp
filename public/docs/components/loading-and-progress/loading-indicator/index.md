@@ -11,7 +11,7 @@ primarySymbol: MatExpLoadingIndicator
 
 The host is exposed as a **`progressbar`** with `aria-busy="true"`, `aria-valuemin` / `aria-valuemax` (static 0–100 for role compatibility), and an **`aria-label`** you should set for context (defaults to `"Loading"` from options).
 
-## Import
+## Usage
 
 ```angular-ts name="app.ts"
 import { MatExpLoadingIndicator } from '@ngm-dev/mat-exp';

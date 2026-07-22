@@ -10,6 +10,10 @@
     "components",
     "styles"
   ],
+  "author": {
+    "name": "Dharmen Shah",
+    "url": "https://github.com/shhdharmen"
+  },
   "publishConfig": {
     "access": "public"
   },

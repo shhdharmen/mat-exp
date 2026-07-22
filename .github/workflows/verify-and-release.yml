@@ -133,8 +133,8 @@ jobs:
           # NPM_TOKEN: ${{ secrets.NPM_TOKEN }} — using npm Trusted Publishing (OIDC) instead
         run: npx semantic-release --debug
 
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx angular-cli-ghpages --name="mr. Dharmen's Bot" --email=shhdharmen@gmail.com --dir=dist/mat-exp-docs/browser
+    #   - name: Deploy to GitHub Pages
+    #     if: github.ref == 'refs/heads/main'
+    #     env:
+    #       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     run: npx angular-cli-ghpages --name="mr. Dharmen's Bot" --email=shhdharmen@gmail.com --dir=dist/mat-exp-docs/browser

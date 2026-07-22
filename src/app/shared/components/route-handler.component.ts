@@ -21,7 +21,7 @@ export class RouteHandlerComponent implements OnDestroy {
 
           const target = this._document.getElementById(this._urlFragment);
           if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
+            target.scrollIntoView();
           }
         }
       }),
@@ -49,8 +49,6 @@ export class RouteHandlerComponent implements OnDestroy {
   }
 
   updateScrollPosition(): void {
-    this._document.getElementById(this._urlFragment)?.scrollIntoView({
-      behavior: 'smooth',
-    });
+    this._document.getElementById(this._urlFragment)?.scrollIntoView();
   }
 }

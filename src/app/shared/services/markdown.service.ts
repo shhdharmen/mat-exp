@@ -348,6 +348,7 @@ export class MarkdownService {
     const currentPath = this.location.path();
 
     const markedInstance = new Marked({ async: true, gfm: true });
+    const seenHeadingIds = new Map<string, number>();
 
     markedInstance.use(markedAlert());
 
@@ -375,11 +376,23 @@ export class MarkdownService {
           return `<code>${escaped}</code>`;
         },
         heading(token: Tokens.Heading): string {
-          const id = token.text
+          const baseId = token.text
             .toLowerCase()
             .replace(/[^\w\s-]/g, '')
             .trim()
             .replace(/\s+/g, '-');
+
+          // Repeated heading text (e.g. an "Usage" subheading under both the
+          // page's own content and a folded-in `## API`/`## Styling`
+          // section) would otherwise collide on the same id, breaking
+          // fragment navigation and the TOC scroll-spy for whichever
+          // heading isn't first in the DOM. Matches GitHub's own
+          // disambiguation scheme: first occurrence keeps the plain slug,
+          // repeats get -1, -2, ...
+          const seenCount = seenHeadingIds.get(baseId) ?? 0;
+          seenHeadingIds.set(baseId, seenCount + 1);
+          const id = seenCount === 0 ? baseId : `${baseId}-${seenCount}`;
+
           return `<h${token.depth} id="${id}">${token.text}</h${token.depth}>\n`;
         },
         code(token: Tokens.Code): string {

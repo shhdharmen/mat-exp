@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Angular-Material-Dev/mat-exp/compare/v1.0.0...v1.0.1) (2026-07-23)
+
+
+### Bug Fixes
+
+* **ci:** pin Node to 22 LTS to fix release-asset upload ([e89ae29](https://github.com/Angular-Material-Dev/mat-exp/commit/e89ae29f42a47e3f1da4dbb32d8370152e5ec10f))
+
 # 1.0.0 (2026-07-23)
 
 

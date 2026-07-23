@@ -1,0 +1,32 @@
+name: Documentation issue
+description: Report a problem with the docs site — wrong, missing, or unclear content
+title: '[Docs]: '
+labels: ['documentation']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For typos or small wording fixes, feel free to skip this and open a PR directly instead.
+
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+      description: Link to the doc page this is about.
+      placeholder: https://expressive.angular-material.dev/docs/components/all-buttons/button
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong or missing?
+      description: A clear and concise description of the issue with the content.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested fix
+      description: What should it say instead?

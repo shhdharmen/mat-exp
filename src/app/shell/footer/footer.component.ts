@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { MatAnchor } from '@angular/material/button';
+import { MatExpButton } from '@ngm-dev/mat-exp';
+import { LogoComponent } from '../../shared/components/logo/logo.component';
 
 export interface FooterLink {
   label: string;
@@ -35,7 +38,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 @Component({
   selector: 'app-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, MatAnchor, MatExpButton, LogoComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })

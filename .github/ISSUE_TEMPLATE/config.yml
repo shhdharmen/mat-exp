@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question / discuss an idea
+    url: https://github.com/Angular-Material-Dev/mat-exp/discussions
+    about: Use GitHub Discussions for questions, ideas, and general discussion instead of an issue.
+  - name: Documentation
+    url: https://expressive.angular-material.dev/docs
+    about: Check the docs site before filing — your question may already be answered there.

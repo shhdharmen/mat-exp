@@ -152,12 +152,22 @@ export class DocPageComponent {
     return `${environment.githubRepoUrl}/tree/${environment.githubBranch}/projects/ngm-dev/mat-exp/src/lib/components/${suffix}`;
   });
 
-  /** GitHub Row "Report an issue" link, pre-filled with a component-specific title. */
-  protected readonly reportIssueUrl = computed<string | undefined>(() => {
-    const node = this.currentPageNode();
-    if (!node?.primarySymbol?.length) return undefined;
-    return `${environment.githubRepoUrl}/issues/new?title=${encodeURIComponent(`[${node.label}] `)}`;
-  });
+  /** GitHub Row "Report an issue" link — opens the bug_report issue form, pre-filled with a component-specific title. */
+  protected readonly reportIssueUrl = computed<string | undefined>(() =>
+    this.buildIssueUrl('bug_report.yml'),
+  );
+
+  /** GitHub Row "Suggest a feature" link — opens the feature_request issue form, pre-filled with a component-specific title. */
+  protected readonly suggestFeatureUrl = computed<string | undefined>(() =>
+    this.buildIssueUrl('feature_request.yml'),
+  );
+
+  private buildIssueUrl(template: string): string | undefined {
+    const symbols = this.currentPageNode()?.primarySymbol;
+    if (!symbols?.length) return undefined;
+    const params = new URLSearchParams({ template, title: `[${symbols.join(', ')}] ` });
+    return `${environment.githubRepoUrl}/issues/new?${params.toString()}`;
+  }
 
   protected readonly tocItems = this.tocService.items;
 

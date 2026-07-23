@@ -7,8 +7,8 @@ description: Step-by-step guide to installing and configuring Mat Expressive in 
 ## Supported Angular versions
 
 | Mat Expressive version | Angular version |
-| --- | --- |
-| Latest | 21 |
+| ---------------------- | --------------- |
+| Latest                 | 21              |
 
 ## Pre-requisites
 
@@ -34,7 +34,7 @@ This installs the package and configures its styles for you:
     what that ships).
   - **SCSS/Sass project** — it asks **which components you'd like to include styles for**,
     offering each Button Family member individually (Button, Icon Button, Button Group, Split
-    Button, FAB Menu, FAB Menu Trigger) plus an "All components" option (the default), then
+    Button, FAB Menu, FAB Menu Trigger), then
     inserts the matching `@use`/`@include` block into your global stylesheet — positioned
     correctly relative to any existing `@use` statements (e.g. the one `ng add @angular/material`
     already wrote).
@@ -48,7 +48,7 @@ ng add @ngm-dev/mat-exp --components=button,icon-button
 ```
 
 Valid `--components` keys are `button`, `icon-button`, `button-group`, `split-button`,
-`fab-menu`, and `fab-menu-trigger`, or the literal `all` (default). `--components` is ignored for
+`fab-menu`, and `fab-menu-trigger`. `--components` is ignored for
 CSS projects, which always receive the full prebuilt stylesheet.
 
 ## Manual installation
@@ -109,7 +109,7 @@ html {
 
 ### Not using Sass?
 
-If your project doesn't compile Sass, you can import the prebuilt CSS instead. It bundles the full `mat-exp-all-styles()` output (HTML element styles included, `skip-html-element-styles` is not configurable this way). This is the escape hatch for teams without a Sass build step — if you *do* compile Sass, prefer the mixins above (or the filtering options below) since the prebuilt CSS can't be trimmed at compile time.
+If your project doesn't compile Sass, you can import the prebuilt CSS instead. It bundles the full `mat-exp-all-styles()` output (HTML element styles included, `skip-html-element-styles` is not configurable this way). This is the escape hatch for teams without a Sass build step — if you _do_ compile Sass, prefer the mixins above (or the filtering options below) since the prebuilt CSS can't be trimmed at compile time.
 
 ```css
 @import '@ngm-dev/mat-exp/styles.css';

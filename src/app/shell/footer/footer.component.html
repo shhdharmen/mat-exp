@@ -14,40 +14,70 @@
 </div>
 <footer class="pt-10 pb-6 px-4 sm:px-6">
   <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-2 gap-8 mb-8">
-      @for (col of columns; track col.heading) {
-        <div>
-          <p class="text-sm font-semibold text-on-surface mb-3">{{ col.heading }}</p>
-          <ul class="space-y-2 text-sm text-on-surface-variant">
-            @for (link of col.links; track link.label) {
-              <li>
-                @if (link.routerLink) {
-                  <a
-                    [routerLink]="link.routerLink"
-                    class="hover:text-on-surface transition-colors no-underline"
-                    >{{ link.label }}</a
-                  >
-                } @else {
-                  <a
-                    [href]="link.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-on-surface transition-colors no-underline"
-                    >{{ link.label }}</a
-                  >
-                }
-              </li>
-            }
-          </ul>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-2">
+          <app-logo svgClass="size-12" />
+          <div class="flex flex-col">
+            <span class="font-semibold font-body-medium text-body-medium">@ngm-dev/</span>
+            <span class="font-semibold font-title-large text-title-large">mat-exp</span>
+          </div>
         </div>
-      }
+        <p class="text-on-surface-variant text-sm">
+          Free and open source Material 3 Expressive components and motion for Angular.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+        @for (col of columns; track col.heading) {
+          <div>
+            <p class="text-sm font-semibold text-on-surface mb-3">{{ col.heading }}</p>
+            <ul class="space-y-2 text-sm text-on-surface-variant">
+              @for (link of col.links; track link.label) {
+                <li>
+                  @if (link.routerLink) {
+                    <a
+                      [routerLink]="link.routerLink"
+                      class="hover:text-on-surface transition-colors no-underline"
+                      >{{ link.label }}</a
+                    >
+                  } @else {
+                    <a
+                      [href]="link.href"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-on-surface transition-colors no-underline"
+                      >{{ link.label }}</a
+                    >
+                  }
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
     </div>
-    <div class="pt-6 text-xs text-on-surface-variant text-center flex flex-col gap-4">
-      <a [href]="LICENSE_HREF" target="_blank" rel="noopener noreferrer"
+    <div class="flex flex-col items-center gap-4 text-on-surface-variant">
+      <span class="flex items-center gap-2 text-sm"
+        >Creafted by
+        <a
+          matButton
+          matExpButton
+          size="xs"
+          href="https://x.com/shhdharmen"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://avatars.githubusercontent.com/u/6831283?s=24&v=4"
+            class="rounded-full inline-block"
+            alt="Dharmen"
+          />
+          Dharmen
+        </a>
+      </span>
+
+      <a [href]="LICENSE_HREF" target="_blank" rel="noopener noreferrer" class="text-xs"
         >Code licensed under an MIT License</a
-      >
-      <a href="https://x.com/shhdharmen" target="_blank" rel="noopener noreferrer"
-        >Say <span class="wave">👋</span> Hi</a
       >
     </div>
   </div>

@@ -1,10 +1,10 @@
 ---
 title: What is Mat Expressive?
 order: 1
-description: An introduction to Mat Expressive — a collection of components, directives, and styles for Angular Material aligned with the Material Design 3 Expressive Design System.
+description: An introduction to Mat Expressive — a collection of components, directives, and styles for Angular Material aligned with the Material 3 Expressive Design System.
 ---
 
-Mat Expressive is a library of components and styles for Angular Material, built on the latest Material Design 3 Expressive Design System.
+Mat Expressive is a library of components and styles for Angular Material, built on the latest Material 3 Expressive Design System.
 
 It is **not** a replacement for Angular Material and **not** a fork of it. Instead, it's a collection of:
 

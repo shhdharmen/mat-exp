@@ -90,10 +90,10 @@ Mat Expressive Button supports the following variations:
 ## Toggle Behavior
 
 Mat Expressive Button supports a `toggle` state (`selected` / `unselected`), but toggling on click
-is only automatic **inside a `MatExpButtonGroup`** — the group owns selection state for every
+is only automatic **inside a [`<mat-exp-button-group>`](/docs/components/all-buttons/button-group)** — the group owns selection state for every
 button it manages.
 
-**Standalone toggle buttons (outside a `MatExpButtonGroup`) do not flip `toggle` on click.** This
+**Standalone toggle buttons (outside a [`<mat-exp-button-group>`](/docs/components/all-buttons/button-group)) do not flip `toggle` on click.** This
 is intentional: a lone button's click handler only has one consumer to satisfy, so the library leaves the state
 transition up to you rather than guessing what a click should mean. Two-way bind `toggle` and
 flip it yourself in your own `(click)` handler:
@@ -241,8 +241,6 @@ export const appConfig: ApplicationConfig = {
 You may pass a **partial static object** or a **factory** `() => Partial<MatExpButtonOptions>`.
 
 ## Styling
-
-This document outlines API for `mat-exp-button-styles` mixin.
 
 ### Usage
 

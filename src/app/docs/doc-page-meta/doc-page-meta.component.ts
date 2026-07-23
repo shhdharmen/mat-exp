@@ -48,6 +48,7 @@ export class DocPageMetaComponent {
   readonly primarySymbol = input<string[] | undefined>();
   readonly sourceFolderUrl = input<string | undefined>();
   readonly reportIssueUrl = input<string | undefined>();
+  readonly suggestFeatureUrl = input<string | undefined>();
 
   protected readonly copiedImport = signal(false);
 

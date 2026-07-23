@@ -44,18 +44,29 @@ html {
 ## Usage
 
 ```angular-ts name="app.ts"
-import {
-  MatExpSplitButton,
-} from '@ngm-dev/mat-exp';
-import { MatButton } from '@angular/material/button';
+import { MatExpSplitButton, MatExpButton, MatExpIconButton } from '@ngm-dev/mat-exp';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 @Component({
   selector: 'app-root',
-  imports: [MatExpSplitButton, MatButton, MatIcon, MatMenu, MatMenuItem],
+  imports: [
+    MatExpSplitButton,
+    MatExpButton,
+    MatExpIconButton,
+    MatButton,
+    MatIconButton,
+    MatIcon,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+  ],
   template: `
-    <mat-exp-split-button [matMenuTriggerFor]="menu">
+    <mat-exp-split-button>
       <button matButton matExpButton>Primary Action</button>
+      <button matIconButton matExpIconButton [matMenuTriggerFor]="menu">
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
     </mat-exp-split-button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>Option 1</button>

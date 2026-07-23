@@ -34,17 +34,24 @@
               View source folder
             </a>
           }
-          @if (reportIssueUrl(); as url) {
-            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
-              <mat-icon>bug_report</mat-icon>
-              Report an issue
-            </a>
-          }
-          @if (suggestFeatureUrl(); as url) {
-            <a matButton matExpButton [href]="url" target="_blank" rel="noopener noreferrer">
-              <mat-icon>lightbulb</mat-icon>
-              Suggest a feature
-            </a>
+          @let featureUrl = suggestFeatureUrl();
+          @if (reportIssueUrl(); as issueUrl) {
+            <mat-exp-split-button>
+              <a matButton matExpButton [href]="issueUrl"
+                ><mat-icon>bug_report</mat-icon> Report an issue</a
+              >
+              @if (featureUrl) {
+                <button matIconButton matExpIconButton [matMenuTriggerFor]="menu">
+                  <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+              }
+            </mat-exp-split-button>
+            <mat-menu #menu="matMenu">
+              <a mat-menu-item [href]="featureUrl" target="_blank" rel="noopener noreferrer">
+                <mat-icon>lightbulb</mat-icon>
+                Suggest a feature
+              </a>
+            </mat-menu>
           }
         </div>
       </mat-card-content>

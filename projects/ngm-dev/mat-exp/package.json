@@ -51,6 +51,7 @@
     },
     "./styles.css": {
       "style": "./src/styles/styles.css"
-    }
+    },
+    "./schematics/*": "./schematics/*"
   }
 }

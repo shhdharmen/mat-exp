@@ -17,7 +17,7 @@
 @let showGHCard = sourceFolderUrl() || reportIssueUrl() || suggestFeatureUrl();
 @let showDocCard = editPageUrl() || designUrl() || rawMarkdownUrl();
 
-<div class="grid gap-4" [class.lg:grid-cols-2]="showGHCard && showDocCard">
+<div class="flex gap-4">
   @if (showGHCard) {
     <mat-card class="shadow-none!">
       <mat-card-content>
@@ -36,22 +36,14 @@
           }
           @let featureUrl = suggestFeatureUrl();
           @if (reportIssueUrl(); as issueUrl) {
-            <mat-exp-split-button>
-              <a matButton matExpButton [href]="issueUrl"
-                ><mat-icon>bug_report</mat-icon> Report an issue</a
-              >
-              @if (featureUrl) {
-                <button matIconButton matExpIconButton [matMenuTriggerFor]="menu">
-                  <mat-icon>arrow_drop_down</mat-icon>
-                </button>
-              }
-            </mat-exp-split-button>
-            <mat-menu #menu="matMenu">
-              <a mat-menu-item [href]="featureUrl" target="_blank" rel="noopener noreferrer">
-                <mat-icon>lightbulb</mat-icon>
-                Suggest a feature
-              </a>
-            </mat-menu>
+            <a matButton matExpButton [href]="issueUrl"
+              ><mat-icon>bug_report</mat-icon> Report an issue</a
+            >
+          }
+          @if (featureUrl) {
+            <a matButton matExpButton [href]="featureUrl"
+              ><mat-icon>lightbulb</mat-icon> Suggest a feature</a
+            >
           }
         </div>
       </mat-card-content>

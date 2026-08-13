@@ -10,6 +10,7 @@ import type { MatExpButtonGroupSelection, MatExpButtonSize } from '../../../type
 
 @Component({
   imports: [MatButton, MatExpButton, MatExpButtonGroup],
+
   template: `
     <mat-exp-button-group
       [selection]="selection()"

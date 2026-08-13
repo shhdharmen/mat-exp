@@ -11,6 +11,7 @@ import type { MatExpButtonSize, MatExpSplitButtonAppearance } from '../../../typ
 /** Host that never binds `size`/`appearance`, so the component's own defaults apply. */
 @Component({
   imports: [MatButton, MatIconButton, MatExpButton, MatExpIconButton, MatExpSplitButton],
+
   template: `
     <mat-exp-split-button>
       <button matButton matExpButton>Action</button>
@@ -25,6 +26,7 @@ class SplitButtonDefaultsTestHost {}
 /** Host that binds `size`/`appearance` so tests can drive value changes through it. */
 @Component({
   imports: [MatButton, MatIconButton, MatExpButton, MatExpIconButton, MatExpSplitButton],
+
   template: `
     <mat-exp-split-button [size]="size()" [appearance]="appearance()">
       <button matButton matExpButton>Action</button>

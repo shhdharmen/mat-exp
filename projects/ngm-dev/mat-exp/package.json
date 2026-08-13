@@ -31,9 +31,9 @@
     "postbuild": "copyfiles schematics/*/schema.json schematics/collection.json ../../../dist/ngm-dev/mat-exp/"
   },
   "peerDependencies": {
-    "@angular/common": "^21.1.0",
-    "@angular/core": "^21.1.0",
-    "@angular/material": "^21.1.0",
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/material": "^22.0.0",
     "gsap": "^3.13.0"
   },
   "dependencies": {

@@ -8,7 +8,8 @@ description: Step-by-step guide to installing and configuring Mat Expressive in 
 
 | Mat Expressive version | Angular version |
 | ---------------------- | --------------- |
-| Latest                 | 21              |
+| v2 (Latest)            | 22              |
+| v1                     | 21              |
 
 ## Pre-requisites
 

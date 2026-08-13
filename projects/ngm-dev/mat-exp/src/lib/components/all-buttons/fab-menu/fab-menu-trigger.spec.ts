@@ -8,6 +8,7 @@ import type { MatExpFabMenuTriggerColor } from '../../../types/appearance';
 
 @Component({
   imports: [MatFabButton, MatMenu, MatMenuItem, MatMenuTrigger, MatExpFabMenuTrigger],
+
   template: `
     <button matFab matExpFabMenuTrigger [matMenuTriggerFor]="menu" [color]="color()">Open</button>
     <mat-menu #menu="matMenu">

@@ -11,6 +11,7 @@ import type { MatExpButtonShape, MatExpButtonSize, MatExpButtonToggle } from '..
 /** Host that never binds any input, so the directive's own defaults apply. */
 @Component({
   imports: [MatButton, MatExpButton],
+
   template: `<button matButton matExpButton>Click</button>`,
 })
 class ButtonDefaultsTestHost {}
@@ -18,6 +19,7 @@ class ButtonDefaultsTestHost {}
 /** Host that binds `size`/`shape`/`toggle` so tests can drive value changes through it. */
 @Component({
   imports: [MatButton, MatExpButton],
+
   template: `
     <button matButton matExpButton [size]="size()" [shape]="shape()" [toggle]="toggle()">
       Click
@@ -33,6 +35,7 @@ class ButtonBoundTestHost {
 /** Host that projects a button into a `MatExpButtonGroup`. */
 @Component({
   imports: [MatButton, MatExpButton, MatExpButtonGroup],
+
   template: `
     <mat-exp-button-group>
       <button matButton matExpButton [value]="'a'">A</button>
@@ -44,6 +47,7 @@ class ButtonGroupBroadcastTestHost {}
 /** Host that pairs a button with a `MatMenuTrigger`. */
 @Component({
   imports: [MatButton, MatExpButton, MatMenu, MatMenuItem, MatMenuTrigger],
+
   template: `
     <button matButton matExpButton [matMenuTriggerFor]="menu">Open</button>
     <mat-menu #menu="matMenu">

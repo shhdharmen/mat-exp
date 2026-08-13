@@ -18,6 +18,7 @@ import type {
 /** Host that never binds any input, so the directive's own defaults apply. */
 @Component({
   imports: [MatIconButton, MatExpIconButton],
+
   template: `
     <button matIconButton matExpIconButton>
       <span>icon</span>
@@ -29,6 +30,7 @@ class IconButtonDefaultsTestHost {}
 /** Host that binds every input so tests can drive value changes through it. */
 @Component({
   imports: [MatIconButton, MatExpIconButton],
+
   template: `
     <button
       matIconButton
@@ -54,6 +56,7 @@ class IconButtonBoundTestHost {
 /** Host that projects icon buttons into a `MatExpButtonGroup`. */
 @Component({
   imports: [MatIconButton, MatExpIconButton, MatExpButtonGroup],
+
   template: `
     <mat-exp-button-group
       [size]="size()"
@@ -76,6 +79,7 @@ class IconButtonGroupTestHost {
 /** Host with a `MatMenuTrigger` attached to the icon button. */
 @Component({
   imports: [MatIconButton, MatExpIconButton, MatMenu, MatMenuItem, MatMenuTrigger],
+
   template: `
     <button matIconButton matExpIconButton [matMenuTriggerFor]="menu">
       <span>icon</span>

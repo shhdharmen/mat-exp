@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-route-handler',
+
   template: `<ng-content />`,
 })
 export class RouteHandlerComponent implements OnDestroy {

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
-import { MatAnchor, MatIconButton } from '@angular/material/button';
+import { MatAnchor } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatCard,
@@ -8,9 +8,8 @@ import {
   MatCardSubtitle,
   MatCardAvatar,
 } from '@angular/material/card';
-import { MatExpButton, MatExpSplitButton, MatExpIconButton } from '@ngm-dev/mat-exp';
+import { MatExpButton } from '@ngm-dev/mat-exp';
 import { CodeComponent } from '../../shared/components/code/code.component';
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 
 /**
  * Compact metadata table shown above every markdown-backed Doc Page's
@@ -34,12 +33,6 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
     MatCardAvatar,
     MatAnchor,
     MatExpButton,
-    MatExpSplitButton,
-    MatExpIconButton,
-    MatMenuTrigger,
-    MatMenu,
-    MatMenuItem,
-    MatIconButton,
   ],
   templateUrl: './doc-page-meta.component.html',
   styles: `
